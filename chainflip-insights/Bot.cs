@@ -192,8 +192,8 @@ namespace ChainflipInsights
         {
             var swapInfo = await GetSwap(swap.Id, cancellationToken);
 
-            var swapStartedAt = DateTimeOffset.FromUnixTimeSeconds(swapInfo.DepositReceivedAt);
-            var swapFinishedAt = DateTimeOffset.FromUnixTimeSeconds(swapInfo.BroadcastSucceededAt);
+            var swapStartedAt = DateTimeOffset.FromUnixTimeMilliseconds(swapInfo.DepositReceivedAt);
+            var swapFinishedAt = DateTimeOffset.FromUnixTimeMilliseconds(swapInfo.BroadcastSucceededAt);
             var swapTime = swapFinishedAt.Subtract(swapStartedAt);
             
             var inputDecimals = _assetDecimals[swap.SourceAsset.ToLowerInvariant()];
