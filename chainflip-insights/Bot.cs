@@ -233,10 +233,11 @@ namespace ChainflipInsights
             {
                 var infoChannel = (ITextChannel)_discordClient.GetChannel(_configuration.SwapInfoChannelId.Value);
 
-                try {
-                await infoChannel.SendMessageAsync(
-                    text,
-                    flags: MessageFlags.SuppressEmbeds);
+                try 
+                {
+                    await infoChannel.SendMessageAsync(
+                        text,
+                        flags: MessageFlags.SuppressEmbeds);
                 }
                 catch (Exception e)
                 {
