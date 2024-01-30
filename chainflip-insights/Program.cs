@@ -104,7 +104,17 @@
                     {
                         x.BaseAddress = new Uri(botConfiguration.GraphUrl);
                         x.DefaultRequestHeaders.UserAgent.ParseAdd("discord-chainflip-insights");
-                    });
+                    })
+                
+                .Services
+                
+                .AddHttpClient(
+                    "Swap",
+                    x =>
+                    {
+                        x.BaseAddress = new Uri(botConfiguration.SwapUrl);
+                        x.DefaultRequestHeaders.UserAgent.ParseAdd("discord-chainflip-insights");
+                    });;
             
             builder
                 .Register(x =>

@@ -9,6 +9,7 @@ namespace ChainflipInsights
     using System.Net.Http.Headers;
     using System.Net.Http.Json;
     using System.Net.Mime;
+    using System.Text;
     using System.Text.Json.Serialization;
     using System.Threading;
     using System.Threading.Tasks;
@@ -20,6 +21,12 @@ namespace ChainflipInsights
 
     public class Bot
     {
+        private const string SUB1K = "🦐";
+        private const string SUB2_5K = "🐟";
+        private const string SUB5K = "🐠";
+        private const string SUB10K = "🦈";
+        private const string WHALE = "🐳";
+        
         private const string SwapsQuery = 
             """
             {
@@ -124,6 +131,7 @@ namespace ChainflipInsights
                 foreach (var swap in swaps)
                 {
                     await AnnounceSwap(swap, cancellationToken);
+                    
                     lastId = swap.Id;
                     await StoreLastSwapId(swap.Id);
                 }
@@ -167,10 +175,27 @@ namespace ChainflipInsights
             return await response.Content.ReadFromJsonAsync<SwapsResponse>(cancellationToken: cancellationToken);
         }
 
+        private async Task<SwapResponse?> GetSwap(
+            double swapId,
+            CancellationToken cancellationToken)
+        {
+            using var client = _httpClientFactory.CreateClient("Swap");
+            
+            return await client.GetFromJsonAsync<SwapResponse>(
+                $"swaps/{swapId}", 
+                cancellationToken: cancellationToken);
+        }
+
         private async Task AnnounceSwap(
             SwapsResponseNode swap, 
             CancellationToken cancellationToken)
         {
+            var swapInfo = await GetSwap(swap.Id, cancellationToken);
+
+            var swapStartedAt = DateTimeOffset.FromUnixTimeSeconds(swapInfo.DepositReceivedAt);
+            var swapFinishedAt = DateTimeOffset.FromUnixTimeSeconds(swapInfo.BroadcastSucceededAt);
+            var swapTime = swapFinishedAt.Subtract(swapStartedAt);
+            
             var inputDecimals = _assetDecimals[swap.SourceAsset.ToLowerInvariant()];
             var inputString = $"0.00{new string('#', inputDecimals - 2)}";
             var swapInput = swap.DepositAmount / Math.Pow(10, inputDecimals);
@@ -190,7 +215,8 @@ namespace ChainflipInsights
                 await infoChannel.SendMessageAsync(
                     $"💵 Swapped " +
                     $"**{Math.Round(swapInput, 8).ToString(inputString)} {swap.SourceAsset}** (*${swap.DepositValueUsd.ToString(dollarString)}*) → " +
-                    $"**{Math.Round(swapOutput, 8).ToString(outputString)} {swap.DestinationAsset}** (*${swap.EgressValueUsd.ToString(dollarString)}*) " +
+                    $"**{Math.Round(swapOutput, 8).ToString(outputString)} {swap.DestinationAsset}** (*${swap.EgressValueUsd.ToString(dollarString)}*) in " +
+                    $"**{HumanTime(swapTime)}** " +
                     $"// **[view swap on explorer]({_configuration.ExplorerUrl}{swap.Id})**",
                     flags: MessageFlags.SuppressEmbeds);
             }
@@ -203,6 +229,22 @@ namespace ChainflipInsights
                 swap.DestinationAsset,
                 $"{time:yyyy-MM-dd HH:mm:ss}",
                 $"{_configuration.ExplorerUrl}{swap.Id}");
+        }
+
+        private static string HumanTime(TimeSpan span)
+        {
+            var time = new StringBuilder();
+
+            if (span.Hours > 0)
+                time.Append($"{span.Hours}h");
+            
+            if (span.Minutes > 0)
+                time.Append($"{span.Minutes}m");
+
+            if (span.Seconds > 0)
+                time.Append($"{span.Seconds}s");
+
+            return time.ToString();
         }
     }
     
@@ -282,5 +324,14 @@ namespace ChainflipInsights
 
         [JsonPropertyName("intermediateValueUsd")] 
         public double? IntermediateValueUsd { get; set; }
+    }
+    
+    public class SwapResponse
+    {
+        [JsonPropertyName("depositReceivedAt")]
+        public long DepositReceivedAt { get; set; }
+        
+        [JsonPropertyName("broadcastSucceededAt")]
+        public long BroadcastSucceededAt { get; set; }
     }
 }

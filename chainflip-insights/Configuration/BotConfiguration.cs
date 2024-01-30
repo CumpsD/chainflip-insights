@@ -31,6 +31,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public string? SwapUrl
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
         public int? SwapInfoDelay
         {
             get; init;
