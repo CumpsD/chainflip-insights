@@ -249,7 +249,7 @@ namespace ChainflipInsights
                 var message = await _telegramClient.SendTextMessageAsync(
                     new ChatId(_configuration.TelegramSwapInfoChannelId.Value),
                     text,
-                    parseMode: ParseMode.MarkdownV2,
+                    parseMode: ParseMode.Markdown,
                     disableNotification: true,
                     allowSendingWithoutReply: true,
                     cancellationToken: cancellationToken);
