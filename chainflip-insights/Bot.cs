@@ -215,8 +215,8 @@ namespace ChainflipInsights
                 await infoChannel.SendMessageAsync(
                     $"{GetEmoji(swap.DepositValueUsd)} Swapped " +
                     $"**{Math.Round(swapInput, 8).ToString(inputString)} {swap.SourceAsset}** (*${swap.DepositValueUsd.ToString(dollarString)}*) → " +
-                    $"**{Math.Round(swapOutput, 8).ToString(outputString)} {swap.DestinationAsset}** (*${swap.EgressValueUsd.ToString(dollarString)}*) in " +
-                    $"**{HumanTime(swapTime)}** " +
+                    $"**{Math.Round(swapOutput, 8).ToString(outputString)} {swap.DestinationAsset}** (*${swap.EgressValueUsd.ToString(dollarString)}*) " +
+                    // $"in **{HumanTime(swapTime)}** " +
                     $"// **[view swap on explorer]({_configuration.ExplorerUrl}{swap.Id})**",
                     flags: MessageFlags.SuppressEmbeds);
             }
