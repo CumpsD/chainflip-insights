@@ -19,6 +19,7 @@ namespace ChainflipInsights
     using Microsoft.Extensions.Options;
     using Telegram.Bot;
     using Telegram.Bot.Types;
+    using Telegram.Bot.Types.Enums;
     using File = System.IO.File;
 
     public class Bot
@@ -248,12 +249,13 @@ namespace ChainflipInsights
                 var message = await _telegramClient.SendTextMessageAsync(
                     new ChatId(_configuration.TelegramSwapInfoChannelId.Value),
                     text,
+                    parseMode: ParseMode.MarkdownV2,
                     disableNotification: true,
                     allowSendingWithoutReply: true,
                     cancellationToken: cancellationToken);
 
                 if (totalSwaps > 1)
-                    await Task.Delay(1100, cancellationToken);
+                    await Task.Delay(1500, cancellationToken);
             }
             catch (Exception e)
             {
