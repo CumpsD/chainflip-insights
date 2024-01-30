@@ -146,8 +146,8 @@ namespace ChainflipInsights
                 return double.Parse(await File.ReadAllTextAsync(_configuration.LastSwapIdLocation, cancellationToken));
             
             await using var file = File.CreateText(_configuration.LastSwapIdLocation);
-            await file.WriteAsync("375");
-            return 375;
+            await file.WriteAsync("381");
+            return 381;
         }
 
         private async Task StoreLastSwapId(double swapId)
@@ -213,7 +213,7 @@ namespace ChainflipInsights
                 var infoChannel = (ITextChannel)_client.GetChannel(_configuration.SwapInfoChannelId.Value);
 
                 await infoChannel.SendMessageAsync(
-                    $"💵 Swapped " +
+                    $"{GetEmoji(swap.DepositValueUsd)} Swapped " +
                     $"**{Math.Round(swapInput, 8).ToString(inputString)} {swap.SourceAsset}** (*${swap.DepositValueUsd.ToString(dollarString)}*) → " +
                     $"**{Math.Round(swapOutput, 8).ToString(outputString)} {swap.DestinationAsset}** (*${swap.EgressValueUsd.ToString(dollarString)}*) in " +
                     $"**{HumanTime(swapTime)}** " +
@@ -230,6 +230,16 @@ namespace ChainflipInsights
                 $"{time:yyyy-MM-dd HH:mm:ss}",
                 $"{_configuration.ExplorerUrl}{swap.Id}");
         }
+
+        private static string GetEmoji(double amount) =>
+            amount switch
+            {
+                > 10000 => WHALE,
+                > 5000 => SUB10K,
+                > 2500 => SUB5K,
+                > 1000 => SUB2_5K,
+                _ => SUB1K
+            };
 
         private static string HumanTime(TimeSpan span)
         {
