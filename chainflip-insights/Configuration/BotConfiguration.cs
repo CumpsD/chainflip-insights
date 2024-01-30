@@ -10,7 +10,28 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
-        public string? Token
+        public bool? EnableDiscord
+        {
+            get; init;
+        }  
+        
+        [Required]
+        [NotNull]
+        public bool? EnableTelegram
+        {
+            get; init;
+        }   
+        
+        [Required]
+        [NotNull]
+        public bool? EnableTwitter
+        {
+            get; init;
+        }   
+        
+        [Required]
+        [NotNull]
+        public string? DiscordToken
         {
             get; init;
         }
@@ -49,17 +70,17 @@ namespace ChainflipInsights.Configuration
         {
             get; init;
         }
-        
-        [Required]
-        [NotNull]
-        public ulong? SwapInfoChannelId
-        {
-            get; init;
-        }
-        
+
         [Required]
         [NotNull]
         public string? LastSwapIdLocation
+        {
+            get; init;
+        }
+
+        [Required]
+        [NotNull]
+        public ulong? DiscordSwapInfoChannelId
         {
             get; init;
         }
