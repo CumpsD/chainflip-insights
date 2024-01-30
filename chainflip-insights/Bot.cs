@@ -96,22 +96,22 @@ namespace ChainflipInsights
         {
             _logger.LogInformation("Running Bot...");
 
-            // await _discordClient.LoginAsync(
-            //     TokenType.Bot,
-            //     _configuration.DiscordToken);
-            //
-            // await _discordClient.StartAsync();
+            await _discordClient.LoginAsync(
+                TokenType.Bot,
+                _configuration.DiscordToken);
+            
+            await _discordClient.StartAsync();
             
             // Start a loop fetching Swap Info
             await ProvideSwapInfo(cancellationToken);
 
             cancellationToken.WaitHandle.WaitOne();
             
-            // if (_discordClient.ConnectionState != ConnectionState.Disconnected)
-            // {
-            //     await _discordClient.LogoutAsync();
-            //     await _discordClient.StopAsync();
-            // }
+            if (_discordClient.ConnectionState != ConnectionState.Disconnected)
+            {
+                await _discordClient.LogoutAsync();
+                await _discordClient.StopAsync();
+            }
         }
         
         private async Task ProvideSwapInfo(CancellationToken cancellationToken)
@@ -163,8 +163,8 @@ namespace ChainflipInsights
                 return double.Parse(await File.ReadAllTextAsync(_configuration.LastSwapIdLocation, cancellationToken));
             
             await using var file = File.CreateText(_configuration.LastSwapIdLocation);
-            await file.WriteAsync("386");
-            return 386;
+            await file.WriteAsync("387");
+            return 387;
         }
 
         private async Task StoreLastSwapId(double swapId)
