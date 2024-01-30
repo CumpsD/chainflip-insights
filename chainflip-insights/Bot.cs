@@ -151,8 +151,8 @@ namespace ChainflipInsights
                 return double.Parse(await File.ReadAllTextAsync(_configuration.LastSwapIdLocation, cancellationToken));
             
             await using var file = File.CreateText(_configuration.LastSwapIdLocation);
-            await file.WriteAsync("381");
-            return 381;
+            await file.WriteAsync("386");
+            return 386;
         }
 
         private async Task StoreLastSwapId(double swapId)
