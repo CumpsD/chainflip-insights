@@ -130,12 +130,19 @@ namespace ChainflipInsights
                     continue;                    
                 }
                 
-                var swaps = swapsInfo.Data.Data.Data.Select(x => x.Data).OrderBy(x => x.Id);
+                var swaps = swapsInfo
+                    .Data.Data.Data
+                    .Select(x => x.Data)
+                    .OrderBy(x => x.Id)
+                    .ToList();
                 
                 // Swaps are in increasing order
                 foreach (var swap in swaps)
                 {
-                    await AnnounceSwap(swap, cancellationToken);
+                    await AnnounceSwap(
+                        swap, 
+                        swaps.Count,
+                        cancellationToken);
                     
                     lastId = swap.Id;
                     await StoreLastSwapId(swap.Id);
@@ -192,7 +199,8 @@ namespace ChainflipInsights
         }
 
         private async Task AnnounceSwap(
-            SwapsResponseNode swap, 
+            SwapsResponseNode swap,
+            int totalSwaps,
             CancellationToken cancellationToken)
         {
             var swapInfo = await GetSwap(swap.Id, cancellationToken);
@@ -243,6 +251,9 @@ namespace ChainflipInsights
                     disableNotification: true,
                     allowSendingWithoutReply: true,
                     cancellationToken: cancellationToken);
+
+                if (totalSwaps > 1)
+                    await Task.Delay(1100, cancellationToken);
             }
             catch (Exception e)
             {
