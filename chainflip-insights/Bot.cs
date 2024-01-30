@@ -20,6 +20,7 @@ namespace ChainflipInsights
     using Telegram.Bot;
     using Telegram.Bot.Types;
     using Telegram.Bot.Types.Enums;
+    using Tweetinvi;
     using File = System.IO.File;
 
     public class Bot
@@ -71,6 +72,7 @@ namespace ChainflipInsights
         private readonly ILogger<Bot> _logger;
         private readonly DiscordSocketClient _discordClient;
         private readonly TelegramBotClient _telegramClient;
+        private readonly TwitterClient _twitterClient;
         private readonly BotConfiguration _configuration;
         private readonly IHttpClientFactory _httpClientFactory;
 
@@ -79,12 +81,14 @@ namespace ChainflipInsights
             IOptions<BotConfiguration> options,
             IHttpClientFactory httpClientFactory,
             DiscordSocketClient discordClient,
-            TelegramBotClient telegramClient)
+            TelegramBotClient telegramClient,
+            TwitterClient twitterClient)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _httpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));
             _discordClient = discordClient ?? throw new ArgumentNullException(nameof(discordClient));
             _telegramClient = telegramClient ?? throw new ArgumentNullException(nameof(telegramClient));
+            _twitterClient = twitterClient ?? throw new ArgumentNullException(nameof(twitterClient));
             _configuration = options.Value ?? throw new ArgumentNullException(nameof(options));
         }
         
@@ -92,22 +96,22 @@ namespace ChainflipInsights
         {
             _logger.LogInformation("Running Bot...");
 
-            await _discordClient.LoginAsync(
-                TokenType.Bot,
-                _configuration.DiscordToken);
-            
-            await _discordClient.StartAsync();
+            // await _discordClient.LoginAsync(
+            //     TokenType.Bot,
+            //     _configuration.DiscordToken);
+            //
+            // await _discordClient.StartAsync();
             
             // Start a loop fetching Swap Info
             await ProvideSwapInfo(cancellationToken);
 
             cancellationToken.WaitHandle.WaitOne();
             
-            if (_discordClient.ConnectionState != ConnectionState.Disconnected)
-            {
-                await _discordClient.LogoutAsync();
-                await _discordClient.StopAsync();
-            }
+            // if (_discordClient.ConnectionState != ConnectionState.Disconnected)
+            // {
+            //     await _discordClient.LogoutAsync();
+            //     await _discordClient.StopAsync();
+            // }
         }
         
         private async Task ProvideSwapInfo(CancellationToken cancellationToken)
@@ -228,13 +232,24 @@ namespace ChainflipInsights
                 $"**{Math.Round(swapOutput, 8).ToString(outputString)} {swap.DestinationAsset}** (*${swap.EgressValueUsd.ToString(dollarString)}*) " +
                 // $"in **{HumanTime(swapTime)}** " +
                 $"// **[view swap on explorer]({_configuration.ExplorerUrl}{swap.Id})**";
+            
+            var plainText = 
+                $"{GetEmoji(swap.DepositValueUsd)} Swapped {_configuration.ExplorerUrl}{swap.Id}\n" +
+                $"➡️ {Math.Round(swapInput, 8).ToString(inputString)} ${swap.SourceAsset} (${swap.DepositValueUsd.ToString(dollarString)})\n" +
+                $"⬅️ {Math.Round(swapOutput, 8).ToString(outputString)} ${swap.DestinationAsset} (${swap.EgressValueUsd.ToString(dollarString)})";
 
             if (_configuration.EnableDiscord.Value)
                 await AnnounceDiscord(text);
 
             if (_configuration.EnableTelegram.Value)
-                await AnnounceTelegram(totalSwaps, text, cancellationToken);
+                await AnnounceTelegram(text, cancellationToken);
 
+            if (_configuration.EnableTwitter.Value)
+                await AnnounceTwitter(plainText);
+            
+            if (totalSwaps > 1)
+                await Task.Delay(1500, cancellationToken);
+            
             _logger.LogInformation(
                 "Swap {IngressAmount} {IngressTicker} to {EgressAmount} {EgressTicker} at {SwapTime} -> {ExplorerUrl}",
                 Math.Round(swapInput, 8).ToString(inputString),
@@ -266,7 +281,6 @@ namespace ChainflipInsights
         }
 
         private async Task AnnounceTelegram(
-            int totalSwaps, 
             string text, 
             CancellationToken cancellationToken)
         {
@@ -279,13 +293,35 @@ namespace ChainflipInsights
                     disableNotification: true,
                     allowSendingWithoutReply: true,
                     cancellationToken: cancellationToken);
-
-                if (totalSwaps > 1)
-                    await Task.Delay(1500, cancellationToken);
             }
             catch (Exception e)
             {
                 _logger.LogError(e, "Telegram meh.");
+            }
+        }
+
+        private async Task AnnounceTwitter(
+            string text)
+        {
+            try 
+            {
+                await _twitterClient.Execute.AdvanceRequestAsync(x =>
+                {
+                    var tweet = new TweetV2PostRequest
+                    {
+                        Text = text
+                    };
+
+                    x.Query.Url = "https://api.twitter.com/2/tweets";
+                    x.Query.HttpMethod = Tweetinvi.Models.HttpMethod.POST;
+                    x.Query.HttpContent = JsonContent.Create(
+                        tweet, 
+                        mediaType: new MediaTypeHeaderValue(MediaTypeNames.Application.Json));
+                });
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Twitter meh.");
             }
         }
 
@@ -401,5 +437,19 @@ namespace ChainflipInsights
         
         [JsonPropertyName("broadcastSucceededAt")]
         public long BroadcastSucceededAt { get; set; }
+    }
+    
+    /// <summary>
+    /// There are a lot more fields according to:
+    /// https://developer.twitter.com/en/docs/twitter-api/tweets/manage-tweets/api-reference/post-tweets
+    /// but these are the ones we care about for our use case.
+    /// </summary>
+    public class TweetV2PostRequest
+    {
+        /// <summary>
+        /// The text of the tweet to post.
+        /// </summary>
+        [JsonPropertyName( "text" )]
+        public string Text { get; set; }
     }
 }

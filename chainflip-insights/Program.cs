@@ -18,6 +18,8 @@
     using Microsoft.Extensions.Logging;
     using Serilog;
     using Telegram.Bot;
+    using Tweetinvi;
+    using Tweetinvi.Models;
 
     public class Program
     {
@@ -172,6 +174,14 @@
 
             builder
                 .Register(_ => new TelegramBotClient(botConfiguration.TelegramToken))
+                .SingleInstance();
+
+            builder
+                .Register(_ => new TwitterClient(
+                    botConfiguration.TwitterConsumerKey,
+                    botConfiguration.TwitterConsumerSecret,
+                    botConfiguration.TwitterAccessToken,
+                    botConfiguration.TwitterAccessTokenSecret))
                 .SingleInstance();
             
             builder

@@ -91,5 +91,33 @@ namespace ChainflipInsights.Configuration
         {
             get; init;
         }
+
+        [Required]
+        [NotNull]
+        public string? TwitterConsumerKey
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public string? TwitterConsumerSecret
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public string? TwitterAccessToken
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public string? TwitterAccessTokenSecret
+        {
+            get; init;
+        }
     }
 }
