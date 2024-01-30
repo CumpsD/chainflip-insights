@@ -17,6 +17,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public string? TelegramToken
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
         public string? GraphUrl
         {
             get; init;
@@ -53,6 +60,13 @@ namespace ChainflipInsights.Configuration
         [Required]
         [NotNull]
         public string? LastSwapIdLocation
+        {
+            get; init;
+        }
+
+        [Required]
+        [NotNull]
+        public long? TelegramSwapInfoChannelId 
         {
             get; init;
         }

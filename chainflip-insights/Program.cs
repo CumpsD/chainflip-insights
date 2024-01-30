@@ -17,6 +17,7 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
     using Serilog;
+    using Telegram.Bot;
 
     public class Program
     {
@@ -169,6 +170,10 @@
                 })
                 .SingleInstance();
 
+            builder
+                .Register(_ => new TelegramBotClient(botConfiguration.TelegramToken))
+                .SingleInstance();
+            
             builder
                 .RegisterType<Bot>()
                 .SingleInstance();

@@ -3,7 +3,6 @@ namespace ChainflipInsights
     using System;
     using System.Collections.Generic;
     using System.Globalization;
-    using System.IO;
     using System.Linq;
     using System.Net.Http;
     using System.Net.Http.Headers;
@@ -18,6 +17,9 @@ namespace ChainflipInsights
     using ChainflipInsights.Configuration;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
+    using Telegram.Bot;
+    using Telegram.Bot.Types;
+    using File = System.IO.File;
 
     public class Bot
     {
@@ -66,7 +68,8 @@ namespace ChainflipInsights
         }; 
         
         private readonly ILogger<Bot> _logger;
-        private readonly DiscordSocketClient _client;
+        private readonly DiscordSocketClient _discordClient;
+        private readonly TelegramBotClient _telegramClient;
         private readonly BotConfiguration _configuration;
         private readonly IHttpClientFactory _httpClientFactory;
 
@@ -74,11 +77,13 @@ namespace ChainflipInsights
             ILogger<Bot> logger,
             IOptions<BotConfiguration> options,
             IHttpClientFactory httpClientFactory,
-            DiscordSocketClient client)
+            DiscordSocketClient discordClient,
+            TelegramBotClient telegramClient)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _httpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));
-            _client = client ?? throw new ArgumentNullException(nameof(client));
+            _discordClient = discordClient ?? throw new ArgumentNullException(nameof(discordClient));
+            _telegramClient = telegramClient ?? throw new ArgumentNullException(nameof(telegramClient));
             _configuration = options.Value ?? throw new ArgumentNullException(nameof(options));
         }
         
@@ -86,21 +91,21 @@ namespace ChainflipInsights
         {
             _logger.LogInformation("Running Bot...");
 
-            await _client.LoginAsync(
+            await _discordClient.LoginAsync(
                 TokenType.Bot,
                 _configuration.Token);
             
-            await _client.StartAsync();
+            await _discordClient.StartAsync();
             
             // Start a loop fetching Swap Info
             await ProvideSwapInfo(cancellationToken);
 
             cancellationToken.WaitHandle.WaitOne();
             
-            if (_client.ConnectionState != ConnectionState.Disconnected)
+            if (_discordClient.ConnectionState != ConnectionState.Disconnected)
             {
-                await _client.LogoutAsync();
-                await _client.StopAsync();
+                await _discordClient.LogoutAsync();
+                await _discordClient.StopAsync();
             }
         }
         
@@ -207,19 +212,29 @@ namespace ChainflipInsights
             var dollarString = "0.00";
 
             var time = DateTimeOffset.Parse(swap.SwapScheduledBlockTimestamp);
+
+            var text =
+                $"{GetEmoji(swap.DepositValueUsd)} Swapped " +
+                $"**{Math.Round(swapInput, 8).ToString(inputString)} {swap.SourceAsset}** (*${swap.DepositValueUsd.ToString(dollarString)}*) → " +
+                $"**{Math.Round(swapOutput, 8).ToString(outputString)} {swap.DestinationAsset}** (*${swap.EgressValueUsd.ToString(dollarString)}*) " +
+                // $"in **{HumanTime(swapTime)}** " +
+                $"// **[view swap on explorer]({_configuration.ExplorerUrl}{swap.Id})**";
             
-            if (_client.ConnectionState == ConnectionState.Connected)
+            if (_discordClient.ConnectionState == ConnectionState.Connected)
             {
-                var infoChannel = (ITextChannel)_client.GetChannel(_configuration.SwapInfoChannelId.Value);
+                var infoChannel = (ITextChannel)_discordClient.GetChannel(_configuration.SwapInfoChannelId.Value);
 
                 await infoChannel.SendMessageAsync(
-                    $"{GetEmoji(swap.DepositValueUsd)} Swapped " +
-                    $"**{Math.Round(swapInput, 8).ToString(inputString)} {swap.SourceAsset}** (*${swap.DepositValueUsd.ToString(dollarString)}*) → " +
-                    $"**{Math.Round(swapOutput, 8).ToString(outputString)} {swap.DestinationAsset}** (*${swap.EgressValueUsd.ToString(dollarString)}*) " +
-                    // $"in **{HumanTime(swapTime)}** " +
-                    $"// **[view swap on explorer]({_configuration.ExplorerUrl}{swap.Id})**",
+                    text,
                     flags: MessageFlags.SuppressEmbeds);
             }
+            
+            var message = await _telegramClient.SendTextMessageAsync(
+                new ChatId(_configuration.TelegramSwapInfoChannelId.Value),
+                text,
+                disableNotification: true,
+                allowSendingWithoutReply: true,
+                cancellationToken: cancellationToken);
             
             _logger.LogInformation(
                 "Swap {IngressAmount} {IngressTicker} to {EgressAmount} {EgressTicker} at {SwapTime} -> {ExplorerUrl}",
