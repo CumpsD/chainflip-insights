@@ -224,18 +224,31 @@ namespace ChainflipInsights
             {
                 var infoChannel = (ITextChannel)_discordClient.GetChannel(_configuration.SwapInfoChannelId.Value);
 
+                try {
                 await infoChannel.SendMessageAsync(
                     text,
                     flags: MessageFlags.SuppressEmbeds);
+                }
+                catch (Exception e)
+                {
+                    _logger.LogError(e, "Discord meh.");
+                }
             }
-            
-            var message = await _telegramClient.SendTextMessageAsync(
-                new ChatId(_configuration.TelegramSwapInfoChannelId.Value),
-                text,
-                disableNotification: true,
-                allowSendingWithoutReply: true,
-                cancellationToken: cancellationToken);
-            
+
+            try
+            {
+                var message = await _telegramClient.SendTextMessageAsync(
+                    new ChatId(_configuration.TelegramSwapInfoChannelId.Value),
+                    text,
+                    disableNotification: true,
+                    allowSendingWithoutReply: true,
+                    cancellationToken: cancellationToken);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Telegram meh.");
+            }
+
             _logger.LogInformation(
                 "Swap {IngressAmount} {IngressTicker} to {EgressAmount} {EgressTicker} at {SwapTime} -> {ExplorerUrl}",
                 Math.Round(swapInput, 8).ToString(inputString),
