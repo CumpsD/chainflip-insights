@@ -89,8 +89,19 @@ namespace ChainflipInsights.Consumers.Discord
         private void ProcessSwap(SwapInfo swap)
         {
             if (swap.DepositValueUsd < _configuration.DiscordSwapAmountThreshold)
+            {
+                _logger.LogInformation(
+                    "Swap did not meet treshold (${Threshold}) for Discord: {IngressAmount} {IngressTicker} to {EgressAmount} {EgressTicker} -> {ExplorerUrl}",
+                    _configuration.DiscordSwapAmountThreshold,
+                    swap.DepositAmountFormatted,
+                    swap.SourceAsset,
+                    swap.EgressAmountFormatted,
+                    swap.DestinationAsset,
+                    $"{_configuration.ExplorerSwapsUrl}{swap.Id}");
+                
                 return;
-            
+            }
+
             if (_discordClient.ConnectionState != ConnectionState.Connected)
                 return;
 
@@ -134,8 +145,18 @@ namespace ChainflipInsights.Consumers.Discord
         private void ProcessIncomingLiquidityInfo(IncomingLiquidityInfo liquidity)
         {
             if (liquidity.DepositValueUsd < _configuration.DiscordLiquidityAmountThreshold)
+            {
+                _logger.LogInformation(
+                    "Incoming Liquidity did not meet treshold (${Threshold}) for Discord: {IngressAmount} {IngressTicker} (${IngressUsdAmount}) -> {ExplorerUrl}",
+                    _configuration.DiscordLiquidityAmountThreshold,
+                    liquidity.DepositAmountFormatted,
+                    liquidity.SourceAsset,
+                    liquidity.DepositValueUsdFormatted,
+                    $"{_configuration.ExplorerLiquidityChannelUrl}{liquidity.BlockId}-{liquidity.Network}-{liquidity.ChannelId}");
+                
                 return;
-            
+            }
+
             if (_discordClient.ConnectionState != ConnectionState.Connected)
                 return;
             

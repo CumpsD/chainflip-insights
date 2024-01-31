@@ -77,7 +77,18 @@ namespace ChainflipInsights.Consumers.Twitter
         private void ProcessSwap(SwapInfo swap)
         {
             if (swap.DepositValueUsd < _configuration.TwitterSwapAmountThreshold)
+            {
+                _logger.LogInformation(
+                    "Swap did not meet treshold (${Threshold}) for Twitter: {IngressAmount} {IngressTicker} to {EgressAmount} {EgressTicker} -> {ExplorerUrl}",
+                    _configuration.TwitterSwapAmountThreshold,
+                    swap.DepositAmountFormatted,
+                    swap.SourceAsset,
+                    swap.EgressAmountFormatted,
+                    swap.DestinationAsset,
+                    $"{_configuration.ExplorerSwapsUrl}{swap.Id}");
+                
                 return;
+            }
 
             try
             {
