@@ -49,19 +49,27 @@ namespace ChainflipInsights.Consumers.Discord
 
                     VerifyConnection(ct);
                     
-                    var text =
-                        $"{swap.Emoji} Swapped " +
-                        $"**{swap.DepositAmountFormatted} {swap.SourceAsset}** (*${swap.DepositValueUsdFormatted}*) → " +
-                        $"**{swap.EgressAmountFormatted} {swap.DestinationAsset}** (*${swap.EgressValueUsdFormatted}*) " +
-                        $"// **[view swap on explorer]({_configuration.ExplorerUrl}{swap.Id})**";
-
                     if (_discordClient.ConnectionState != ConnectionState.Connected)
                         return;
-                
-                    var infoChannel = (ITextChannel)_discordClient.GetChannel(_configuration.DiscordSwapInfoChannelId.Value);
-
+                    
                     try
                     {
+                        _logger.LogInformation(
+                            "Announcing Swap on Discord: {IngressAmount} {IngressTicker} to {EgressAmount} {EgressTicker} -> {ExplorerUrl}",
+                            swap.DepositAmountFormatted,
+                            swap.SourceAsset,
+                            swap.EgressAmountFormatted,
+                            swap.DestinationAsset,
+                            $"{_configuration.ExplorerUrl}{swap.Id}");
+                        
+                        var text =
+                            $"{swap.Emoji} Swapped " +
+                            $"**{swap.DepositAmountFormatted} {swap.SourceAsset}** (*${swap.DepositValueUsdFormatted}*) → " +
+                            $"**{swap.EgressAmountFormatted} {swap.DestinationAsset}** (*${swap.EgressValueUsdFormatted}*) " +
+                            $"// **[view swap on explorer]({_configuration.ExplorerUrl}{swap.Id})**";
+
+                        var infoChannel = (ITextChannel)_discordClient.GetChannel(_configuration.DiscordSwapInfoChannelId.Value);
+
                         infoChannel
                             .SendMessageAsync(
                                 text,

@@ -113,8 +113,18 @@ namespace ChainflipInsights.Feeders.Swap
                 // Swaps are in increasing order
                 foreach (var swap in swaps.TakeWhile(_ => !cancellationToken.IsCancellationRequested))
                 {
+                    var swapInfo = new SwapInfo(swap);
+                    
+                    _logger.LogInformation(
+                        "Broadcasting Swap: {IngressAmount} {IngressTicker} to {EgressAmount} {EgressTicker} -> {ExplorerUrl}",
+                        swapInfo.DepositAmountFormatted,
+                        swapInfo.SourceAsset,
+                        swapInfo.EgressAmountFormatted,
+                        swapInfo.DestinationAsset,
+                        $"{_configuration.ExplorerUrl}{swapInfo.Id}");
+                    
                     await _pipeline.Source.SendAsync(
-                        new SwapInfo(swap), 
+                        swapInfo, 
                         cancellationToken);
                    
                     lastId = swap.Id;

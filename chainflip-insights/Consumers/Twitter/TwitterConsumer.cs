@@ -52,6 +52,14 @@ namespace ChainflipInsights.Consumers.Twitter
                     
                     try
                     {
+                        _logger.LogInformation(
+                            "Announcing Swap on Twitter: {IngressAmount} {IngressTicker} to {EgressAmount} {EgressTicker} -> {ExplorerUrl}",
+                            swap.DepositAmountFormatted,
+                            swap.SourceAsset,
+                            swap.EgressAmountFormatted,
+                            swap.DestinationAsset,
+                            $"{_configuration.ExplorerUrl}{swap.Id}");
+                        
                         var text =
                             $"{swap.Emoji} Swapped {_configuration.ExplorerUrl}{swap.Id}\n" +
                             $"➡️ {swap.DepositAmountFormatted} ${swap.SourceAsset} (${swap.DepositValueUsdFormatted})\n" +

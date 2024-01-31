@@ -50,6 +50,14 @@ namespace ChainflipInsights.Consumers.Telegram
                     
                     try
                     {
+                        _logger.LogInformation(
+                            "Announcing Swap on Telegram: {IngressAmount} {IngressTicker} to {EgressAmount} {EgressTicker} -> {ExplorerUrl}",
+                            swap.DepositAmountFormatted,
+                            swap.SourceAsset,
+                            swap.EgressAmountFormatted,
+                            swap.DestinationAsset,
+                            $"{_configuration.ExplorerUrl}{swap.Id}");
+                        
                         var text =
                             $"{swap.Emoji} Swapped " +
                             $"**{swap.DepositAmountFormatted} {swap.SourceAsset}** (*${swap.DepositValueUsdFormatted}*) → " +
