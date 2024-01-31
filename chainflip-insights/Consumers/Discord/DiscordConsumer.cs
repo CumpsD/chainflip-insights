@@ -70,12 +70,17 @@ namespace ChainflipInsights.Consumers.Discord
 
                         var infoChannel = (ITextChannel)_discordClient.GetChannel(_configuration.DiscordSwapInfoChannelId.Value);
 
-                        infoChannel
+                        var message = infoChannel
                             .SendMessageAsync(
                                 text,
                                 flags: MessageFlags.SuppressEmbeds)
                             .GetAwaiter()
                             .GetResult();
+                        
+                        _logger.LogInformation(
+                            "Announcing Swap {SwapId} on Discord as Message {MessageId}",
+                            swap.Id,
+                            message.Id);
                     }
                     catch (Exception e)
                     {
