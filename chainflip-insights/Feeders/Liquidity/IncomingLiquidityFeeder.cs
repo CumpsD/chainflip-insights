@@ -63,7 +63,7 @@ namespace ChainflipInsights.Feeders.Liquidity
         
         public async Task Start()
         {
-            if (!_configuration.EnableSwaps.Value)
+            if (!_configuration.EnableLiquidity.Value)
             {
                 _logger.LogInformation(
                     "Liquidity not enabled. Skipping {TaskName}",
@@ -116,15 +116,16 @@ namespace ChainflipInsights.Feeders.Liquidity
                     .OrderBy(x => x.Id)
                     .ToList();
                 
-                // Swaps are in increasing order
+                // Incoming liquidity is in increasing order
                 foreach (var liquidity in incomingLiquidity.TakeWhile(_ => !cancellationToken.IsCancellationRequested))
                 {
                     var liquidityInfo = new IncomingLiquidityInfo(liquidity);
                     
                     _logger.LogInformation(
-                        "Broadcasting Incoming Liquidity: {IngressAmount} {IngressTicker} -> {ExplorerUrl}",
+                        "Broadcasting Incoming Liquidity: {IngressAmount} {IngressTicker} ({IngressUsdAmount}) -> {ExplorerUrl}",
                         liquidityInfo.DepositAmountFormatted,
                         liquidityInfo.SourceAsset,
+                        liquidityInfo.DepositValueUsdFormatted,
                         $"{_configuration.ExplorerLiquidityChannelUrl}{liquidityInfo.BlockId}-{liquidityInfo.Network}-{liquidityInfo.ChannelId}");
                     
                     await _pipeline.Source.SendAsync(

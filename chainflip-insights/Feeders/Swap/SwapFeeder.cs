@@ -125,11 +125,13 @@ namespace ChainflipInsights.Feeders.Swap
                     var swapInfo = new SwapInfo(swap);
                     
                     _logger.LogInformation(
-                        "Broadcasting Swap: {IngressAmount} {IngressTicker} to {EgressAmount} {EgressTicker} -> {ExplorerUrl}",
+                        "Broadcasting Swap: {IngressAmount} {IngressTicker} ({IngressUsdAmount}) to {EgressAmount} {EgressTicker} ({EgressUsdAmount}) -> {ExplorerUrl}",
                         swapInfo.DepositAmountFormatted,
                         swapInfo.SourceAsset,
+                        swapInfo.DepositValueUsdFormatted,
                         swapInfo.EgressAmountFormatted,
                         swapInfo.DestinationAsset,
+                        swapInfo.EgressValueUsdFormatted,
                         $"{_configuration.ExplorerSwapsUrl}{swapInfo.Id}");
                     
                     await _pipeline.Source.SendAsync(

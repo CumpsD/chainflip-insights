@@ -16,6 +16,7 @@
     using ChainflipInsights.Consumers.Discord;
     using ChainflipInsights.Consumers.Telegram;
     using ChainflipInsights.Consumers.Twitter;
+    using ChainflipInsights.Feeders.Liquidity;
     using ChainflipInsights.Feeders.Swap;
     using ChainflipInsights.Infrastructure;
     using ChainflipInsights.Infrastructure.Options;
@@ -33,6 +34,7 @@
         private static readonly CancellationTokenSource CancellationTokenSource = new();
         
         private static Pipeline<SwapInfo>? _swapPipeline;
+        private static Pipeline<IncomingLiquidityInfo>? _incomingLiquidityPipeline;
 
         public static void Main()
         {
@@ -64,6 +66,7 @@
                 logger.LogInformation("Requesting stop...");
                 
                 _swapPipeline?.Source.Complete();
+                _incomingLiquidityPipeline?.Source.Complete();
                 CancellationTokenSource.Cancel();
 
                 eventArgs.Cancel = true;
@@ -80,10 +83,15 @@
                 var swapRunner = container.GetRequiredService<SwapRunner>();
                 var swapFeeder = container.GetRequiredService<SwapFeeder>();
 
+                _incomingLiquidityPipeline = container.GetRequiredService<Pipeline<IncomingLiquidityInfo>>();
+                var incomingLiquidityFeeder = container.GetRequiredService<IncomingLiquidityFeeder>();
+
                 var tasks = new List<Task>();
                 tasks.AddRange(swapRunner.Start());
                 tasks.Add(swapFeeder.Start());
-                
+
+                tasks.Add(incomingLiquidityFeeder.Start());
+
                 Console.WriteLine("Running... Press CTRL + C to exit.");
                 Task.WaitAll(tasks.ToArray());
             }
@@ -212,13 +220,24 @@
                 .Register(_ =>
                 {
                     var source = new BufferBlock<SwapInfo>();
-
                     return new Pipeline<SwapInfo>(source, ct);
                 })
                 .SingleInstance();
 
             builder
+                .Register(_ =>
+                {
+                    var source = new BufferBlock<IncomingLiquidityInfo>();
+                    return new Pipeline<IncomingLiquidityInfo>(source, ct);
+                })
+                .SingleInstance();
+            
+            builder
                 .RegisterType<SwapFeeder>()
+                .SingleInstance();
+            
+            builder
+                .RegisterType<IncomingLiquidityFeeder>()
                 .SingleInstance();
             
             builder
@@ -236,8 +255,6 @@
             builder
                 .RegisterType<SwapRunner>()
                 .SingleInstance();
-
-
             
             builder
                 .Populate(services);
