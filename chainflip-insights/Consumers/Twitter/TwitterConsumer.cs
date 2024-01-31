@@ -47,6 +47,9 @@ namespace ChainflipInsights.Consumers.Twitter
                     if (!_configuration.EnableTwitter.Value)
                         return;
 
+                    if (swap.DepositValueUsd < _configuration.TwitterAmountThreshold)
+                        return;
+                    
                     try
                     {
                         var text =

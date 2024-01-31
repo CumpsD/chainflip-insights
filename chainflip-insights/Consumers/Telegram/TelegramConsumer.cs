@@ -45,6 +45,9 @@ namespace ChainflipInsights.Consumers.Telegram
                     if (!_configuration.EnableTelegram.Value)
                         return;
                     
+                    if (swap.DepositValueUsd < _configuration.TelegramAmountThreshold)
+                        return;
+                    
                     try
                     {
                         var text =

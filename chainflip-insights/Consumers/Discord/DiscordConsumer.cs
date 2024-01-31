@@ -43,6 +43,9 @@ namespace ChainflipInsights.Consumers.Discord
                     if (!_configuration.EnableDiscord.Value)
                         return;
 
+                    if (swap.DepositValueUsd < _configuration.DiscordAmountThreshold)
+                        return;
+
                     VerifyConnection();
                     
                     var text =

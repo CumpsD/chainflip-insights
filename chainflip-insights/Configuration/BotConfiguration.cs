@@ -126,5 +126,26 @@ namespace ChainflipInsights.Configuration
         {
             get; init;
         }
+        
+        [Required]
+        [NotNull]
+        public int? TwitterAmountThreshold
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public int? TelegramAmountThreshold
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public int? DiscordAmountThreshold
+        {
+            get; init;
+        }
     }
 }
