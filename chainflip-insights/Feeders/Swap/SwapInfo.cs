@@ -7,7 +7,7 @@ namespace ChainflipInsights.Feeders.Swap
     {
         private const string SUB1K = "🦐";
         private const string SUB2_5K = "🐟";
-        private const string SUB5K = "🐙";
+        private const string SUB5K = "🦀";
         private const string SUB10K = "🦈";
         private const string WHALE = "🐳";
         
