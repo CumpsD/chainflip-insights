@@ -157,21 +157,21 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
-        public int? TwitterAmountThreshold
+        public int? TwitterSwapAmountThreshold
         {
             get; init;
         }
         
         [Required]
         [NotNull]
-        public int? TelegramAmountThreshold
+        public int? TelegramSwapAmountThreshold
         {
             get; init;
         }
         
         [Required]
         [NotNull]
-        public int? DiscordAmountThreshold
+        public int? DiscordSwapAmountThreshold
         {
             get; init;
         }

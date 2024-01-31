@@ -5,6 +5,7 @@ namespace ChainflipInsights.Consumers.Discord
     using System.Threading.Tasks;
     using System.Threading.Tasks.Dataflow;
     using ChainflipInsights.Configuration;
+    using ChainflipInsights.Feeders.Liquidity;
     using ChainflipInsights.Feeders.Swap;
     using ChainflipInsights.Infrastructure.Pipelines;
     using global::Discord;
@@ -48,6 +49,9 @@ namespace ChainflipInsights.Consumers.Discord
 
                     if (input.SwapInfo != null)
                         ProcessSwap(input.SwapInfo);
+                    
+                    if (input.IncomingLiquidityInfo != null)
+                        ProcessIncomingLiquidityInfo(input.IncomingLiquidityInfo);
                 },
                 new ExecutionDataflowBlockOptions
                 {
@@ -84,7 +88,7 @@ namespace ChainflipInsights.Consumers.Discord
 
         private void ProcessSwap(SwapInfo swap)
         {
-            if (swap.DepositValueUsd < _configuration.DiscordAmountThreshold)
+            if (swap.DepositValueUsd < _configuration.DiscordSwapAmountThreshold)
                 return;
             
             if (_discordClient.ConnectionState != ConnectionState.Connected)
@@ -125,6 +129,11 @@ namespace ChainflipInsights.Consumers.Discord
             {
                 _logger.LogError(e, "Discord meh.");
             }
+        }
+
+        private void ProcessIncomingLiquidityInfo(IncomingLiquidityInfo liquidity)
+        {
+            
         }
 
         private void VerifyConnection(CancellationToken cancellationToken)

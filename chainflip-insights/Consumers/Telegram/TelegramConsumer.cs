@@ -5,6 +5,7 @@ namespace ChainflipInsights.Consumers.Telegram
     using System.Threading.Tasks;
     using System.Threading.Tasks.Dataflow;
     using ChainflipInsights.Configuration;
+    using ChainflipInsights.Feeders.Liquidity;
     using ChainflipInsights.Feeders.Swap;
     using ChainflipInsights.Infrastructure.Pipelines;
     using global::Telegram.Bot;
@@ -47,7 +48,10 @@ namespace ChainflipInsights.Consumers.Telegram
 
                     if (input.SwapInfo != null)
                         ProcessSwap(input.SwapInfo, cancellationToken);
-
+                    
+                    if (input.IncomingLiquidityInfo != null)
+                        ProcessIncomingLiquidityInfo(input.IncomingLiquidityInfo);
+                    
                     Task
                         .Delay(1500, cancellationToken)
                         .GetAwaiter()
@@ -72,7 +76,7 @@ namespace ChainflipInsights.Consumers.Telegram
             SwapInfo swap,
             CancellationToken cancellationToken)
         {
-            if (swap.DepositValueUsd < _configuration.TelegramAmountThreshold)
+            if (swap.DepositValueUsd < _configuration.TelegramSwapAmountThreshold)
                 return;
 
             try
@@ -111,6 +115,11 @@ namespace ChainflipInsights.Consumers.Telegram
             {
                 _logger.LogError(e, "Telegram meh.");
             }
+        }
+        
+        private void ProcessIncomingLiquidityInfo(IncomingLiquidityInfo liquidity)
+        {
+            
         }
     }
 }

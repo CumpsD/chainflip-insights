@@ -9,6 +9,7 @@ namespace ChainflipInsights.Consumers.Twitter
     using System.Threading.Tasks;
     using System.Threading.Tasks.Dataflow;
     using ChainflipInsights.Configuration;
+    using ChainflipInsights.Feeders.Liquidity;
     using ChainflipInsights.Feeders.Swap;
     using ChainflipInsights.Infrastructure.Pipelines;
     using Microsoft.Extensions.Logging;
@@ -49,7 +50,10 @@ namespace ChainflipInsights.Consumers.Twitter
 
                     if (input.SwapInfo != null)
                         ProcessSwap(input.SwapInfo);
-
+                    
+                    if (input.IncomingLiquidityInfo != null)
+                        ProcessIncomingLiquidityInfo(input.IncomingLiquidityInfo);
+                    
                     Task
                         .Delay(1500, cancellationToken)
                         .GetAwaiter()
@@ -72,7 +76,7 @@ namespace ChainflipInsights.Consumers.Twitter
 
         private void ProcessSwap(SwapInfo swap)
         {
-            if (swap.DepositValueUsd < _configuration.TwitterAmountThreshold)
+            if (swap.DepositValueUsd < _configuration.TwitterSwapAmountThreshold)
                 return;
 
             try
@@ -106,6 +110,11 @@ namespace ChainflipInsights.Consumers.Twitter
             {
                 _logger.LogError(e, "Twitter meh.");
             }
+        }
+        
+        private void ProcessIncomingLiquidityInfo(IncomingLiquidityInfo liquidity)
+        {
+            
         }
     }
 
