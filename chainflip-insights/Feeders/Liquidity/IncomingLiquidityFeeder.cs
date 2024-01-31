@@ -1,4 +1,4 @@
-namespace ChainflipInsights.Feeders.Swap
+namespace ChainflipInsights.Feeders.Liquidity
 {
     using System;
     using System.Globalization;
@@ -16,47 +16,44 @@ namespace ChainflipInsights.Feeders.Swap
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
 
-    public class SwapFeeder
+    public class IncomingLiquidityFeeder
     {
-        private const string SwapsQuery = 
+        private const string IncomingLiquidityQuery = 
             """
             {
-                allSwaps(orderBy: ID_DESC, first: 500, filter: {
+                allLiquidityDeposits(orderBy: ID_DESC, first: 500, filter: {
                     id: { greaterThan: LAST_ID }
                  }) {
                     edges {
                         node {
                             id
-                            nativeId
-                            swapScheduledBlockTimestamp
-            
+                            accountId
                             depositAmount
                             depositValueUsd
-                            sourceAsset
-            
-                            egressAmount
-                            egressValueUsd
-                            destinationAsset
-                            destinationAddress
-            
-                            intermediateAmount
-                            intermediateValueUsd
+                            channel: liquidityDepositChannelByLiquidityDepositChannelId {
+                                issuedBlockId
+                                chain
+                                asset
+                                channelId
+                                depositAddress
+                                isExpired
+                            }
                         }
                     }
                 }
             }
             """;
         
-        private readonly ILogger<SwapFeeder> _logger;
-        private readonly Pipeline<SwapInfo> _pipeline;
+        private readonly ILogger<IncomingLiquidityFeeder> _logger;
+        private readonly Pipeline<IncomingLiquidityInfo> _pipeline;
         private readonly BotConfiguration _configuration;
         private readonly IHttpClientFactory _httpClientFactory;
 
-        public SwapFeeder(
-            ILogger<SwapFeeder> logger,
+        public IncomingLiquidityFeeder(
+            ILogger<IncomingLiquidityFeeder> logger,
             IOptions<BotConfiguration> options,
             IHttpClientFactory httpClientFactory,
-            Pipeline<SwapInfo> pipeline)
+            Pipeline<IncomingLiquidityInfo> pipeline)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _configuration = options.Value ?? throw new ArgumentNullException(nameof(options));
@@ -69,104 +66,102 @@ namespace ChainflipInsights.Feeders.Swap
             if (!_configuration.EnableSwaps.Value)
             {
                 _logger.LogInformation(
-                    "Swaps not enabled. Skipping {TaskName}",
-                    nameof(SwapFeeder));
+                    "Liquidity not enabled. Skipping {TaskName}",
+                    nameof(IncomingLiquidityFeeder));
                 
                 return;
             }
             
             _logger.LogInformation(
                 "Starting {TaskName}",
-                nameof(SwapFeeder));
+                nameof(IncomingLiquidityFeeder));
 
             // Give the consumers some time to connect
             await Task.Delay(_configuration.FeedingDelay.Value, _pipeline.CancellationToken);
             
-            // Start a loop fetching Swap Info
-            await ProvideSwapInfo(_pipeline.CancellationToken);
+            // Start a loop fetching Liquidity Info
+            await ProvideIncomingLiquidityInfo(_pipeline.CancellationToken);
             
             _logger.LogInformation(
                 "Stopping {TaskName}",
-                nameof(SwapFeeder));
+                nameof(IncomingLiquidityFeeder));
         }
-        
-        private async Task ProvideSwapInfo(CancellationToken cancellationToken)
+
+        private async Task ProvideIncomingLiquidityInfo(CancellationToken cancellationToken)
         {
             if (cancellationToken.IsCancellationRequested)
                 return;
             
-            var lastId = await GetLastSwapId(cancellationToken);
-            
+            var lastId = await GetLastIncomingLiquidityId(cancellationToken);
+
             while (true)
             {
                 if (cancellationToken.IsCancellationRequested)
                     return;
                 
-                var swapsInfo = await GetSwaps(lastId, cancellationToken);
+                var incomingLiquidityInfo = await GetIncomingLiquidity(lastId, cancellationToken);
                 
                 if (cancellationToken.IsCancellationRequested)
                     return;
 
-                if (swapsInfo == null)
+                if (incomingLiquidityInfo == null)
                 {
                     await Task.Delay(_configuration.SwapInfoDelay.Value, cancellationToken);
                     continue;                    
                 }
                 
-                var swaps = swapsInfo
+                var incomingLiquidity = incomingLiquidityInfo
                     .Data.Data.Data
                     .Select(x => x.Data)
                     .OrderBy(x => x.Id)
                     .ToList();
                 
                 // Swaps are in increasing order
-                foreach (var swap in swaps.TakeWhile(_ => !cancellationToken.IsCancellationRequested))
+                foreach (var liquidity in incomingLiquidity.TakeWhile(_ => !cancellationToken.IsCancellationRequested))
                 {
-                    var swapInfo = new SwapInfo(swap);
+                    var liquidityInfo = new IncomingLiquidityInfo(liquidity);
                     
                     _logger.LogInformation(
-                        "Broadcasting Swap: {IngressAmount} {IngressTicker} to {EgressAmount} {EgressTicker} -> {ExplorerUrl}",
-                        swapInfo.DepositAmountFormatted,
-                        swapInfo.SourceAsset,
-                        swapInfo.EgressAmountFormatted,
-                        swapInfo.DestinationAsset,
-                        $"{_configuration.ExplorerSwapsUrl}{swapInfo.Id}");
+                        "Broadcasting Incoming Liquidity: {IngressAmount} {IngressTicker} -> {ExplorerUrl}",
+                        liquidityInfo.DepositAmountFormatted,
+                        liquidityInfo.SourceAsset,
+                        $"{_configuration.ExplorerLiquidityChannelUrl}{liquidityInfo.BlockId}-{liquidityInfo.Network}-{liquidityInfo.ChannelId}");
                     
                     await _pipeline.Source.SendAsync(
-                        swapInfo, 
+                        liquidityInfo, 
                         cancellationToken);
                    
-                    lastId = swap.Id;
-                    await StoreLastSwapId(swap.Id);
+                    lastId = liquidityInfo.Id;
+                    await StoreLastIncomingLiquidityId(liquidityInfo.Id);
                 }
                 
                 await Task.Delay(_configuration.SwapInfoDelay.Value, cancellationToken);
             }
         }
         
-        private async Task<double> GetLastSwapId(CancellationToken cancellationToken)
+        private async Task<double> GetLastIncomingLiquidityId(CancellationToken cancellationToken)
         {
-            if (File.Exists(_configuration.LastSwapIdLocation))
-                return double.Parse(await File.ReadAllTextAsync(_configuration.LastSwapIdLocation, cancellationToken));
+            if (File.Exists(_configuration.LastIncomingLiquidityIdLocation))
+                return double.Parse(await File.ReadAllTextAsync(_configuration.LastIncomingLiquidityIdLocation, cancellationToken));
             
-            await using var file = File.CreateText(_configuration.LastSwapIdLocation);
-            await file.WriteAsync("387");
-            return 387;
-        }
-
-        private async Task StoreLastSwapId(double swapId)
-        {
-            await using var file = File.CreateText(_configuration.LastSwapIdLocation);
-            await file.WriteAsync(swapId.ToString(CultureInfo.InvariantCulture));
+            await using var file = File.CreateText(_configuration.LastIncomingLiquidityIdLocation);
+            await file.WriteAsync("1");
+            return 1;
         }
         
-        private async Task<SwapsResponse?> GetSwaps(
+        private async Task StoreLastIncomingLiquidityId(double incomingLiquidityId)
+        {
+            await using var file = File.CreateText(_configuration.LastIncomingLiquidityIdLocation);
+            await file.WriteAsync(incomingLiquidityId.ToString(CultureInfo.InvariantCulture));
+        }
+        
+        private async Task<IncomingLiquidityResponse?> GetIncomingLiquidity(
             double fromId,
             CancellationToken cancellationToken)
         {
             using var client = _httpClientFactory.CreateClient("Graph");
 
-            var query = SwapsQuery.Replace("LAST_ID", fromId.ToString(CultureInfo.InvariantCulture));
+            var query = IncomingLiquidityQuery.Replace("LAST_ID", fromId.ToString(CultureInfo.InvariantCulture));
             var graphQuery = $"{{ \"query\": \"{query.ReplaceLineEndings("\\n")}\" }}";
             
             var response = await client.PostAsync(
@@ -176,18 +171,7 @@ namespace ChainflipInsights.Feeders.Swap
                     new MediaTypeHeaderValue(MediaTypeNames.Application.Json)), 
                 cancellationToken);
 
-            return await response.Content.ReadFromJsonAsync<SwapsResponse>(cancellationToken: cancellationToken);
-        }
-
-        private async Task<SwapResponse?> GetSwap(
-            double swapId,
-            CancellationToken cancellationToken)
-        {
-            using var client = _httpClientFactory.CreateClient("Swap");
-            
-            return await client.GetFromJsonAsync<SwapResponse>(
-                $"swaps/{swapId}", 
-                cancellationToken: cancellationToken);
+            return await response.Content.ReadFromJsonAsync<IncomingLiquidityResponse>(cancellationToken: cancellationToken);
         }
     }
 }

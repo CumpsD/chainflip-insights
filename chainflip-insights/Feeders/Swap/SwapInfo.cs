@@ -1,27 +1,9 @@
 namespace ChainflipInsights.Feeders.Swap
 {
     using System;
-    using System.Collections.Generic;
 
     public class SwapInfo
     {
-        private const string SUB1K = "🦐";
-        private const string SUB2_5K = "🐟";
-        private const string SUB5K = "🦀";
-        private const string SUB10K = "🦈";
-        private const string WHALE = "🐳";
-        
-        private const string dollarString = "0.00";
-
-        private readonly Dictionary<string, int> _assetDecimals = new()
-        {
-            { "btc", 8 },
-            { "dot", 10 },
-            { "eth", 18 },
-            { "flip", 18 },
-            { "usdc", 6 },
-        };
-        
         public double Id { get; }
 
         public double DepositAmount { get; }
@@ -30,7 +12,7 @@ namespace ChainflipInsights.Feeders.Swap
         {
             get
             {
-                var inputDecimals = _assetDecimals[SourceAsset.ToLowerInvariant()];
+                var inputDecimals = Constants.AssetDecimals[SourceAsset.ToLowerInvariant()];
                 var inputString = $"0.00{new string('#', inputDecimals - 2)}";
                 var swapInput = DepositAmount / Math.Pow(10, inputDecimals);
                 return Math.Round(swapInput, 8).ToString(inputString);
@@ -39,7 +21,7 @@ namespace ChainflipInsights.Feeders.Swap
         
         public double DepositValueUsd { get; }
         
-        public string DepositValueUsdFormatted => DepositValueUsd.ToString(dollarString);
+        public string DepositValueUsdFormatted => DepositValueUsd.ToString(Constants.DollarString);
         
         public string SourceAsset { get; }
         
@@ -49,7 +31,7 @@ namespace ChainflipInsights.Feeders.Swap
         {
             get
             {
-                var outputDecimals = _assetDecimals[DestinationAsset.ToLowerInvariant()];
+                var outputDecimals = Constants.AssetDecimals[DestinationAsset.ToLowerInvariant()];
                 var outputString = $"0.00{new string('#', outputDecimals - 2)}";
                 var swapOutput = EgressAmount / Math.Pow(10, outputDecimals);
                 return Math.Round(swapOutput, 8).ToString(outputString);
@@ -58,7 +40,7 @@ namespace ChainflipInsights.Feeders.Swap
         
         public double EgressValueUsd { get; }
 
-        public string EgressValueUsdFormatted => EgressValueUsd.ToString(dollarString);
+        public string EgressValueUsdFormatted => EgressValueUsd.ToString(Constants.DollarString);
 
         public string DestinationAsset { get; }
         
@@ -67,11 +49,11 @@ namespace ChainflipInsights.Feeders.Swap
         public string Emoji =>
             DepositValueUsd switch
             {
-                > 10000 => WHALE,
-                > 5000 => SUB10K,
-                > 2500 => SUB5K,
-                > 1000 => SUB2_5K,
-                _ => SUB1K
+                > 10000 => Constants.Whale,
+                > 5000 => Constants.Sub10K,
+                > 2500 => Constants.Sub5K,
+                > 1000 => Constants.Sub2_5K,
+                _ => Constants.Sub1K
             };
 
         public SwapInfo(

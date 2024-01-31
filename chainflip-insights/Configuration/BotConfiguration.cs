@@ -10,6 +10,20 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public bool? EnableSwaps
+        {
+            get; init;
+        }  
+        
+        [Required]
+        [NotNull]
+        public bool? EnableLiquidity
+        {
+            get; init;
+        }  
+        
+        [Required]
+        [NotNull]
         public bool? EnableDiscord
         {
             get; init;
@@ -52,7 +66,14 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
-        public string? ExplorerUrl
+        public string? ExplorerSwapsUrl
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public string? ExplorerLiquidityChannelUrl
         {
             get; init;
         }
@@ -81,6 +102,13 @@ namespace ChainflipInsights.Configuration
         [Required]
         [NotNull]
         public string? LastSwapIdLocation
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public string? LastIncomingLiquidityIdLocation
         {
             get; init;
         }

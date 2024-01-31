@@ -60,13 +60,13 @@ namespace ChainflipInsights.Consumers.Discord
                             swap.SourceAsset,
                             swap.EgressAmountFormatted,
                             swap.DestinationAsset,
-                            $"{_configuration.ExplorerUrl}{swap.Id}");
+                            $"{_configuration.ExplorerSwapsUrl}{swap.Id}");
                         
                         var text =
                             $"{swap.Emoji} Swapped " +
                             $"**{swap.DepositAmountFormatted} {swap.SourceAsset}** (*${swap.DepositValueUsdFormatted}*) → " +
                             $"**{swap.EgressAmountFormatted} {swap.DestinationAsset}** (*${swap.EgressValueUsdFormatted}*) " +
-                            $"// **[view swap on explorer]({_configuration.ExplorerUrl}{swap.Id})**";
+                            $"// **[view swap on explorer]({_configuration.ExplorerSwapsUrl}{swap.Id})**";
 
                         var infoChannel = (ITextChannel)_discordClient.GetChannel(_configuration.DiscordSwapInfoChannelId.Value);
 

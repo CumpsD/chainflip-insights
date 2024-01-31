@@ -51,6 +51,7 @@
                 .Build();
             
             var container = ConfigureServices(configuration, ct);
+            var botConfiguration = container.GetRequiredService<ILogger<Program>>();
             var logger = container.GetRequiredService<ILogger<Program>>();
             var applicationName = Assembly.GetEntryAssembly()?.GetName().Name;
             

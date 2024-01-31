@@ -58,10 +58,10 @@ namespace ChainflipInsights.Consumers.Twitter
                             swap.SourceAsset,
                             swap.EgressAmountFormatted,
                             swap.DestinationAsset,
-                            $"{_configuration.ExplorerUrl}{swap.Id}");
+                            $"{_configuration.ExplorerSwapsUrl}{swap.Id}");
                         
                         var text =
-                            $"{swap.Emoji} Swapped {_configuration.ExplorerUrl}{swap.Id}\n" +
+                            $"{swap.Emoji} Swapped {_configuration.ExplorerSwapsUrl}{swap.Id}\n" +
                             $"➡️ {swap.DepositAmountFormatted} ${swap.SourceAsset} (${swap.DepositValueUsdFormatted})\n" +
                             $"⬅️ {swap.EgressAmountFormatted} ${swap.DestinationAsset} (${swap.EgressValueUsdFormatted})";
                         
