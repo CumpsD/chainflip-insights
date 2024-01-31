@@ -146,8 +146,8 @@ namespace ChainflipInsights.Feeders.Liquidity
                 return double.Parse(await File.ReadAllTextAsync(_configuration.LastIncomingLiquidityIdLocation, cancellationToken));
             
             await using var file = File.CreateText(_configuration.LastIncomingLiquidityIdLocation);
-            await file.WriteAsync("50");
-            return 50;
+            await file.WriteAsync("95");
+            return 95;
         }
         
         private async Task StoreLastIncomingLiquidityId(double incomingLiquidityId)

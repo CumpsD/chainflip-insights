@@ -139,7 +139,39 @@ namespace ChainflipInsights.Consumers.Discord
             if (_discordClient.ConnectionState != ConnectionState.Connected)
                 return;
             
-            // TODO: Send
+            try
+            {
+                _logger.LogInformation(
+                    "Announcing Incoming Liquidity on Discord: {IngressAmount} {IngressTicker} (${IngressUsdAmount}) -> {ExplorerUrl}",
+                    liquidity.DepositAmountFormatted,
+                    liquidity.SourceAsset,
+                    liquidity.DepositValueUsdFormatted,
+                    $"{_configuration.ExplorerLiquidityChannelUrl}{liquidity.BlockId}-{liquidity.Network}-{liquidity.ChannelId}");
+
+                var text =
+                    $"💰 Liquidity Added! An extra " +
+                    $"**{liquidity.DepositAmountFormatted} {liquidity.SourceAsset}** (*${liquidity.DepositValueUsdFormatted}*) is available! " +
+                    $"// **[view incoming liquidity on explorer]({_configuration.ExplorerLiquidityChannelUrl}{liquidity.BlockId}-{liquidity.Network}-{liquidity.ChannelId})**";
+
+                var infoChannel = (ITextChannel)_discordClient
+                    .GetChannel(_configuration.DiscordSwapInfoChannelId.Value);
+
+                var message = infoChannel
+                    .SendMessageAsync(
+                        text,
+                        flags: MessageFlags.SuppressEmbeds)
+                    .GetAwaiter()
+                    .GetResult();
+
+                _logger.LogInformation(
+                    "Announcing Incoming Liquidity {LiquidityId} on Discord as Message {MessageId}",
+                    liquidity.Id,
+                    message.Id);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Discord meh.");
+            }
         }
 
         private void VerifyConnection(CancellationToken cancellationToken)
