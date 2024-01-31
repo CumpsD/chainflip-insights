@@ -149,7 +149,7 @@ namespace ChainflipInsights.Consumers.Discord
                     $"{_configuration.ExplorerLiquidityChannelUrl}{liquidity.BlockId}-{liquidity.Network}-{liquidity.ChannelId}");
 
                 var text =
-                    $"💰 Liquidity Added! An extra " +
+                    $"💵 **Liquidity Added**! An extra " +
                     $"**{liquidity.DepositAmountFormatted} {liquidity.SourceAsset}** (*${liquidity.DepositValueUsdFormatted}*) is available! " +
                     $"// **[view incoming liquidity on explorer]({_configuration.ExplorerLiquidityChannelUrl}{liquidity.BlockId}-{liquidity.Network}-{liquidity.ChannelId})**";
 
