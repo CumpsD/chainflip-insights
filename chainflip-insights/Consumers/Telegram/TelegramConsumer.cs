@@ -64,7 +64,7 @@ namespace ChainflipInsights.Consumers.Telegram
                             $"**{swap.EgressAmountFormatted} {swap.DestinationAsset}** (*${swap.EgressValueUsdFormatted}*) " +
                             $"// **[view swap on explorer]({_configuration.ExplorerSwapsUrl}{swap.Id})**";
                         
-                        _telegramClient
+                        var message = _telegramClient
                             .SendTextMessageAsync(
                                 new ChatId(_configuration.TelegramSwapInfoChannelId.Value),
                                 text,
@@ -74,6 +74,11 @@ namespace ChainflipInsights.Consumers.Telegram
                                 cancellationToken: ct)
                             .GetAwaiter()
                             .GetResult();
+                        
+                        _logger.LogInformation(
+                            "Announcing Swap {SwapId} on Telegram as Message {MessageId}",
+                            swap.Id,
+                            message.MessageId);
                     }
                     catch (Exception e)
                     {
