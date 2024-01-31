@@ -133,7 +133,13 @@ namespace ChainflipInsights.Consumers.Discord
 
         private void ProcessIncomingLiquidityInfo(IncomingLiquidityInfo liquidity)
         {
+            if (liquidity.DepositValueUsd < _configuration.DiscordLiquidityAmountThreshold)
+                return;
             
+            if (_discordClient.ConnectionState != ConnectionState.Connected)
+                return;
+            
+            // TODO: Send
         }
 
         private void VerifyConnection(CancellationToken cancellationToken)

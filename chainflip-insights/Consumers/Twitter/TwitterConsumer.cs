@@ -114,7 +114,10 @@ namespace ChainflipInsights.Consumers.Twitter
         
         private void ProcessIncomingLiquidityInfo(IncomingLiquidityInfo liquidity)
         {
+            if (liquidity.DepositValueUsd < _configuration.TwitterLiquidityAmountThreshold)
+                return;
             
+            // TODO: Send
         }
     }
 

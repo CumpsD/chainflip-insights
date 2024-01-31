@@ -119,7 +119,10 @@ namespace ChainflipInsights.Consumers.Telegram
         
         private void ProcessIncomingLiquidityInfo(IncomingLiquidityInfo liquidity)
         {
+            if (liquidity.DepositValueUsd < _configuration.TelegramLiquidityAmountThreshold)
+                return;
             
+            // TODO: Send
         }
     }
 }
