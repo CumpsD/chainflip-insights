@@ -12,10 +12,8 @@ namespace ChainflipInsights.Feeders.Swap
         {
             get
             {
-                var inputDecimals = Constants.AssetDecimals[SourceAsset.ToLowerInvariant()];
-                var inputString = $"0.00{new string('#', inputDecimals - 2)}";
-                var swapInput = DepositAmount / Math.Pow(10, inputDecimals);
-                return Math.Round(swapInput, 8).ToString(inputString);
+                var swapInput = DepositAmount / Math.Pow(10, SourceAssetInfo.Decimals);
+                return Math.Round(swapInput, 8).ToString(SourceAssetInfo.FormatString);
             }
         }
         
@@ -25,16 +23,16 @@ namespace ChainflipInsights.Feeders.Swap
         
         public string SourceAsset { get; }
         
+        public AssetInfo SourceAssetInfo { get; }
+        
         public double EgressAmount { get; }
 
         public string EgressAmountFormatted
         {
             get
             {
-                var outputDecimals = Constants.AssetDecimals[DestinationAsset.ToLowerInvariant()];
-                var outputString = $"0.00{new string('#', outputDecimals - 2)}";
-                var swapOutput = EgressAmount / Math.Pow(10, outputDecimals);
-                return Math.Round(swapOutput, 8).ToString(outputString);
+                var swapOutput = EgressAmount / Math.Pow(10, DestinationAssetInfo.Decimals);
+                return Math.Round(swapOutput, 8).ToString(DestinationAssetInfo.FormatString);
             }
         }
         
@@ -43,6 +41,8 @@ namespace ChainflipInsights.Feeders.Swap
         public string EgressValueUsdFormatted => EgressValueUsd.ToString(Constants.DollarString);
 
         public string DestinationAsset { get; }
+        
+        public AssetInfo DestinationAssetInfo { get; }
         
         public string SwapScheduledBlockTimestamp { get; }
 
@@ -69,6 +69,9 @@ namespace ChainflipInsights.Feeders.Swap
             DestinationAsset = swap.DestinationAsset;
 
             SwapScheduledBlockTimestamp = swap.SwapScheduledBlockTimestamp;
+
+            SourceAssetInfo = Constants.AssetDecimals[SourceAsset.ToLowerInvariant()];
+            DestinationAssetInfo = Constants.AssetDecimals[DestinationAsset.ToLowerInvariant()];
         }
     }
 }

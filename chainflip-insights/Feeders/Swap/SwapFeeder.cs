@@ -125,7 +125,7 @@ namespace ChainflipInsights.Feeders.Swap
                     var swapInfo = new SwapInfo(swap);
                     
                     _logger.LogInformation(
-                        "Broadcasting Swap: {IngressAmount} {IngressTicker} ({IngressUsdAmount}) to {EgressAmount} {EgressTicker} ({EgressUsdAmount}) -> {ExplorerUrl}",
+                        "Broadcasting Swap: {IngressAmount} {IngressTicker} (${IngressUsdAmount}) to {EgressAmount} {EgressTicker} (${EgressUsdAmount}) -> {ExplorerUrl}",
                         swapInfo.DepositAmountFormatted,
                         swapInfo.SourceAsset,
                         swapInfo.DepositValueUsdFormatted,

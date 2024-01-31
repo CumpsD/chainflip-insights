@@ -12,10 +12,8 @@ namespace ChainflipInsights.Feeders.Liquidity
         {
             get
             {
-                var inputDecimals = Constants.AssetDecimals[SourceAsset.ToLowerInvariant()];
-                var inputString = $"0.00{new string('#', inputDecimals - 2)}";
-                var swapInput = DepositAmount / Math.Pow(10, inputDecimals);
-                return Math.Round(swapInput, 8).ToString(inputString);
+                var swapInput = DepositAmount / Math.Pow(10, SourceAssetInfo.Decimals);
+                return Math.Round(swapInput, 8).ToString(SourceAssetInfo.FormatString);
             }
         }
         
@@ -24,6 +22,8 @@ namespace ChainflipInsights.Feeders.Liquidity
         public string DepositValueUsdFormatted => DepositValueUsd.ToString(Constants.DollarString);
         
         public string SourceAsset { get; }
+        
+        public AssetInfo SourceAssetInfo { get; }
         
         public ulong BlockId { get; }
 
@@ -42,6 +42,7 @@ namespace ChainflipInsights.Feeders.Liquidity
             Network = liquidity.Channel.Chain;
             ChannelId = liquidity.Channel.ChannelId;
 
+            SourceAssetInfo = Constants.AssetDecimals[SourceAsset.ToLowerInvariant()];
         }
     }
 }

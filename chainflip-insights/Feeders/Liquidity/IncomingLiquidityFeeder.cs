@@ -122,7 +122,7 @@ namespace ChainflipInsights.Feeders.Liquidity
                     var liquidityInfo = new IncomingLiquidityInfo(liquidity);
                     
                     _logger.LogInformation(
-                        "Broadcasting Incoming Liquidity: {IngressAmount} {IngressTicker} ({IngressUsdAmount}) -> {ExplorerUrl}",
+                        "Broadcasting Incoming Liquidity: {IngressAmount} {IngressTicker} (${IngressUsdAmount}) -> {ExplorerUrl}",
                         liquidityInfo.DepositAmountFormatted,
                         liquidityInfo.SourceAsset,
                         liquidityInfo.DepositValueUsdFormatted,
@@ -146,8 +146,8 @@ namespace ChainflipInsights.Feeders.Liquidity
                 return double.Parse(await File.ReadAllTextAsync(_configuration.LastIncomingLiquidityIdLocation, cancellationToken));
             
             await using var file = File.CreateText(_configuration.LastIncomingLiquidityIdLocation);
-            await file.WriteAsync("1");
-            return 1;
+            await file.WriteAsync("50");
+            return 50;
         }
         
         private async Task StoreLastIncomingLiquidityId(double incomingLiquidityId)
