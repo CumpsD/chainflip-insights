@@ -2,6 +2,7 @@ namespace ChainflipInsights.Consumers.Discord
 {
     using System;
     using System.Threading;
+    using System.Threading.Tasks;
     using System.Threading.Tasks.Dataflow;
     using ChainflipInsights.Configuration;
     using ChainflipInsights.Feeders.Swap;
@@ -46,7 +47,7 @@ namespace ChainflipInsights.Consumers.Discord
                     if (swap.DepositValueUsd < _configuration.DiscordAmountThreshold)
                         return;
 
-                    VerifyConnection();
+                    VerifyConnection(ct);
                     
                     var text =
                         $"{swap.Emoji} Swapped " +
@@ -106,8 +107,21 @@ namespace ChainflipInsights.Consumers.Discord
             return logging;
         }
 
-        private void VerifyConnection()
+        private void VerifyConnection(CancellationToken cancellationToken)
         {
+            if (_discordClient.ConnectionState == ConnectionState.Connected)
+                return;
+            
+            var ready = false;
+
+            Task OnReady()
+            {
+                ready = true;
+                return Task.CompletedTask;
+            }
+            
+            _discordClient.Ready += OnReady;
+
             _discordClient
                 .LoginAsync(
                     TokenType.Bot,
@@ -119,6 +133,16 @@ namespace ChainflipInsights.Consumers.Discord
                  .StartAsync()
                  .GetAwaiter()
                  .GetResult();
+
+             // Hacky workaround to make sure discord is ready before proceeding
+             var retry = 0;
+             while (!ready && retry < 2)
+             {
+                 retry++;
+                 Task.Delay(1000, cancellationToken);
+             }
+             
+             _discordClient.Ready -= OnReady;
         }
     }
 }
