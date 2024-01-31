@@ -127,8 +127,10 @@ namespace ChainflipInsights.Consumers.Discord
                 ready = true;
                 return Task.CompletedTask;
             }
-            
+
             _discordClient.Ready += OnReady;
+
+            _logger.LogDebug("Requesting Discord connection");
 
             _discordClient
                 .LoginAsync(
@@ -136,19 +138,26 @@ namespace ChainflipInsights.Consumers.Discord
                     _configuration.DiscordToken)
                 .GetAwaiter()
                 .GetResult();
+            
+            _logger.LogDebug("Discord logged in");
              
              _discordClient
                  .StartAsync()
                  .GetAwaiter()
                  .GetResult();
+             
+             _logger.LogDebug("Discord started");
 
              // Hacky workaround to make sure discord is ready before proceeding
              var retry = 0;
-             while (!ready && retry < 2)
+             while (!ready && retry < 10)
              {
+                 _logger.LogDebug("Discord not yet ready");
                  retry++;
                  Task.Delay(1000, cancellationToken);
              }
+
+             _logger.LogDebug("Discord status: {DiscordStatus}", _discordClient.ConnectionState);
              
              _discordClient.Ready -= OnReady;
         }

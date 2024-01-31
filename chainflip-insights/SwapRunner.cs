@@ -7,6 +7,7 @@ namespace ChainflipInsights
     using ChainflipInsights.Consumers.Discord;
     using ChainflipInsights.Consumers.Telegram;
     using ChainflipInsights.Consumers.Twitter;
+    using ChainflipInsights.Feeders.Liquidity;
     using ChainflipInsights.Feeders.Swap;
     using ChainflipInsights.Infrastructure.Pipelines;
     using Microsoft.Extensions.Logging;
@@ -15,7 +16,7 @@ namespace ChainflipInsights
     {
         private readonly ILogger<SwapRunner> _logger;
         private readonly Pipeline<SwapInfo> _swapPipeline;
-        
+
         private readonly DiscordConsumer _discordConsumer;
         private readonly TelegramConsumer _telegramConsumer;
         private readonly TwitterConsumer _twitterConsumer;
