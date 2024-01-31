@@ -213,7 +213,10 @@ namespace ChainflipInsights.Consumers.Discord
             {
                 _logger.LogDebug("Discord not yet ready");
                 retry++;
-                Task.Delay(1000, cancellationToken);
+                Task
+                    .Delay(1000, cancellationToken)
+                    .GetAwaiter()
+                    .GetResult();
             }
 
             _logger.LogDebug("Discord status: {DiscordStatus}", _discordClient.ConnectionState);
