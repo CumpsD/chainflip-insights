@@ -31,75 +31,81 @@ namespace ChainflipInsights.Consumers.Twitter
             _twitterClient = twitterClient ?? throw new ArgumentNullException(nameof(twitterClient));
         }
 
-        public ITargetBlock<SwapInfo> Build(
-            CancellationToken ct)
+        public ITargetBlock<BroadcastInfo> Build(
+            CancellationToken cancellationToken)
         {
-            var announcer = BuildAnnouncer(ct);
-            return new EncapsulatingTarget<SwapInfo, SwapInfo>(announcer, announcer);
+            var announcer = BuildAnnouncer(cancellationToken);
+            return new EncapsulatingTarget<BroadcastInfo, BroadcastInfo>(announcer, announcer);
         }
 
-        private ActionBlock<SwapInfo> BuildAnnouncer(
-            CancellationToken ct)
+        private ActionBlock<BroadcastInfo> BuildAnnouncer(
+            CancellationToken cancellationToken)
         {
-            var logging = new ActionBlock<SwapInfo>(
-                swap =>
+            var logging = new ActionBlock<BroadcastInfo>(
+                input =>
                 {
                     if (!_configuration.EnableTwitter.Value)
                         return;
 
-                    if (swap.DepositValueUsd < _configuration.TwitterAmountThreshold)
-                        return;
-                    
-                    try
-                    {
-                        _logger.LogInformation(
-                            "Announcing Swap on Twitter: {IngressAmount} {IngressTicker} to {EgressAmount} {EgressTicker} -> {ExplorerUrl}",
-                            swap.DepositAmountFormatted,
-                            swap.SourceAsset,
-                            swap.EgressAmountFormatted,
-                            swap.DestinationAsset,
-                            $"{_configuration.ExplorerSwapsUrl}{swap.Id}");
-                        
-                        var text =
-                            $"{swap.Emoji} Swapped {_configuration.ExplorerSwapsUrl}{swap.Id}\n" +
-                            $"➡️ {swap.DepositAmountFormatted} ${swap.SourceAsset} (${swap.DepositValueUsdFormatted})\n" +
-                            $"⬅️ {swap.EgressAmountFormatted} ${swap.DestinationAsset} (${swap.EgressValueUsdFormatted})";
-                        
-                        _twitterClient.Execute
-                            .AdvanceRequestAsync(x =>
-                            {
-                                x.Query.Url = "https://api.twitter.com/2/tweets";
-                                x.Query.HttpMethod = Tweetinvi.Models.HttpMethod.POST;
-                                x.Query.HttpContent = JsonContent.Create(
-                                    new TweetV2PostRequest { Text = text },
-                                    mediaType: new MediaTypeHeaderValue(MediaTypeNames.Application.Json));
-                            })
-                            .GetAwaiter()
-                            .GetResult();
-                    }
-                    catch (Exception e)
-                    {
-                        _logger.LogError(e, "Twitter meh.");
-                    }
+                    if (input.SwapInfo != null)
+                        ProcessSwap(input.SwapInfo);
 
                     Task
-                        .Delay(1500, ct)
+                        .Delay(1500, cancellationToken)
                         .GetAwaiter()
                         .GetResult();
                 },
                 new ExecutionDataflowBlockOptions
                 {
                     MaxDegreeOfParallelism = 1,
-                    CancellationToken = ct
+                    CancellationToken = cancellationToken
                 });
 
             logging.Completion.ContinueWith(
                 task => _logger.LogDebug(
                     "Twitter Logging completed, {Status}",
                     task.Status),
-                ct);
+                cancellationToken);
 
             return logging;
+        }
+
+        private void ProcessSwap(SwapInfo swap)
+        {
+            if (swap.DepositValueUsd < _configuration.TwitterAmountThreshold)
+                return;
+
+            try
+            {
+                _logger.LogInformation(
+                    "Announcing Swap on Twitter: {IngressAmount} {IngressTicker} to {EgressAmount} {EgressTicker} -> {ExplorerUrl}",
+                    swap.DepositAmountFormatted,
+                    swap.SourceAsset,
+                    swap.EgressAmountFormatted,
+                    swap.DestinationAsset,
+                    $"{_configuration.ExplorerSwapsUrl}{swap.Id}");
+
+                var text =
+                    $"{swap.Emoji} Swapped {_configuration.ExplorerSwapsUrl}{swap.Id}\n" +
+                    $"➡️ {swap.DepositAmountFormatted} ${swap.SourceAsset} (${swap.DepositValueUsdFormatted})\n" +
+                    $"⬅️ {swap.EgressAmountFormatted} ${swap.DestinationAsset} (${swap.EgressValueUsdFormatted})";
+
+                _twitterClient.Execute
+                    .AdvanceRequestAsync(x =>
+                    {
+                        x.Query.Url = "https://api.twitter.com/2/tweets";
+                        x.Query.HttpMethod = Tweetinvi.Models.HttpMethod.POST;
+                        x.Query.HttpContent = JsonContent.Create(
+                            new TweetV2PostRequest { Text = text },
+                            mediaType: new MediaTypeHeaderValue(MediaTypeNames.Application.Json));
+                    })
+                    .GetAwaiter()
+                    .GetResult();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Twitter meh.");
+            }
         }
     }
 

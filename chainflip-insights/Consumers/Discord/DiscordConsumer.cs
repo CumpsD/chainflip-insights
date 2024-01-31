@@ -27,70 +27,32 @@ namespace ChainflipInsights.Consumers.Discord
             _configuration = options.Value ?? throw new ArgumentNullException(nameof(options));
             _discordClient = discordClient ?? throw new ArgumentNullException(nameof(discordClient));
         }
-        
-        public ITargetBlock<SwapInfo> Build(
-            CancellationToken ct)
+
+        public ITargetBlock<BroadcastInfo> Build(
+            CancellationToken cancellationToken)
         {
-            var announcer = BuildAnnouncer(ct);
-            return new EncapsulatingTarget<SwapInfo, SwapInfo>(announcer, announcer);
+            var announcer = BuildAnnouncer(cancellationToken);
+            return new EncapsulatingTarget<BroadcastInfo, BroadcastInfo>(announcer, announcer);
         }
 
-        private ActionBlock<SwapInfo> BuildAnnouncer(
-            CancellationToken ct)
+        private ActionBlock<BroadcastInfo> BuildAnnouncer(
+            CancellationToken cancellationToken)
         {
-            var logging = new ActionBlock<SwapInfo>(
-                swap =>
+            var logging = new ActionBlock<BroadcastInfo>(
+                input =>
                 {
                     if (!_configuration.EnableDiscord.Value)
                         return;
-
-                    if (swap.DepositValueUsd < _configuration.DiscordAmountThreshold)
-                        return;
-
-                    VerifyConnection(ct);
                     
-                    if (_discordClient.ConnectionState != ConnectionState.Connected)
-                        return;
-                    
-                    try
-                    {
-                        _logger.LogInformation(
-                            "Announcing Swap on Discord: {IngressAmount} {IngressTicker} to {EgressAmount} {EgressTicker} -> {ExplorerUrl}",
-                            swap.DepositAmountFormatted,
-                            swap.SourceAsset,
-                            swap.EgressAmountFormatted,
-                            swap.DestinationAsset,
-                            $"{_configuration.ExplorerSwapsUrl}{swap.Id}");
-                        
-                        var text =
-                            $"{swap.Emoji} Swapped " +
-                            $"**{swap.DepositAmountFormatted} {swap.SourceAsset}** (*${swap.DepositValueUsdFormatted}*) → " +
-                            $"**{swap.EgressAmountFormatted} {swap.DestinationAsset}** (*${swap.EgressValueUsdFormatted}*) " +
-                            $"// **[view swap on explorer]({_configuration.ExplorerSwapsUrl}{swap.Id})**";
+                    VerifyConnection(cancellationToken);
 
-                        var infoChannel = (ITextChannel)_discordClient.GetChannel(_configuration.DiscordSwapInfoChannelId.Value);
-
-                        var message = infoChannel
-                            .SendMessageAsync(
-                                text,
-                                flags: MessageFlags.SuppressEmbeds)
-                            .GetAwaiter()
-                            .GetResult();
-                        
-                        _logger.LogInformation(
-                            "Announcing Swap {SwapId} on Discord as Message {MessageId}",
-                            swap.Id,
-                            message.Id);
-                    }
-                    catch (Exception e)
-                    {
-                        _logger.LogError(e, "Discord meh.");
-                    }
+                    if (input.SwapInfo != null)
+                        ProcessSwap(input.SwapInfo);
                 },
                 new ExecutionDataflowBlockOptions
                 {
                     MaxDegreeOfParallelism = 1,
-                    CancellationToken = ct
+                    CancellationToken = cancellationToken
                 });
 
             logging.Completion.ContinueWith(
@@ -100,31 +62,76 @@ namespace ChainflipInsights.Consumers.Discord
                         "Discord Logging completed, {Status}",
                         task.Status);
 
-                    if (_discordClient.ConnectionState == ConnectionState.Disconnected) 
+                    if (_discordClient.ConnectionState == ConnectionState.Disconnected)
                         return;
-                    
+
                     _logger.LogDebug("Disconnecting Discord client");
-                        
+
                     _discordClient
                         .LogoutAsync()
                         .GetAwaiter()
                         .GetResult();
-                        
+
                     _discordClient
                         .StopAsync()
                         .GetAwaiter()
                         .GetResult();
                 },
-                ct);
+                cancellationToken);
 
             return logging;
+        }
+
+        private void ProcessSwap(SwapInfo swap)
+        {
+            if (swap.DepositValueUsd < _configuration.DiscordAmountThreshold)
+                return;
+            
+            if (_discordClient.ConnectionState != ConnectionState.Connected)
+                return;
+
+            try
+            {
+                _logger.LogInformation(
+                    "Announcing Swap on Discord: {IngressAmount} {IngressTicker} to {EgressAmount} {EgressTicker} -> {ExplorerUrl}",
+                    swap.DepositAmountFormatted,
+                    swap.SourceAsset,
+                    swap.EgressAmountFormatted,
+                    swap.DestinationAsset,
+                    $"{_configuration.ExplorerSwapsUrl}{swap.Id}");
+
+                var text =
+                    $"{swap.Emoji} Swapped " +
+                    $"**{swap.DepositAmountFormatted} {swap.SourceAsset}** (*${swap.DepositValueUsdFormatted}*) → " +
+                    $"**{swap.EgressAmountFormatted} {swap.DestinationAsset}** (*${swap.EgressValueUsdFormatted}*) " +
+                    $"// **[view swap on explorer]({_configuration.ExplorerSwapsUrl}{swap.Id})**";
+
+                var infoChannel = (ITextChannel)_discordClient
+                    .GetChannel(_configuration.DiscordSwapInfoChannelId.Value);
+
+                var message = infoChannel
+                    .SendMessageAsync(
+                        text,
+                        flags: MessageFlags.SuppressEmbeds)
+                    .GetAwaiter()
+                    .GetResult();
+
+                _logger.LogInformation(
+                    "Announcing Swap {SwapId} on Discord as Message {MessageId}",
+                    swap.Id,
+                    message.Id);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Discord meh.");
+            }
         }
 
         private void VerifyConnection(CancellationToken cancellationToken)
         {
             if (_discordClient.ConnectionState == ConnectionState.Connected)
                 return;
-            
+
             var ready = false;
 
             Task OnReady()
@@ -143,28 +150,28 @@ namespace ChainflipInsights.Consumers.Discord
                     _configuration.DiscordToken)
                 .GetAwaiter()
                 .GetResult();
-            
+
             _logger.LogDebug("Discord logged in");
-             
-             _discordClient
-                 .StartAsync()
-                 .GetAwaiter()
-                 .GetResult();
-             
-             _logger.LogDebug("Discord started");
 
-             // Hacky workaround to make sure discord is ready before proceeding
-             var retry = 0;
-             while (!ready && retry < 10)
-             {
-                 _logger.LogDebug("Discord not yet ready");
-                 retry++;
-                 Task.Delay(1000, cancellationToken);
-             }
+            _discordClient
+                .StartAsync()
+                .GetAwaiter()
+                .GetResult();
 
-             _logger.LogDebug("Discord status: {DiscordStatus}", _discordClient.ConnectionState);
-             
-             _discordClient.Ready -= OnReady;
+            _logger.LogDebug("Discord started");
+
+            // Hacky workaround to make sure discord is ready before proceeding
+            var retry = 0;
+            while (!ready && retry < 10)
+            {
+                _logger.LogDebug("Discord not yet ready");
+                retry++;
+                Task.Delay(1000, cancellationToken);
+            }
+
+            _logger.LogDebug("Discord status: {DiscordStatus}", _discordClient.ConnectionState);
+
+            _discordClient.Ready -= OnReady;
         }
     }
 }

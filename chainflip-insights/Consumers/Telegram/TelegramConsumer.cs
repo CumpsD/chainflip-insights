@@ -28,81 +28,89 @@ namespace ChainflipInsights.Consumers.Telegram
             _configuration = options.Value ?? throw new ArgumentNullException(nameof(options));
             _telegramClient = telegramClient ?? throw new ArgumentNullException(nameof(telegramClient));
         }
-        
-        public ITargetBlock<SwapInfo> Build(
-            CancellationToken ct)
+
+        public ITargetBlock<BroadcastInfo> Build(
+            CancellationToken cancellationToken)
         {
-            var announcer = BuildAnnouncer(ct);
-            return new EncapsulatingTarget<SwapInfo, SwapInfo>(announcer, announcer);
+            var announcer = BuildAnnouncer(cancellationToken);
+            return new EncapsulatingTarget<BroadcastInfo, BroadcastInfo>(announcer, announcer);
         }
 
-        private ActionBlock<SwapInfo> BuildAnnouncer(
-            CancellationToken ct)
+        private ActionBlock<BroadcastInfo> BuildAnnouncer(
+            CancellationToken cancellationToken)
         {
-            var logging = new ActionBlock<SwapInfo>(
-                swap =>
+            var logging = new ActionBlock<BroadcastInfo>(
+                input =>
                 {
                     if (!_configuration.EnableTelegram.Value)
                         return;
-                    
-                    if (swap.DepositValueUsd < _configuration.TelegramAmountThreshold)
-                        return;
-                    
-                    try
-                    {
-                        _logger.LogInformation(
-                            "Announcing Swap on Telegram: {IngressAmount} {IngressTicker} to {EgressAmount} {EgressTicker} -> {ExplorerUrl}",
-                            swap.DepositAmountFormatted,
-                            swap.SourceAsset,
-                            swap.EgressAmountFormatted,
-                            swap.DestinationAsset,
-                            $"{_configuration.ExplorerSwapsUrl}{swap.Id}");
-                        
-                        var text =
-                            $"{swap.Emoji} Swapped " +
-                            $"**{swap.DepositAmountFormatted} {swap.SourceAsset}** (*${swap.DepositValueUsdFormatted}*) → " +
-                            $"**{swap.EgressAmountFormatted} {swap.DestinationAsset}** (*${swap.EgressValueUsdFormatted}*) " +
-                            $"// **[view swap on explorer]({_configuration.ExplorerSwapsUrl}{swap.Id})**";
-                        
-                        var message = _telegramClient
-                            .SendTextMessageAsync(
-                                new ChatId(_configuration.TelegramSwapInfoChannelId.Value),
-                                text,
-                                parseMode: ParseMode.Markdown,
-                                disableNotification: true,
-                                allowSendingWithoutReply: true,
-                                cancellationToken: ct)
-                            .GetAwaiter()
-                            .GetResult();
-                        
-                        _logger.LogInformation(
-                            "Announcing Swap {SwapId} on Telegram as Message {MessageId}",
-                            swap.Id,
-                            message.MessageId);
-                    }
-                    catch (Exception e)
-                    {
-                        _logger.LogError(e, "Telegram meh.");
-                    }
-                    
+
+                    if (input.SwapInfo != null)
+                        ProcessSwap(input.SwapInfo, cancellationToken);
+
                     Task
-                        .Delay(1500, ct)
+                        .Delay(1500, cancellationToken)
                         .GetAwaiter()
                         .GetResult();
                 },
                 new ExecutionDataflowBlockOptions
                 {
                     MaxDegreeOfParallelism = 1,
-                    CancellationToken = ct
+                    CancellationToken = cancellationToken
                 });
 
             logging.Completion.ContinueWith(
                 task => _logger.LogDebug(
                     "Telegram Logging completed, {Status}",
                     task.Status),
-                ct);
+                cancellationToken);
 
             return logging;
+        }
+
+        private void ProcessSwap(
+            SwapInfo swap,
+            CancellationToken cancellationToken)
+        {
+            if (swap.DepositValueUsd < _configuration.TelegramAmountThreshold)
+                return;
+
+            try
+            {
+                _logger.LogInformation(
+                    "Announcing Swap on Telegram: {IngressAmount} {IngressTicker} to {EgressAmount} {EgressTicker} -> {ExplorerUrl}",
+                    swap.DepositAmountFormatted,
+                    swap.SourceAsset,
+                    swap.EgressAmountFormatted,
+                    swap.DestinationAsset,
+                    $"{_configuration.ExplorerSwapsUrl}{swap.Id}");
+
+                var text =
+                    $"{swap.Emoji} Swapped " +
+                    $"**{swap.DepositAmountFormatted} {swap.SourceAsset}** (*${swap.DepositValueUsdFormatted}*) → " +
+                    $"**{swap.EgressAmountFormatted} {swap.DestinationAsset}** (*${swap.EgressValueUsdFormatted}*) " +
+                    $"// **[view swap on explorer]({_configuration.ExplorerSwapsUrl}{swap.Id})**";
+
+                var message = _telegramClient
+                    .SendTextMessageAsync(
+                        new ChatId(_configuration.TelegramSwapInfoChannelId.Value),
+                        text,
+                        parseMode: ParseMode.Markdown,
+                        disableNotification: true,
+                        allowSendingWithoutReply: true,
+                        cancellationToken: cancellationToken)
+                    .GetAwaiter()
+                    .GetResult();
+
+                _logger.LogInformation(
+                    "Announcing Swap {SwapId} on Telegram as Message {MessageId}",
+                    swap.Id,
+                    message.MessageId);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Telegram meh.");
+            }
         }
     }
 }

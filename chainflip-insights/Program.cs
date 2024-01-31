@@ -53,7 +53,6 @@
                 .Build();
             
             var container = ConfigureServices(configuration, ct);
-            var botConfiguration = container.GetRequiredService<ILogger<Program>>();
             var logger = container.GetRequiredService<ILogger<Program>>();
             var applicationName = Assembly.GetEntryAssembly()?.GetName().Name;
             
@@ -80,16 +79,17 @@
                 #endif
                 
                 _swapPipeline = container.GetRequiredService<Pipeline<SwapInfo>>();
-                var swapRunner = container.GetRequiredService<SwapRunner>();
-                var swapFeeder = container.GetRequiredService<SwapFeeder>();
-
                 _incomingLiquidityPipeline = container.GetRequiredService<Pipeline<IncomingLiquidityInfo>>();
+
+                var runner = container.GetRequiredService<Runner>();
+
+                var swapFeeder = container.GetRequiredService<SwapFeeder>();
                 var incomingLiquidityFeeder = container.GetRequiredService<IncomingLiquidityFeeder>();
 
                 var tasks = new List<Task>();
-                tasks.AddRange(swapRunner.Start());
+                tasks.AddRange(runner.Start());
+                
                 tasks.Add(swapFeeder.Start());
-
                 tasks.Add(incomingLiquidityFeeder.Start());
 
                 Console.WriteLine("Running... Press CTRL + C to exit.");
@@ -253,7 +253,7 @@
                 .SingleInstance();
             
             builder
-                .RegisterType<SwapRunner>()
+                .RegisterType<Runner>()
                 .SingleInstance();
             
             builder
