@@ -94,7 +94,7 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
-        public int? SwapInfoDelay
+        public int? QueryDelay
         {
             get; init;
         }
