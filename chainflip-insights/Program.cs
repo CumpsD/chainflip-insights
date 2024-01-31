@@ -1,17 +1,25 @@
 ﻿namespace ChainflipInsights
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Reflection;
     using System.Threading;
     using System.Threading.Tasks;
+    using System.Threading.Tasks.Dataflow;
     using Autofac;
     using Autofac.Extensions.DependencyInjection;
     using Discord;
     using Discord.WebSocket;
     using ChainflipInsights.Configuration;
+    using ChainflipInsights.Consumers.Discord;
+    using ChainflipInsights.Consumers.Telegram;
+    using ChainflipInsights.Consumers.Twitter;
+    using ChainflipInsights.Feeders.Swap;
     using ChainflipInsights.Infrastructure;
     using ChainflipInsights.Infrastructure.Options;
+    using ChainflipInsights.Infrastructure.Pipelines;
     using ChainflipInsights.Modules;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -19,11 +27,12 @@
     using Serilog;
     using Telegram.Bot;
     using Tweetinvi;
-    using Tweetinvi.Models;
 
     public class Program
     {
         private static readonly CancellationTokenSource CancellationTokenSource = new();
+        
+        private static Pipeline<SwapInfo>? _swapPipeline;
 
         public static void Main()
         {
@@ -41,7 +50,7 @@
                 .AddEnvironmentVariables()
                 .Build();
             
-            var container = ConfigureServices(configuration);
+            var container = ConfigureServices(configuration, ct);
             var logger = container.GetRequiredService<ILogger<Program>>();
             var applicationName = Assembly.GetEntryAssembly()?.GetName().Name;
             
@@ -51,8 +60,11 @@
             
             Console.CancelKeyPress += (_, eventArgs) =>
             { 
-                logger.LogInformation("Requesting disconnect...");
+                logger.LogInformation("Requesting stop...");
+                
+                _swapPipeline?.Source.Complete();
                 CancellationTokenSource.Cancel();
+
                 eventArgs.Cancel = true;
             };
 
@@ -63,18 +75,28 @@
                 Console.ReadLine();
                 #endif
                 
-                // Run the bot
-                var bot = container.GetRequiredService<Bot>();
-                var botTask = bot.RunAsync(ct);
+                _swapPipeline = container.GetRequiredService<Pipeline<SwapInfo>>();
+                var swapRunner = container.GetRequiredService<SwapRunner>();
+                var swapFeeder = container.GetRequiredService<SwapFeeder>();
+
+                var tasks = new List<Task>();
+                tasks.AddRange(swapRunner.Start());
+                tasks.Add(swapFeeder.Start());
                 
                 Console.WriteLine("Running... Press CTRL + C to exit.");
-                botTask.GetAwaiter().GetResult();
+                Task.WaitAll(tasks.ToArray());
             }
             catch (Exception e)
             {
-                logger.LogCritical(e, "Encountered a fatal exception, exiting program.");
+                var tasksCancelled = false;
+                if (e is AggregateException ae)
+                    tasksCancelled = ae.InnerExceptions.All(x => x is TaskCanceledException);
 
-                throw;
+                if (!tasksCancelled)
+                {
+                    logger.LogCritical(e, "Encountered a fatal exception, exiting program.");
+                    throw;
+                }
             }
             
             logger.LogInformation("Stopping...");
@@ -85,7 +107,8 @@
         }
 
         private static AutofacServiceProvider ConfigureServices(
-            IConfiguration configuration)
+            IConfiguration configuration,
+            CancellationToken ct)
         {
             var services = new ServiceCollection();
 
@@ -183,10 +206,37 @@
                     botConfiguration.TwitterAccessToken,
                     botConfiguration.TwitterAccessTokenSecret))
                 .SingleInstance();
+
+            builder
+                .Register(_ =>
+                {
+                    var source = new BufferBlock<SwapInfo>();
+
+                    return new Pipeline<SwapInfo>(source, ct);
+                })
+                .SingleInstance();
+
+            builder
+                .RegisterType<SwapFeeder>()
+                .SingleInstance();
             
             builder
-                .RegisterType<Bot>()
+                .RegisterType<DiscordConsumer>()
                 .SingleInstance();
+            
+            builder
+                .RegisterType<TelegramConsumer>()
+                .SingleInstance();
+            
+            builder
+                .RegisterType<TwitterConsumer>()
+                .SingleInstance();
+            
+            builder
+                .RegisterType<SwapRunner>()
+                .SingleInstance();
+
+
             
             builder
                 .Populate(services);

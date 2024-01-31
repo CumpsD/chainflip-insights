@@ -66,6 +66,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public int? FeedingDelay
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
         public int? SwapInfoDelay
         {
             get; init;
