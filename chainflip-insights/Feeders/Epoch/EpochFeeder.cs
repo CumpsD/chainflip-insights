@@ -106,7 +106,7 @@ namespace ChainflipInsights.Feeders.Epoch
                 if (cancellationToken.IsCancellationRequested)
                     return;
                 
-                var epochInfo = await GetEpoch(lastId - 1, cancellationToken);
+                var epochInfo = await GetEpoch(lastId, cancellationToken);
                 
                 if (cancellationToken.IsCancellationRequested)
                     return;
@@ -123,6 +123,13 @@ namespace ChainflipInsights.Feeders.Epoch
                     .OrderBy(x => x.Id)
                     .ToList();
                 
+                if (epoch.Count <= 1)
+                {
+                    _logger.LogInformation(
+                        "No new epoch to announce. Last epoch is still {EpochId}",
+                        lastId);
+                }
+
                 // Epoch is in increasing order, we skip the first one since we always need to look back for rewards
                 var previousEpoch = new EpochInfo(epoch.First(), null);
                 foreach (var epochDetails in epoch.Skip(1).TakeWhile(_ => !cancellationToken.IsCancellationRequested))
@@ -160,8 +167,8 @@ namespace ChainflipInsights.Feeders.Epoch
                 return double.Parse(await File.ReadAllTextAsync(_configuration.LastEpochIdLocation, cancellationToken));
             
             await using var file = File.CreateText(_configuration.LastEpochIdLocation);
-            await file.WriteAsync("78");
-            return 78;
+            await file.WriteAsync("77");
+            return 77;
         }
         
         private async Task StoreLastEpochId(double epochId)
