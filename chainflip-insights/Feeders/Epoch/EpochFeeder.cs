@@ -87,7 +87,7 @@ namespace ChainflipInsights.Feeders.Epoch
             // Give the consumers some time to connect
             await Task.Delay(_configuration.FeedingDelay.Value, _pipeline.CancellationToken);
             
-            // Start a loop fetching Liquidity Info
+            // Start a loop fetching Epoch Info
             await ProvideEpochInfo(_pipeline.CancellationToken);
             
             _logger.LogInformation(

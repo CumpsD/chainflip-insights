@@ -31,6 +31,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public bool? EnableFunding
+        {
+            get; init;
+        }  
+        
+        [Required]
+        [NotNull]
         public bool? EnableDiscord
         {
             get; init;
@@ -101,6 +108,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public string? ValidatorUrl
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
         public int? FeedingDelay
         {
             get; init;
@@ -129,6 +143,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public int? FundingQueryDelay
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
         public string? LastSwapIdLocation
         {
             get; init;
@@ -144,6 +165,13 @@ namespace ChainflipInsights.Configuration
         [Required]
         [NotNull]
         public string? LastEpochIdLocation
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public string? LastFundingIdLocation
         {
             get; init;
         }
@@ -192,42 +220,49 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
-        public int? TwitterSwapAmountThreshold
+        public double? TwitterSwapAmountThreshold
         {
             get; init;
         }
         
         [Required]
         [NotNull]
-        public int? TelegramSwapAmountThreshold
+        public double? TelegramSwapAmountThreshold
         {
             get; init;
         }
         
         [Required]
         [NotNull]
-        public int? DiscordSwapAmountThreshold
+        public double? DiscordSwapAmountThreshold
         {
             get; init;
         }
         
         [Required]
         [NotNull]
-        public int? TwitterLiquidityAmountThreshold
+        public double? TwitterLiquidityAmountThreshold
         {
             get; init;
         }
         
         [Required]
         [NotNull]
-        public int? TelegramLiquidityAmountThreshold
+        public double? TelegramLiquidityAmountThreshold
         {
             get; init;
         }
         
         [Required]
         [NotNull]
-        public int? DiscordLiquidityAmountThreshold
+        public double? DiscordLiquidityAmountThreshold
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public double? FundingAmountThreshold
         {
             get; init;
         }

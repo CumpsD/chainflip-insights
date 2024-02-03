@@ -17,6 +17,7 @@
     using ChainflipInsights.Consumers.Telegram;
     using ChainflipInsights.Consumers.Twitter;
     using ChainflipInsights.Feeders.Epoch;
+    using ChainflipInsights.Feeders.Funding;
     using ChainflipInsights.Feeders.Liquidity;
     using ChainflipInsights.Feeders.Swap;
     using ChainflipInsights.Infrastructure;
@@ -37,6 +38,7 @@
         private static Pipeline<SwapInfo>? _swapPipeline;
         private static Pipeline<IncomingLiquidityInfo>? _incomingLiquidityPipeline;
         private static Pipeline<EpochInfo>? _epochPipeline;
+        private static Pipeline<FundingInfo>? _fundingPipeline;
 
         public static void Main()
         {
@@ -69,6 +71,7 @@
                 _swapPipeline?.Source.Complete();
                 _incomingLiquidityPipeline?.Source.Complete();
                 _epochPipeline?.Source.Complete();
+                _fundingPipeline?.Source.Complete();
 
                 CancellationTokenSource.Cancel();
 
@@ -85,12 +88,14 @@
                 _swapPipeline = container.GetRequiredService<Pipeline<SwapInfo>>();
                 _incomingLiquidityPipeline = container.GetRequiredService<Pipeline<IncomingLiquidityInfo>>();
                 _epochPipeline = container.GetRequiredService<Pipeline<EpochInfo>>();
+                _fundingPipeline = container.GetRequiredService<Pipeline<FundingInfo>>();
 
                 var runner = container.GetRequiredService<Runner>();
 
                 var swapFeeder = container.GetRequiredService<SwapFeeder>();
                 var incomingLiquidityFeeder = container.GetRequiredService<IncomingLiquidityFeeder>();
                 var epochFeeder = container.GetRequiredService<EpochFeeder>();
+                var fundingFeeder = container.GetRequiredService<FundingFeeder>();
 
                 var tasks = new List<Task>();
                 tasks.AddRange(runner.Start());
@@ -98,6 +103,7 @@
                 tasks.Add(swapFeeder.Start());
                 tasks.Add(incomingLiquidityFeeder.Start());
                 tasks.Add(epochFeeder.Start());
+                tasks.Add(fundingFeeder.Start());
 
                 Console.WriteLine("Running... Press CTRL + C to exit.");
                 Task.WaitAll(tasks.ToArray());
@@ -236,6 +242,10 @@
                 .SingleInstance();
             
             builder
+                .Register(_ => new Pipeline<FundingInfo>(new BufferBlock<FundingInfo>(), ct))
+                .SingleInstance();
+            
+            builder
                 .RegisterType<SwapFeeder>()
                 .SingleInstance();
             
@@ -245,6 +255,10 @@
             
             builder
                 .RegisterType<EpochFeeder>()
+                .SingleInstance();
+            
+            builder
+                .RegisterType<FundingFeeder>()
                 .SingleInstance();
             
             builder
