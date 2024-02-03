@@ -52,21 +52,21 @@ namespace ChainflipInsights
         {
             var swapSource = swapPipeline.Source;
             swapSource.Completion.ContinueWith(
-                task => _logger.LogDebug(
+                task => _logger.LogInformation(
                     "Swap Source completed, {Status}",
                     task.Status),
                 swapPipeline.CancellationToken);
             
             var incomingLiquiditySource = incomingLiquidityPipeline.Source;
             incomingLiquiditySource.Completion.ContinueWith(
-                task => _logger.LogDebug(
+                task => _logger.LogInformation(
                     "Incoming Liquidity Source completed, {Status}",
                     task.Status),
                 incomingLiquidityPipeline.CancellationToken);
             
             var epochSource = epochPipeline.Source;
             epochSource.Completion.ContinueWith(
-                task => _logger.LogDebug(
+                task => _logger.LogInformation(
                     "Epoch Source completed, {Status}",
                     task.Status),
                 epochPipeline.CancellationToken);
@@ -82,7 +82,7 @@ namespace ChainflipInsights
                 });
 
             wrapSwaps.Completion.ContinueWith(
-                task => _logger.LogDebug(
+                task => _logger.LogInformation(
                     "Wrap Swaps completed, {Status}",
                     task.Status),
                 swapPipeline.CancellationToken);
@@ -98,7 +98,7 @@ namespace ChainflipInsights
                 });
             
             wrapIncomingLiquidity.Completion.ContinueWith(
-                task => _logger.LogDebug(
+                task => _logger.LogInformation(
                     "Wrap Incoming Liquidity completed, {Status}",
                     task.Status),
                 incomingLiquidityPipeline.CancellationToken);
@@ -114,7 +114,7 @@ namespace ChainflipInsights
                 });
             
             wrapEpoch.Completion.ContinueWith(
-                task => _logger.LogDebug(
+                task => _logger.LogInformation(
                     "Wrap Epoch completed, {Status}",
                     task.Status),
                 epochPipeline.CancellationToken);
@@ -127,7 +127,7 @@ namespace ChainflipInsights
                 });
             
             broadcast.Completion.ContinueWith(
-                task => _logger.LogDebug(
+                task => _logger.LogInformation(
                     "Broadcast completed, {Status}",
                     task.Status),
                 swapPipeline.CancellationToken);
@@ -169,7 +169,7 @@ namespace ChainflipInsights
             var pipeline = _discordConsumer.Build(cancellationToken);
 
             pipeline.Completion.ContinueWith(
-                task => _logger.LogDebug(
+                task => _logger.LogInformation(
                     "Discord Pipeline completed, {Status}",
                     task.Status),
                 cancellationToken);
@@ -187,7 +187,7 @@ namespace ChainflipInsights
             var pipeline = _telegramConsumer.Build(cancellationToken);
 
             pipeline.Completion.ContinueWith(
-                task => _logger.LogDebug(
+                task => _logger.LogInformation(
                     "Telegram Pipeline completed, {Status}",
                     task.Status),
                 cancellationToken);
@@ -205,7 +205,7 @@ namespace ChainflipInsights
             var pipeline = _twitterConsumer.Build(cancellationToken);
 
             pipeline.Completion.ContinueWith(
-                task => _logger.LogDebug(
+                task => _logger.LogInformation(
                     "Twitter Pipeline completed, {Status}",
                     task.Status),
                 cancellationToken);

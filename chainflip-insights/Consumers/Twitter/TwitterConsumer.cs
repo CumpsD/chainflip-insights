@@ -66,7 +66,7 @@ namespace ChainflipInsights.Consumers.Twitter
                 });
 
             logging.Completion.ContinueWith(
-                task => _logger.LogDebug(
+                task => _logger.LogInformation(
                     "Twitter Logging completed, {Status}",
                     task.Status),
                 cancellationToken);

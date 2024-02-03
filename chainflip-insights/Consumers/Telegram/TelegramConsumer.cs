@@ -64,7 +64,7 @@ namespace ChainflipInsights.Consumers.Telegram
                 });
 
             logging.Completion.ContinueWith(
-                task => _logger.LogDebug(
+                task => _logger.LogInformation(
                     "Telegram Logging completed, {Status}",
                     task.Status),
                 cancellationToken);

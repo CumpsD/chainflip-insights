@@ -66,14 +66,14 @@ namespace ChainflipInsights.Consumers.Discord
             logging.Completion.ContinueWith(
                 task =>
                 {
-                    _logger.LogDebug(
+                    _logger.LogInformation(
                         "Discord Logging completed, {Status}",
                         task.Status);
 
                     if (_discordClient.ConnectionState == ConnectionState.Disconnected)
                         return;
 
-                    _logger.LogDebug("Disconnecting Discord client");
+                    _logger.LogInformation("Disconnecting Discord client");
 
                     _discordClient
                         .LogoutAsync()
@@ -253,7 +253,7 @@ namespace ChainflipInsights.Consumers.Discord
 
             _discordClient.Ready += OnReady;
 
-            _logger.LogDebug("Requesting Discord connection");
+            _logger.LogInformation("Requesting Discord connection");
 
             _discordClient
                 .LoginAsync(
@@ -262,20 +262,20 @@ namespace ChainflipInsights.Consumers.Discord
                 .GetAwaiter()
                 .GetResult();
 
-            _logger.LogDebug("Discord logged in");
+            _logger.LogInformation("Discord logged in");
 
             _discordClient
                 .StartAsync()
                 .GetAwaiter()
                 .GetResult();
 
-            _logger.LogDebug("Discord started");
+            _logger.LogInformation("Discord started");
 
             // Hacky workaround to make sure discord is ready before proceeding
             var retry = 0;
             while (!ready && retry < 10)
             {
-                _logger.LogDebug("Discord not yet ready");
+                _logger.LogInformation("Discord not yet ready");
                 retry++;
                 Task
                     .Delay(1000, cancellationToken)
@@ -283,7 +283,7 @@ namespace ChainflipInsights.Consumers.Discord
                     .GetResult();
             }
 
-            _logger.LogDebug("Discord status: {DiscordStatus}", _discordClient.ConnectionState);
+            _logger.LogInformation("Discord status: {DiscordStatus}", _discordClient.ConnectionState);
 
             _discordClient.Ready -= OnReady;
         }
