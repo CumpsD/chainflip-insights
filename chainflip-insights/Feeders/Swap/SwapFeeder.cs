@@ -12,6 +12,7 @@ namespace ChainflipInsights.Feeders.Swap
     using System.Threading.Tasks;
     using System.Threading.Tasks.Dataflow;
     using ChainflipInsights.Configuration;
+    using ChainflipInsights.Infrastructure;
     using ChainflipInsights.Infrastructure.Pipelines;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
@@ -109,7 +110,7 @@ namespace ChainflipInsights.Feeders.Swap
 
                 if (swapsInfo == null)
                 {
-                    await Task.Delay(_configuration.SwapQueryDelay.Value, cancellationToken);
+                    await Task.Delay(_configuration.SwapQueryDelay.Value.RandomizeTime(), cancellationToken);
                     continue;                    
                 }
                 
@@ -149,7 +150,7 @@ namespace ChainflipInsights.Feeders.Swap
                     await StoreLastSwapId(lastId);
                 }
                 
-                await Task.Delay(_configuration.SwapQueryDelay.Value, cancellationToken);
+                await Task.Delay(_configuration.SwapQueryDelay.Value.RandomizeTime(), cancellationToken);
             }
         }
         

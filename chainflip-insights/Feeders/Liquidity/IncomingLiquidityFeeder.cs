@@ -12,6 +12,7 @@ namespace ChainflipInsights.Feeders.Liquidity
     using System.Threading.Tasks;
     using System.Threading.Tasks.Dataflow;
     using ChainflipInsights.Configuration;
+    using ChainflipInsights.Infrastructure;
     using ChainflipInsights.Infrastructure.Pipelines;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
@@ -106,7 +107,7 @@ namespace ChainflipInsights.Feeders.Liquidity
 
                 if (incomingLiquidityInfo == null)
                 {
-                    await Task.Delay(_configuration.IncomingLiquidityQueryDelay.Value, cancellationToken);
+                    await Task.Delay(_configuration.IncomingLiquidityQueryDelay.Value.RandomizeTime(), cancellationToken);
                     continue;                    
                 }
                 
@@ -143,7 +144,7 @@ namespace ChainflipInsights.Feeders.Liquidity
                     await StoreLastIncomingLiquidityId(lastId);
                 }
                 
-                await Task.Delay(_configuration.IncomingLiquidityQueryDelay.Value, cancellationToken);
+                await Task.Delay(_configuration.IncomingLiquidityQueryDelay.Value.RandomizeTime(), cancellationToken);
             }
         }
         

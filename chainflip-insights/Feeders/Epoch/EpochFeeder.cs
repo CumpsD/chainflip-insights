@@ -12,6 +12,7 @@ namespace ChainflipInsights.Feeders.Epoch
     using System.Threading.Tasks;
     using System.Threading.Tasks.Dataflow;
     using ChainflipInsights.Configuration;
+    using ChainflipInsights.Infrastructure;
     using ChainflipInsights.Infrastructure.Pipelines;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
@@ -113,7 +114,7 @@ namespace ChainflipInsights.Feeders.Epoch
 
                 if (epochInfo == null)
                 {
-                    await Task.Delay(_configuration.EpochQueryDelay.Value, cancellationToken);
+                    await Task.Delay(_configuration.EpochQueryDelay.Value.RandomizeTime(), cancellationToken);
                     continue;                    
                 }
                 
@@ -157,7 +158,7 @@ namespace ChainflipInsights.Feeders.Epoch
                     previousEpoch = epochDetail;
                 }
                 
-                await Task.Delay(_configuration.EpochQueryDelay.Value, cancellationToken);
+                await Task.Delay(_configuration.EpochQueryDelay.Value.RandomizeTime(), cancellationToken);
             }
         }
         
