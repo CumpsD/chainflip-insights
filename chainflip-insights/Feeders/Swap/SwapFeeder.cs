@@ -21,7 +21,7 @@ namespace ChainflipInsights.Feeders.Swap
         private const string SwapsQuery = 
             """
             {
-                allSwaps(orderBy: ID_DESC, first: 500, filter: {
+                allSwaps(orderBy: ID_ASC, first: 500, filter: {
                     id: { greaterThan: LAST_ID }
                  }) {
                     edges {
@@ -139,7 +139,7 @@ namespace ChainflipInsights.Feeders.Swap
                         cancellationToken);
                    
                     lastId = swap.Id;
-                    await StoreLastSwapId(swap.Id);
+                    await StoreLastSwapId(lastId);
                 }
                 
                 await Task.Delay(_configuration.QueryDelay.Value, cancellationToken);

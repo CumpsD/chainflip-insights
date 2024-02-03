@@ -8,6 +8,7 @@ namespace ChainflipInsights
     using ChainflipInsights.Consumers.Discord;
     using ChainflipInsights.Consumers.Telegram;
     using ChainflipInsights.Consumers.Twitter;
+    using ChainflipInsights.Feeders.Epoch;
     using ChainflipInsights.Feeders.Liquidity;
     using ChainflipInsights.Feeders.Swap;
     using ChainflipInsights.Infrastructure.Pipelines;
@@ -28,6 +29,7 @@ namespace ChainflipInsights
             ILogger<Runner> logger,
             Pipeline<SwapInfo> swapPipeline,
             Pipeline<IncomingLiquidityInfo> incomingLiquidityPipeline,
+            Pipeline<EpochInfo> epochPipeline,
             DiscordConsumer discordConsumer,
             TelegramConsumer telegramConsumer,
             TwitterConsumer twitterConsumer)
@@ -39,12 +41,14 @@ namespace ChainflipInsights
 
             SetupPipelines(
                 swapPipeline,
-                incomingLiquidityPipeline);
+                incomingLiquidityPipeline,
+                epochPipeline);
         }
 
         private void SetupPipelines(
             Pipeline<SwapInfo> swapPipeline, 
-            Pipeline<IncomingLiquidityInfo> incomingLiquidityPipeline)
+            Pipeline<IncomingLiquidityInfo> incomingLiquidityPipeline, 
+            Pipeline<EpochInfo> epochPipeline)
         {
             var swapSource = swapPipeline.Source;
             swapSource.Completion.ContinueWith(
@@ -60,6 +64,13 @@ namespace ChainflipInsights
                     task.Status),
                 incomingLiquidityPipeline.CancellationToken);
             
+            var epochSource = epochPipeline.Source;
+            epochSource.Completion.ContinueWith(
+                task => _logger.LogDebug(
+                    "Epoch Source completed, {Status}",
+                    task.Status),
+                epochPipeline.CancellationToken);
+            
             var wrapSwaps = new TransformBlock<SwapInfo, BroadcastInfo>(
                 swapInfo => new BroadcastInfo(swapInfo),
                 new ExecutionDataflowBlockOptions
@@ -74,7 +85,7 @@ namespace ChainflipInsights
                 task => _logger.LogDebug(
                     "Wrap Swaps completed, {Status}",
                     task.Status),
-                incomingLiquidityPipeline.CancellationToken);
+                swapPipeline.CancellationToken);
             
             var wrapIncomingLiquidity = new TransformBlock<IncomingLiquidityInfo, BroadcastInfo>(
                 incomingLiquidityInfo => new BroadcastInfo(incomingLiquidityInfo),
@@ -91,6 +102,22 @@ namespace ChainflipInsights
                     "Wrap Incoming Liquidity completed, {Status}",
                     task.Status),
                 incomingLiquidityPipeline.CancellationToken);
+            
+            var wrapEpoch = new TransformBlock<EpochInfo, BroadcastInfo>(
+                epochInfo => new BroadcastInfo(epochInfo),
+                new ExecutionDataflowBlockOptions
+                {
+                    CancellationToken = epochPipeline.CancellationToken,
+                    MaxDegreeOfParallelism = 1,
+                    EnsureOrdered = true,
+                    SingleProducerConstrained = true
+                });
+            
+            wrapEpoch.Completion.ContinueWith(
+                task => _logger.LogDebug(
+                    "Wrap Epoch completed, {Status}",
+                    task.Status),
+                epochPipeline.CancellationToken);
             
             var broadcast = new BroadcastBlock<BroadcastInfo>(
                 e => e,
@@ -127,9 +154,11 @@ namespace ChainflipInsights
             
             swapSource.LinkTo(wrapSwaps, linkOptions);
             incomingLiquiditySource.LinkTo(wrapIncomingLiquidity, linkOptions);
+            epochSource.LinkTo(wrapEpoch, linkOptions);
             
             wrapSwaps.LinkTo(broadcast, linkOptions);
             wrapIncomingLiquidity.LinkTo(broadcast, linkOptions);
+            wrapEpoch.LinkTo(broadcast, linkOptions);
         }
         
         private ITargetBlock<BroadcastInfo> SetupDiscordSwapPipeline(

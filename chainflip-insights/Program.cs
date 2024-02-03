@@ -16,6 +16,7 @@
     using ChainflipInsights.Consumers.Discord;
     using ChainflipInsights.Consumers.Telegram;
     using ChainflipInsights.Consumers.Twitter;
+    using ChainflipInsights.Feeders.Epoch;
     using ChainflipInsights.Feeders.Liquidity;
     using ChainflipInsights.Feeders.Swap;
     using ChainflipInsights.Infrastructure;
@@ -35,6 +36,7 @@
         
         private static Pipeline<SwapInfo>? _swapPipeline;
         private static Pipeline<IncomingLiquidityInfo>? _incomingLiquidityPipeline;
+        private static Pipeline<EpochInfo>? _epochPipeline;
 
         public static void Main()
         {
@@ -66,6 +68,8 @@
                 
                 _swapPipeline?.Source.Complete();
                 _incomingLiquidityPipeline?.Source.Complete();
+                _epochPipeline?.Source.Complete();
+
                 CancellationTokenSource.Cancel();
 
                 eventArgs.Cancel = true;
@@ -80,17 +84,20 @@
                 
                 _swapPipeline = container.GetRequiredService<Pipeline<SwapInfo>>();
                 _incomingLiquidityPipeline = container.GetRequiredService<Pipeline<IncomingLiquidityInfo>>();
+                _epochPipeline = container.GetRequiredService<Pipeline<EpochInfo>>();
 
                 var runner = container.GetRequiredService<Runner>();
 
                 var swapFeeder = container.GetRequiredService<SwapFeeder>();
                 var incomingLiquidityFeeder = container.GetRequiredService<IncomingLiquidityFeeder>();
+                var epochFeeder = container.GetRequiredService<EpochFeeder>();
 
                 var tasks = new List<Task>();
                 tasks.AddRange(runner.Start());
                 
                 tasks.Add(swapFeeder.Start());
                 tasks.Add(incomingLiquidityFeeder.Start());
+                tasks.Add(epochFeeder.Start());
 
                 Console.WriteLine("Running... Press CTRL + C to exit.");
                 Task.WaitAll(tasks.ToArray());
@@ -217,19 +224,15 @@
                 .SingleInstance();
 
             builder
-                .Register(_ =>
-                {
-                    var source = new BufferBlock<SwapInfo>();
-                    return new Pipeline<SwapInfo>(source, ct);
-                })
+                .Register(_ => new Pipeline<SwapInfo>(new BufferBlock<SwapInfo>(), ct))
                 .SingleInstance();
 
             builder
-                .Register(_ =>
-                {
-                    var source = new BufferBlock<IncomingLiquidityInfo>();
-                    return new Pipeline<IncomingLiquidityInfo>(source, ct);
-                })
+                .Register(_ => new Pipeline<IncomingLiquidityInfo>(new BufferBlock<IncomingLiquidityInfo>(), ct))
+                .SingleInstance();
+            
+            builder
+                .Register(_ => new Pipeline<EpochInfo>(new BufferBlock<EpochInfo>(), ct))
                 .SingleInstance();
             
             builder
@@ -238,6 +241,10 @@
             
             builder
                 .RegisterType<IncomingLiquidityFeeder>()
+                .SingleInstance();
+            
+            builder
+                .RegisterType<EpochFeeder>()
                 .SingleInstance();
             
             builder

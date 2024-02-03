@@ -24,6 +24,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public bool? EnableEpoch
+        {
+            get; init;
+        }  
+        
+        [Required]
+        [NotNull]
         public bool? EnableDiscord
         {
             get; init;
@@ -80,6 +87,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public string? ExplorerAuthorityUrl
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
         public string? SwapUrl
         {
             get; init;
@@ -109,6 +123,13 @@ namespace ChainflipInsights.Configuration
         [Required]
         [NotNull]
         public string? LastIncomingLiquidityIdLocation
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public string? LastEpochIdLocation
         {
             get; init;
         }

@@ -21,7 +21,7 @@ namespace ChainflipInsights.Feeders.Liquidity
         private const string IncomingLiquidityQuery = 
             """
             {
-                allLiquidityDeposits(orderBy: ID_DESC, first: 500, filter: {
+                allLiquidityDeposits(orderBy: ID_ASC, first: 500, filter: {
                     id: { greaterThan: LAST_ID }
                  }) {
                     edges {
@@ -133,7 +133,7 @@ namespace ChainflipInsights.Feeders.Liquidity
                         cancellationToken);
                    
                     lastId = liquidityInfo.Id;
-                    await StoreLastIncomingLiquidityId(liquidityInfo.Id);
+                    await StoreLastIncomingLiquidityId(lastId);
                 }
                 
                 await Task.Delay(_configuration.QueryDelay.Value, cancellationToken);
