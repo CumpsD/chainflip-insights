@@ -6,6 +6,7 @@ namespace ChainflipInsights.Consumers.Discord
     using System.Threading.Tasks.Dataflow;
     using ChainflipInsights.Configuration;
     using ChainflipInsights.Feeders.Epoch;
+    using ChainflipInsights.Feeders.Funding;
     using ChainflipInsights.Feeders.Liquidity;
     using ChainflipInsights.Feeders.Swap;
     using ChainflipInsights.Infrastructure.Pipelines;
@@ -56,6 +57,9 @@ namespace ChainflipInsights.Consumers.Discord
                     
                     if (input.EpochInfo != null)
                         ProcessEpochInfo(input.EpochInfo);
+                    
+                    if (input.FundingInfo != null)
+                        ProcessFundingInfo(input.FundingInfo);
                 },
                 new ExecutionDataflowBlockOptions
                 {
@@ -230,6 +234,57 @@ namespace ChainflipInsights.Consumers.Discord
                 _logger.LogInformation(
                     "Announcing Epoch {Epoch} on Discord as Message {MessageId}",
                     epoch.Id,
+                    message.Id);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Discord meh.");
+            }
+        }
+
+        private void ProcessFundingInfo(FundingInfo funding)
+        {
+            if (funding.AmountConverted < _configuration.FundingAmountThreshold)
+            {
+                _logger.LogInformation(
+                    "Funding did not meet treshold (${Threshold}) for Discord: {Validator} added {Amount} FLIP -> {ExplorerUrl}",
+                    _configuration.FundingAmountThreshold,
+                    funding.Validator,
+                    funding.AmountFormatted,
+                    string.Format(_configuration.ValidatorUrl, funding.ValidatorName));
+                
+                return;
+            }
+            
+            if (_discordClient.ConnectionState != ConnectionState.Connected)
+                return;
+            
+            try
+            {
+                _logger.LogInformation(
+                    "Announcing Funding {FundingId} on Discord: {Validator} added {Amount} FLIP -> {EpochUrl}",
+                    funding.Id,
+                    funding.Validator,
+                    funding.AmountFormatted,
+                    string.Format(_configuration.ValidatorUrl, funding.ValidatorName));
+                
+                var text =
+                    $"🪙 **Validator Funded**! **{funding.Validator}** added **{funding.AmountFormatted} FLIP**! " +
+                    $"// **[view validator on explorer]({string.Format(_configuration.ValidatorUrl, funding.ValidatorName)})**";
+
+                var infoChannel = (ITextChannel)_discordClient
+                    .GetChannel(_configuration.DiscordSwapInfoChannelId.Value);
+
+                var message = infoChannel
+                    .SendMessageAsync(
+                        text,
+                        flags: MessageFlags.SuppressEmbeds)
+                    .GetAwaiter()
+                    .GetResult();
+
+                _logger.LogInformation(
+                    "Announcing Funding {FundingId} on Discord as Message {MessageId}",
+                    funding.Id,
                     message.Id);
             }
             catch (Exception e)

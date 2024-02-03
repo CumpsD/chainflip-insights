@@ -136,7 +136,7 @@ namespace ChainflipInsights.Feeders.Funding
                     _logger.LogInformation(
                         "Broadcasting Funding {FundingId}, {Validator} added {Funding} FLIP. {FundingUrl}",
                         fundingDetail.Id,
-                        fundingDetail.ValidatorName,
+                        fundingDetail.Validator,
                         fundingDetail.AmountFormatted,
                         string.Format(_configuration.ValidatorUrl, fundingDetail.ValidatorName));
 
