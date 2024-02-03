@@ -116,6 +116,13 @@ namespace ChainflipInsights.Feeders.Liquidity
                     .OrderBy(x => x.Id)
                     .ToList();
                 
+                if (incomingLiquidity.Count <= 0)
+                {
+                    _logger.LogInformation(
+                        "No new incoming liquidity to announce. Last incoming liquidity is still {IncomingLiquidityId}",
+                        lastId);
+                }
+                
                 // Incoming liquidity is in increasing order
                 foreach (var liquidity in incomingLiquidity.TakeWhile(_ => !cancellationToken.IsCancellationRequested))
                 {

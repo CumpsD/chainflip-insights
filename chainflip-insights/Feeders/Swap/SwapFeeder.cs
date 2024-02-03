@@ -119,6 +119,13 @@ namespace ChainflipInsights.Feeders.Swap
                     .OrderBy(x => x.Id)
                     .ToList();
                 
+                if (swaps.Count <= 0)
+                {
+                    _logger.LogInformation(
+                        "No new swaps to announce. Last swap is still {SwapId}",
+                        lastId);
+                }
+                
                 // Swaps are in increasing order
                 foreach (var swap in swaps.TakeWhile(_ => !cancellationToken.IsCancellationRequested))
                 {
