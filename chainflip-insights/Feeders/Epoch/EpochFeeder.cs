@@ -113,7 +113,7 @@ namespace ChainflipInsights.Feeders.Epoch
 
                 if (epochInfo == null)
                 {
-                    await Task.Delay(_configuration.QueryDelay.Value, cancellationToken);
+                    await Task.Delay(_configuration.EpochQueryDelay.Value, cancellationToken);
                     continue;                    
                 }
                 
@@ -157,7 +157,7 @@ namespace ChainflipInsights.Feeders.Epoch
                     previousEpoch = epochDetail;
                 }
                 
-                await Task.Delay(_configuration.QueryDelay.Value, cancellationToken);
+                await Task.Delay(_configuration.EpochQueryDelay.Value, cancellationToken);
             }
         }
         

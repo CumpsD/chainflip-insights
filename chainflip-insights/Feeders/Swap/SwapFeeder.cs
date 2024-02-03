@@ -109,7 +109,7 @@ namespace ChainflipInsights.Feeders.Swap
 
                 if (swapsInfo == null)
                 {
-                    await Task.Delay(_configuration.QueryDelay.Value, cancellationToken);
+                    await Task.Delay(_configuration.SwapQueryDelay.Value, cancellationToken);
                     continue;                    
                 }
                 
@@ -149,7 +149,7 @@ namespace ChainflipInsights.Feeders.Swap
                     await StoreLastSwapId(lastId);
                 }
                 
-                await Task.Delay(_configuration.QueryDelay.Value, cancellationToken);
+                await Task.Delay(_configuration.SwapQueryDelay.Value, cancellationToken);
             }
         }
         

@@ -106,7 +106,7 @@ namespace ChainflipInsights.Feeders.Liquidity
 
                 if (incomingLiquidityInfo == null)
                 {
-                    await Task.Delay(_configuration.QueryDelay.Value, cancellationToken);
+                    await Task.Delay(_configuration.IncomingLiquidityQueryDelay.Value, cancellationToken);
                     continue;                    
                 }
                 
@@ -143,7 +143,7 @@ namespace ChainflipInsights.Feeders.Liquidity
                     await StoreLastIncomingLiquidityId(lastId);
                 }
                 
-                await Task.Delay(_configuration.QueryDelay.Value, cancellationToken);
+                await Task.Delay(_configuration.IncomingLiquidityQueryDelay.Value, cancellationToken);
             }
         }
         

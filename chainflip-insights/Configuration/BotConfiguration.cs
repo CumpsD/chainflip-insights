@@ -108,11 +108,25 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
-        public int? QueryDelay
+        public int? EpochQueryDelay
         {
             get; init;
         }
 
+        [Required]
+        [NotNull]
+        public int? IncomingLiquidityQueryDelay
+        {
+            get; init;
+        }
+
+        [Required]
+        [NotNull]
+        public int? SwapQueryDelay
+        {
+            get; init;
+        }
+        
         [Required]
         [NotNull]
         public string? LastSwapIdLocation
