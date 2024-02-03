@@ -5,6 +5,7 @@ namespace ChainflipInsights.Consumers.Discord
     using System.Threading.Tasks;
     using System.Threading.Tasks.Dataflow;
     using ChainflipInsights.Configuration;
+    using ChainflipInsights.Feeders.Epoch;
     using ChainflipInsights.Feeders.Liquidity;
     using ChainflipInsights.Feeders.Swap;
     using ChainflipInsights.Infrastructure.Pipelines;
@@ -52,6 +53,9 @@ namespace ChainflipInsights.Consumers.Discord
                     
                     if (input.IncomingLiquidityInfo != null)
                         ProcessIncomingLiquidityInfo(input.IncomingLiquidityInfo);
+                    
+                    if (input.EpochInfo != null)
+                        ProcessEpochInfo(input.EpochInfo);
                 },
                 new ExecutionDataflowBlockOptions
                 {
@@ -187,6 +191,45 @@ namespace ChainflipInsights.Consumers.Discord
                 _logger.LogInformation(
                     "Announcing Incoming Liquidity {LiquidityId} on Discord as Message {MessageId}",
                     liquidity.Id,
+                    message.Id);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Discord meh.");
+            }
+        }
+
+        private void ProcessEpochInfo(EpochInfo epoch)
+        {
+            if (_discordClient.ConnectionState != ConnectionState.Connected)
+                return;
+            
+            try
+            {
+                _logger.LogInformation(
+                    "Announcing Epoch {Epoch} on Discord -> {EpochUrl}",
+                    epoch.Id,
+                    $"{_configuration.ExplorerAuthorityUrl}{epoch.Id}");
+
+                var text =
+                    $"⏰ **Epoch {epoch.Id} Started**! Current MAB is **{epoch.MinimumBondFormatted} FLIP**. " +
+                    $"In total we have **{epoch.TotalBondFormatted}** FLIP bonded, with a maximum bond of **{epoch.MaxBidFormatted} FLIP**. " +
+                    $"Last Epoch distributed **{epoch.TotalRewardsFormatted}** FLIP as rewards." +
+                    $"// **[view authority set on explorer]({_configuration.ExplorerAuthorityUrl}{epoch.Id})**";
+
+                var infoChannel = (ITextChannel)_discordClient
+                    .GetChannel(_configuration.DiscordSwapInfoChannelId.Value);
+
+                var message = infoChannel
+                    .SendMessageAsync(
+                        text,
+                        flags: MessageFlags.SuppressEmbeds)
+                    .GetAwaiter()
+                    .GetResult();
+
+                _logger.LogInformation(
+                    "Announcing Epoch {Epoch} on Discord as Message {MessageId}",
+                    epoch.Id,
                     message.Id);
             }
             catch (Exception e)
