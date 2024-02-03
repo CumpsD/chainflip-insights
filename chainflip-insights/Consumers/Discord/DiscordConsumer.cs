@@ -268,8 +268,13 @@ namespace ChainflipInsights.Consumers.Discord
                     funding.AmountFormatted,
                     string.Format(_configuration.ValidatorUrl, funding.ValidatorName));
                 
+                var validator =
+                    string.IsNullOrWhiteSpace(funding.ValidatorAlias)
+                        ? $"**`{funding.ValidatorName}`**" 
+                        : $"**`{funding.ValidatorName}`** (**{funding.ValidatorAlias}**)";
+                
                 var text =
-                    $"🪙 **Validator Funded**! **{funding.Validator}** added **{funding.AmountFormatted} FLIP**! " +
+                    $"🪙 **Validator Funded**! {funding.Validator} added **{funding.AmountFormatted} FLIP**! " +
                     $"// **[view validator on explorer]({string.Format(_configuration.ValidatorUrl, funding.ValidatorName)})**";
 
                 var infoChannel = (ITextChannel)_discordClient
