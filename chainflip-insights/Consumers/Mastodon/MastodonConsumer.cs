@@ -5,20 +5,29 @@ namespace ChainflipInsights.Consumers.Mastodon
     using System.Threading.Tasks;
     using System.Threading.Tasks.Dataflow;
     using ChainflipInsights.Configuration;
+    using ChainflipInsights.Feeders.Epoch;
+    using ChainflipInsights.Feeders.Funding;
+    using ChainflipInsights.Feeders.Liquidity;
+    using ChainflipInsights.Feeders.Redemption;
+    using ChainflipInsights.Feeders.Swap;
     using ChainflipInsights.Infrastructure.Pipelines;
+    using Mastonet;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
 
     public class MastodonConsumer
     {
         private readonly ILogger<MastodonConsumer> _logger;
+        private readonly MastodonClient _mastodonClient;
         private readonly BotConfiguration _configuration;
 
         public MastodonConsumer(
             ILogger<MastodonConsumer> logger,
-            IOptions<BotConfiguration> options)
+            IOptions<BotConfiguration> options,
+            MastodonClient mastodonClient)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _mastodonClient = mastodonClient ?? throw new ArgumentNullException(nameof(mastodonClient));
             _configuration = options.Value ?? throw new ArgumentNullException(nameof(options));
         }
         
@@ -38,20 +47,20 @@ namespace ChainflipInsights.Consumers.Mastodon
                     if (!_configuration.EnableMastodon.Value)
                         return;
 
-                    // if (input.SwapInfo != null)
-                    //     ProcessSwap(input.SwapInfo, cancellationToken);
-                    //
-                    // if (input.IncomingLiquidityInfo != null)
-                    //     ProcessIncomingLiquidityInfo(input.IncomingLiquidityInfo, cancellationToken);
-                    //
-                    // if (input.EpochInfo != null)
-                    //     ProcessEpochInfo(input.EpochInfo, cancellationToken);
-                    //
-                    // if (input.FundingInfo != null)
-                    //     ProcessFundingInfo(input.FundingInfo, cancellationToken);
-                    //
-                    // if (input.RedemptionInfo != null)
-                    //     ProcessRedemptionInfo(input.RedemptionInfo, cancellationToken);
+                    if (input.SwapInfo != null)
+                        ProcessSwap(input.SwapInfo);
+                    
+                    if (input.IncomingLiquidityInfo != null)
+                        ProcessIncomingLiquidityInfo(input.IncomingLiquidityInfo);
+                    
+                    if (input.EpochInfo != null)
+                        ProcessEpochInfo(input.EpochInfo);
+                    
+                    if (input.FundingInfo != null)
+                        ProcessFundingInfo(input.FundingInfo);
+                    
+                    if (input.RedemptionInfo != null)
+                        ProcessRedemptionInfo(input.RedemptionInfo);
                     
                     Task
                         .Delay(1500, cancellationToken)
@@ -73,5 +82,183 @@ namespace ChainflipInsights.Consumers.Mastodon
             return logging;
         }
 
+        private void ProcessSwap(SwapInfo swap)
+        {
+            if (swap.DepositValueUsd < _configuration.MastodonSwapAmountThreshold)
+            {
+                _logger.LogInformation(
+                    "Swap did not meet treshold (${Threshold}) for Mastodon: {IngressAmount} {IngressTicker} to {EgressAmount} {EgressTicker} -> {ExplorerUrl}",
+                    _configuration.MastodonSwapAmountThreshold,
+                    swap.DepositAmountFormatted,
+                    swap.SourceAsset,
+                    swap.EgressAmountFormatted,
+                    swap.DestinationAsset,
+                    $"{_configuration.ExplorerSwapsUrl}{swap.Id}");
+                
+                return;
+            }
+
+            try
+            {
+                _logger.LogInformation(
+                    "Announcing Swap on Mastodon: {IngressAmount} {IngressTicker} to {EgressAmount} {EgressTicker} -> {ExplorerUrl}",
+                    swap.DepositAmountFormatted,
+                    swap.SourceAsset,
+                    swap.EgressAmountFormatted,
+                    swap.DestinationAsset,
+                    $"{_configuration.ExplorerSwapsUrl}{swap.Id}");
+
+                var text =
+                    $"{swap.Emoji} Swapped {_configuration.ExplorerSwapsUrl}{swap.Id}\n" +
+                    $"➡️ {swap.DepositAmountFormatted} #{swap.SourceAsset} (${swap.DepositValueUsdFormatted})\n" +
+                    $"⬅️ {swap.EgressAmountFormatted} #{swap.DestinationAsset} (${swap.EgressValueUsdFormatted})";
+
+                var status = _mastodonClient
+                    .PublishStatus(
+                        text,
+                        Visibility.Public)
+                    .GetAwaiter()
+                    .GetResult();
+                
+                _logger.LogInformation(
+                    "Announcing Swap {SwapId} on Mastodon as Message {MessageId}",
+                    swap.Id,
+                    status.Url);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Mastodon meh.");
+            }
+        }
+        
+        private void ProcessIncomingLiquidityInfo(IncomingLiquidityInfo liquidity)
+        {
+            if (liquidity.DepositValueUsd < _configuration.MastodonLiquidityAmountThreshold)
+                return;
+            
+            // TODO: Send
+        }
+        
+        private void ProcessEpochInfo(EpochInfo epoch)
+        {
+            try
+            {
+                _logger.LogInformation(
+                    "Announcing Epoch {Epoch} on Mastodon -> {EpochUrl}",
+                    epoch.Id,
+                    $"{_configuration.ExplorerAuthorityUrl}{epoch.Id}");
+                
+                var text =
+                    $"⏰ Epoch {epoch.Id} Started {_configuration.ExplorerAuthorityUrl}{epoch.Id}\n" +
+                    $"➖ Minimum Bid is {epoch.MinimumBondFormatted} $FLIP\n" +
+                    $"➕ Maximum Bid is {epoch.MaxBidFormatted} $FLIP\n" +
+                    $"🧮 Total bonded is {epoch.TotalBondFormatted} $FLIP\n" +
+                    $"💰 Last Epoch distributed {epoch.PreviousEpoch.TotalRewardsFormatted} $FLIP in rewards";
+
+                var status = _mastodonClient
+                    .PublishStatus(
+                        text,
+                        Visibility.Public)
+                    .GetAwaiter()
+                    .GetResult();
+                
+                _logger.LogInformation(
+                    "Announcing Epoch {EpochId} on Mastodon as Message {MessageId}",
+                    epoch.Id,
+                    status.Url);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Mastodon meh.");
+            }
+        }
+
+                private void ProcessFundingInfo(FundingInfo funding)
+        {
+            if (funding.AmountConverted < _configuration.MastodonFundingAmountThreshold)
+            {
+                _logger.LogInformation(
+                    "Funding did not meet treshold (${Threshold}) for Mastodon: {Validator} added {Amount} FLIP -> {ExplorerUrl}",
+                    _configuration.MastodonFundingAmountThreshold,
+                    funding.Validator,
+                    funding.AmountFormatted,
+                    string.Format(_configuration.ValidatorUrl, funding.ValidatorName));
+                
+                return;
+            }
+            
+            try
+            {
+                _logger.LogInformation(
+                    "Announcing Funding {FundingId} on Mastodon: {Validator} added {Amount} FLIP -> {EpochUrl}",
+                    funding.Id,
+                    funding.Validator,
+                    funding.AmountFormatted,
+                    string.Format(_configuration.ValidatorUrl, funding.ValidatorName));
+                
+                var text =
+                    $"🪙 Validator {funding.Validator} added {funding.AmountFormatted} FLIP! {string.Format(_configuration.ValidatorUrl, funding.ValidatorName)}";
+
+                var status = _mastodonClient
+                    .PublishStatus(
+                        text,
+                        Visibility.Public)
+                    .GetAwaiter()
+                    .GetResult();
+                
+                _logger.LogInformation(
+                    "Announcing Funding {FundingId} on Mastodon as Message {MessageId}",
+                    funding.Id,
+                    status.Url);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Mastodon meh.");
+            }
+        }
+
+        private void ProcessRedemptionInfo(RedemptionInfo redemption)
+        {
+            if (redemption.AmountConverted < _configuration.MastodonRedemptionAmountThreshold)
+            {
+                _logger.LogInformation(
+                    "Redemption did not meet treshold (${Threshold}) for Mastodon: {Validator} added {Amount} FLIP -> {ExplorerUrl}",
+                    _configuration.MastodonRedemptionAmountThreshold,
+                    redemption.Validator,
+                    redemption.AmountFormatted,
+                    string.Format(_configuration.ValidatorUrl, redemption.ValidatorName));
+                
+                return;
+            }
+            
+            try
+            {
+                _logger.LogInformation(
+                    "Announcing Redemption {RedemptionId} on Mastodon: {Validator} redeemed {Amount} FLIP -> {EpochUrl}",
+                    redemption.Id,
+                    redemption.Validator,
+                    redemption.AmountFormatted,
+                    string.Format(_configuration.ValidatorUrl, redemption.ValidatorName));
+                
+                var text =
+                    $"💸 Validator {redemption.Validator} redeemed {redemption.AmountFormatted} FLIP! {string.Format(_configuration.ValidatorUrl, redemption.ValidatorName)}";
+
+                var status = _mastodonClient
+                    .PublishStatus(
+                        text,
+                        Visibility.Public)
+                    .GetAwaiter()
+                    .GetResult();
+                
+                _logger.LogInformation(
+                    "Announcing Redemption {RedemptionId} on Mastodon as Message {MessageId}",
+                    redemption.Id,
+                    status.Url);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Mastodon meh.");
+            }
+        }
     }
 }

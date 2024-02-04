@@ -26,6 +26,7 @@
     using ChainflipInsights.Infrastructure.Options;
     using ChainflipInsights.Infrastructure.Pipelines;
     using ChainflipInsights.Modules;
+    using Mastonet;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
@@ -234,6 +235,10 @@
                     botConfiguration.TwitterConsumerSecret,
                     botConfiguration.TwitterAccessToken,
                     botConfiguration.TwitterAccessTokenSecret))
+                .SingleInstance();
+
+            builder
+                .Register(_ => new MastodonClient("mastodon.social", botConfiguration.MastodonAccessToken))
                 .SingleInstance();
 
             builder

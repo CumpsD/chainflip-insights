@@ -269,6 +269,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public double? MastodonSwapAmountThreshold
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
         public double? TwitterSwapAmountThreshold
         {
             get; init;
@@ -284,6 +291,13 @@ namespace ChainflipInsights.Configuration
         [Required]
         [NotNull]
         public double? DiscordSwapAmountThreshold
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public double? MastodonLiquidityAmountThreshold
         {
             get; init;
         }
@@ -311,6 +325,13 @@ namespace ChainflipInsights.Configuration
 
         [Required]
         [NotNull]
+        public double? MastodonFundingAmountThreshold
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
         public double? TwitterFundingAmountThreshold
         {
             get; init;
@@ -326,6 +347,13 @@ namespace ChainflipInsights.Configuration
         [Required]
         [NotNull]
         public double? DiscordFundingAmountThreshold
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public double? MastodonRedemptionAmountThreshold
         {
             get; init;
         }
