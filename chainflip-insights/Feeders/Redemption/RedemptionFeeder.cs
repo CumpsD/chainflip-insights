@@ -1,4 +1,4 @@
-namespace ChainflipInsights.Feeders.Funding
+namespace ChainflipInsights.Feeders.Redemption
 {
     using System;
     using System.Globalization;
@@ -17,15 +17,15 @@ namespace ChainflipInsights.Feeders.Funding
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
 
-    public class FundingFeeder
+    public class RedemptionFeeder
     {
-        private const string FundingQuery = 
+        private const string RedemptionQuery = 
             """
             {
                 allValidatorFundingEvents(orderBy: ID_ASC, first: 50, filter: {
                     and: {
                         id: { greaterThan: LAST_ID }
-                        type: { equalTo: FUNDED }
+                        type: { equalTo: REDEEMED }
                     }
                 }) {
                     edges {
@@ -49,16 +49,16 @@ namespace ChainflipInsights.Feeders.Funding
             }
             """;
         
-        private readonly ILogger<FundingFeeder> _logger;
-        private readonly Pipeline<FundingInfo> _pipeline;
+        private readonly ILogger<RedemptionFeeder> _logger;
+        private readonly Pipeline<RedemptionInfo> _pipeline;
         private readonly BotConfiguration _configuration;
         private readonly IHttpClientFactory _httpClientFactory;
 
-        public FundingFeeder(
-            ILogger<FundingFeeder> logger,
+        public RedemptionFeeder(
+            ILogger<RedemptionFeeder> logger,
             IOptions<BotConfiguration> options,
             IHttpClientFactory httpClientFactory,
-            Pipeline<FundingInfo> pipeline)
+            Pipeline<RedemptionInfo> pipeline)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _configuration = options.Value ?? throw new ArgumentNullException(nameof(options));
@@ -68,113 +68,113 @@ namespace ChainflipInsights.Feeders.Funding
         
         public async Task Start()
         {
-            if (!_configuration.EnableFunding.Value)
+            if (!_configuration.EnableRedemption.Value)
             {
                 _logger.LogInformation(
-                    "Funding not enabled. Skipping {TaskName}",
-                    nameof(FundingFeeder));
+                    "Redemption not enabled. Skipping {TaskName}",
+                    nameof(RedemptionFeeder));
                 
                 return;
             }
             
             _logger.LogInformation(
                 "Starting {TaskName}",
-                nameof(FundingFeeder));
+                nameof(RedemptionFeeder));
 
             // Give the consumers some time to connect
             await Task.Delay(_configuration.FeedingDelay.Value, _pipeline.CancellationToken);
             
-            // Start a loop fetching Funding Info
-            await ProvideFundingInfo(_pipeline.CancellationToken);
+            // Start a loop fetching Redemption Info
+            await ProvideRedemptionInfo(_pipeline.CancellationToken);
             
             _logger.LogInformation(
                 "Stopping {TaskName}",
-                nameof(FundingFeeder));
+                nameof(RedemptionFeeder));
         }
 
-        private async Task ProvideFundingInfo(CancellationToken cancellationToken)
+        private async Task ProvideRedemptionInfo(CancellationToken cancellationToken)
         {
             if (cancellationToken.IsCancellationRequested)
                 return;
             
-            var lastId = await GetLastFundingId(cancellationToken);
+            var lastId = await GetLastRedemptionId(cancellationToken);
 
             while (true)
             {
                 if (cancellationToken.IsCancellationRequested)
                     return;
                 
-                var fundingInfo = await GetFunding(lastId, cancellationToken);
+                var redemptionInfo = await GetRedemption(lastId, cancellationToken);
                 
                 if (cancellationToken.IsCancellationRequested)
                     return;
 
-                if (fundingInfo == null)
+                if (redemptionInfo == null)
                 {
-                    await Task.Delay(_configuration.FundingQueryDelay.Value.RandomizeTime(), cancellationToken);
+                    await Task.Delay(_configuration.RedemptionQueryDelay.Value.RandomizeTime(), cancellationToken);
                     continue;                    
                 }
                 
-                var funding = fundingInfo
+                var redemption = redemptionInfo
                     .Data.Data.Data
                     .Select(x => x.Data)
                     .OrderBy(x => x.Id)
                     .ToList();
                 
-                if (funding.Count <= 0)
+                if (redemption.Count <= 0)
                 {
                     _logger.LogInformation(
-                        "No new funding to announce. Last funding is still {FundingId}",
+                        "No new redemption to announce. Last redemption is still {RedemptionId}",
                         lastId);
                 }
 
-                // Funding is in increasing order
-                foreach (var fundingDetails in funding.TakeWhile(_ => !cancellationToken.IsCancellationRequested))
+                // Redemption is in increasing order
+                foreach (var redemptionDetails in redemption.TakeWhile(_ => !cancellationToken.IsCancellationRequested))
                 {
-                    var fundingDetail = new FundingInfo(fundingDetails);
+                    var redemptionDetail = new RedemptionInfo(redemptionDetails);
 
                     _logger.LogInformation(
-                        "Broadcasting Funding {FundingId}, {Validator} added {Funding} FLIP. {FundingUrl}",
-                        fundingDetail.Id,
-                        fundingDetail.Validator,
-                        fundingDetail.AmountFormatted,
-                        string.Format(_configuration.ValidatorUrl, fundingDetail.ValidatorName));
+                        "Broadcasting Redemption {RedemptionId}, {Validator} redeemed {Redemption} FLIP. {RedemptionUrl}",
+                        redemptionDetail.Id,
+                        redemptionDetail.Validator,
+                        redemptionDetail.AmountFormatted,
+                        string.Format(_configuration.ValidatorUrl, redemptionDetail.ValidatorName));
 
                     await _pipeline.Source.SendAsync(
-                        fundingDetail, 
+                        redemptionDetail, 
                         cancellationToken);
                     
-                    lastId = fundingDetail.Id;
-                    await StoreLastFundingId(lastId);
+                    lastId = redemptionDetail.Id;
+                    await StoreLastRedemptionId(lastId);
                 }
                 
-                await Task.Delay(_configuration.FundingQueryDelay.Value.RandomizeTime(), cancellationToken);
+                await Task.Delay(_configuration.RedemptionQueryDelay.Value.RandomizeTime(), cancellationToken);
             }
         }
         
-        private async Task<double> GetLastFundingId(CancellationToken cancellationToken)
+        private async Task<double> GetLastRedemptionId(CancellationToken cancellationToken)
         {
-            if (File.Exists(_configuration.LastFundingIdLocation))
-                return double.Parse(await File.ReadAllTextAsync(_configuration.LastFundingIdLocation, cancellationToken));
+            if (File.Exists(_configuration.LastRedemptionIdLocation))
+                return double.Parse(await File.ReadAllTextAsync(_configuration.LastRedemptionIdLocation, cancellationToken));
             
-            await using var file = File.CreateText(_configuration.LastFundingIdLocation);
+            await using var file = File.CreateText(_configuration.LastRedemptionIdLocation);
             await file.WriteAsync("3042");
             return 3042;
         }
         
-        private async Task StoreLastFundingId(double fundingId)
+        private async Task StoreLastRedemptionId(double redemptionId)
         {
-            await using var file = File.CreateText(_configuration.LastFundingIdLocation);
-            await file.WriteAsync(fundingId.ToString(CultureInfo.InvariantCulture));
+            await using var file = File.CreateText(_configuration.LastRedemptionIdLocation);
+            await file.WriteAsync(redemptionId.ToString(CultureInfo.InvariantCulture));
         }
         
-        private async Task<FundingResponse?> GetFunding(
+        private async Task<RedemptionResponse?> GetRedemption(
             double fromId,
             CancellationToken cancellationToken)
         {
             using var client = _httpClientFactory.CreateClient("Graph");
 
-            var query = FundingQuery.Replace("LAST_ID", fromId.ToString(CultureInfo.InvariantCulture));
+            var query = RedemptionQuery.Replace("LAST_ID", fromId.ToString(CultureInfo.InvariantCulture));
             var graphQuery = $"{{ \"query\": \"{query.ReplaceLineEndings("\\n")}\" }}";
             
             var response = await client.PostAsync(
@@ -184,7 +184,7 @@ namespace ChainflipInsights.Feeders.Funding
                     new MediaTypeHeaderValue(MediaTypeNames.Application.Json)), 
                 cancellationToken);
 
-            return await response.Content.ReadFromJsonAsync<FundingResponse>(cancellationToken: cancellationToken);
+            return await response.Content.ReadFromJsonAsync<RedemptionResponse>(cancellationToken: cancellationToken);
         }
     }
 }

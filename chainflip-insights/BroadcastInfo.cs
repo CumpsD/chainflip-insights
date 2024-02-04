@@ -4,6 +4,7 @@ namespace ChainflipInsights
     using ChainflipInsights.Feeders.Epoch;
     using ChainflipInsights.Feeders.Funding;
     using ChainflipInsights.Feeders.Liquidity;
+    using ChainflipInsights.Feeders.Redemption;
     using ChainflipInsights.Feeders.Swap;
 
     public class BroadcastInfo
@@ -12,6 +13,7 @@ namespace ChainflipInsights
         public IncomingLiquidityInfo? IncomingLiquidityInfo { get; }
         public EpochInfo? EpochInfo { get; }
         public FundingInfo? FundingInfo { get; }
+        public RedemptionInfo? RedemptionInfo { get; }
 
         public BroadcastInfo(SwapInfo swapInfo) 
             => SwapInfo = swapInfo ?? throw new ArgumentNullException(nameof(swapInfo));
@@ -24,6 +26,9 @@ namespace ChainflipInsights
 
         public BroadcastInfo(FundingInfo fundingInfo)
             => FundingInfo = fundingInfo ?? throw new ArgumentNullException(nameof(fundingInfo));
+
+        public BroadcastInfo(RedemptionInfo redemptionInfo)
+            => RedemptionInfo = redemptionInfo ?? throw new ArgumentNullException(nameof(redemptionInfo));
 
     }
 }

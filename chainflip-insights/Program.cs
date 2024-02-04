@@ -18,6 +18,7 @@
     using ChainflipInsights.Consumers.Twitter;
     using ChainflipInsights.Feeders.Epoch;
     using ChainflipInsights.Feeders.Funding;
+    using ChainflipInsights.Feeders.Redemption;
     using ChainflipInsights.Feeders.Liquidity;
     using ChainflipInsights.Feeders.Swap;
     using ChainflipInsights.Infrastructure;
@@ -39,6 +40,7 @@
         private static Pipeline<IncomingLiquidityInfo>? _incomingLiquidityPipeline;
         private static Pipeline<EpochInfo>? _epochPipeline;
         private static Pipeline<FundingInfo>? _fundingPipeline;
+        private static Pipeline<RedemptionInfo>? _redemptionPipeline;
 
         public static void Main()
         {
@@ -72,6 +74,7 @@
                 _incomingLiquidityPipeline?.Source.Complete();
                 _epochPipeline?.Source.Complete();
                 _fundingPipeline?.Source.Complete();
+                _redemptionPipeline?.Source.Complete();
 
                 CancellationTokenSource.Cancel();
 
@@ -89,6 +92,7 @@
                 _incomingLiquidityPipeline = container.GetRequiredService<Pipeline<IncomingLiquidityInfo>>();
                 _epochPipeline = container.GetRequiredService<Pipeline<EpochInfo>>();
                 _fundingPipeline = container.GetRequiredService<Pipeline<FundingInfo>>();
+                _redemptionPipeline = container.GetRequiredService<Pipeline<RedemptionInfo>>();
 
                 var runner = container.GetRequiredService<Runner>();
 
@@ -96,6 +100,7 @@
                 var incomingLiquidityFeeder = container.GetRequiredService<IncomingLiquidityFeeder>();
                 var epochFeeder = container.GetRequiredService<EpochFeeder>();
                 var fundingFeeder = container.GetRequiredService<FundingFeeder>();
+                var redemptionFeeder = container.GetRequiredService<RedemptionFeeder>();
 
                 var tasks = new List<Task>();
                 tasks.AddRange(runner.Start());
@@ -104,6 +109,7 @@
                 tasks.Add(incomingLiquidityFeeder.Start());
                 tasks.Add(epochFeeder.Start());
                 tasks.Add(fundingFeeder.Start());
+                tasks.Add(redemptionFeeder.Start());
 
                 Console.WriteLine("Running... Press CTRL + C to exit.");
                 Task.WaitAll(tasks.ToArray());
@@ -246,6 +252,10 @@
                 .SingleInstance();
             
             builder
+                .Register(_ => new Pipeline<RedemptionInfo>(new BufferBlock<RedemptionInfo>(), ct))
+                .SingleInstance();
+            
+            builder
                 .RegisterType<SwapFeeder>()
                 .SingleInstance();
             
@@ -259,6 +269,10 @@
             
             builder
                 .RegisterType<FundingFeeder>()
+                .SingleInstance();
+            
+            builder
+                .RegisterType<RedemptionFeeder>()
                 .SingleInstance();
             
             builder

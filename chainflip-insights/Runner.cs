@@ -10,6 +10,7 @@ namespace ChainflipInsights
     using ChainflipInsights.Consumers.Twitter;
     using ChainflipInsights.Feeders.Epoch;
     using ChainflipInsights.Feeders.Funding;
+    using ChainflipInsights.Feeders.Redemption;
     using ChainflipInsights.Feeders.Liquidity;
     using ChainflipInsights.Feeders.Swap;
     using ChainflipInsights.Infrastructure.Pipelines;
@@ -32,6 +33,7 @@ namespace ChainflipInsights
             Pipeline<IncomingLiquidityInfo> incomingLiquidityPipeline,
             Pipeline<EpochInfo> epochPipeline,
             Pipeline<FundingInfo> fundingPipeline,
+            Pipeline<RedemptionInfo> redemptionPipeline,
             DiscordConsumer discordConsumer,
             TelegramConsumer telegramConsumer,
             TwitterConsumer twitterConsumer)
@@ -45,14 +47,16 @@ namespace ChainflipInsights
                 swapPipeline,
                 incomingLiquidityPipeline,
                 epochPipeline,
-                fundingPipeline);
+                fundingPipeline,
+                redemptionPipeline);
         }
 
         private void SetupPipelines(
             Pipeline<SwapInfo> swapPipeline, 
             Pipeline<IncomingLiquidityInfo> incomingLiquidityPipeline, 
             Pipeline<EpochInfo> epochPipeline, 
-            Pipeline<FundingInfo> fundingPipeline)
+            Pipeline<FundingInfo> fundingPipeline, 
+            Pipeline<RedemptionInfo> redemptionPipeline)
         {
             var swapSource = swapPipeline.Source;
             swapSource.Completion.ContinueWith(
@@ -81,6 +85,13 @@ namespace ChainflipInsights
                     "Funding Source completed, {Status}",
                     task.Status),
                 fundingPipeline.CancellationToken);
+            
+            var redemptionSource = redemptionPipeline.Source;
+            redemptionSource.Completion.ContinueWith(
+                task => _logger.LogInformation(
+                    "Redemption Source completed, {Status}",
+                    task.Status),
+                redemptionPipeline.CancellationToken);
             
             var wrapSwaps = new TransformBlock<SwapInfo, BroadcastInfo>(
                 swapInfo => new BroadcastInfo(swapInfo),
@@ -146,6 +157,22 @@ namespace ChainflipInsights
                     task.Status),
                 fundingPipeline.CancellationToken);
             
+            var wrapRedemption = new TransformBlock<RedemptionInfo, BroadcastInfo>(
+                redemptionInfo => new BroadcastInfo(redemptionInfo),
+                new ExecutionDataflowBlockOptions
+                {
+                    CancellationToken = redemptionPipeline.CancellationToken,
+                    MaxDegreeOfParallelism = 1,
+                    EnsureOrdered = true,
+                    SingleProducerConstrained = true
+                });
+            
+            wrapRedemption.Completion.ContinueWith(
+                task => _logger.LogInformation(
+                    "Wrap Redemption completed, {Status}",
+                    task.Status),
+                redemptionPipeline.CancellationToken);
+            
             var broadcast = new BroadcastBlock<BroadcastInfo>(
                 e => e,
                 new DataflowBlockOptions
@@ -183,11 +210,13 @@ namespace ChainflipInsights
             incomingLiquiditySource.LinkTo(wrapIncomingLiquidity, linkOptions);
             epochSource.LinkTo(wrapEpoch, linkOptions);
             fundingSource.LinkTo(wrapFunding, linkOptions);
+            redemptionSource.LinkTo(wrapRedemption, linkOptions);
             
             wrapSwaps.LinkTo(broadcast, linkOptions);
             wrapIncomingLiquidity.LinkTo(broadcast, linkOptions);
             wrapEpoch.LinkTo(broadcast, linkOptions);
             wrapFunding.LinkTo(broadcast, linkOptions);
+            wrapRedemption.LinkTo(broadcast, linkOptions);
         }
         
         private ITargetBlock<BroadcastInfo> SetupDiscordSwapPipeline(

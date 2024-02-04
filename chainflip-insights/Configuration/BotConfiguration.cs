@@ -35,6 +35,13 @@ namespace ChainflipInsights.Configuration
         {
             get; init;
         }  
+                
+        [Required]
+        [NotNull]
+        public bool? EnableRedemption
+        {
+            get; init;
+        }  
         
         [Required]
         [NotNull]
@@ -150,6 +157,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public int? RedemptionQueryDelay
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
         public string? LastSwapIdLocation
         {
             get; init;
@@ -176,6 +190,13 @@ namespace ChainflipInsights.Configuration
             get; init;
         }
 
+        [Required]
+        [NotNull]
+        public string? LastRedemptionIdLocation
+        {
+            get; init;
+        }
+        
         [Required]
         [NotNull]
         public ulong? DiscordSwapInfoChannelId
@@ -263,6 +284,13 @@ namespace ChainflipInsights.Configuration
         [Required]
         [NotNull]
         public double? FundingAmountThreshold
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public double? RedemptionAmountThreshold
         {
             get; init;
         }
