@@ -10,7 +10,9 @@ namespace ChainflipInsights.Consumers.Twitter
     using System.Threading.Tasks.Dataflow;
     using ChainflipInsights.Configuration;
     using ChainflipInsights.Feeders.Epoch;
+    using ChainflipInsights.Feeders.Funding;
     using ChainflipInsights.Feeders.Liquidity;
+    using ChainflipInsights.Feeders.Redemption;
     using ChainflipInsights.Feeders.Swap;
     using ChainflipInsights.Infrastructure.Pipelines;
     using Microsoft.Extensions.Logging;
@@ -57,6 +59,12 @@ namespace ChainflipInsights.Consumers.Twitter
                     
                     if (input.EpochInfo != null)
                         ProcessEpochInfo(input.EpochInfo);
+                    
+                    if (input.FundingInfo != null)
+                        ProcessFundingInfo(input.FundingInfo);
+                    
+                    if (input.RedemptionInfo != null)
+                        ProcessRedemptionInfo(input.RedemptionInfo);
                     
                     Task
                         .Delay(1500, cancellationToken)
@@ -150,6 +158,94 @@ namespace ChainflipInsights.Consumers.Twitter
                     $"➕ Maximum Bid is {epoch.MaxBidFormatted} $FLIP\n" +
                     $"🧮 Total bonded is {epoch.TotalBondFormatted} $FLIP\n" +
                     $"💰 Last Epoch distributed {epoch.PreviousEpoch.TotalRewardsFormatted} $FLIP in rewards";
+
+                _twitterClient.Execute
+                    .AdvanceRequestAsync(x =>
+                    {
+                        x.Query.Url = "https://api.twitter.com/2/tweets";
+                        x.Query.HttpMethod = Tweetinvi.Models.HttpMethod.POST;
+                        x.Query.HttpContent = JsonContent.Create(
+                            new TweetV2PostRequest { Text = text },
+                            mediaType: new MediaTypeHeaderValue(MediaTypeNames.Application.Json));
+                    })
+                    .GetAwaiter()
+                    .GetResult();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Twitter meh.");
+            }
+        }
+
+        private void ProcessFundingInfo(FundingInfo funding)
+        {
+            if (funding.AmountConverted < _configuration.TwitterFundingAmountThreshold)
+            {
+                _logger.LogInformation(
+                    "Funding did not meet treshold (${Threshold}) for Twitter: {Validator} added {Amount} FLIP -> {ExplorerUrl}",
+                    _configuration.TwitterFundingAmountThreshold,
+                    funding.Validator,
+                    funding.AmountFormatted,
+                    string.Format(_configuration.ValidatorUrl, funding.ValidatorName));
+                
+                return;
+            }
+            
+            try
+            {
+                _logger.LogInformation(
+                    "Announcing Funding {FundingId} on Twitter: {Validator} added {Amount} FLIP -> {EpochUrl}",
+                    funding.Id,
+                    funding.Validator,
+                    funding.AmountFormatted,
+                    string.Format(_configuration.ValidatorUrl, funding.ValidatorName));
+                
+                var text =
+                    $"🪙 Validator {funding.Validator} added {funding.AmountFormatted} FLIP! {string.Format(_configuration.ValidatorUrl, funding.ValidatorName)}";
+
+                _twitterClient.Execute
+                    .AdvanceRequestAsync(x =>
+                    {
+                        x.Query.Url = "https://api.twitter.com/2/tweets";
+                        x.Query.HttpMethod = Tweetinvi.Models.HttpMethod.POST;
+                        x.Query.HttpContent = JsonContent.Create(
+                            new TweetV2PostRequest { Text = text },
+                            mediaType: new MediaTypeHeaderValue(MediaTypeNames.Application.Json));
+                    })
+                    .GetAwaiter()
+                    .GetResult();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Twitter meh.");
+            }
+        }
+
+        private void ProcessRedemptionInfo(RedemptionInfo redemption)
+        {
+            if (redemption.AmountConverted < _configuration.TwitterRedemptionAmountThreshold)
+            {
+                _logger.LogInformation(
+                    "Redemption did not meet treshold (${Threshold}) for Twitter: {Validator} added {Amount} FLIP -> {ExplorerUrl}",
+                    _configuration.TwitterRedemptionAmountThreshold,
+                    redemption.Validator,
+                    redemption.AmountFormatted,
+                    string.Format(_configuration.ValidatorUrl, redemption.ValidatorName));
+                
+                return;
+            }
+            
+            try
+            {
+                _logger.LogInformation(
+                    "Announcing Redemption {RedemptionId} on Twitter: {Validator} redeemed {Amount} FLIP -> {EpochUrl}",
+                    redemption.Id,
+                    redemption.Validator,
+                    redemption.AmountFormatted,
+                    string.Format(_configuration.ValidatorUrl, redemption.ValidatorName));
+                
+                var text =
+                    $"💸 Validator {redemption.Validator} redeemed {redemption.AmountFormatted} FLIP! {string.Format(_configuration.ValidatorUrl, redemption.ValidatorName)}";
 
                 _twitterClient.Execute
                     .AdvanceRequestAsync(x =>
