@@ -111,7 +111,8 @@ namespace ChainflipInsights.Consumers.Mastodon
                 var text =
                     $"{swap.Emoji} Swapped {_configuration.ExplorerSwapsUrl}{swap.Id}\n" +
                     $"➡️ {swap.DepositAmountFormatted} #{swap.SourceAsset} (${swap.DepositValueUsdFormatted})\n" +
-                    $"⬅️ {swap.EgressAmountFormatted} #{swap.DestinationAsset} (${swap.EgressValueUsdFormatted})";
+                    $"⬅️ {swap.EgressAmountFormatted} #{swap.DestinationAsset} (${swap.EgressValueUsdFormatted})\n" +
+                    $"#chainflip #flip";
 
                 var status = _mastodonClient
                     .PublishStatus(
@@ -153,7 +154,8 @@ namespace ChainflipInsights.Consumers.Mastodon
                     $"➖ Minimum Bid is {epoch.MinimumBondFormatted} $FLIP\n" +
                     $"➕ Maximum Bid is {epoch.MaxBidFormatted} $FLIP\n" +
                     $"🧮 Total bonded is {epoch.TotalBondFormatted} $FLIP\n" +
-                    $"💰 Last Epoch distributed {epoch.PreviousEpoch.TotalRewardsFormatted} $FLIP in rewards";
+                    $"💰 Last Epoch distributed {epoch.PreviousEpoch.TotalRewardsFormatted} $FLIP in rewards\n" +
+                    $"#chainflip #flip";
 
                 var status = _mastodonClient
                     .PublishStatus(
@@ -197,7 +199,8 @@ namespace ChainflipInsights.Consumers.Mastodon
                     string.Format(_configuration.ValidatorUrl, funding.ValidatorName));
                 
                 var text =
-                    $"🪙 Validator {funding.Validator} added {funding.AmountFormatted} FLIP! {string.Format(_configuration.ValidatorUrl, funding.ValidatorName)}";
+                    $"🪙 Validator {funding.Validator} added {funding.AmountFormatted} FLIP! {string.Format(_configuration.ValidatorUrl, funding.ValidatorName)}\n" +
+                    $"#chainflip #flip";
 
                 var status = _mastodonClient
                     .PublishStatus(
@@ -241,7 +244,8 @@ namespace ChainflipInsights.Consumers.Mastodon
                     string.Format(_configuration.ValidatorUrl, redemption.ValidatorName));
                 
                 var text =
-                    $"💸 Validator {redemption.Validator} redeemed {redemption.AmountFormatted} FLIP! {string.Format(_configuration.ValidatorUrl, redemption.ValidatorName)}";
+                    $"💸 Validator {redemption.Validator} redeemed {redemption.AmountFormatted} FLIP! {string.Format(_configuration.ValidatorUrl, redemption.ValidatorName)}\n" +
+                    $"#chainflip #flip";
 
                 var status = _mastodonClient
                     .PublishStatus(
