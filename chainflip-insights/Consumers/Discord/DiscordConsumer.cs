@@ -278,7 +278,7 @@ namespace ChainflipInsights.Consumers.Discord
                         : $"**`{funding.ValidatorName}`** (**{funding.ValidatorAlias}**)";
                 
                 var text =
-                    $"🪙 **Validator Funded**! {validator} added **{funding.AmountFormatted} FLIP**! " +
+                    $"🪙 Validator {validator} added **{funding.AmountFormatted} FLIP**! " +
                     $"// **[view validator on explorer]({string.Format(_configuration.ValidatorUrl, funding.ValidatorName)})**";
 
                 var infoChannel = (ITextChannel)_discordClient
@@ -334,7 +334,7 @@ namespace ChainflipInsights.Consumers.Discord
                         : $"**`{redemption.ValidatorName}`** (**{redemption.ValidatorAlias}**)";
                 
                 var text =
-                    $"💸 **Validator Redeemed**! {validator} redeemed **{redemption.AmountFormatted} FLIP**! " +
+                    $"💸 Validator {validator} redeemed **{redemption.AmountFormatted} FLIP**! " +
                     $"// **[view validator on explorer]({string.Format(_configuration.ValidatorUrl, redemption.ValidatorName)})**";
 
                 var infoChannel = (ITextChannel)_discordClient
