@@ -9,6 +9,7 @@ namespace ChainflipInsights.Consumers.Twitter
     using System.Threading.Tasks;
     using System.Threading.Tasks.Dataflow;
     using ChainflipInsights.Configuration;
+    using ChainflipInsights.Feeders.Epoch;
     using ChainflipInsights.Feeders.Liquidity;
     using ChainflipInsights.Feeders.Swap;
     using ChainflipInsights.Infrastructure.Pipelines;
@@ -53,6 +54,9 @@ namespace ChainflipInsights.Consumers.Twitter
                     
                     if (input.IncomingLiquidityInfo != null)
                         ProcessIncomingLiquidityInfo(input.IncomingLiquidityInfo);
+                    
+                    if (input.EpochInfo != null)
+                        ProcessEpochInfo(input.EpochInfo);
                     
                     Task
                         .Delay(1500, cancellationToken)
@@ -122,13 +126,47 @@ namespace ChainflipInsights.Consumers.Twitter
                 _logger.LogError(e, "Twitter meh.");
             }
         }
-        
+
         private void ProcessIncomingLiquidityInfo(IncomingLiquidityInfo liquidity)
         {
             if (liquidity.DepositValueUsd < _configuration.TwitterLiquidityAmountThreshold)
                 return;
             
             // TODO: Send
+        }
+
+        private void ProcessEpochInfo(EpochInfo epoch)
+        {
+            try
+            {
+                _logger.LogInformation(
+                    "Announcing Epoch {Epoch} on Twitter -> {EpochUrl}",
+                    epoch.Id,
+                    $"{_configuration.ExplorerAuthorityUrl}{epoch.Id}");
+                
+                var text =
+                    $"⏰ Epoch {epoch.Id} Started {_configuration.ExplorerAuthorityUrl}{epoch.Id}\n" +
+                    $"➖ Minimum Bid is {epoch.MinimumBondFormatted} FLIP.\n" +
+                    $"➕ Minimum Bid is {epoch.MaxBidFormatted} FLIP.\n" +
+                    $"🧮 Total bonded is {epoch.TotalBondFormatted} FLIP.\n" +
+                    $"💰 Last Epoch distributed {epoch.PreviousEpoch.TotalRewardsFormatted} FLIP rewards.";
+
+                _twitterClient.Execute
+                    .AdvanceRequestAsync(x =>
+                    {
+                        x.Query.Url = "https://api.twitter.com/2/tweets";
+                        x.Query.HttpMethod = Tweetinvi.Models.HttpMethod.POST;
+                        x.Query.HttpContent = JsonContent.Create(
+                            new TweetV2PostRequest { Text = text },
+                            mediaType: new MediaTypeHeaderValue(MediaTypeNames.Application.Json));
+                    })
+                    .GetAwaiter()
+                    .GetResult();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Twitter meh.");
+            }
         }
     }
 
