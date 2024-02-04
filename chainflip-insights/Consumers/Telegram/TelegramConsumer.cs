@@ -5,7 +5,10 @@ namespace ChainflipInsights.Consumers.Telegram
     using System.Threading.Tasks;
     using System.Threading.Tasks.Dataflow;
     using ChainflipInsights.Configuration;
+    using ChainflipInsights.Feeders.Epoch;
+    using ChainflipInsights.Feeders.Funding;
     using ChainflipInsights.Feeders.Liquidity;
+    using ChainflipInsights.Feeders.Redemption;
     using ChainflipInsights.Feeders.Swap;
     using ChainflipInsights.Infrastructure.Pipelines;
     using global::Telegram.Bot;
@@ -50,7 +53,16 @@ namespace ChainflipInsights.Consumers.Telegram
                         ProcessSwap(input.SwapInfo, cancellationToken);
                     
                     if (input.IncomingLiquidityInfo != null)
-                        ProcessIncomingLiquidityInfo(input.IncomingLiquidityInfo);
+                        ProcessIncomingLiquidityInfo(input.IncomingLiquidityInfo, cancellationToken);
+                    
+                    if (input.EpochInfo != null)
+                        ProcessEpochInfo(input.EpochInfo, cancellationToken);
+                    
+                    if (input.FundingInfo != null)
+                        ProcessFundingInfo(input.FundingInfo, cancellationToken);
+                    
+                    if (input.RedemptionInfo != null)
+                        ProcessRedemptionInfo(input.RedemptionInfo, cancellationToken);
                     
                     Task
                         .Delay(1500, cancellationToken)
@@ -127,13 +139,166 @@ namespace ChainflipInsights.Consumers.Telegram
                 _logger.LogError(e, "Telegram meh.");
             }
         }
-        
-        private void ProcessIncomingLiquidityInfo(IncomingLiquidityInfo liquidity)
+
+        private void ProcessIncomingLiquidityInfo(
+            IncomingLiquidityInfo liquidity,
+            CancellationToken cancellationToken)
         {
             if (liquidity.DepositValueUsd < _configuration.TelegramLiquidityAmountThreshold)
                 return;
             
             // TODO: Send
+        }
+
+        private void ProcessEpochInfo(
+            EpochInfo epoch,
+            CancellationToken cancellationToken)
+        {
+            try
+            {
+                _logger.LogInformation(
+                    "Announcing Epoch {Epoch} on Telegram -> {EpochUrl}",
+                    epoch.Id,
+                    $"{_configuration.ExplorerAuthorityUrl}{epoch.Id}");
+
+                var text =
+                    $"⏰ **Epoch {epoch.Id} Started**! Current Minimum Active Bid is **{epoch.MinimumBondFormatted} FLIP**. " +
+                    $"In total we have **{epoch.TotalBondFormatted}** FLIP bonded, with a maximum bid of **{epoch.MaxBidFormatted} FLIP**. " +
+                    $"Last Epoch distributed **{epoch.PreviousEpoch.TotalRewardsFormatted}** FLIP as rewards. " +
+                    $"// **[view authority set on explorer]({_configuration.ExplorerAuthorityUrl}{epoch.Id})**";
+
+                var message = _telegramClient
+                    .SendTextMessageAsync(
+                        new ChatId(_configuration.TelegramSwapInfoChannelId.Value),
+                        text,
+                        parseMode: ParseMode.Markdown,
+                        disableNotification: true,
+                        allowSendingWithoutReply: true,
+                        cancellationToken: cancellationToken)
+                    .GetAwaiter()
+                    .GetResult();
+
+                _logger.LogInformation(
+                    "Announcing Epoch {Epoch} on Discord as Message {MessageId}",
+                    epoch.Id,
+                    message.MessageId);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Telegram meh.");
+            }
+        }
+
+        private void ProcessFundingInfo(
+            FundingInfo funding,
+            CancellationToken cancellationToken)
+        {
+            if (funding.AmountConverted < _configuration.TelegramFundingAmountThreshold)
+            {
+                _logger.LogInformation(
+                    "Funding did not meet treshold (${Threshold}) for Telegram: {Validator} added {Amount} FLIP -> {ExplorerUrl}",
+                    _configuration.TelegramFundingAmountThreshold,
+                    funding.Validator,
+                    funding.AmountFormatted,
+                    string.Format(_configuration.ValidatorUrl, funding.ValidatorName));
+                
+                return;
+            }
+
+            try
+            {
+                _logger.LogInformation(
+                    "Announcing Funding {FundingId} on Telegram: {Validator} added {Amount} FLIP -> {EpochUrl}",
+                    funding.Id,
+                    funding.Validator,
+                    funding.AmountFormatted,
+                    string.Format(_configuration.ValidatorUrl, funding.ValidatorName));
+
+                var validator =
+                    string.IsNullOrWhiteSpace(funding.ValidatorAlias)
+                        ? $"**`{funding.ValidatorName}`**" 
+                        : $"**`{funding.ValidatorName}`** (**{funding.ValidatorAlias}**)";
+                
+                var text =
+                    $"🪙 Validator {validator} added **{funding.AmountFormatted} FLIP**! " +
+                    $"// **[view validator on explorer]({string.Format(_configuration.ValidatorUrl, funding.ValidatorName)})**";
+
+                var message = _telegramClient
+                    .SendTextMessageAsync(
+                        new ChatId(_configuration.TelegramSwapInfoChannelId.Value),
+                        text,
+                        parseMode: ParseMode.Markdown,
+                        disableNotification: true,
+                        allowSendingWithoutReply: true,
+                        cancellationToken: cancellationToken)
+                    .GetAwaiter()
+                    .GetResult();
+
+                _logger.LogInformation(
+                    "Announcing Funding {FundingId} on Telegram as Message {MessageId}",
+                    funding.Id,
+                    message.MessageId);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Telegram meh.");
+            }
+        }
+
+        private void ProcessRedemptionInfo(
+            RedemptionInfo redemption,
+            CancellationToken cancellationToken)
+        {
+            if (redemption.AmountConverted < _configuration.TelegramRedemptionAmountThreshold)
+            {
+                _logger.LogInformation(
+                    "Redemption did not meet treshold (${Threshold}) for Telegram: {Validator} added {Amount} FLIP -> {ExplorerUrl}",
+                    _configuration.TelegramRedemptionAmountThreshold,
+                    redemption.Validator,
+                    redemption.AmountFormatted,
+                    string.Format(_configuration.ValidatorUrl, redemption.ValidatorName));
+                
+                return;
+            }
+
+            try
+            {
+                _logger.LogInformation(
+                    "Announcing Redemption {RedemptionId} on Telegram: {Validator} redeemed {Amount} FLIP -> {EpochUrl}",
+                    redemption.Id,
+                    redemption.Validator,
+                    redemption.AmountFormatted,
+                    string.Format(_configuration.ValidatorUrl, redemption.ValidatorName));
+
+                var validator =
+                    string.IsNullOrWhiteSpace(redemption.ValidatorAlias)
+                        ? $"**`{redemption.ValidatorName}`**" 
+                        : $"**`{redemption.ValidatorName}`** (**{redemption.ValidatorAlias}**)";
+                
+                var text =
+                    $"💸 Validator {validator} redeemed **{redemption.AmountFormatted} FLIP**! " +
+                    $"// **[view validator on explorer]({string.Format(_configuration.ValidatorUrl, redemption.ValidatorName)})**";
+
+                var message = _telegramClient
+                    .SendTextMessageAsync(
+                        new ChatId(_configuration.TelegramSwapInfoChannelId.Value),
+                        text,
+                        parseMode: ParseMode.Markdown,
+                        disableNotification: true,
+                        allowSendingWithoutReply: true,
+                        cancellationToken: cancellationToken)
+                    .GetAwaiter()
+                    .GetResult();
+
+                _logger.LogInformation(
+                    "Announcing Redemption {RedemptionId} on Discord as Message {MessageId}",
+                    redemption.Id,
+                    message.MessageId);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Telegram meh.");
+            }
         }
     }
 }
