@@ -222,7 +222,7 @@ namespace ChainflipInsights.Consumers.Discord
                 var text =
                     $"⏰ **Epoch {epoch.Id} Started**! Current MAB is **{epoch.MinimumBondFormatted} FLIP**. " +
                     $"In total we have **{epoch.TotalBondFormatted}** FLIP bonded, with a maximum bond of **{epoch.MaxBidFormatted} FLIP**. " +
-                    $"Last Epoch distributed **{epoch.TotalRewardsFormatted}** FLIP as rewards." +
+                    $"Last Epoch distributed **{epoch.PreviousEpoch.TotalRewardsFormatted}** FLIP as rewards." +
                     $"// **[view authority set on explorer]({_configuration.ExplorerAuthorityUrl}{epoch.Id})**";
 
                 var infoChannel = (ITextChannel)_discordClient

@@ -168,8 +168,8 @@ namespace ChainflipInsights.Feeders.Epoch
                 return double.Parse(await File.ReadAllTextAsync(_configuration.LastEpochIdLocation, cancellationToken));
             
             await using var file = File.CreateText(_configuration.LastEpochIdLocation);
-            await file.WriteAsync("77");
-            return 77;
+            await file.WriteAsync("78");
+            return 78;
         }
         
         private async Task StoreLastEpochId(double epochId)
