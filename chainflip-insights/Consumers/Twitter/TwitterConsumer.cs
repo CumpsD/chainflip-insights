@@ -147,9 +147,9 @@ namespace ChainflipInsights.Consumers.Twitter
                 var text =
                     $"⏰ Epoch {epoch.Id} Started {_configuration.ExplorerAuthorityUrl}{epoch.Id}\n" +
                     $"➖ Minimum Bid is {epoch.MinimumBondFormatted} FLIP.\n" +
-                    $"➕ Minimum Bid is {epoch.MaxBidFormatted} FLIP.\n" +
+                    $"➕ Maximum Bid is {epoch.MaxBidFormatted} FLIP.\n" +
                     $"🧮 Total bonded is {epoch.TotalBondFormatted} FLIP.\n" +
-                    $"💰 Last Epoch distributed {epoch.PreviousEpoch.TotalRewardsFormatted} FLIP rewards.";
+                    $"💰 Last Epoch distributed {epoch.PreviousEpoch.TotalRewardsFormatted} FLIP in rewards.";
 
                 _twitterClient.Execute
                     .AdvanceRequestAsync(x =>
