@@ -248,11 +248,11 @@ namespace ChainflipInsights.Consumers.Discord
 
         private void ProcessFundingInfo(FundingInfo funding)
         {
-            if (funding.AmountConverted < _configuration.FundingAmountThreshold)
+            if (funding.AmountConverted < _configuration.DiscordFundingAmountThreshold)
             {
                 _logger.LogInformation(
                     "Funding did not meet treshold (${Threshold}) for Discord: {Validator} added {Amount} FLIP -> {ExplorerUrl}",
-                    _configuration.FundingAmountThreshold,
+                    _configuration.DiscordFundingAmountThreshold,
                     funding.Validator,
                     funding.AmountFormatted,
                     string.Format(_configuration.ValidatorUrl, funding.ValidatorName));
@@ -304,11 +304,11 @@ namespace ChainflipInsights.Consumers.Discord
 
         private void ProcessRedemptionInfo(RedemptionInfo redemption)
         {
-            if (redemption.AmountConverted < _configuration.RedemptionAmountThreshold)
+            if (redemption.AmountConverted < _configuration.DiscordRedemptionAmountThreshold)
             {
                 _logger.LogInformation(
                     "Redemption did not meet treshold (${Threshold}) for Discord: {Validator} added {Amount} FLIP -> {ExplorerUrl}",
-                    _configuration.RedemptionAmountThreshold,
+                    _configuration.DiscordRedemptionAmountThreshold,
                     redemption.Validator,
                     redemption.AmountFormatted,
                     string.Format(_configuration.ValidatorUrl, redemption.ValidatorName));

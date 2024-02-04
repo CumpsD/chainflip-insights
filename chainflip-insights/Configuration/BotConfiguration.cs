@@ -280,17 +280,45 @@ namespace ChainflipInsights.Configuration
         {
             get; init;
         }
-        
+
         [Required]
         [NotNull]
-        public double? FundingAmountThreshold
+        public double? TwitterFundingAmountThreshold
         {
             get; init;
         }
         
         [Required]
         [NotNull]
-        public double? RedemptionAmountThreshold
+        public double? TelegramFundingAmountThreshold
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public double? DiscordFundingAmountThreshold
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public double? TwitterRedemptionAmountThreshold
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public double? TelegramRedemptionAmountThreshold
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public double? DiscordRedemptionAmountThreshold
         {
             get; init;
         }
