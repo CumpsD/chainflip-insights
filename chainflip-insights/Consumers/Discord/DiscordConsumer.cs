@@ -220,7 +220,7 @@ namespace ChainflipInsights.Consumers.Discord
                     $"{_configuration.ExplorerAuthorityUrl}{epoch.Id}");
 
                 var text =
-                    $"⏰ **Epoch {epoch.Id} Started**! Current MAB is **{epoch.MinimumBondFormatted} FLIP**. " +
+                    $"⏰ **Epoch {epoch.Id} Started**! Current Minimum Active Bid is **{epoch.MinimumBondFormatted} FLIP**. " +
                     $"In total we have **{epoch.TotalBondFormatted}** FLIP bonded, with a maximum bond of **{epoch.MaxBidFormatted} FLIP**. " +
                     $"Last Epoch distributed **{epoch.PreviousEpoch.TotalRewardsFormatted}** FLIP as rewards." +
                     $"// **[view authority set on explorer]({_configuration.ExplorerAuthorityUrl}{epoch.Id})**";
