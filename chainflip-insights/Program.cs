@@ -14,6 +14,7 @@
     using Discord.WebSocket;
     using ChainflipInsights.Configuration;
     using ChainflipInsights.Consumers.Discord;
+    using ChainflipInsights.Consumers.Mastodon;
     using ChainflipInsights.Consumers.Telegram;
     using ChainflipInsights.Consumers.Twitter;
     using ChainflipInsights.Feeders.Epoch;
@@ -285,6 +286,10 @@
             
             builder
                 .RegisterType<TwitterConsumer>()
+                .SingleInstance();
+            
+            builder
+                .RegisterType<MastodonConsumer>()
                 .SingleInstance();
             
             builder

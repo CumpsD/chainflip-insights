@@ -6,6 +6,7 @@ namespace ChainflipInsights
     using System.Threading.Tasks;
     using System.Threading.Tasks.Dataflow;
     using ChainflipInsights.Consumers.Discord;
+    using ChainflipInsights.Consumers.Mastodon;
     using ChainflipInsights.Consumers.Telegram;
     using ChainflipInsights.Consumers.Twitter;
     using ChainflipInsights.Feeders.Epoch;
@@ -22,11 +23,13 @@ namespace ChainflipInsights
         private readonly DiscordConsumer _discordConsumer;
         private readonly TelegramConsumer _telegramConsumer;
         private readonly TwitterConsumer _twitterConsumer;
+        private readonly MastodonConsumer _mastodonConsumer;
 
-        private ITargetBlock<BroadcastInfo> _discordSwapPipelineTarget = null!;
-        private ITargetBlock<BroadcastInfo> _telegramSwapPipelineTarget = null!;
-        private ITargetBlock<BroadcastInfo> _twitterSwapPipelineTarget = null!;
-        
+        private ITargetBlock<BroadcastInfo> _discordPipelineTarget = null!;
+        private ITargetBlock<BroadcastInfo> _telegramPipelineTarget = null!;
+        private ITargetBlock<BroadcastInfo> _twitterPipelineTarget = null!;
+        private ITargetBlock<BroadcastInfo> _mastodonPipelineTarget = null!;
+
         public Runner(
             ILogger<Runner> logger,
             Pipeline<SwapInfo> swapPipeline,
@@ -36,12 +39,14 @@ namespace ChainflipInsights
             Pipeline<RedemptionInfo> redemptionPipeline,
             DiscordConsumer discordConsumer,
             TelegramConsumer telegramConsumer,
-            TwitterConsumer twitterConsumer)
+            TwitterConsumer twitterConsumer,
+            MastodonConsumer mastodonConsumer)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _discordConsumer = discordConsumer ?? throw new ArgumentNullException(nameof(discordConsumer));
             _telegramConsumer = telegramConsumer ?? throw new ArgumentNullException(nameof(telegramConsumer));
             _twitterConsumer = twitterConsumer ?? throw new ArgumentNullException(nameof(twitterConsumer));
+            _mastodonConsumer = mastodonConsumer ?? throw new ArgumentNullException(nameof(mastodonConsumer));
 
             SetupPipelines(
                 swapPipeline,
@@ -191,17 +196,22 @@ namespace ChainflipInsights
                 PropagateCompletion = true
             };
             
-            _discordSwapPipelineTarget = SetupDiscordSwapPipeline(
+            _discordPipelineTarget = SetupDiscordPipeline(
                 broadcast,
                 linkOptions, 
                 swapPipeline.CancellationToken);
             
-            _telegramSwapPipelineTarget = SetupTelegramSwapPipeline(
+            _telegramPipelineTarget = SetupTelegramPipeline(
                 broadcast,
                 linkOptions,
                 swapPipeline.CancellationToken);
             
-            _twitterSwapPipelineTarget = SetupTwitterSwapPipeline(
+            _twitterPipelineTarget = SetupTwitterPipeline(
+                broadcast,
+                linkOptions,
+                swapPipeline.CancellationToken);
+            
+            _mastodonPipelineTarget = SetupMastodonPipeline(
                 broadcast,
                 linkOptions,
                 swapPipeline.CancellationToken);
@@ -219,7 +229,7 @@ namespace ChainflipInsights
             wrapRedemption.LinkTo(broadcast, linkOptions);
         }
         
-        private ITargetBlock<BroadcastInfo> SetupDiscordSwapPipeline(
+        private ITargetBlock<BroadcastInfo> SetupDiscordPipeline(
             BroadcastBlock<BroadcastInfo> broadcast, 
             DataflowLinkOptions linkOptions,
             CancellationToken cancellationToken)
@@ -237,7 +247,7 @@ namespace ChainflipInsights
             return pipeline;
         }
 
-        private ITargetBlock<BroadcastInfo> SetupTelegramSwapPipeline(
+        private ITargetBlock<BroadcastInfo> SetupTelegramPipeline(
             BroadcastBlock<BroadcastInfo> broadcast, 
             DataflowLinkOptions linkOptions,
             CancellationToken cancellationToken)
@@ -255,7 +265,7 @@ namespace ChainflipInsights
             return pipeline;
         }
         
-        private ITargetBlock<BroadcastInfo> SetupTwitterSwapPipeline(
+        private ITargetBlock<BroadcastInfo> SetupTwitterPipeline(
             BroadcastBlock<BroadcastInfo> broadcast, 
             DataflowLinkOptions linkOptions,
             CancellationToken cancellationToken)
@@ -273,6 +283,24 @@ namespace ChainflipInsights
             return pipeline;
         }
         
+        private ITargetBlock<BroadcastInfo> SetupMastodonPipeline(
+            BroadcastBlock<BroadcastInfo> broadcast, 
+            DataflowLinkOptions linkOptions,
+            CancellationToken cancellationToken)
+        {
+            var pipeline = _mastodonConsumer.Build(cancellationToken);
+
+            pipeline.Completion.ContinueWith(
+                task => _logger.LogInformation(
+                    "Mastodon Pipeline completed, {Status}",
+                    task.Status),
+                cancellationToken);
+            
+            broadcast.LinkTo(pipeline, linkOptions);
+
+            return pipeline;
+        }
+        
         public IEnumerable<Task> Start()
         {
             _logger.LogInformation(
@@ -282,9 +310,10 @@ namespace ChainflipInsights
             {
                 return
                 [
-                    _discordSwapPipelineTarget.Completion,
-                    _telegramSwapPipelineTarget.Completion,
-                    _twitterSwapPipelineTarget.Completion
+                    _discordPipelineTarget.Completion,
+                    _telegramPipelineTarget.Completion,
+                    _twitterPipelineTarget.Completion,
+                    _mastodonPipelineTarget.Completion
                 ];
             }
             catch (AggregateException ex)

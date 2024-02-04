@@ -66,6 +66,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public bool? EnableMastodon
+        {
+            get; init;
+        }   
+        
+        [Required]
+        [NotNull]
         public string? DiscordToken
         {
             get; init;
@@ -74,6 +81,55 @@ namespace ChainflipInsights.Configuration
         [Required]
         [NotNull]
         public string? TelegramToken
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public string? TwitterConsumerKey
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public string? TwitterConsumerSecret
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public string? TwitterAccessToken
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public string? TwitterAccessTokenSecret
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public string? MastodonClientKey
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public string? MastodonClientSecret
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public string? MastodonAccessToken
         {
             get; init;
         }
@@ -207,34 +263,6 @@ namespace ChainflipInsights.Configuration
         [Required]
         [NotNull]
         public long? TelegramSwapInfoChannelId 
-        {
-            get; init;
-        }
-
-        [Required]
-        [NotNull]
-        public string? TwitterConsumerKey
-        {
-            get; init;
-        }
-        
-        [Required]
-        [NotNull]
-        public string? TwitterConsumerSecret
-        {
-            get; init;
-        }
-        
-        [Required]
-        [NotNull]
-        public string? TwitterAccessToken
-        {
-            get; init;
-        }
-        
-        [Required]
-        [NotNull]
-        public string? TwitterAccessTokenSecret
         {
             get; init;
         }
