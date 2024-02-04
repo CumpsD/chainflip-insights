@@ -11,20 +11,18 @@ namespace ChainflipInsights.Feeders.Epoch
         public double Id { get; }
         
         public double MinimumBond { get; }
-        
-        public string MinimumBondFormatted 
+
+        public string MinimumBondFormatted
             => Math
                 .Round(MinimumBond / Math.Pow(10, FlipDecimals), 3)
-                .ToMetric(decimals: 2)
-                .ToUpperInvariant();
+                .ToMetric(decimals: 2);
 
         public double TotalBond { get; }
         
         public string TotalBondFormatted 
             => Math
                 .Round(TotalBond / Math.Pow(10, FlipDecimals), 3)
-                .ToMetric(decimals: 2)
-                .ToUpperInvariant();
+                .ToMetric(decimals: 2);
         
         public DateTimeOffset EpochStart { get; }
         
@@ -33,8 +31,7 @@ namespace ChainflipInsights.Feeders.Epoch
         public string MaxBidFormatted 
             => Math
                 .Round(MaxBid / Math.Pow(10, FlipDecimals), 3)
-                .ToMetric(decimals: 2)
-                .ToUpperInvariant();
+                .ToMetric(decimals: 2);
         
         public double TotalRewards { get; }
         
