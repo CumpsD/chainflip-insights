@@ -113,6 +113,9 @@ namespace ChainflipInsights.Feeders.CfeVersion
                     _logger.LogInformation(
                         "No new CFE Version to announce. Last CFE Version Info is still {CfeVersion}",
                         lastVersion);
+                    
+                    await Task.Delay(_configuration.CfeVersionQueryDelay.Value.RandomizeTime(), cancellationToken);
+                    continue;
                 }
                 
                 var cfeVersionInfo = await GetCfeVersion(cancellationToken);
