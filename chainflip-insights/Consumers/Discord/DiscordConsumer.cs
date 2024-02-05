@@ -5,6 +5,7 @@ namespace ChainflipInsights.Consumers.Discord
     using System.Threading.Tasks;
     using System.Threading.Tasks.Dataflow;
     using ChainflipInsights.Configuration;
+    using ChainflipInsights.Feeders.CexMovement;
     using ChainflipInsights.Feeders.Epoch;
     using ChainflipInsights.Feeders.Funding;
     using ChainflipInsights.Feeders.Redemption;
@@ -64,6 +65,9 @@ namespace ChainflipInsights.Consumers.Discord
                     
                     if (input.RedemptionInfo != null)
                         ProcessRedemptionInfo(input.RedemptionInfo);
+                    
+                    if (input.CexMovementInfo != null)
+                        ProcessCexMovementInfo(input.CexMovementInfo);
                 },
                 new ExecutionDataflowBlockOptions
                 {
@@ -350,6 +354,47 @@ namespace ChainflipInsights.Consumers.Discord
                 _logger.LogInformation(
                     "Announcing Redemption {RedemptionId} on Discord as Message {MessageId}",
                     redemption.Id,
+                    message.Id);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Discord meh.");
+            }
+        }
+
+        private void ProcessCexMovementInfo(CexMovementInfo cexMovement)
+        {
+            if (_discordClient.ConnectionState != ConnectionState.Connected)
+                return;
+            
+            try
+            {
+                _logger.LogInformation(
+                    "Announcing CEX Movements for {Date} on Discord: {MovementIn} FLIP in, {MovementOut} FLIP out, {Movement} FLIP {NetMovement}.",
+                    cexMovement.Date.ToString("yyyy-MM-dd"),
+                    cexMovement.MovementInFormatted,
+                    cexMovement.MovementOutFormatted,
+                    cexMovement.TotalMovementFormatted,
+                    cexMovement.NetMovement);
+
+                var text =
+                    $"🔀 CEX Movements for **{cexMovement.Date:yyyy-MM-dd}** are in! " +
+                    $"**{cexMovement.MovementInFormatted} FLIP** moved towards CEX, **{cexMovement.MovementOutFormatted} FLIP** moved towards DEX. " +
+                    $"In total, **{(cexMovement.NetMovement == NetMovement.MoreTowardsCex ? "CEX" : "DEX" )}** gained **{cexMovement.TotalMovementFormatted} FLIP**";
+
+                var infoChannel = (ITextChannel)_discordClient
+                    .GetChannel(_configuration.DiscordSwapInfoChannelId.Value);
+
+                var message = infoChannel
+                    .SendMessageAsync(
+                        text,
+                        flags: MessageFlags.SuppressEmbeds)
+                    .GetAwaiter()
+                    .GetResult();
+
+                _logger.LogInformation(
+                    "Announcing CEX Movements {Day} on Discord as Message {MessageId}",
+                    cexMovement.DayOfYear,
                     message.Id);
             }
             catch (Exception e)

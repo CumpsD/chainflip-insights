@@ -9,6 +9,7 @@ namespace ChainflipInsights.Consumers.Twitter
     using System.Threading.Tasks;
     using System.Threading.Tasks.Dataflow;
     using ChainflipInsights.Configuration;
+    using ChainflipInsights.Feeders.CexMovement;
     using ChainflipInsights.Feeders.Epoch;
     using ChainflipInsights.Feeders.Funding;
     using ChainflipInsights.Feeders.Liquidity;
@@ -18,6 +19,20 @@ namespace ChainflipInsights.Consumers.Twitter
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
     using Tweetinvi;
+
+    /// <summary>
+    /// There are a lot more fields according to:
+    /// https://developer.twitter.com/en/docs/twitter-api/tweets/manage-tweets/api-reference/post-tweets
+    /// but these are the ones we care about for our use case.
+    /// </summary>
+    public class TweetV2PostRequest
+    {
+        /// <summary>
+        /// The text of the tweet to post.
+        /// </summary>
+        [JsonPropertyName("text")]
+        public string Text { get; set; }
+    }
 
     public class TwitterConsumer
     {
@@ -65,6 +80,9 @@ namespace ChainflipInsights.Consumers.Twitter
                     
                     if (input.RedemptionInfo != null)
                         ProcessRedemptionInfo(input.RedemptionInfo);
+                    
+                    if (input.CexMovementInfo != null)
+                        ProcessCexMovementInfo(input.CexMovementInfo);
                     
                     Task
                         .Delay(1500, cancellationToken)
@@ -226,7 +244,7 @@ namespace ChainflipInsights.Consumers.Twitter
             if (redemption.AmountConverted < _configuration.TwitterRedemptionAmountThreshold)
             {
                 _logger.LogInformation(
-                    "Redemption did not meet treshold (${Threshold}) for Twitter: {Validator} added {Amount} FLIP -> {ExplorerUrl}",
+                    "Redemption did not meet treshold (${Threshold}) for Twitter: {Validator} added {Amount} $FLIP -> {ExplorerUrl}",
                     _configuration.TwitterRedemptionAmountThreshold,
                     redemption.Validator,
                     redemption.AmountFormatted,
@@ -245,7 +263,7 @@ namespace ChainflipInsights.Consumers.Twitter
                     string.Format(_configuration.ValidatorUrl, redemption.ValidatorName));
                 
                 var text =
-                    $"💸 Validator {redemption.Validator} redeemed {redemption.AmountFormatted} FLIP! {string.Format(_configuration.ValidatorUrl, redemption.ValidatorName)}";
+                    $"💸 Validator {redemption.Validator} redeemed {redemption.AmountFormatted} $FLIP! {string.Format(_configuration.ValidatorUrl, redemption.ValidatorName)}";
 
                 _twitterClient.Execute
                     .AdvanceRequestAsync(x =>
@@ -264,19 +282,41 @@ namespace ChainflipInsights.Consumers.Twitter
                 _logger.LogError(e, "Twitter meh.");
             }
         }
-    }
 
-    /// <summary>
-    /// There are a lot more fields according to:
-    /// https://developer.twitter.com/en/docs/twitter-api/tweets/manage-tweets/api-reference/post-tweets
-    /// but these are the ones we care about for our use case.
-    /// </summary>
-    public class TweetV2PostRequest
-    {
-        /// <summary>
-        /// The text of the tweet to post.
-        /// </summary>
-        [JsonPropertyName("text")]
-        public string Text { get; set; }
+        private void ProcessCexMovementInfo(CexMovementInfo cexMovement)
+        {
+            try
+            {
+                _logger.LogInformation(
+                    "Announcing CEX Movements for {Date} on Twitter: {MovementIn} FLIP in, {MovementOut} FLIP out, {Movement} FLIP {NetMovement}.",
+                    cexMovement.Date.ToString("yyyy-MM-dd"),
+                    cexMovement.MovementInFormatted,
+                    cexMovement.MovementOutFormatted,
+                    cexMovement.TotalMovementFormatted,
+                    cexMovement.NetMovement);
+                
+                var text =
+                    $"🔀 CEX Movements for **{cexMovement.Date:yyyy-MM-dd}** are in!\n" +
+                    $"⬆️ **{cexMovement.MovementInFormatted} $FLIP** moved towards CEX\n" +
+                    $"⬇️ **{cexMovement.MovementOutFormatted} $FLIP** moved towards DEX\n" +
+                    $"{(cexMovement.NetMovement == NetMovement.MoreTowardsCex ? "🔴" : "🟢" )} **{(cexMovement.NetMovement == NetMovement.MoreTowardsCex ? "CEX" : "DEX" )}** gained **{cexMovement.TotalMovementFormatted} $FLIP**";
+                
+                _twitterClient.Execute
+                    .AdvanceRequestAsync(x =>
+                    {
+                        x.Query.Url = "https://api.twitter.com/2/tweets";
+                        x.Query.HttpMethod = Tweetinvi.Models.HttpMethod.POST;
+                        x.Query.HttpContent = JsonContent.Create(
+                            new TweetV2PostRequest { Text = text },
+                            mediaType: new MediaTypeHeaderValue(MediaTypeNames.Application.Json));
+                    })
+                    .GetAwaiter()
+                    .GetResult();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Twitter meh.");
+            }
+        }
     }
 }

@@ -5,6 +5,7 @@ namespace ChainflipInsights.Consumers.Telegram
     using System.Threading.Tasks;
     using System.Threading.Tasks.Dataflow;
     using ChainflipInsights.Configuration;
+    using ChainflipInsights.Feeders.CexMovement;
     using ChainflipInsights.Feeders.Epoch;
     using ChainflipInsights.Feeders.Funding;
     using ChainflipInsights.Feeders.Liquidity;
@@ -63,6 +64,9 @@ namespace ChainflipInsights.Consumers.Telegram
                     
                     if (input.RedemptionInfo != null)
                         ProcessRedemptionInfo(input.RedemptionInfo, cancellationToken);
+                    
+                    if (input.CexMovementInfo != null)
+                        ProcessCexMovementInfo(input.CexMovementInfo, cancellationToken);
                     
                     Task
                         .Delay(1500, cancellationToken)
@@ -293,6 +297,47 @@ namespace ChainflipInsights.Consumers.Telegram
                 _logger.LogInformation(
                     "Announcing Redemption {RedemptionId} on Discord as Message {MessageId}",
                     redemption.Id,
+                    message.MessageId);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Telegram meh.");
+            }
+        }
+
+        private void ProcessCexMovementInfo(
+            CexMovementInfo cexMovement,
+            CancellationToken cancellationToken)
+        {
+            try
+            {
+                _logger.LogInformation(
+                    "Announcing CEX Movements for {Date} on Telegram: {MovementIn} FLIP in, {MovementOut} FLIP out, {Movement} FLIP {NetMovement}.",
+                    cexMovement.Date.ToString("yyyy-MM-dd"),
+                    cexMovement.MovementInFormatted,
+                    cexMovement.MovementOutFormatted,
+                    cexMovement.TotalMovementFormatted,
+                    cexMovement.NetMovement);
+
+                var text =
+                    $"🔀 CEX Movements for **{cexMovement.Date:yyyy-MM-dd}** are in! " +
+                    $"**{cexMovement.MovementInFormatted} FLIP** moved towards CEX, **{cexMovement.MovementOutFormatted} FLIP** moved towards DEX. " +
+                    $"In total, **{(cexMovement.NetMovement == NetMovement.MoreTowardsCex ? "CEX" : "DEX" )}** gained **{cexMovement.TotalMovementFormatted} FLIP**";
+
+                var message = _telegramClient
+                    .SendTextMessageAsync(
+                        new ChatId(_configuration.TelegramSwapInfoChannelId.Value),
+                        text,
+                        parseMode: ParseMode.Markdown,
+                        disableNotification: true,
+                        allowSendingWithoutReply: true,
+                        cancellationToken: cancellationToken)
+                    .GetAwaiter()
+                    .GetResult();
+
+                _logger.LogInformation(
+                    "Announcing CEX Movements {Day} on Telegram as Message {MessageId}",
+                    cexMovement.DayOfYear,
                     message.MessageId);
             }
             catch (Exception e)

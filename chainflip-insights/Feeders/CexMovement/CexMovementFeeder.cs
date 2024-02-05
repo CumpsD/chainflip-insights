@@ -134,8 +134,8 @@ namespace ChainflipInsights.Feeders.CexMovement
                 return int.Parse(await File.ReadAllTextAsync(_configuration.LastCexMovementDayLocation, cancellationToken));
             
             await using var file = File.CreateText(_configuration.LastCexMovementDayLocation);
-            await file.WriteAsync("32");
-            return 32;
+            await file.WriteAsync("34");
+            return 34;
         }
         
         private async Task StoreLastCexMovementDay(int cexMovementDay)

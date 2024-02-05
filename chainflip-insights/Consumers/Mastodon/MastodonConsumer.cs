@@ -5,6 +5,7 @@ namespace ChainflipInsights.Consumers.Mastodon
     using System.Threading.Tasks;
     using System.Threading.Tasks.Dataflow;
     using ChainflipInsights.Configuration;
+    using ChainflipInsights.Feeders.CexMovement;
     using ChainflipInsights.Feeders.Epoch;
     using ChainflipInsights.Feeders.Funding;
     using ChainflipInsights.Feeders.Liquidity;
@@ -61,6 +62,9 @@ namespace ChainflipInsights.Consumers.Mastodon
                     
                     if (input.RedemptionInfo != null)
                         ProcessRedemptionInfo(input.RedemptionInfo);
+                    
+                    if (input.CexMovementInfo != null)
+                        ProcessCexMovementInfo(input.CexMovementInfo);
                     
                     Task
                         .Delay(1500, cancellationToken)
@@ -131,7 +135,7 @@ namespace ChainflipInsights.Consumers.Mastodon
                 _logger.LogError(e, "Mastodon meh.");
             }
         }
-        
+
         private void ProcessIncomingLiquidityInfo(IncomingLiquidityInfo liquidity)
         {
             if (liquidity.DepositValueUsd < _configuration.MastodonLiquidityAmountThreshold)
@@ -139,7 +143,7 @@ namespace ChainflipInsights.Consumers.Mastodon
             
             // TODO: Send
         }
-        
+
         private void ProcessEpochInfo(EpochInfo epoch)
         {
             try
@@ -151,10 +155,10 @@ namespace ChainflipInsights.Consumers.Mastodon
                 
                 var text =
                     $"⏰ Epoch {epoch.Id} Started {_configuration.ExplorerAuthorityUrl}{epoch.Id}\n" +
-                    $"➖ Minimum Bid is {epoch.MinimumBondFormatted} $FLIP\n" +
-                    $"➕ Maximum Bid is {epoch.MaxBidFormatted} $FLIP\n" +
-                    $"🧮 Total bonded is {epoch.TotalBondFormatted} $FLIP\n" +
-                    $"💰 Last Epoch distributed {epoch.PreviousEpoch.TotalRewardsFormatted} $FLIP in rewards\n" +
+                    $"➖ Minimum Bid is {epoch.MinimumBondFormatted} #FLIP\n" +
+                    $"➕ Maximum Bid is {epoch.MaxBidFormatted} #FLIP\n" +
+                    $"🧮 Total bonded is {epoch.TotalBondFormatted} #FLIP\n" +
+                    $"💰 Last Epoch distributed {epoch.PreviousEpoch.TotalRewardsFormatted} #FLIP in rewards\n" +
                     $"#chainflip #flip";
 
                 var status = _mastodonClient
@@ -175,7 +179,7 @@ namespace ChainflipInsights.Consumers.Mastodon
             }
         }
 
-                private void ProcessFundingInfo(FundingInfo funding)
+        private void ProcessFundingInfo(FundingInfo funding)
         {
             if (funding.AmountConverted < _configuration.MastodonFundingAmountThreshold)
             {
@@ -199,7 +203,7 @@ namespace ChainflipInsights.Consumers.Mastodon
                     string.Format(_configuration.ValidatorUrl, funding.ValidatorName));
                 
                 var text =
-                    $"🪙 Validator {funding.Validator} added {funding.AmountFormatted} FLIP! {string.Format(_configuration.ValidatorUrl, funding.ValidatorName)}\n" +
+                    $"🪙 Validator {funding.Validator} added {funding.AmountFormatted} #FLIP! {string.Format(_configuration.ValidatorUrl, funding.ValidatorName)}\n" +
                     $"#chainflip #flip";
 
                 var status = _mastodonClient
@@ -237,7 +241,7 @@ namespace ChainflipInsights.Consumers.Mastodon
             try
             {
                 _logger.LogInformation(
-                    "Announcing Redemption {RedemptionId} on Mastodon: {Validator} redeemed {Amount} FLIP -> {EpochUrl}",
+                    "Announcing Redemption {RedemptionId} on Mastodon: {Validator} redeemed {Amount} #FLIP -> {EpochUrl}",
                     redemption.Id,
                     redemption.Validator,
                     redemption.AmountFormatted,
@@ -257,6 +261,43 @@ namespace ChainflipInsights.Consumers.Mastodon
                 _logger.LogInformation(
                     "Announcing Redemption {RedemptionId} on Mastodon as Message {MessageId}",
                     redemption.Id,
+                    status.Url);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Mastodon meh.");
+            }
+        }
+
+        private void ProcessCexMovementInfo(CexMovementInfo cexMovement)
+        {
+            try
+            {
+                _logger.LogInformation(
+                    "Announcing CEX Movements for {Date} on Mastodon: {MovementIn} FLIP in, {MovementOut} FLIP out, {Movement} FLIP {NetMovement}.",
+                    cexMovement.Date.ToString("yyyy-MM-dd"),
+                    cexMovement.MovementInFormatted,
+                    cexMovement.MovementOutFormatted,
+                    cexMovement.TotalMovementFormatted,
+                    cexMovement.NetMovement);
+                
+                var text =
+                    $"🔀 CEX Movements for **{cexMovement.Date:yyyy-MM-dd}** are in!\n" +
+                    $"⬆️ **{cexMovement.MovementInFormatted} #FLIP** moved towards CEX\n" +
+                    $"⬇️ **{cexMovement.MovementOutFormatted} #FLIP** moved towards DEX\n" +
+                    $"{(cexMovement.NetMovement == NetMovement.MoreTowardsCex ? "🔴" : "🟢" )} **{(cexMovement.NetMovement == NetMovement.MoreTowardsCex ? "CEX" : "DEX" )}** gained **{cexMovement.TotalMovementFormatted} #FLIP**\n" +
+                    $"#chainflip #flip";
+
+                var status = _mastodonClient
+                    .PublishStatus(
+                        text,
+                        Visibility.Public)
+                    .GetAwaiter()
+                    .GetResult();
+                
+                _logger.LogInformation(
+                    "Announcing CEX Movements {Day} on Mastodon as Message {MessageId}",
+                    cexMovement.DayOfYear,
                     status.Url);
             }
             catch (Exception e)
