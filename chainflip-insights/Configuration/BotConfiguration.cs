@@ -420,5 +420,61 @@ namespace ChainflipInsights.Configuration
         {
             get; init;
         }
+        
+        [Required]
+        [NotNull]
+        public bool? MastodonEpochEnabled
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public bool? TwitterEpochEnabled
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public bool? TelegramEpochEnabled
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public bool? DiscordEpochEnabled
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public bool? MastodonCexMovementEnabled
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public bool? TwitterCexMovementEnabled
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public bool? TelegramCexMovementEnabled
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public bool? DiscordCexMovementEnabled
+        {
+            get; init;
+        }
     }
 }

@@ -146,6 +146,16 @@ namespace ChainflipInsights.Consumers.Mastodon
 
         private void ProcessEpochInfo(EpochInfo epoch)
         {
+            if (!_configuration.MastodonEpochEnabled.Value)
+            {
+                _logger.LogInformation(
+                    "Epoch disabled for Mastodon. Epoch {Epoch} -> {EpochUrl}",
+                    epoch.Id,
+                    $"{_configuration.ExplorerAuthorityUrl}{epoch.Id}");
+                
+                return;
+            }
+            
             try
             {
                 _logger.LogInformation(
@@ -271,6 +281,19 @@ namespace ChainflipInsights.Consumers.Mastodon
 
         private void ProcessCexMovementInfo(CexMovementInfo cexMovement)
         {
+            if (!_configuration.MastodonCexMovementEnabled.Value)
+            {
+                _logger.LogInformation(
+                    "CEX Movement disabled for Mastodon. {Date}: {MovementIn} FLIP in, {MovementOut} FLIP out, {Movement} FLIP {NetMovement}.",
+                    cexMovement.Date.ToString("yyyy-MM-dd"),
+                    cexMovement.MovementInFormatted,
+                    cexMovement.MovementOutFormatted,
+                    cexMovement.TotalMovementFormatted,
+                    cexMovement.NetMovement);
+                
+                return;
+            }
+            
             try
             {
                 _logger.LogInformation(

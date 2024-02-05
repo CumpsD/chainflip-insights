@@ -213,6 +213,16 @@ namespace ChainflipInsights.Consumers.Discord
 
         private void ProcessEpochInfo(EpochInfo epoch)
         {
+            if (!_configuration.DiscordEpochEnabled.Value)
+            {
+                _logger.LogInformation(
+                    "Epoch disabled for Discord. Epoch {Epoch} -> {EpochUrl}",
+                    epoch.Id,
+                    $"{_configuration.ExplorerAuthorityUrl}{epoch.Id}");
+                
+                return;
+            }
+            
             if (_discordClient.ConnectionState != ConnectionState.Connected)
                 return;
             
@@ -364,6 +374,19 @@ namespace ChainflipInsights.Consumers.Discord
 
         private void ProcessCexMovementInfo(CexMovementInfo cexMovement)
         {
+            if (!_configuration.DiscordCexMovementEnabled.Value)
+            {
+                _logger.LogInformation(
+                    "CEX Movement disabled for Discord. {Date}: {MovementIn} FLIP in, {MovementOut} FLIP out, {Movement} FLIP {NetMovement}.",
+                    cexMovement.Date.ToString("yyyy-MM-dd"),
+                    cexMovement.MovementInFormatted,
+                    cexMovement.MovementOutFormatted,
+                    cexMovement.TotalMovementFormatted,
+                    cexMovement.NetMovement);
+                
+                return;
+            }
+            
             if (_discordClient.ConnectionState != ConnectionState.Connected)
                 return;
             

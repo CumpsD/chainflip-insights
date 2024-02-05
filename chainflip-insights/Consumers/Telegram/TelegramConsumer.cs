@@ -158,6 +158,16 @@ namespace ChainflipInsights.Consumers.Telegram
             EpochInfo epoch,
             CancellationToken cancellationToken)
         {
+            if (!_configuration.TelegramEpochEnabled.Value)
+            {
+                _logger.LogInformation(
+                    "Epoch disabled for Telegram. Epoch {Epoch} -> {EpochUrl}",
+                    epoch.Id,
+                    $"{_configuration.ExplorerAuthorityUrl}{epoch.Id}");
+                
+                return;
+            }
+            
             try
             {
                 _logger.LogInformation(
@@ -309,6 +319,19 @@ namespace ChainflipInsights.Consumers.Telegram
             CexMovementInfo cexMovement,
             CancellationToken cancellationToken)
         {
+            if (!_configuration.TelegramCexMovementEnabled.Value)
+            {
+                _logger.LogInformation(
+                    "CEX Movement disabled for Telegram. {Date}: {MovementIn} FLIP in, {MovementOut} FLIP out, {Movement} FLIP {NetMovement}.",
+                    cexMovement.Date.ToString("yyyy-MM-dd"),
+                    cexMovement.MovementInFormatted,
+                    cexMovement.MovementOutFormatted,
+                    cexMovement.TotalMovementFormatted,
+                    cexMovement.NetMovement);
+                
+                return;
+            }
+            
             try
             {
                 _logger.LogInformation(
