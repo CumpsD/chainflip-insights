@@ -17,7 +17,7 @@ namespace ChainflipInsights
         public FundingInfo? FundingInfo { get; }
         public RedemptionInfo? RedemptionInfo { get; }
         public CexMovementInfo? CexMovementInfo { get; }
-        public CfeVersionInfo? CfeVersionInfo { get; }
+        public CfeVersionsInfo? CfeVersionInfo { get; }
 
         public BroadcastInfo(SwapInfo swapInfo) 
             => SwapInfo = swapInfo ?? throw new ArgumentNullException(nameof(swapInfo));
@@ -37,7 +37,7 @@ namespace ChainflipInsights
         public BroadcastInfo(CexMovementInfo cexMovementInfo) 
             => CexMovementInfo = cexMovementInfo ?? throw new ArgumentNullException(nameof(cexMovementInfo));
 
-        public BroadcastInfo(CfeVersionInfo cfeVersionInfo) 
+        public BroadcastInfo(CfeVersionsInfo cfeVersionInfo) 
             => CfeVersionInfo = cfeVersionInfo ?? throw new ArgumentNullException(nameof(cfeVersionInfo));
     }
 }

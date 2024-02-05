@@ -41,7 +41,7 @@ namespace ChainflipInsights.Feeders.CfeVersion
             """;
         
         private readonly ILogger<CfeVersionFeeder> _logger;
-        private readonly Pipeline<CfeVersionInfo> _pipeline;
+        private readonly Pipeline<CfeVersionsInfo> _pipeline;
         private readonly BotConfiguration _configuration;
         private readonly IHttpClientFactory _httpClientFactory;
 
@@ -49,7 +49,7 @@ namespace ChainflipInsights.Feeders.CfeVersion
             ILogger<CfeVersionFeeder> logger,
             IOptions<BotConfiguration> options,
             IHttpClientFactory httpClientFactory,
-            Pipeline<CfeVersionInfo> pipeline)
+            Pipeline<CfeVersionsInfo> pipeline)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _configuration = options.Value ?? throw new ArgumentNullException(nameof(options));
@@ -85,7 +85,54 @@ namespace ChainflipInsights.Feeders.CfeVersion
 
         private async Task ProvideCfeVersionInfo(CancellationToken cancellationToken)
         {
-         
+            if (cancellationToken.IsCancellationRequested)
+                return;
+            
+            var lastVersion = await GetLastCfeVersion(cancellationToken);
+            
+            while (true)
+            {
+                if (cancellationToken.IsCancellationRequested)
+                    return;
+
+                var now = DateTime.UtcNow.Date.ToString("yyyy-MM-dd");
+                if (now == lastVersion)
+                {
+                    _logger.LogInformation(
+                        "No new CFE Version to announce. Last CFE Version Info is still {CfeVersion}",
+                        lastVersion);
+                }
+                
+                var cfeVersionInfo = await GetCfeVersion(cancellationToken);
+                
+                if (cancellationToken.IsCancellationRequested)
+                    return;
+                
+                if (cfeVersionInfo == null)
+                {
+                    await Task.Delay(_configuration.CfeVersionQueryDelay.Value.RandomizeTime(), cancellationToken);
+                    continue;                    
+                }
+                
+                var cfeVersions = cfeVersionInfo
+                    .Data.Data.Data
+                    .Select(x => new CfeVersionInfo(x.Data))
+                    .OrderBy(x => x.Version)
+                    .ToArray();
+                
+                _logger.LogInformation(
+                    "Broadcasting {TotalVersions} CFE Versions",
+                    cfeVersions.Length);
+
+                await _pipeline.Source.SendAsync(
+                    new CfeVersionsInfo(cfeVersions), 
+                    cancellationToken);
+
+                lastVersion = now;
+                await StoreLastCfeVersion(lastVersion);
+                
+                await Task.Delay(_configuration.CfeVersionQueryDelay.Value.RandomizeTime(), cancellationToken);
+            }
         }
         
         private async Task<string> GetLastCfeVersion(CancellationToken cancellationToken)
@@ -105,13 +152,11 @@ namespace ChainflipInsights.Feeders.CfeVersion
         }
         
         private async Task<CfeVersionResponse?> GetCfeVersion(
-            double fromId,
             CancellationToken cancellationToken)
         {
             using var client = _httpClientFactory.CreateClient("Graph");
 
-            var query = CfeVersionQuery.Replace("LAST_ID", fromId.ToString(CultureInfo.InvariantCulture));
-            var graphQuery = $"{{ \"query\": \"{query.ReplaceLineEndings("\\n")}\" }}";
+            var graphQuery = $"{{ \"query\": \"{CfeVersionQuery.ReplaceLineEndings("\\n")}\" }}";
             
             var response = await client.PostAsync(
                 string.Empty,

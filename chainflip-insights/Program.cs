@@ -46,7 +46,7 @@
         private static Pipeline<FundingInfo>? _fundingPipeline;
         private static Pipeline<RedemptionInfo>? _redemptionPipeline;
         private static Pipeline<CexMovementInfo>? _cexMovementPipeline;
-        private static Pipeline<CfeVersionInfo>? _cfeVersionPipeline;
+        private static Pipeline<CfeVersionsInfo>? _cfeVersionPipeline;
 
         public static void Main()
         {
@@ -102,7 +102,7 @@
                 _fundingPipeline = container.GetRequiredService<Pipeline<FundingInfo>>();
                 _redemptionPipeline = container.GetRequiredService<Pipeline<RedemptionInfo>>();
                 _cexMovementPipeline = container.GetRequiredService<Pipeline<CexMovementInfo>>();
-                _cfeVersionPipeline = container.GetRequiredService<Pipeline<CfeVersionInfo>>();
+                _cfeVersionPipeline = container.GetRequiredService<Pipeline<CfeVersionsInfo>>();
 
                 var runner = container.GetRequiredService<Runner>();
 
@@ -288,7 +288,7 @@
                 .SingleInstance();
             
             builder
-                .Register(_ => new Pipeline<CfeVersionInfo>(new BufferBlock<CfeVersionInfo>(), ct))
+                .Register(_ => new Pipeline<CfeVersionsInfo>(new BufferBlock<CfeVersionsInfo>(), ct))
                 .SingleInstance();
             
             builder

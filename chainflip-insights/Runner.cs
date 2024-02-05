@@ -41,7 +41,7 @@ namespace ChainflipInsights
             Pipeline<FundingInfo> fundingPipeline,
             Pipeline<RedemptionInfo> redemptionPipeline,
             Pipeline<CexMovementInfo> cexMovementPipeline,
-            Pipeline<CfeVersionInfo> cfeVersionPipeline,
+            Pipeline<CfeVersionsInfo> cfeVersionPipeline,
             DiscordConsumer discordConsumer,
             TelegramConsumer telegramConsumer,
             TwitterConsumer twitterConsumer,
@@ -70,7 +70,7 @@ namespace ChainflipInsights
             Pipeline<FundingInfo> fundingPipeline, 
             Pipeline<RedemptionInfo> redemptionPipeline, 
             Pipeline<CexMovementInfo> cexMovementPipeline, 
-            Pipeline<CfeVersionInfo> cfeVersionPipeline)
+            Pipeline<CfeVersionsInfo> cfeVersionPipeline)
         {
             var linkOptions = new DataflowLinkOptions
             {
