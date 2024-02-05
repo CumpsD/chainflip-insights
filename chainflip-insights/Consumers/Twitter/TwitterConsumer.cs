@@ -296,10 +296,10 @@ namespace ChainflipInsights.Consumers.Twitter
                     cexMovement.NetMovement);
                 
                 var text =
-                    $"🔀 CEX Movements for **{cexMovement.Date:yyyy-MM-dd}** are in!\n" +
-                    $"⬆️ **{cexMovement.MovementInFormatted} $FLIP** moved towards CEX\n" +
-                    $"⬇️ **{cexMovement.MovementOutFormatted} $FLIP** moved towards DEX\n" +
-                    $"{(cexMovement.NetMovement == NetMovement.MoreTowardsCex ? "🔴" : "🟢" )} **{(cexMovement.NetMovement == NetMovement.MoreTowardsCex ? "CEX" : "DEX" )}** gained **{cexMovement.TotalMovementFormatted} $FLIP**";
+                    $"🔀 CEX Movements for {cexMovement.Date:yyyy-MM-dd} are in!\n" +
+                    $"⬆️ {cexMovement.MovementInFormatted} $FLIP moved towards CEX\n" +
+                    $"⬇️ {cexMovement.MovementOutFormatted} $FLIP moved towards DEX\n" +
+                    $"{(cexMovement.NetMovement == NetMovement.MoreTowardsCex ? "🔴" : "🟢" )} {(cexMovement.NetMovement == NetMovement.MoreTowardsCex ? "CEX" : "DEX" )} gained {cexMovement.TotalMovementFormatted} $FLIP";
                 
                 _twitterClient.Execute
                     .AdvanceRequestAsync(x =>
