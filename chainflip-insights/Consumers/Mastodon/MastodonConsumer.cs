@@ -16,7 +16,7 @@ namespace ChainflipInsights.Consumers.Mastodon
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
 
-    public class MastodonConsumer
+    public class MastodonConsumer : IConsumer
     {
         private readonly ILogger<MastodonConsumer> _logger;
         private readonly MastodonClient _mastodonClient;

@@ -5,6 +5,7 @@ namespace ChainflipInsights
     using System.Threading;
     using System.Threading.Tasks;
     using System.Threading.Tasks.Dataflow;
+    using ChainflipInsights.Consumers;
     using ChainflipInsights.Consumers.Discord;
     using ChainflipInsights.Consumers.Mastodon;
     using ChainflipInsights.Consumers.Telegram;
@@ -71,166 +72,10 @@ namespace ChainflipInsights
             Pipeline<CexMovementInfo> cexMovementPipeline, 
             Pipeline<CfeVersionInfo> cfeVersionPipeline)
         {
-            var swapSource = swapPipeline.Source;
-            swapSource.Completion.ContinueWith(
-                task => _logger.LogInformation(
-                    "Swap Source completed, {Status}",
-                    task.Status),
-                swapPipeline.CancellationToken);
-            
-            var incomingLiquiditySource = incomingLiquidityPipeline.Source;
-            incomingLiquiditySource.Completion.ContinueWith(
-                task => _logger.LogInformation(
-                    "Incoming Liquidity Source completed, {Status}",
-                    task.Status),
-                incomingLiquidityPipeline.CancellationToken);
-            
-            var epochSource = epochPipeline.Source;
-            epochSource.Completion.ContinueWith(
-                task => _logger.LogInformation(
-                    "Epoch Source completed, {Status}",
-                    task.Status),
-                epochPipeline.CancellationToken);
-            
-            var fundingSource = fundingPipeline.Source;
-            fundingSource.Completion.ContinueWith(
-                task => _logger.LogInformation(
-                    "Funding Source completed, {Status}",
-                    task.Status),
-                fundingPipeline.CancellationToken);
-            
-            var redemptionSource = redemptionPipeline.Source;
-            redemptionSource.Completion.ContinueWith(
-                task => _logger.LogInformation(
-                    "Redemption Source completed, {Status}",
-                    task.Status),
-                redemptionPipeline.CancellationToken);
-            
-            var cexMovementSource = cexMovementPipeline.Source;
-            cexMovementSource.Completion.ContinueWith(
-                task => _logger.LogInformation(
-                    "CEX Movement Source completed, {Status}",
-                    task.Status),
-                cexMovementPipeline.CancellationToken);
-            
-            var cfeVersionSource = cfeVersionPipeline.Source;
-            cfeVersionSource.Completion.ContinueWith(
-                task => _logger.LogInformation(
-                    "CFE Version Source completed, {Status}",
-                    task.Status),
-                cfeVersionPipeline.CancellationToken);
-            
-            var wrapSwaps = new TransformBlock<SwapInfo, BroadcastInfo>(
-                swapInfo => new BroadcastInfo(swapInfo),
-                new ExecutionDataflowBlockOptions
-                {
-                    CancellationToken = swapPipeline.CancellationToken,
-                    MaxDegreeOfParallelism = 1,
-                    EnsureOrdered = true,
-                    SingleProducerConstrained = true
-                });
-
-            wrapSwaps.Completion.ContinueWith(
-                task => _logger.LogInformation(
-                    "Wrap Swaps completed, {Status}",
-                    task.Status),
-                swapPipeline.CancellationToken);
-            
-            var wrapIncomingLiquidity = new TransformBlock<IncomingLiquidityInfo, BroadcastInfo>(
-                incomingLiquidityInfo => new BroadcastInfo(incomingLiquidityInfo),
-                new ExecutionDataflowBlockOptions
-                {
-                    CancellationToken = incomingLiquidityPipeline.CancellationToken,
-                    MaxDegreeOfParallelism = 1,
-                    EnsureOrdered = true,
-                    SingleProducerConstrained = true
-                });
-            
-            wrapIncomingLiquidity.Completion.ContinueWith(
-                task => _logger.LogInformation(
-                    "Wrap Incoming Liquidity completed, {Status}",
-                    task.Status),
-                incomingLiquidityPipeline.CancellationToken);
-            
-            var wrapEpoch = new TransformBlock<EpochInfo, BroadcastInfo>(
-                epochInfo => new BroadcastInfo(epochInfo),
-                new ExecutionDataflowBlockOptions
-                {
-                    CancellationToken = epochPipeline.CancellationToken,
-                    MaxDegreeOfParallelism = 1,
-                    EnsureOrdered = true,
-                    SingleProducerConstrained = true
-                });
-            
-            wrapEpoch.Completion.ContinueWith(
-                task => _logger.LogInformation(
-                    "Wrap Epoch completed, {Status}",
-                    task.Status),
-                epochPipeline.CancellationToken);
-            
-            var wrapFunding = new TransformBlock<FundingInfo, BroadcastInfo>(
-                fundingInfo => new BroadcastInfo(fundingInfo),
-                new ExecutionDataflowBlockOptions
-                {
-                    CancellationToken = fundingPipeline.CancellationToken,
-                    MaxDegreeOfParallelism = 1,
-                    EnsureOrdered = true,
-                    SingleProducerConstrained = true
-                });
-            
-            wrapFunding.Completion.ContinueWith(
-                task => _logger.LogInformation(
-                    "Wrap Funding completed, {Status}",
-                    task.Status),
-                fundingPipeline.CancellationToken);
-            
-            var wrapRedemption = new TransformBlock<RedemptionInfo, BroadcastInfo>(
-                redemptionInfo => new BroadcastInfo(redemptionInfo),
-                new ExecutionDataflowBlockOptions
-                {
-                    CancellationToken = redemptionPipeline.CancellationToken,
-                    MaxDegreeOfParallelism = 1,
-                    EnsureOrdered = true,
-                    SingleProducerConstrained = true
-                });
-            
-            wrapRedemption.Completion.ContinueWith(
-                task => _logger.LogInformation(
-                    "Wrap Redemption completed, {Status}",
-                    task.Status),
-                redemptionPipeline.CancellationToken);
-            
-            var wrapCexMovement = new TransformBlock<CexMovementInfo, BroadcastInfo>(
-                cexMovementInfo => new BroadcastInfo(cexMovementInfo),
-                new ExecutionDataflowBlockOptions
-                {
-                    CancellationToken = cexMovementPipeline.CancellationToken,
-                    MaxDegreeOfParallelism = 1,
-                    EnsureOrdered = true,
-                    SingleProducerConstrained = true
-                });
-            
-            wrapCexMovement.Completion.ContinueWith(
-                task => _logger.LogInformation(
-                    "Wrap CEX Movement completed, {Status}",
-                    task.Status),
-                cexMovementPipeline.CancellationToken);
-            
-            var wrapCfeVersion = new TransformBlock<CfeVersionInfo, BroadcastInfo>(
-                cfeVersionInfo => new BroadcastInfo(cfeVersionInfo),
-                new ExecutionDataflowBlockOptions
-                {
-                    CancellationToken = cfeVersionPipeline.CancellationToken,
-                    MaxDegreeOfParallelism = 1,
-                    EnsureOrdered = true,
-                    SingleProducerConstrained = true
-                });
-            
-            wrapCfeVersion.Completion.ContinueWith(
-                task => _logger.LogInformation(
-                    "Wrap CFE Version completed, {Status}",
-                    task.Status),
-                cfeVersionPipeline.CancellationToken);
+            var linkOptions = new DataflowLinkOptions
+            {
+                PropagateCompletion = true
+            };
             
             var broadcast = new BroadcastBlock<BroadcastInfo>(
                 e => e,
@@ -244,113 +89,134 @@ namespace ChainflipInsights
                     "Broadcast completed, {Status}",
                     task.Status),
                 swapPipeline.CancellationToken);
+
+            SetupFeederPipeline(
+                "Swap",
+                swapPipeline,
+                linkOptions,
+                broadcast,
+                x => new BroadcastInfo(x));
+
+            SetupFeederPipeline(
+                "Incoming Liquidity",
+                incomingLiquidityPipeline,
+                linkOptions,
+                broadcast,
+                x => new BroadcastInfo(x));
             
-            var linkOptions = new DataflowLinkOptions
-            {
-                PropagateCompletion = true
-            };
+            SetupFeederPipeline(
+                "Epoch",
+                epochPipeline,
+                linkOptions,
+                broadcast,
+                x => new BroadcastInfo(x));
+           
+            SetupFeederPipeline(
+                "Funding",
+                fundingPipeline,
+                linkOptions,
+                broadcast,
+                x => new BroadcastInfo(x));
             
-            _discordPipelineTarget = SetupDiscordPipeline(
+            SetupFeederPipeline(
+                "Redemption",
+                redemptionPipeline,
+                linkOptions,
+                broadcast,
+                x => new BroadcastInfo(x));
+            
+            SetupFeederPipeline(
+                "CEX Movement",
+                cexMovementPipeline,
+                linkOptions,
+                broadcast,
+                x => new BroadcastInfo(x));
+            
+            SetupFeederPipeline(
+                "CFE Version",
+                cfeVersionPipeline,
+                linkOptions,
+                broadcast,
+                x => new BroadcastInfo(x));
+            
+            _discordPipelineTarget = SetupConsumerPipeline(
+                "Discord",
+                _discordConsumer,
                 broadcast,
                 linkOptions, 
                 swapPipeline.CancellationToken);
             
-            _telegramPipelineTarget = SetupTelegramPipeline(
+            _telegramPipelineTarget = SetupConsumerPipeline(
+                "Telegram",
+                _telegramConsumer,
                 broadcast,
-                linkOptions,
+                linkOptions, 
                 swapPipeline.CancellationToken);
             
-            _twitterPipelineTarget = SetupTwitterPipeline(
+            _twitterPipelineTarget = SetupConsumerPipeline(
+                "Twitter",
+                _twitterConsumer,
                 broadcast,
-                linkOptions,
+                linkOptions, 
                 swapPipeline.CancellationToken);
             
-            _mastodonPipelineTarget = SetupMastodonPipeline(
+            _mastodonPipelineTarget = SetupConsumerPipeline(
+                "Mastodon",
+                _mastodonConsumer,
                 broadcast,
-                linkOptions,
+                linkOptions, 
                 swapPipeline.CancellationToken);
-            
-            swapSource.LinkTo(wrapSwaps, linkOptions);
-            incomingLiquiditySource.LinkTo(wrapIncomingLiquidity, linkOptions);
-            epochSource.LinkTo(wrapEpoch, linkOptions);
-            fundingSource.LinkTo(wrapFunding, linkOptions);
-            redemptionSource.LinkTo(wrapRedemption, linkOptions);
-            cexMovementSource.LinkTo(wrapCexMovement, linkOptions);
-            cfeVersionSource.LinkTo(wrapCfeVersion, linkOptions);
-
-            wrapSwaps.LinkTo(broadcast, linkOptions);
-            wrapIncomingLiquidity.LinkTo(broadcast, linkOptions);
-            wrapEpoch.LinkTo(broadcast, linkOptions);
-            wrapFunding.LinkTo(broadcast, linkOptions);
-            wrapRedemption.LinkTo(broadcast, linkOptions);
-            wrapCexMovement.LinkTo(broadcast, linkOptions);
-            wrapCfeVersion.LinkTo(broadcast, linkOptions);
         }
-        
-        private ITargetBlock<BroadcastInfo> SetupDiscordPipeline(
-            BroadcastBlock<BroadcastInfo> broadcast, 
-            DataflowLinkOptions linkOptions,
-            CancellationToken cancellationToken)
-        {
-            var pipeline = _discordConsumer.Build(cancellationToken);
 
-            pipeline.Completion.ContinueWith(
+        private void SetupFeederPipeline<T>(
+            string name,
+            Pipeline<T> pipeline, 
+            DataflowLinkOptions linkOptions, 
+            BroadcastBlock<BroadcastInfo> broadcast,
+            Func<T, BroadcastInfo> buildBroadcastInfo)
+        {
+            var source = pipeline.Source;
+            source.Completion.ContinueWith(
                 task => _logger.LogInformation(
-                    "Discord Pipeline completed, {Status}",
+                    "{Name} Source completed, {Status}",
+                    name,
                     task.Status),
-                cancellationToken);
+                pipeline.CancellationToken);
             
-            broadcast.LinkTo(pipeline, linkOptions);
+            var wrap = new TransformBlock<T, BroadcastInfo>(
+                buildBroadcastInfo,
+                new ExecutionDataflowBlockOptions
+                {
+                    CancellationToken = pipeline.CancellationToken,
+                    MaxDegreeOfParallelism = 1,
+                    EnsureOrdered = true,
+                    SingleProducerConstrained = true
+                });
 
-            return pipeline;
-        }
-
-        private ITargetBlock<BroadcastInfo> SetupTelegramPipeline(
-            BroadcastBlock<BroadcastInfo> broadcast, 
-            DataflowLinkOptions linkOptions,
-            CancellationToken cancellationToken)
-        {
-            var pipeline = _telegramConsumer.Build(cancellationToken);
-
-            pipeline.Completion.ContinueWith(
+            wrap.Completion.ContinueWith(
                 task => _logger.LogInformation(
-                    "Telegram Pipeline completed, {Status}",
+                    "Wrap {Name} completed, {Status}",
+                    name,
                     task.Status),
-                cancellationToken);
+                pipeline.CancellationToken);
             
-            broadcast.LinkTo(pipeline, linkOptions);
-
-            return pipeline;
+            source.LinkTo(wrap, linkOptions);
+            wrap.LinkTo(broadcast, linkOptions);
         }
-        
-        private ITargetBlock<BroadcastInfo> SetupTwitterPipeline(
+
+        private ITargetBlock<BroadcastInfo> SetupConsumerPipeline<T>(
+            string name,
+            T consumer,
             BroadcastBlock<BroadcastInfo> broadcast, 
             DataflowLinkOptions linkOptions,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken) where T : IConsumer
         {
-            var pipeline = _twitterConsumer.Build(cancellationToken);
+            var pipeline = consumer.Build(cancellationToken);
 
             pipeline.Completion.ContinueWith(
                 task => _logger.LogInformation(
-                    "Twitter Pipeline completed, {Status}",
-                    task.Status),
-                cancellationToken);
-            
-            broadcast.LinkTo(pipeline, linkOptions);
-
-            return pipeline;
-        }
-        
-        private ITargetBlock<BroadcastInfo> SetupMastodonPipeline(
-            BroadcastBlock<BroadcastInfo> broadcast, 
-            DataflowLinkOptions linkOptions,
-            CancellationToken cancellationToken)
-        {
-            var pipeline = _mastodonConsumer.Build(cancellationToken);
-
-            pipeline.Completion.ContinueWith(
-                task => _logger.LogInformation(
-                    "Mastodon Pipeline completed, {Status}",
+                    "{Name} Pipeline completed, {Status}",
+                    name,
                     task.Status),
                 cancellationToken);
             

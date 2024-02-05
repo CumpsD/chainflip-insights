@@ -34,7 +34,7 @@ namespace ChainflipInsights.Consumers.Twitter
         public string Text { get; set; }
     }
 
-    public class TwitterConsumer
+    public class TwitterConsumer : IConsumer
     {
         private readonly ILogger<TwitterConsumer> _logger;
         private readonly BotConfiguration _configuration;

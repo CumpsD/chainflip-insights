@@ -18,7 +18,7 @@ namespace ChainflipInsights.Consumers.Telegram
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
 
-    public class TelegramConsumer
+    public class TelegramConsumer : IConsumer
     {
         private readonly ILogger<TelegramConsumer> _logger;
         private readonly BotConfiguration _configuration;

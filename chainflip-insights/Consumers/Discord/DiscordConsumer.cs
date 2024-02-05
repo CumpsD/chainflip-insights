@@ -17,7 +17,7 @@ namespace ChainflipInsights.Consumers.Discord
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
 
-    public class DiscordConsumer
+    public class DiscordConsumer : IConsumer
     {
         private readonly ILogger<DiscordConsumer> _logger;
         private readonly BotConfiguration _configuration;
