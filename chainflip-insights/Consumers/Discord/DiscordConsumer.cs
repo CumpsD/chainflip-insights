@@ -468,8 +468,8 @@ namespace ChainflipInsights.Consumers.Discord
                 var text =
                     $"📜 CFE overview for **{cfeVersionInfo.Date}**! " +
                     $"The current version is **{maxVersion}**, which **{upToDateValidators} online validators** are running. " +
-                    $"**{outdatedValidators.Sum(x => x.Value.Validators.Count(v => v.ValidatorStatus == ValidatorStatus.Online))} validators** are online on older versions " +
-                    $"({string.Join(", ", outdatedValidators.Select(x => $"{x.Value.Validators.Count(v => v.ValidatorStatus == ValidatorStatus.Online)} on {x.Key}"))})";
+                    $"There are **{outdatedValidators.Sum(x => x.Value.Validators.Count(v => v.ValidatorStatus == ValidatorStatus.Online))} online validators** on older versions: " +
+                    $"{string.Join(", ", outdatedValidators.Select(x => $"**{x.Value.Validators.Count(v => v.ValidatorStatus == ValidatorStatus.Online)}** on **{x.Key}**"))}";
                 
                 var infoChannel = (ITextChannel)_discordClient
                     .GetChannel(_configuration.DiscordSwapInfoChannelId.Value);
