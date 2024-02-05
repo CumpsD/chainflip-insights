@@ -10,6 +10,7 @@ namespace ChainflipInsights
     using ChainflipInsights.Consumers.Telegram;
     using ChainflipInsights.Consumers.Twitter;
     using ChainflipInsights.Feeders.CexMovement;
+    using ChainflipInsights.Feeders.CfeVersion;
     using ChainflipInsights.Feeders.Epoch;
     using ChainflipInsights.Feeders.Funding;
     using ChainflipInsights.Feeders.Redemption;
@@ -39,6 +40,7 @@ namespace ChainflipInsights
             Pipeline<FundingInfo> fundingPipeline,
             Pipeline<RedemptionInfo> redemptionPipeline,
             Pipeline<CexMovementInfo> cexMovementPipeline,
+            Pipeline<CfeVersionInfo> cfeVersionPipeline,
             DiscordConsumer discordConsumer,
             TelegramConsumer telegramConsumer,
             TwitterConsumer twitterConsumer,
@@ -56,7 +58,8 @@ namespace ChainflipInsights
                 epochPipeline,
                 fundingPipeline,
                 redemptionPipeline,
-                cexMovementPipeline);
+                cexMovementPipeline,
+                cfeVersionPipeline);
         }
 
         private void SetupPipelines(
@@ -65,7 +68,8 @@ namespace ChainflipInsights
             Pipeline<EpochInfo> epochPipeline, 
             Pipeline<FundingInfo> fundingPipeline, 
             Pipeline<RedemptionInfo> redemptionPipeline, 
-            Pipeline<CexMovementInfo> cexMovementPipeline)
+            Pipeline<CexMovementInfo> cexMovementPipeline, 
+            Pipeline<CfeVersionInfo> cfeVersionPipeline)
         {
             var swapSource = swapPipeline.Source;
             swapSource.Completion.ContinueWith(
@@ -108,6 +112,13 @@ namespace ChainflipInsights
                     "CEX Movement Source completed, {Status}",
                     task.Status),
                 cexMovementPipeline.CancellationToken);
+            
+            var cfeVersionSource = cfeVersionPipeline.Source;
+            cfeVersionSource.Completion.ContinueWith(
+                task => _logger.LogInformation(
+                    "CFE Version Source completed, {Status}",
+                    task.Status),
+                cfeVersionPipeline.CancellationToken);
             
             var wrapSwaps = new TransformBlock<SwapInfo, BroadcastInfo>(
                 swapInfo => new BroadcastInfo(swapInfo),
@@ -193,7 +204,7 @@ namespace ChainflipInsights
                 cexMovementInfo => new BroadcastInfo(cexMovementInfo),
                 new ExecutionDataflowBlockOptions
                 {
-                    CancellationToken = fundingPipeline.CancellationToken,
+                    CancellationToken = cexMovementPipeline.CancellationToken,
                     MaxDegreeOfParallelism = 1,
                     EnsureOrdered = true,
                     SingleProducerConstrained = true
@@ -204,6 +215,22 @@ namespace ChainflipInsights
                     "Wrap CEX Movement completed, {Status}",
                     task.Status),
                 cexMovementPipeline.CancellationToken);
+            
+            var wrapCfeVersion = new TransformBlock<CfeVersionInfo, BroadcastInfo>(
+                cfeVersionInfo => new BroadcastInfo(cfeVersionInfo),
+                new ExecutionDataflowBlockOptions
+                {
+                    CancellationToken = cfeVersionPipeline.CancellationToken,
+                    MaxDegreeOfParallelism = 1,
+                    EnsureOrdered = true,
+                    SingleProducerConstrained = true
+                });
+            
+            wrapCfeVersion.Completion.ContinueWith(
+                task => _logger.LogInformation(
+                    "Wrap CFE Version completed, {Status}",
+                    task.Status),
+                cfeVersionPipeline.CancellationToken);
             
             var broadcast = new BroadcastBlock<BroadcastInfo>(
                 e => e,
@@ -249,6 +276,7 @@ namespace ChainflipInsights
             fundingSource.LinkTo(wrapFunding, linkOptions);
             redemptionSource.LinkTo(wrapRedemption, linkOptions);
             cexMovementSource.LinkTo(wrapCexMovement, linkOptions);
+            cfeVersionSource.LinkTo(wrapCfeVersion, linkOptions);
 
             wrapSwaps.LinkTo(broadcast, linkOptions);
             wrapIncomingLiquidity.LinkTo(broadcast, linkOptions);
@@ -256,6 +284,7 @@ namespace ChainflipInsights
             wrapFunding.LinkTo(broadcast, linkOptions);
             wrapRedemption.LinkTo(broadcast, linkOptions);
             wrapCexMovement.LinkTo(broadcast, linkOptions);
+            wrapCfeVersion.LinkTo(broadcast, linkOptions);
         }
         
         private ITargetBlock<BroadcastInfo> SetupDiscordPipeline(

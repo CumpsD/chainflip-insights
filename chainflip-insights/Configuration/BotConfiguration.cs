@@ -52,6 +52,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public bool? EnableCfeVersion
+        {
+            get; init;
+        }  
+        
+        [Required]
+        [NotNull]
         public bool? EnableDiscord
         {
             get; init;
@@ -255,6 +262,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public int? CfeVersionQueryDelay
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
         public string? LastSwapIdLocation
         {
             get; init;
@@ -291,6 +305,13 @@ namespace ChainflipInsights.Configuration
         [Required]
         [NotNull]
         public string? LastCexMovementDayLocation
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public string? LastCfeVersionLocation
         {
             get; init;
         }
@@ -473,6 +494,34 @@ namespace ChainflipInsights.Configuration
         [Required]
         [NotNull]
         public bool? DiscordCexMovementEnabled
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public bool? MastodonCfeVersionEnabled
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public bool? TwitterCfeVersionEnabled
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public bool? TelegramCfeVersionEnabled
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public bool? DiscordCfeVersionEnabled
         {
             get; init;
         }

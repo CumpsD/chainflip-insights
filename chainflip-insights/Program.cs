@@ -18,6 +18,7 @@
     using ChainflipInsights.Consumers.Telegram;
     using ChainflipInsights.Consumers.Twitter;
     using ChainflipInsights.Feeders.CexMovement;
+    using ChainflipInsights.Feeders.CfeVersion;
     using ChainflipInsights.Feeders.Epoch;
     using ChainflipInsights.Feeders.Funding;
     using ChainflipInsights.Feeders.Redemption;
@@ -45,6 +46,7 @@
         private static Pipeline<FundingInfo>? _fundingPipeline;
         private static Pipeline<RedemptionInfo>? _redemptionPipeline;
         private static Pipeline<CexMovementInfo>? _cexMovementPipeline;
+        private static Pipeline<CfeVersionInfo>? _cfeVersionPipeline;
 
         public static void Main()
         {
@@ -80,6 +82,7 @@
                 _fundingPipeline?.Source.Complete();
                 _redemptionPipeline?.Source.Complete();
                 _cexMovementPipeline?.Source.Complete();
+                _cfeVersionPipeline?.Source.Complete();
 
                 CancellationTokenSource.Cancel();
 
@@ -99,6 +102,7 @@
                 _fundingPipeline = container.GetRequiredService<Pipeline<FundingInfo>>();
                 _redemptionPipeline = container.GetRequiredService<Pipeline<RedemptionInfo>>();
                 _cexMovementPipeline = container.GetRequiredService<Pipeline<CexMovementInfo>>();
+                _cfeVersionPipeline = container.GetRequiredService<Pipeline<CfeVersionInfo>>();
 
                 var runner = container.GetRequiredService<Runner>();
 
@@ -108,6 +112,7 @@
                 var fundingFeeder = container.GetRequiredService<FundingFeeder>();
                 var redemptionFeeder = container.GetRequiredService<RedemptionFeeder>();
                 var cexMovementFeeder = container.GetRequiredService<CexMovementFeeder>();
+                var cfeVersionFeeder = container.GetRequiredService<CfeVersionFeeder>();
 
                 var tasks = new List<Task>();
                 tasks.AddRange(runner.Start());
@@ -118,6 +123,7 @@
                 tasks.Add(fundingFeeder.Start());
                 tasks.Add(redemptionFeeder.Start());
                 tasks.Add(cexMovementFeeder.Start());
+                tasks.Add(cfeVersionFeeder.Start());
 
                 Console.WriteLine("Running... Press CTRL + C to exit.");
                 Task.WaitAll(tasks.ToArray());
@@ -282,6 +288,10 @@
                 .SingleInstance();
             
             builder
+                .Register(_ => new Pipeline<CfeVersionInfo>(new BufferBlock<CfeVersionInfo>(), ct))
+                .SingleInstance();
+            
+            builder
                 .RegisterType<SwapFeeder>()
                 .SingleInstance();
             
@@ -296,15 +306,19 @@
             builder
                 .RegisterType<FundingFeeder>()
                 .SingleInstance();
-            
-            builder
-                .RegisterType<CexMovementFeeder>()
-                .SingleInstance();
-            
+
             builder
                 .RegisterType<RedemptionFeeder>()
                 .SingleInstance();
             
+            builder
+                .RegisterType<CexMovementFeeder>()
+                .SingleInstance();
+
+            builder
+                .RegisterType<CfeVersionFeeder>()
+                .SingleInstance();
+
             builder
                 .RegisterType<DiscordConsumer>()
                 .SingleInstance();

@@ -2,6 +2,7 @@ namespace ChainflipInsights
 {
     using System;
     using ChainflipInsights.Feeders.CexMovement;
+    using ChainflipInsights.Feeders.CfeVersion;
     using ChainflipInsights.Feeders.Epoch;
     using ChainflipInsights.Feeders.Funding;
     using ChainflipInsights.Feeders.Liquidity;
@@ -16,7 +17,7 @@ namespace ChainflipInsights
         public FundingInfo? FundingInfo { get; }
         public RedemptionInfo? RedemptionInfo { get; }
         public CexMovementInfo? CexMovementInfo { get; }
-
+        public CfeVersionInfo? CfeVersionInfo { get; }
 
         public BroadcastInfo(SwapInfo swapInfo) 
             => SwapInfo = swapInfo ?? throw new ArgumentNullException(nameof(swapInfo));
@@ -35,5 +36,8 @@ namespace ChainflipInsights
 
         public BroadcastInfo(CexMovementInfo cexMovementInfo) 
             => CexMovementInfo = cexMovementInfo ?? throw new ArgumentNullException(nameof(cexMovementInfo));
+
+        public BroadcastInfo(CfeVersionInfo cfeVersionInfo) 
+            => CfeVersionInfo = cfeVersionInfo ?? throw new ArgumentNullException(nameof(cfeVersionInfo));
     }
 }
