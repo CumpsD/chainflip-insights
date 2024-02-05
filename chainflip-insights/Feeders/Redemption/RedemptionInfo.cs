@@ -16,11 +16,11 @@ namespace ChainflipInsights.Feeders.Redemption
         
         public double Epoch { get; }
         
-        public string Validator { get; set; }
+        public string Validator { get; }
         
-        public string ValidatorAlias { get; set; }
+        public string ValidatorAlias { get; }
 
-        public string ValidatorName { get; set; }
+        public string ValidatorName { get; }
         
         public DateTimeOffset Timestamp { get; }
         

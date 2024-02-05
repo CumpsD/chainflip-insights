@@ -90,20 +90,38 @@ namespace ChainflipInsights.Feeders.CexMovement
                     .OrderBy(x => x.DayOfYear)
                     .ToList();
                 
-                if (cexMovementPerDay.Count <= 0)
+                if (cexMovementPerDay.Count <= 0 || cexMovementPerDay.Max(x => x.DayOfYear) <= lastDay)
                 {
                     _logger.LogInformation(
                         "No new CEX movement to announce. Last CEX movement day is still {CexMovementDay}",
                         lastDay);
+                    
+                    await Task.Delay(_configuration.CexMovementQueryDelay.Value.RandomizeTime(), cancellationToken);
+                    continue;
                 }
 
                 // CEX Movement is in increasing order
                 foreach (var cexMovementDay in cexMovementPerDay.TakeWhile(_ => !cancellationToken.IsCancellationRequested))
                 {
                     var cexMovementInfo = new CexMovementInfo(cexMovementDay);
+                    
+                    if (cexMovementInfo.DayOfYear <= lastDay)
+                        continue;
+                        
+                    _logger.LogInformation(
+                        "Broadcasting CEX Movements for Day {Day}, {MovementIn} FLIP in, {MovementOut} FLIP out, {Movement} FLIP {NetMovement}.",
+                        cexMovementInfo.DayOfYear,
+                        cexMovementInfo.MovementInFormatted,
+                        cexMovementInfo.MovementOutFormatted,
+                        cexMovementInfo.TotalMovementFormatted,
+                        cexMovementInfo.NetMovement);
 
-                    // TODO: Add logic here to only broadcast current day once
-
+                    await _pipeline.Source.SendAsync(
+                        cexMovementInfo, 
+                        cancellationToken);
+                    
+                    lastDay = cexMovementInfo.DayOfYear;
+                    await StoreLastCexMovementDay(lastDay);
                 }
                 
                 await Task.Delay(_configuration.FundingQueryDelay.Value.RandomizeTime(), cancellationToken);
