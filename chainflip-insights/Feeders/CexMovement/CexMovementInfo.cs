@@ -27,17 +27,21 @@ namespace ChainflipInsights.Feeders.CexMovement
         
         public string MovementOutFormatted => MovementOut.ToMetric(decimals: 2);
         
+        public DateTimeOffset Date { get; }
+        
         public CexMovementInfo(
             CexMovementInfoResponseRow cexMovement)
         {
             DayOfYear = cexMovement.DayOfYear;
-            TotalMovement = cexMovement.TotalMovement;
+            TotalMovement = Math.Abs(cexMovement.TotalMovement);
             MovementIn = cexMovement.MovementIn;
             MovementOut = Math.Abs(cexMovement.MovementOut);
 
             NetMovement = TotalMovement > 0 
                 ? NetMovement.MoreTowardsCex 
                 : NetMovement.MoreTowardsDex;
+            
+            Date = new DateTime(DateTime.UtcNow.Year, 1, 1).AddDays(cexMovement.DayOfYear -1);
         }
     }
 }

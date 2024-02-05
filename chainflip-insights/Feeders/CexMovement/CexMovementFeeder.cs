@@ -109,8 +109,8 @@ namespace ChainflipInsights.Feeders.CexMovement
                         continue;
                         
                     _logger.LogInformation(
-                        "Broadcasting CEX Movements for Day {Day}, {MovementIn} FLIP in, {MovementOut} FLIP out, {Movement} FLIP {NetMovement}.",
-                        cexMovementInfo.DayOfYear,
+                        "Broadcasting CEX Movements for {Date}, {MovementIn} FLIP in, {MovementOut} FLIP out, {Movement} FLIP {NetMovement}.",
+                        cexMovementInfo.Date.ToString("yyyy-MM-dd"),
                         cexMovementInfo.MovementInFormatted,
                         cexMovementInfo.MovementOutFormatted,
                         cexMovementInfo.TotalMovementFormatted,
