@@ -16,6 +16,7 @@ namespace ChainflipInsights.Feeders.CfeVersion
     using ChainflipInsights.Infrastructure.Pipelines;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
+    using Semver;
 
     public class CfeVersionFeeder
     {
@@ -37,6 +38,17 @@ namespace ChainflipInsights.Feeders.CfeVersion
                         }
                     }
                 }
+            }
+            """;
+
+        private const string LastBlockQuery =
+            """
+            {
+                allBlocks(orderBy: ID_DESC, first: 1) {
+                    nodes {
+                        id
+                    }
+                } 
             }
             """;
         
@@ -104,11 +116,12 @@ namespace ChainflipInsights.Feeders.CfeVersion
                 }
                 
                 var cfeVersionInfo = await GetCfeVersion(cancellationToken);
+                var lastBlockInfo = await GetLastBlock(cancellationToken);
                 
                 if (cancellationToken.IsCancellationRequested)
                     return;
                 
-                if (cfeVersionInfo == null)
+                if (cfeVersionInfo == null || lastBlockInfo == null)
                 {
                     await Task.Delay(_configuration.CfeVersionQueryDelay.Value.RandomizeTime(), cancellationToken);
                     continue;                    
@@ -116,7 +129,7 @@ namespace ChainflipInsights.Feeders.CfeVersion
                 
                 var cfeVersions = cfeVersionInfo
                     .Data.Data.Data
-                    .Select(x => new CfeVersionInfo(x.Data))
+                    .Select(x => new CfeVersionInfo(x.Data, lastBlockInfo.Data.Data.Data[0].Id))
                     .OrderBy(x => x.Version)
                     .ToArray();
                 
@@ -124,10 +137,11 @@ namespace ChainflipInsights.Feeders.CfeVersion
                     "Broadcasting {TotalVersions} CFE Versions",
                     cfeVersions.Length);
 
+                var allCfeVersions = new CfeVersionsInfo(lastVersion, cfeVersions);
                 await _pipeline.Source.SendAsync(
-                    new CfeVersionsInfo(cfeVersions), 
+                    allCfeVersions, 
                     cancellationToken);
-
+                
                 lastVersion = now;
                 await StoreLastCfeVersion(lastVersion);
                 
@@ -139,10 +153,12 @@ namespace ChainflipInsights.Feeders.CfeVersion
         {
             if (File.Exists(_configuration.LastCfeVersionLocation))
                 return await File.ReadAllTextAsync(_configuration.LastCfeVersionLocation, cancellationToken);
+
+            var yesterday = $"{DateTime.UtcNow.Date.AddDays(-1):yyyy-MM-dd}";
             
             await using var file = File.CreateText(_configuration.LastCfeVersionLocation);
-            await file.WriteAsync("1.1.7");
-            return "1.1.7";
+            await file.WriteAsync(yesterday);
+            return yesterday;
         }
         
         private async Task StoreLastCfeVersion(string cfeVersion)
@@ -166,6 +182,23 @@ namespace ChainflipInsights.Feeders.CfeVersion
                 cancellationToken);
 
             return await response.Content.ReadFromJsonAsync<CfeVersionResponse>(cancellationToken: cancellationToken);
+        }
+        
+        private async Task<LastBlockResponse?> GetLastBlock(
+            CancellationToken cancellationToken)
+        {
+            using var client = _httpClientFactory.CreateClient("Graph");
+
+            var graphQuery = $"{{ \"query\": \"{LastBlockQuery.ReplaceLineEndings("\\n")}\" }}";
+            
+            var response = await client.PostAsync(
+                string.Empty,
+                new StringContent(
+                    graphQuery, 
+                    new MediaTypeHeaderValue(MediaTypeNames.Application.Json)), 
+                cancellationToken);
+
+            return await response.Content.ReadFromJsonAsync<LastBlockResponse>(cancellationToken: cancellationToken);
         }
     }
 }

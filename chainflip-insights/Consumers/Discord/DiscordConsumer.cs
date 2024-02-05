@@ -1,11 +1,13 @@
 namespace ChainflipInsights.Consumers.Discord
 {
     using System;
+    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
     using System.Threading.Tasks.Dataflow;
     using ChainflipInsights.Configuration;
     using ChainflipInsights.Feeders.CexMovement;
+    using ChainflipInsights.Feeders.CfeVersion;
     using ChainflipInsights.Feeders.Epoch;
     using ChainflipInsights.Feeders.Funding;
     using ChainflipInsights.Feeders.Redemption;
@@ -16,6 +18,7 @@ namespace ChainflipInsights.Consumers.Discord
     using global::Discord.WebSocket;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
+    using Semver;
 
     public class DiscordConsumer : IConsumer
     {
@@ -68,6 +71,9 @@ namespace ChainflipInsights.Consumers.Discord
                     
                     if (input.CexMovementInfo != null)
                         ProcessCexMovementInfo(input.CexMovementInfo);
+                    
+                    if (input.CfeVersionInfo != null)
+                        ProcessCfeVersionInfo(input.CfeVersionInfo);
                 },
                 new ExecutionDataflowBlockOptions
                 {
@@ -418,6 +424,66 @@ namespace ChainflipInsights.Consumers.Discord
                 _logger.LogInformation(
                     "Announcing CEX Movements {Day} on Discord as Message {MessageId}",
                     cexMovement.DayOfYear,
+                    message.Id);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Discord meh.");
+            }
+        }
+
+        private void ProcessCfeVersionInfo(CfeVersionsInfo cfeVersionInfo)
+        {
+            if (!_configuration.DiscordCfeVersionEnabled.Value)
+            {
+                _logger.LogInformation(
+                    "CFE Version disabled for Discord. {Date}: {Versions} CFE Versions.",
+                    cfeVersionInfo.Date,
+                    cfeVersionInfo.Versions.Count);
+                
+                return;
+            }
+            
+            if (_discordClient.ConnectionState != ConnectionState.Connected)
+                return;
+            
+            try
+            {
+                _logger.LogInformation(
+                    "Announcing CFE Versions for {Date} on Discord: {Versions} CFE Versions.",
+                    cfeVersionInfo.Date,
+                    cfeVersionInfo.Versions.Count);
+
+                var maxVersion = cfeVersionInfo.Versions.Keys.Max(x => x);
+                var upToDateValidators = cfeVersionInfo
+                    .Versions[maxVersion]
+                    .Validators
+                    .Count(x => x.ValidatorStatus == ValidatorStatus.Online);
+
+                var outdatedValidators = cfeVersionInfo
+                    .Versions
+                    .Where(x => x.Key < maxVersion && x.Value.Validators.Any(v => v.ValidatorStatus == ValidatorStatus.Online))
+                    .ToList();
+                
+                var text =
+                    $"📜 CFE overview for **{cfeVersionInfo.Date}**! " +
+                    $"The current version is **{maxVersion}**, which **{upToDateValidators} online validators** are running. " +
+                    $"**{outdatedValidators.Sum(x => x.Value.Validators.Count(v => v.ValidatorStatus == ValidatorStatus.Online))} validators** are online on older versions " +
+                    $"({string.Join(", ", outdatedValidators.Select(x => $"{x.Value.Validators.Count(v => v.ValidatorStatus == ValidatorStatus.Online)} on {x.Key}"))})";
+                
+                var infoChannel = (ITextChannel)_discordClient
+                    .GetChannel(_configuration.DiscordSwapInfoChannelId.Value);
+                
+                var message = infoChannel
+                    .SendMessageAsync(
+                        text,
+                        flags: MessageFlags.SuppressEmbeds)
+                    .GetAwaiter()
+                    .GetResult();
+                
+                _logger.LogInformation(
+                    "Announcing CFE Versions {Day} on Discord as Message {MessageId}",
+                    cfeVersionInfo.Date,
                     message.Id);
             }
             catch (Exception e)
