@@ -9,6 +9,7 @@ namespace ChainflipInsights
     using ChainflipInsights.Consumers.Mastodon;
     using ChainflipInsights.Consumers.Telegram;
     using ChainflipInsights.Consumers.Twitter;
+    using ChainflipInsights.Feeders.CexMovement;
     using ChainflipInsights.Feeders.Epoch;
     using ChainflipInsights.Feeders.Funding;
     using ChainflipInsights.Feeders.Redemption;
@@ -37,6 +38,7 @@ namespace ChainflipInsights
             Pipeline<EpochInfo> epochPipeline,
             Pipeline<FundingInfo> fundingPipeline,
             Pipeline<RedemptionInfo> redemptionPipeline,
+            Pipeline<CexMovementInfo> cexMovementPipeline,
             DiscordConsumer discordConsumer,
             TelegramConsumer telegramConsumer,
             TwitterConsumer twitterConsumer,
@@ -53,7 +55,8 @@ namespace ChainflipInsights
                 incomingLiquidityPipeline,
                 epochPipeline,
                 fundingPipeline,
-                redemptionPipeline);
+                redemptionPipeline,
+                cexMovementPipeline);
         }
 
         private void SetupPipelines(
@@ -61,7 +64,8 @@ namespace ChainflipInsights
             Pipeline<IncomingLiquidityInfo> incomingLiquidityPipeline, 
             Pipeline<EpochInfo> epochPipeline, 
             Pipeline<FundingInfo> fundingPipeline, 
-            Pipeline<RedemptionInfo> redemptionPipeline)
+            Pipeline<RedemptionInfo> redemptionPipeline, 
+            Pipeline<CexMovementInfo> cexMovementPipeline)
         {
             var swapSource = swapPipeline.Source;
             swapSource.Completion.ContinueWith(
@@ -97,6 +101,13 @@ namespace ChainflipInsights
                     "Redemption Source completed, {Status}",
                     task.Status),
                 redemptionPipeline.CancellationToken);
+            
+            var cexMovementSource = cexMovementPipeline.Source;
+            cexMovementSource.Completion.ContinueWith(
+                task => _logger.LogInformation(
+                    "CEX Movement Source completed, {Status}",
+                    task.Status),
+                cexMovementPipeline.CancellationToken);
             
             var wrapSwaps = new TransformBlock<SwapInfo, BroadcastInfo>(
                 swapInfo => new BroadcastInfo(swapInfo),
@@ -178,6 +189,22 @@ namespace ChainflipInsights
                     task.Status),
                 redemptionPipeline.CancellationToken);
             
+            var wrapCexMovement = new TransformBlock<CexMovementInfo, BroadcastInfo>(
+                cexMovementInfo => new BroadcastInfo(cexMovementInfo),
+                new ExecutionDataflowBlockOptions
+                {
+                    CancellationToken = fundingPipeline.CancellationToken,
+                    MaxDegreeOfParallelism = 1,
+                    EnsureOrdered = true,
+                    SingleProducerConstrained = true
+                });
+            
+            wrapCexMovement.Completion.ContinueWith(
+                task => _logger.LogInformation(
+                    "Wrap CEX Movement completed, {Status}",
+                    task.Status),
+                cexMovementPipeline.CancellationToken);
+            
             var broadcast = new BroadcastBlock<BroadcastInfo>(
                 e => e,
                 new DataflowBlockOptions
@@ -221,12 +248,14 @@ namespace ChainflipInsights
             epochSource.LinkTo(wrapEpoch, linkOptions);
             fundingSource.LinkTo(wrapFunding, linkOptions);
             redemptionSource.LinkTo(wrapRedemption, linkOptions);
-            
+            cexMovementSource.LinkTo(wrapCexMovement, linkOptions);
+
             wrapSwaps.LinkTo(broadcast, linkOptions);
             wrapIncomingLiquidity.LinkTo(broadcast, linkOptions);
             wrapEpoch.LinkTo(broadcast, linkOptions);
             wrapFunding.LinkTo(broadcast, linkOptions);
             wrapRedemption.LinkTo(broadcast, linkOptions);
+            wrapCexMovement.LinkTo(broadcast, linkOptions);
         }
         
         private ITargetBlock<BroadcastInfo> SetupDiscordPipeline(

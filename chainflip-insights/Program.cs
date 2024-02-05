@@ -17,6 +17,7 @@
     using ChainflipInsights.Consumers.Mastodon;
     using ChainflipInsights.Consumers.Telegram;
     using ChainflipInsights.Consumers.Twitter;
+    using ChainflipInsights.Feeders.CexMovement;
     using ChainflipInsights.Feeders.Epoch;
     using ChainflipInsights.Feeders.Funding;
     using ChainflipInsights.Feeders.Redemption;
@@ -43,6 +44,7 @@
         private static Pipeline<EpochInfo>? _epochPipeline;
         private static Pipeline<FundingInfo>? _fundingPipeline;
         private static Pipeline<RedemptionInfo>? _redemptionPipeline;
+        private static Pipeline<CexMovementInfo>? _cexMovementPipeline;
 
         public static void Main()
         {
@@ -77,6 +79,7 @@
                 _epochPipeline?.Source.Complete();
                 _fundingPipeline?.Source.Complete();
                 _redemptionPipeline?.Source.Complete();
+                _cexMovementPipeline?.Source.Complete();
 
                 CancellationTokenSource.Cancel();
 
@@ -95,6 +98,7 @@
                 _epochPipeline = container.GetRequiredService<Pipeline<EpochInfo>>();
                 _fundingPipeline = container.GetRequiredService<Pipeline<FundingInfo>>();
                 _redemptionPipeline = container.GetRequiredService<Pipeline<RedemptionInfo>>();
+                _cexMovementPipeline = container.GetRequiredService<Pipeline<CexMovementInfo>>();
 
                 var runner = container.GetRequiredService<Runner>();
 
@@ -103,6 +107,7 @@
                 var epochFeeder = container.GetRequiredService<EpochFeeder>();
                 var fundingFeeder = container.GetRequiredService<FundingFeeder>();
                 var redemptionFeeder = container.GetRequiredService<RedemptionFeeder>();
+                var cexMovementFeeder = container.GetRequiredService<CexMovementFeeder>();
 
                 var tasks = new List<Task>();
                 tasks.AddRange(runner.Start());
@@ -112,6 +117,7 @@
                 tasks.Add(epochFeeder.Start());
                 tasks.Add(fundingFeeder.Start());
                 tasks.Add(redemptionFeeder.Start());
+                tasks.Add(cexMovementFeeder.Start());
 
                 Console.WriteLine("Running... Press CTRL + C to exit.");
                 Task.WaitAll(tasks.ToArray());
@@ -170,7 +176,17 @@
                     {
                         x.BaseAddress = new Uri(botConfiguration.SwapUrl);
                         x.DefaultRequestHeaders.UserAgent.ParseAdd("discord-chainflip-insights");
-                    });;
+                    })
+                
+                .Services
+                
+                .AddHttpClient(
+                    "Dune",
+                    x =>
+                    {
+                        x.BaseAddress = new Uri(botConfiguration.DuneUrl);
+                        x.DefaultRequestHeaders.UserAgent.ParseAdd("discord-chainflip-insights");
+                    });
             
             builder
                 .Register(x =>
@@ -262,6 +278,10 @@
                 .SingleInstance();
             
             builder
+                .Register(_ => new Pipeline<CexMovementInfo>(new BufferBlock<CexMovementInfo>(), ct))
+                .SingleInstance();
+            
+            builder
                 .RegisterType<SwapFeeder>()
                 .SingleInstance();
             
@@ -275,6 +295,10 @@
             
             builder
                 .RegisterType<FundingFeeder>()
+                .SingleInstance();
+            
+            builder
+                .RegisterType<CexMovementFeeder>()
                 .SingleInstance();
             
             builder

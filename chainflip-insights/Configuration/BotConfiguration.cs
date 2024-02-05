@@ -45,6 +45,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public bool? EnableCexMovement
+        {
+            get; init;
+        }  
+        
+        [Required]
+        [NotNull]
         public bool? EnableDiscord
         {
             get; init;
@@ -136,6 +143,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public string? DuneApiKey
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
         public string? GraphUrl
         {
             get; init;
@@ -168,14 +182,28 @@ namespace ChainflipInsights.Configuration
         {
             get; init;
         }
-        
+
         [Required]
         [NotNull]
         public string? ValidatorUrl
         {
             get; init;
         }
+
+        [Required]
+        [NotNull]
+        public string? DuneUrl
+        {
+            get; init;
+        }
         
+        [Required]
+        [NotNull]
+        public int? DuneCexMovementQuery
+        {
+            get; init;
+        }
+
         [Required]
         [NotNull]
         public int? FeedingDelay
@@ -220,6 +248,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public int? CexMovementQueryDelay
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
         public string? LastSwapIdLocation
         {
             get; init;
@@ -249,6 +284,13 @@ namespace ChainflipInsights.Configuration
         [Required]
         [NotNull]
         public string? LastRedemptionIdLocation
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public string? LastCexMovementDayLocation
         {
             get; init;
         }
