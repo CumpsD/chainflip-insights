@@ -138,7 +138,8 @@ namespace ChainflipInsights.Consumers.Twitter
                 var text =
                     $"{swap.Emoji} Swapped {_configuration.ExplorerSwapsUrl}{swap.Id}\n" +
                     $"➡️ {swap.DepositAmountFormatted} ${swap.SourceAsset} (${swap.DepositValueUsdFormatted})\n" +
-                    $"⬅️ {swap.EgressAmountFormatted} ${swap.DestinationAsset} (${swap.EgressValueUsdFormatted})";
+                    $"⬅️ {swap.EgressAmountFormatted} ${swap.DestinationAsset} (${swap.EgressValueUsdFormatted})\n" +
+                    $"#chainflip #flip";
 
                 _twitterClient.Execute
                     .AdvanceRequestAsync(x =>
@@ -190,7 +191,8 @@ namespace ChainflipInsights.Consumers.Twitter
                     $"➖ Minimum Bid is {epoch.MinimumBondFormatted} $FLIP\n" +
                     $"➕ Maximum Bid is {epoch.MaxBidFormatted} $FLIP\n" +
                     $"🧮 Total bonded is {epoch.TotalBondFormatted} $FLIP\n" +
-                    $"💰 Last Epoch distributed {epoch.PreviousEpoch.TotalRewardsFormatted} $FLIP in rewards";
+                    $"💰 Last Epoch distributed {epoch.PreviousEpoch.TotalRewardsFormatted} $FLIP in rewards\n" +
+                    $"#chainflip #flip";
 
                 _twitterClient.Execute
                     .AdvanceRequestAsync(x =>
@@ -234,7 +236,8 @@ namespace ChainflipInsights.Consumers.Twitter
                     string.Format(_configuration.ValidatorUrl, funding.ValidatorName));
                 
                 var text =
-                    $"🪙 Validator {funding.Validator} added {funding.AmountFormatted} FLIP! {string.Format(_configuration.ValidatorUrl, funding.ValidatorName)}";
+                    $"🪙 Validator {funding.Validator} added {funding.AmountFormatted} FLIP! {string.Format(_configuration.ValidatorUrl, funding.ValidatorName)}\n" +
+                    $"#chainflip #flip";
 
                 _twitterClient.Execute
                     .AdvanceRequestAsync(x =>
@@ -278,7 +281,8 @@ namespace ChainflipInsights.Consumers.Twitter
                     string.Format(_configuration.ValidatorUrl, redemption.ValidatorName));
                 
                 var text =
-                    $"💸 Validator {redemption.Validator} redeemed {redemption.AmountFormatted} $FLIP! {string.Format(_configuration.ValidatorUrl, redemption.ValidatorName)}";
+                    $"💸 Validator {redemption.Validator} redeemed {redemption.AmountFormatted} $FLIP! {string.Format(_configuration.ValidatorUrl, redemption.ValidatorName)}\n" +
+                    $"#chainflip #flip";
 
                 _twitterClient.Execute
                     .AdvanceRequestAsync(x =>
@@ -327,7 +331,8 @@ namespace ChainflipInsights.Consumers.Twitter
                     $"🔀 CEX Movements for {cexMovement.Date:yyyy-MM-dd} are in!\n" +
                     $"⬆️ {cexMovement.MovementInFormatted} $FLIP moved towards CEX\n" +
                     $"⬇️ {cexMovement.MovementOutFormatted} $FLIP moved towards DEX\n" +
-                    $"{(cexMovement.NetMovement == NetMovement.MoreTowardsCex ? "🔴" : "🟢" )} {(cexMovement.NetMovement == NetMovement.MoreTowardsCex ? "CEX" : "DEX" )} gained {cexMovement.TotalMovementFormatted} $FLIP";
+                    $"{(cexMovement.NetMovement == NetMovement.MoreTowardsCex ? "🔴" : "🟢" )} {(cexMovement.NetMovement == NetMovement.MoreTowardsCex ? "CEX" : "DEX" )} gained {cexMovement.TotalMovementFormatted} $FLIP\n" +
+                    $"#chainflip #flip";
                 
                 _twitterClient.Execute
                     .AdvanceRequestAsync(x =>
