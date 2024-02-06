@@ -59,6 +59,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public bool? EnableSwapLimits
+        {
+            get; init;
+        }  
+        
+        [Required]
+        [NotNull]
         public bool? EnableDiscord
         {
             get; init;
@@ -206,6 +213,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public string? RpcUrl
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
         public int? DuneCexMovementQuery
         {
             get; init;
@@ -269,6 +283,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public int? SwapLimitsQueryDelay
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
         public string? LastSwapIdLocation
         {
             get; init;
@@ -312,6 +333,13 @@ namespace ChainflipInsights.Configuration
         [Required]
         [NotNull]
         public string? LastCfeVersionLocation
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public string? LastSwapLimitsLocation
         {
             get; init;
         }
@@ -522,6 +550,34 @@ namespace ChainflipInsights.Configuration
         [Required]
         [NotNull]
         public bool? DiscordCfeVersionEnabled
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public bool? MastodonSwapLimitsEnabled
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public bool? TwitterSwapLimitsEnabled
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public bool? TelegramSwapLimitsEnabled
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public bool? DiscordSwapLimitsEnabled
         {
             get; init;
         }

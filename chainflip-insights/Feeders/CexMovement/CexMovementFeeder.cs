@@ -7,7 +7,6 @@ namespace ChainflipInsights.Feeders.CexMovement
     using System.Net.Http;
     using System.Net.Http.Headers;
     using System.Net.Http.Json;
-    using System.Net.Mime;
     using System.Threading;
     using System.Threading.Tasks;
     using System.Threading.Tasks.Dataflow;
@@ -17,7 +16,7 @@ namespace ChainflipInsights.Feeders.CexMovement
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
 
-    public class CexMovementFeeder
+    public class CexMovementFeeder : IFeeder
     {
         private readonly ILogger<CexMovementFeeder> _logger;
         private readonly Pipeline<CexMovementInfo> _pipeline;

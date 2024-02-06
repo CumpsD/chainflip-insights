@@ -17,7 +17,7 @@ namespace ChainflipInsights.Feeders.Swap
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
 
-    public class SwapFeeder
+    public class SwapFeeder : IFeeder
     {
         private const string SwapsQuery = 
             """

@@ -17,7 +17,7 @@ namespace ChainflipInsights.Feeders.Liquidity
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
 
-    public class IncomingLiquidityFeeder
+    public class IncomingLiquidityFeeder : IFeeder
     {
         private const string IncomingLiquidityQuery = 
             """

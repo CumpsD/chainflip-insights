@@ -5,8 +5,15 @@ namespace ChainflipInsights.Infrastructure.Pipelines
     using System.Threading;
     using System.Threading.Tasks.Dataflow;
 
-    public class Pipeline<T>
+    public interface IPipeline
     {
+        IDataflowBlock SourceBlock { get; }
+    }
+
+    public class Pipeline<T> : IPipeline
+    {
+        public IDataflowBlock SourceBlock => Source;
+
         public BufferBlock<T> Source { get; }
 
         public CancellationToken CancellationToken { get; }

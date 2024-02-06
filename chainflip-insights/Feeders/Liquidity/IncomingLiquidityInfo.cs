@@ -42,7 +42,7 @@ namespace ChainflipInsights.Feeders.Liquidity
             Network = liquidity.Channel.Chain;
             ChannelId = liquidity.Channel.ChannelId;
 
-            SourceAssetInfo = Constants.AssetDecimals[SourceAsset.ToLowerInvariant()];
+            SourceAssetInfo = Constants.SupportedAssets[SourceAsset.ToLowerInvariant()];
         }
     }
 }

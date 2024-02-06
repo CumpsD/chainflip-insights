@@ -70,8 +70,8 @@ namespace ChainflipInsights.Feeders.Swap
 
             SwapScheduledBlockTimestamp = swap.SwapScheduledBlockTimestamp;
 
-            SourceAssetInfo = Constants.AssetDecimals[SourceAsset.ToLowerInvariant()];
-            DestinationAssetInfo = Constants.AssetDecimals[DestinationAsset.ToLowerInvariant()];
+            SourceAssetInfo = Constants.SupportedAssets[SourceAsset.ToLowerInvariant()];
+            DestinationAssetInfo = Constants.SupportedAssets[DestinationAsset.ToLowerInvariant()];
         }
     }
 }

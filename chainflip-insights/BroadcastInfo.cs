@@ -8,6 +8,7 @@ namespace ChainflipInsights
     using ChainflipInsights.Feeders.Liquidity;
     using ChainflipInsights.Feeders.Redemption;
     using ChainflipInsights.Feeders.Swap;
+    using ChainflipInsights.Feeders.SwapLimits;
 
     public class BroadcastInfo
     {
@@ -18,6 +19,8 @@ namespace ChainflipInsights
         public RedemptionInfo? RedemptionInfo { get; }
         public CexMovementInfo? CexMovementInfo { get; }
         public CfeVersionsInfo? CfeVersionInfo { get; }
+        public SwapLimitsInfo? SwapLimitsInfo { get; }
+
 
         public BroadcastInfo(SwapInfo swapInfo) 
             => SwapInfo = swapInfo ?? throw new ArgumentNullException(nameof(swapInfo));
@@ -39,5 +42,8 @@ namespace ChainflipInsights
 
         public BroadcastInfo(CfeVersionsInfo cfeVersionInfo) 
             => CfeVersionInfo = cfeVersionInfo ?? throw new ArgumentNullException(nameof(cfeVersionInfo));
+
+        public BroadcastInfo(SwapLimitsInfo swapLimitsInfo) 
+            => SwapLimitsInfo = swapLimitsInfo ?? throw new ArgumentNullException(nameof(swapLimitsInfo));
     }
 }

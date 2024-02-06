@@ -18,7 +18,7 @@ namespace ChainflipInsights.Feeders.CfeVersion
     using Microsoft.Extensions.Options;
     using Semver;
 
-    public class CfeVersionFeeder
+    public class CfeVersionFeeder : IFeeder
     {
         private const string CfeVersionQuery = 
             """

@@ -12,48 +12,54 @@ namespace ChainflipInsights.Feeders
         
         public const string DollarString = "0.00";
 
-        public static readonly Dictionary<string, AssetInfo> AssetDecimals = new()
+        public const string BTC = "btc";
+        public const string DOT = "dot";
+        public const string ETH = "eth";
+        public const string FLIP = "flip";
+        public const string USDC = "usdc";
+        
+        public static readonly Dictionary<string, AssetInfo> SupportedAssets = new()
         {
             {
-                "btc",
+                BTC,
                 new AssetInfo(
-                    "btc",
+                    BTC,
                     "BTC",
                     "Bitcoin",
                     "Bitcoin",
                     8)
             },
             {
-                "dot",
+                DOT,
                 new AssetInfo(
-                    "dot",
+                    DOT,
                     "DOT",
                     "Polkadot",
                     "Polkadot",
                     10)
             },
             {
-                "eth",
+                ETH,
                 new AssetInfo(
-                    "eth",
+                    ETH,
                     "ETH",
                     "Ethereum",
                     "Ethereum",
                     18)
             },
             {
-                "flip",
+                FLIP,
                 new AssetInfo(
-                    "flip",
+                    FLIP,
                     "FLIP",
                     "Chainflip",
                     "Ethereum",
                     18)
             },
             {
-                "usdc",
+                USDC,
                 new AssetInfo(
-                    "usdc",
+                    USDC,
                     "USDC",
                     "ethUSDC",
                     "Ethereum",

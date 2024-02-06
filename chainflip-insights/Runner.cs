@@ -17,6 +17,7 @@ namespace ChainflipInsights
     using ChainflipInsights.Feeders.Redemption;
     using ChainflipInsights.Feeders.Liquidity;
     using ChainflipInsights.Feeders.Swap;
+    using ChainflipInsights.Feeders.SwapLimits;
     using ChainflipInsights.Infrastructure.Pipelines;
     using Microsoft.Extensions.Logging;
 
@@ -42,6 +43,7 @@ namespace ChainflipInsights
             Pipeline<RedemptionInfo> redemptionPipeline,
             Pipeline<CexMovementInfo> cexMovementPipeline,
             Pipeline<CfeVersionsInfo> cfeVersionPipeline,
+            Pipeline<SwapLimitsInfo> swapLimitsPipeline,
             DiscordConsumer discordConsumer,
             TelegramConsumer telegramConsumer,
             TwitterConsumer twitterConsumer,
@@ -60,7 +62,8 @@ namespace ChainflipInsights
                 fundingPipeline,
                 redemptionPipeline,
                 cexMovementPipeline,
-                cfeVersionPipeline);
+                cfeVersionPipeline,
+                swapLimitsPipeline);
         }
 
         private void SetupPipelines(
@@ -70,7 +73,8 @@ namespace ChainflipInsights
             Pipeline<FundingInfo> fundingPipeline, 
             Pipeline<RedemptionInfo> redemptionPipeline, 
             Pipeline<CexMovementInfo> cexMovementPipeline, 
-            Pipeline<CfeVersionsInfo> cfeVersionPipeline)
+            Pipeline<CfeVersionsInfo> cfeVersionPipeline, 
+            Pipeline<SwapLimitsInfo> swapLimitsPipeline)
         {
             var linkOptions = new DataflowLinkOptions
             {
@@ -135,6 +139,13 @@ namespace ChainflipInsights
             SetupFeederPipeline(
                 "CFE Version",
                 cfeVersionPipeline,
+                linkOptions,
+                broadcast,
+                x => new BroadcastInfo(x));
+            
+            SetupFeederPipeline(
+                "Swap Limits",
+                swapLimitsPipeline,
                 linkOptions,
                 broadcast,
                 x => new BroadcastInfo(x));

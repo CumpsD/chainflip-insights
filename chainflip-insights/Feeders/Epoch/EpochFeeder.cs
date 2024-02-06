@@ -17,7 +17,7 @@ namespace ChainflipInsights.Feeders.Epoch
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
 
-    public class EpochFeeder
+    public class EpochFeeder : IFeeder
     {
         private const string EpochQuery = 
             """

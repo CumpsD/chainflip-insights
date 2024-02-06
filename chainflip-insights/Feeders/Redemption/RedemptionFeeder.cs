@@ -17,7 +17,7 @@ namespace ChainflipInsights.Feeders.Redemption
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
 
-    public class RedemptionFeeder
+    public class RedemptionFeeder : IFeeder
     {
         private const string RedemptionQuery = 
             """

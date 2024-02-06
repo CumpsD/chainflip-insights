@@ -17,6 +17,7 @@
     using ChainflipInsights.Consumers.Mastodon;
     using ChainflipInsights.Consumers.Telegram;
     using ChainflipInsights.Consumers.Twitter;
+    using ChainflipInsights.Feeders;
     using ChainflipInsights.Feeders.CexMovement;
     using ChainflipInsights.Feeders.CfeVersion;
     using ChainflipInsights.Feeders.Epoch;
@@ -24,6 +25,7 @@
     using ChainflipInsights.Feeders.Redemption;
     using ChainflipInsights.Feeders.Liquidity;
     using ChainflipInsights.Feeders.Swap;
+    using ChainflipInsights.Feeders.SwapLimits;
     using ChainflipInsights.Infrastructure;
     using ChainflipInsights.Infrastructure.Options;
     using ChainflipInsights.Infrastructure.Pipelines;
@@ -40,14 +42,6 @@
     {
         private static readonly CancellationTokenSource CancellationTokenSource = new();
         
-        private static Pipeline<SwapInfo>? _swapPipeline;
-        private static Pipeline<IncomingLiquidityInfo>? _incomingLiquidityPipeline;
-        private static Pipeline<EpochInfo>? _epochPipeline;
-        private static Pipeline<FundingInfo>? _fundingPipeline;
-        private static Pipeline<RedemptionInfo>? _redemptionPipeline;
-        private static Pipeline<CexMovementInfo>? _cexMovementPipeline;
-        private static Pipeline<CfeVersionsInfo>? _cfeVersionPipeline;
-
         public static void Main()
         {
             var ct = CancellationTokenSource.Token;
@@ -71,18 +65,25 @@
             logger.LogInformation(
                 "Starting {ApplicationName}",
                 applicationName);
+
+            var pipelines = new IPipeline[]
+            {
+                container.GetRequiredService<Pipeline<SwapInfo>>(),
+                container.GetRequiredService<Pipeline<IncomingLiquidityInfo>>(),
+                container.GetRequiredService<Pipeline<EpochInfo>>(),
+                container.GetRequiredService<Pipeline<FundingInfo>>(),
+                container.GetRequiredService<Pipeline<RedemptionInfo>>(),
+                container.GetRequiredService<Pipeline<CexMovementInfo>>(),
+                container.GetRequiredService<Pipeline<CfeVersionsInfo>>(),
+                container.GetRequiredService<Pipeline<SwapLimitsInfo>>(),
+            };
             
             Console.CancelKeyPress += (_, eventArgs) =>
             { 
                 logger.LogInformation("Requesting stop...");
-                
-                _swapPipeline?.Source.Complete();
-                _incomingLiquidityPipeline?.Source.Complete();
-                _epochPipeline?.Source.Complete();
-                _fundingPipeline?.Source.Complete();
-                _redemptionPipeline?.Source.Complete();
-                _cexMovementPipeline?.Source.Complete();
-                _cfeVersionPipeline?.Source.Complete();
+
+                foreach (var pipeline in pipelines)
+                    pipeline?.SourceBlock.Complete();                
 
                 CancellationTokenSource.Cancel();
 
@@ -96,34 +97,23 @@
                 Console.ReadLine();
                 #endif
                 
-                _swapPipeline = container.GetRequiredService<Pipeline<SwapInfo>>();
-                _incomingLiquidityPipeline = container.GetRequiredService<Pipeline<IncomingLiquidityInfo>>();
-                _epochPipeline = container.GetRequiredService<Pipeline<EpochInfo>>();
-                _fundingPipeline = container.GetRequiredService<Pipeline<FundingInfo>>();
-                _redemptionPipeline = container.GetRequiredService<Pipeline<RedemptionInfo>>();
-                _cexMovementPipeline = container.GetRequiredService<Pipeline<CexMovementInfo>>();
-                _cfeVersionPipeline = container.GetRequiredService<Pipeline<CfeVersionsInfo>>();
-
                 var runner = container.GetRequiredService<Runner>();
 
-                var swapFeeder = container.GetRequiredService<SwapFeeder>();
-                var incomingLiquidityFeeder = container.GetRequiredService<IncomingLiquidityFeeder>();
-                var epochFeeder = container.GetRequiredService<EpochFeeder>();
-                var fundingFeeder = container.GetRequiredService<FundingFeeder>();
-                var redemptionFeeder = container.GetRequiredService<RedemptionFeeder>();
-                var cexMovementFeeder = container.GetRequiredService<CexMovementFeeder>();
-                var cfeVersionFeeder = container.GetRequiredService<CfeVersionFeeder>();
+                var feeders = new IFeeder[]
+                {
+                    container.GetRequiredService<SwapFeeder>(),
+                    container.GetRequiredService<IncomingLiquidityFeeder>(),
+                    container.GetRequiredService<EpochFeeder>(),
+                    container.GetRequiredService<FundingFeeder>(),
+                    container.GetRequiredService<RedemptionFeeder>(),
+                    container.GetRequiredService<CexMovementFeeder>(),
+                    container.GetRequiredService<CfeVersionFeeder>(),
+                    container.GetRequiredService<SwapLimitsFeeder>()
+                };
 
                 var tasks = new List<Task>();
                 tasks.AddRange(runner.Start());
-                
-                tasks.Add(swapFeeder.Start());
-                tasks.Add(incomingLiquidityFeeder.Start());
-                tasks.Add(epochFeeder.Start());
-                tasks.Add(fundingFeeder.Start());
-                tasks.Add(redemptionFeeder.Start());
-                tasks.Add(cexMovementFeeder.Start());
-                tasks.Add(cfeVersionFeeder.Start());
+                tasks.AddRange(feeders.Select(feeder => feeder.Start()));
 
                 Console.WriteLine("Running... Press CTRL + C to exit.");
                 Task.WaitAll(tasks.ToArray());
@@ -191,6 +181,16 @@
                     x =>
                     {
                         x.BaseAddress = new Uri(botConfiguration.DuneUrl);
+                        x.DefaultRequestHeaders.UserAgent.ParseAdd("discord-chainflip-insights");
+                    })
+                
+                .Services
+                
+                .AddHttpClient(
+                    "Rpc",
+                    x =>
+                    {
+                        x.BaseAddress = new Uri(botConfiguration.RpcUrl);
                         x.DefaultRequestHeaders.UserAgent.ParseAdd("discord-chainflip-insights");
                     });
             
@@ -262,63 +262,16 @@
             builder
                 .Register(_ => new MastodonClient("mastodon.social", botConfiguration.MastodonAccessToken))
                 .SingleInstance();
-
-            builder
-                .Register(_ => new Pipeline<SwapInfo>(new BufferBlock<SwapInfo>(), ct))
-                .SingleInstance();
-
-            builder
-                .Register(_ => new Pipeline<IncomingLiquidityInfo>(new BufferBlock<IncomingLiquidityInfo>(), ct))
-                .SingleInstance();
             
-            builder
-                .Register(_ => new Pipeline<EpochInfo>(new BufferBlock<EpochInfo>(), ct))
-                .SingleInstance();
+            RegisterFeeder<SwapFeeder, SwapInfo>(builder, ct);
+            RegisterFeeder<IncomingLiquidityFeeder, IncomingLiquidityInfo>(builder, ct);
+            RegisterFeeder<EpochFeeder, EpochInfo>(builder, ct);
+            RegisterFeeder<FundingFeeder, FundingInfo>(builder, ct);
+            RegisterFeeder<RedemptionFeeder, RedemptionInfo>(builder, ct);
+            RegisterFeeder<CexMovementFeeder, CexMovementInfo>(builder, ct);
+            RegisterFeeder<CfeVersionFeeder, CfeVersionsInfo>(builder, ct);
+            RegisterFeeder<SwapLimitsFeeder, SwapLimitsInfo>(builder, ct);
             
-            builder
-                .Register(_ => new Pipeline<FundingInfo>(new BufferBlock<FundingInfo>(), ct))
-                .SingleInstance();
-            
-            builder
-                .Register(_ => new Pipeline<RedemptionInfo>(new BufferBlock<RedemptionInfo>(), ct))
-                .SingleInstance();
-            
-            builder
-                .Register(_ => new Pipeline<CexMovementInfo>(new BufferBlock<CexMovementInfo>(), ct))
-                .SingleInstance();
-            
-            builder
-                .Register(_ => new Pipeline<CfeVersionsInfo>(new BufferBlock<CfeVersionsInfo>(), ct))
-                .SingleInstance();
-            
-            builder
-                .RegisterType<SwapFeeder>()
-                .SingleInstance();
-            
-            builder
-                .RegisterType<IncomingLiquidityFeeder>()
-                .SingleInstance();
-            
-            builder
-                .RegisterType<EpochFeeder>()
-                .SingleInstance();
-            
-            builder
-                .RegisterType<FundingFeeder>()
-                .SingleInstance();
-
-            builder
-                .RegisterType<RedemptionFeeder>()
-                .SingleInstance();
-            
-            builder
-                .RegisterType<CexMovementFeeder>()
-                .SingleInstance();
-
-            builder
-                .RegisterType<CfeVersionFeeder>()
-                .SingleInstance();
-
             builder
                 .RegisterType<DiscordConsumer>()
                 .SingleInstance();
@@ -343,6 +296,17 @@
                 .Populate(services);
 
             return new AutofacServiceProvider(builder.Build());
+        }
+
+        private static void RegisterFeeder<TFeeder, TInfo>(ContainerBuilder builder, CancellationToken ct) where TFeeder : notnull
+        {
+            builder
+                .Register(_ => new Pipeline<TInfo>(new BufferBlock<TInfo>(), ct))
+                .SingleInstance();
+            
+            builder
+                .RegisterType<TFeeder>()
+                .SingleInstance();
         }
     }
 }

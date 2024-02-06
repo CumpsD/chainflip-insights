@@ -17,7 +17,7 @@ namespace ChainflipInsights.Feeders.Funding
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
 
-    public class FundingFeeder
+    public class FundingFeeder : IFeeder
     {
         private const string FundingQuery = 
             """
