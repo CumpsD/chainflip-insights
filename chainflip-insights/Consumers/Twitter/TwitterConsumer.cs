@@ -1,6 +1,7 @@
 namespace ChainflipInsights.Consumers.Twitter
 {
     using System;
+    using System.Linq;
     using System.Net.Http.Headers;
     using System.Net.Http.Json;
     using System.Net.Mime;
@@ -15,6 +16,7 @@ namespace ChainflipInsights.Consumers.Twitter
     using ChainflipInsights.Feeders.Liquidity;
     using ChainflipInsights.Feeders.Redemption;
     using ChainflipInsights.Feeders.Swap;
+    using ChainflipInsights.Feeders.SwapLimits;
     using ChainflipInsights.Infrastructure.Pipelines;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
@@ -83,6 +85,9 @@ namespace ChainflipInsights.Consumers.Twitter
                     
                     if (input.CexMovementInfo != null)
                         ProcessCexMovementInfo(input.CexMovementInfo);
+                    
+                    if (input.SwapLimitsInfo != null)
+                        ProcessSwapLimitsInfo(input.SwapLimitsInfo);
                     
                     Task
                         .Delay(1500, cancellationToken)
@@ -323,6 +328,47 @@ namespace ChainflipInsights.Consumers.Twitter
                     $"⬆️ {cexMovement.MovementInFormatted} $FLIP moved towards CEX\n" +
                     $"⬇️ {cexMovement.MovementOutFormatted} $FLIP moved towards DEX\n" +
                     $"{(cexMovement.NetMovement == NetMovement.MoreTowardsCex ? "🔴" : "🟢" )} {(cexMovement.NetMovement == NetMovement.MoreTowardsCex ? "CEX" : "DEX" )} gained {cexMovement.TotalMovementFormatted} $FLIP";
+                
+                _twitterClient.Execute
+                    .AdvanceRequestAsync(x =>
+                    {
+                        x.Query.Url = "https://api.twitter.com/2/tweets";
+                        x.Query.HttpMethod = Tweetinvi.Models.HttpMethod.POST;
+                        x.Query.HttpContent = JsonContent.Create(
+                            new TweetV2PostRequest { Text = text },
+                            mediaType: new MediaTypeHeaderValue(MediaTypeNames.Application.Json));
+                    })
+                    .GetAwaiter()
+                    .GetResult();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Twitter meh.");
+            }
+        }
+
+        private void ProcessSwapLimitsInfo(SwapLimitsInfo swapLimits)
+        {
+            if (!_configuration.TwitterSwapLimitsEnabled.Value)
+            {
+                _logger.LogInformation(
+                    "Swap Limits disabled for Twitter: {Limits}",
+                    string.Join(", ", swapLimits.SwapLimits.Select(x => $"{x.Asset.Ticker}: {x.SwapLimit}")));
+                
+                return;
+            }
+            
+            try
+            {
+                _logger.LogInformation(
+                    "Announcing Swap Limits on Twitter: {Limits}",
+                    string.Join(", ", swapLimits.SwapLimits.Select(x => $"{x.Asset.Ticker}: {x.SwapLimit}")));
+                
+                var text =
+                    $"🫡 Swap Limits have changed! " +
+                    $"The new limits are:\n" +
+                    $"{string.Join("\n", swapLimits.SwapLimits.Select(x => $"${x.Asset.Ticker}: {x.SwapLimit}"))}\n" +
+                    $"#chainflip #flip";
                 
                 _twitterClient.Execute
                     .AdvanceRequestAsync(x =>

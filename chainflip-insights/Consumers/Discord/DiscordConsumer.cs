@@ -13,6 +13,7 @@ namespace ChainflipInsights.Consumers.Discord
     using ChainflipInsights.Feeders.Redemption;
     using ChainflipInsights.Feeders.Liquidity;
     using ChainflipInsights.Feeders.Swap;
+    using ChainflipInsights.Feeders.SwapLimits;
     using ChainflipInsights.Infrastructure.Pipelines;
     using global::Discord;
     using global::Discord.WebSocket;
@@ -74,6 +75,9 @@ namespace ChainflipInsights.Consumers.Discord
                     
                     if (input.CfeVersionInfo != null)
                         ProcessCfeVersionInfo(input.CfeVersionInfo);
+                    
+                    if (input.SwapLimitsInfo != null)
+                        ProcessSwapLimitsInfo(input.SwapLimitsInfo);
                 },
                 new ExecutionDataflowBlockOptions
                 {
@@ -484,6 +488,51 @@ namespace ChainflipInsights.Consumers.Discord
                 _logger.LogInformation(
                     "Announcing CFE Versions {Day} on Discord as Message {MessageId}",
                     cfeVersionInfo.Date,
+                    message.Id);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Discord meh.");
+            }
+        }
+
+        private void ProcessSwapLimitsInfo(SwapLimitsInfo swapLimits)
+        {
+            if (!_configuration.DiscordSwapLimitsEnabled.Value)
+            {
+                _logger.LogInformation(
+                    "Swap Limits disabled for Discord: {Limits}",
+                    string.Join(", ", swapLimits.SwapLimits.Select(x => $"{x.Asset.Ticker}: {x.SwapLimit}")));
+                
+                return;
+            }
+            
+            if (_discordClient.ConnectionState != ConnectionState.Connected)
+                return;
+            
+            try
+            {
+                _logger.LogInformation(
+                    "Announcing Swap Limits on Discord: {Limits}",
+                    string.Join(", ", swapLimits.SwapLimits.Select(x => $"{x.Asset.Ticker}: {x.SwapLimit}")));
+
+                var text =
+                    $"🫡 Swap Limits have changed! " +
+                    $"The new limits are: " +
+                    $"{string.Join(", ", swapLimits.SwapLimits.Select(x => $"**{x.Asset.Ticker}**: **{x.SwapLimit}**"))}";
+                
+                var infoChannel = (ITextChannel)_discordClient
+                    .GetChannel(_configuration.DiscordSwapInfoChannelId.Value);
+                
+                var message = infoChannel
+                    .SendMessageAsync(
+                        text,
+                        flags: MessageFlags.SuppressEmbeds)
+                    .GetAwaiter()
+                    .GetResult();
+                
+                _logger.LogInformation(
+                    "Announcing Swap Limits on Discord as Message {MessageId}",
                     message.Id);
             }
             catch (Exception e)

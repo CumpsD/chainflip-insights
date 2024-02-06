@@ -1,6 +1,7 @@
 namespace ChainflipInsights.Consumers.Telegram
 {
     using System;
+    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
     using System.Threading.Tasks.Dataflow;
@@ -11,6 +12,7 @@ namespace ChainflipInsights.Consumers.Telegram
     using ChainflipInsights.Feeders.Liquidity;
     using ChainflipInsights.Feeders.Redemption;
     using ChainflipInsights.Feeders.Swap;
+    using ChainflipInsights.Feeders.SwapLimits;
     using ChainflipInsights.Infrastructure.Pipelines;
     using global::Telegram.Bot;
     using global::Telegram.Bot.Types;
@@ -67,6 +69,9 @@ namespace ChainflipInsights.Consumers.Telegram
                     
                     if (input.CexMovementInfo != null)
                         ProcessCexMovementInfo(input.CexMovementInfo, cancellationToken);
+                    
+                    if (input.SwapLimitsInfo != null)
+                        ProcessSwapLimitsInfo(input.SwapLimitsInfo, cancellationToken);
                     
                     Task
                         .Delay(1500, cancellationToken)
@@ -193,7 +198,7 @@ namespace ChainflipInsights.Consumers.Telegram
                     .GetResult();
 
                 _logger.LogInformation(
-                    "Announcing Epoch {Epoch} on Discord as Message {MessageId}",
+                    "Announcing Epoch {Epoch} on Telegram as Message {MessageId}",
                     epoch.Id,
                     message.MessageId);
             }
@@ -305,7 +310,7 @@ namespace ChainflipInsights.Consumers.Telegram
                     .GetResult();
 
                 _logger.LogInformation(
-                    "Announcing Redemption {RedemptionId} on Discord as Message {MessageId}",
+                    "Announcing Redemption {RedemptionId} on Telegram as Message {MessageId}",
                     redemption.Id,
                     message.MessageId);
             }
@@ -367,6 +372,51 @@ namespace ChainflipInsights.Consumers.Telegram
             {
                 _logger.LogError(e, "Telegram meh.");
             }
+        }
+
+        private void ProcessSwapLimitsInfo(
+            SwapLimitsInfo swapLimits, 
+            CancellationToken cancellationToken)
+        {
+            if (!_configuration.TelegramSwapLimitsEnabled.Value)
+            {
+                _logger.LogInformation(
+                    "Swap Limits disabled for Telegram: {Limits}",
+                    string.Join(", ", swapLimits.SwapLimits.Select(x => $"{x.Asset.Ticker}: {x.SwapLimit}")));
+                
+                return;
+            }
+            
+            try
+            {
+                _logger.LogInformation(
+                    "Announcing Swap Limits on Telegram: {Limits}",
+                    string.Join(", ", swapLimits.SwapLimits.Select(x => $"{x.Asset.Ticker}: {x.SwapLimit}")));
+
+                var text =
+                    $"🫡 Swap Limits have changed! " +
+                    $"The new limits are: " +
+                    $"{string.Join(", ", swapLimits.SwapLimits.Select(x => $"**{x.Asset.Ticker}**: **{x.SwapLimit}**"))}";
+                
+                var message = _telegramClient
+                    .SendTextMessageAsync(
+                        new ChatId(_configuration.TelegramSwapInfoChannelId.Value),
+                        text,
+                        parseMode: ParseMode.Markdown,
+                        disableNotification: true,
+                        allowSendingWithoutReply: true,
+                        cancellationToken: cancellationToken)
+                    .GetAwaiter()
+                    .GetResult();
+
+                _logger.LogInformation(
+                    "Announcing Swap Limits on Telegram as Message {MessageId}",
+                    message.MessageId);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Telegram meh.");
+            } 
         }
     }
 }

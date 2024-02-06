@@ -1,6 +1,7 @@
 namespace ChainflipInsights.Consumers.Mastodon
 {
     using System;
+    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
     using System.Threading.Tasks.Dataflow;
@@ -11,6 +12,7 @@ namespace ChainflipInsights.Consumers.Mastodon
     using ChainflipInsights.Feeders.Liquidity;
     using ChainflipInsights.Feeders.Redemption;
     using ChainflipInsights.Feeders.Swap;
+    using ChainflipInsights.Feeders.SwapLimits;
     using ChainflipInsights.Infrastructure.Pipelines;
     using Mastonet;
     using Microsoft.Extensions.Logging;
@@ -65,6 +67,9 @@ namespace ChainflipInsights.Consumers.Mastodon
                     
                     if (input.CexMovementInfo != null)
                         ProcessCexMovementInfo(input.CexMovementInfo);
+                    
+                    if (input.SwapLimitsInfo != null)
+                        ProcessSwapLimitsInfo(input.SwapLimitsInfo);
                     
                     Task
                         .Delay(1500, cancellationToken)
@@ -321,6 +326,46 @@ namespace ChainflipInsights.Consumers.Mastodon
                 _logger.LogInformation(
                     "Announcing CEX Movements {Day} on Mastodon as Message {MessageId}",
                     cexMovement.DayOfYear,
+                    status.Url);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Mastodon meh.");
+            }
+        }
+
+        private void ProcessSwapLimitsInfo(SwapLimitsInfo swapLimits)
+        {
+            if (!_configuration.MastodonSwapLimitsEnabled.Value)
+            {
+                _logger.LogInformation(
+                    "Swap Limits disabled for Mastodon: {Limits}",
+                    string.Join(", ", swapLimits.SwapLimits.Select(x => $"{x.Asset.Ticker}: {x.SwapLimit}")));
+                
+                return;
+            }
+            
+            try
+            {
+                _logger.LogInformation(
+                    "Announcing Swap Limits on Mastodon: {Limits}",
+                    string.Join(", ", swapLimits.SwapLimits.Select(x => $"{x.Asset.Ticker}: {x.SwapLimit}")));
+                
+                var text =
+                    $"🫡 Swap Limits have changed! " +
+                    $"The new limits are:\n" +
+                    $"{string.Join("\n", swapLimits.SwapLimits.Select(x => $"#{x.Asset.Ticker}: {x.SwapLimit}"))}\n" +
+                    $"#chainflip #flip";
+                
+                var status = _mastodonClient
+                    .PublishStatus(
+                        text,
+                        Visibility.Public)
+                    .GetAwaiter()
+                    .GetResult();
+                
+                _logger.LogInformation(
+                    "Announcing Swap Limits on Mastodon as Message {MessageId}",
                     status.Url);
             }
             catch (Exception e)
