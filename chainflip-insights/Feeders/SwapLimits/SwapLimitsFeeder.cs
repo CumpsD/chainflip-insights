@@ -107,7 +107,7 @@ namespace ChainflipInsights.Feeders.SwapLimits
                 if (swapLimitsString == lastLimits)
                 {
                     _logger.LogInformation(
-                        "No new Swap Limits to announce. Last Limits are still {SwapLimits}",
+                        "No new swap limits to announce. Last limits are still {SwapLimits}",
                         string.Join(", ", limits.Select(x => $"{x.Asset.Ticker}: {x.SwapLimit}")));
                     
                     await Task.Delay(_configuration.CfeVersionQueryDelay.Value.RandomizeTime(), cancellationToken);
