@@ -37,7 +37,7 @@ namespace ChainflipInsights.Feeders.CexMovement
             MovementIn = cexMovement.MovementIn;
             MovementOut = Math.Abs(cexMovement.MovementOut);
 
-            NetMovement = TotalMovement > 0 
+            NetMovement = cexMovement.TotalMovement > 0 
                 ? NetMovement.MoreTowardsCex 
                 : NetMovement.MoreTowardsDex;
             
