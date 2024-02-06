@@ -8,7 +8,6 @@ namespace ChainflipInsights.Feeders.SwapLimits
     using System.Net.Http.Headers;
     using System.Net.Http.Json;
     using System.Net.Mime;
-    using System.Text.Json;
     using System.Threading;
     using System.Threading.Tasks;
     using System.Threading.Tasks.Dataflow;
@@ -103,7 +102,7 @@ namespace ChainflipInsights.Feeders.SwapLimits
                 };
 
                 var swapLimits = new SwapLimitsInfo(limits.ToArray());
-                var swapLimitsString = JsonSerializer.Serialize(swapLimits);
+                var swapLimitsString = string.Join(", ", limits.Select(x => $"{x.Asset.Ticker}: {x.SwapLimit}"));
                 if (swapLimitsString == lastLimits)
                 {
                     _logger.LogInformation(
@@ -133,12 +132,10 @@ namespace ChainflipInsights.Feeders.SwapLimits
         {
             if (File.Exists(_configuration.LastSwapLimitsLocation))
                 return await File.ReadAllTextAsync(_configuration.LastSwapLimitsLocation, cancellationToken);
-
-            var yesterday = $"{DateTime.UtcNow.Date.AddDays(-1):yyyy-MM-dd}";
             
             await using var file = File.CreateText(_configuration.LastSwapLimitsLocation);
-            await file.WriteAsync(yesterday);
-            return yesterday;
+            await file.WriteAsync("x");
+            return "x";
         }
         
         private async Task StoreLastSwapLimits(string swapLimits)
