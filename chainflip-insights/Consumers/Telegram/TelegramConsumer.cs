@@ -345,7 +345,7 @@ namespace ChainflipInsights.Consumers.Telegram
                 var text =
                     $"🔀 CEX Movements for **{cexMovement.Date:yyyy-MM-dd}** are in! " +
                     $"**{cexMovement.MovementInFormatted} FLIP** moved towards CEX, **{cexMovement.MovementOutFormatted} FLIP** moved towards DEX. " +
-                    $"In total, **{(cexMovement.NetMovement == NetMovement.MoreTowardsCex ? "CEX" : "DEX" )}** gained **{cexMovement.TotalMovementFormatted} FLIP**";
+                    $"In total, **{(cexMovement.NetMovement == NetMovement.MoreTowardsCex ? "CEX" : "DEX" )}** gained **{cexMovement.TotalMovementFormatted} FLIP** {(cexMovement.NetMovement == NetMovement.MoreTowardsCex ? "🔴" : "🟢" )}";
 
                 var message = _telegramClient
                     .SendTextMessageAsync(
