@@ -154,9 +154,52 @@ namespace ChainflipInsights.Consumers.Telegram
             CancellationToken cancellationToken)
         {
             if (liquidity.DepositValueUsd < _configuration.TelegramLiquidityAmountThreshold)
+            {
+                _logger.LogInformation(
+                    "Incoming Liquidity did not meet treshold (${Threshold}) for Telegram: {IngressAmount} {IngressTicker} (${IngressUsdAmount}) -> {ExplorerUrl}",
+                    _configuration.DiscordLiquidityAmountThreshold,
+                    liquidity.DepositAmountFormatted,
+                    liquidity.SourceAsset,
+                    liquidity.DepositValueUsdFormatted,
+                    $"{_configuration.ExplorerLiquidityChannelUrl}{liquidity.BlockId}-{liquidity.Network}-{liquidity.ChannelId}");
+                
                 return;
-            
-            // TODO: Send
+            }
+
+            try
+            {
+                _logger.LogInformation(
+                    "Announcing Incoming Liquidity on Telegram: {IngressAmount} {IngressTicker} (${IngressUsdAmount}) -> {ExplorerUrl}",
+                    liquidity.DepositAmountFormatted,
+                    liquidity.SourceAsset,
+                    liquidity.DepositValueUsdFormatted,
+                    $"{_configuration.ExplorerLiquidityChannelUrl}{liquidity.BlockId}-{liquidity.Network}-{liquidity.ChannelId}");
+
+                var text =
+                    $"💵 **Liquidity Added**! An extra " +
+                    $"**{liquidity.DepositAmountFormatted} {liquidity.SourceAsset}** (*${liquidity.DepositValueUsdFormatted}*) is available! " +
+                    $"// **[view incoming liquidity on explorer]({_configuration.ExplorerLiquidityChannelUrl}{liquidity.BlockId}-{liquidity.Network}-{liquidity.ChannelId})**";
+
+                var message = _telegramClient
+                    .SendTextMessageAsync(
+                        new ChatId(_configuration.TelegramSwapInfoChannelId.Value),
+                        text,
+                        parseMode: ParseMode.Markdown,
+                        disableNotification: true,
+                        allowSendingWithoutReply: true,
+                        cancellationToken: cancellationToken)
+                    .GetAwaiter()
+                    .GetResult();
+
+                _logger.LogInformation(
+                    "Announcing Incoming Liquidity {LiquidityId} on Telegram as Message {MessageId}",
+                    liquidity.Id,
+                    message.MessageId);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Telegram meh.");
+            }
         }
 
         private void ProcessEpochInfo(
