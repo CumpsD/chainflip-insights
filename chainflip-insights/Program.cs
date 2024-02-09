@@ -24,6 +24,7 @@
     using ChainflipInsights.Feeders.Funding;
     using ChainflipInsights.Feeders.Redemption;
     using ChainflipInsights.Feeders.Liquidity;
+    using ChainflipInsights.Feeders.PastVolume;
     using ChainflipInsights.Feeders.Swap;
     using ChainflipInsights.Feeders.SwapLimits;
     using ChainflipInsights.Infrastructure;
@@ -76,6 +77,7 @@
                 container.GetRequiredService<Pipeline<CexMovementInfo>>(),
                 container.GetRequiredService<Pipeline<CfeVersionsInfo>>(),
                 container.GetRequiredService<Pipeline<SwapLimitsInfo>>(),
+                container.GetRequiredService<Pipeline<PastVolumeInfo>>(),
             };
             
             Console.CancelKeyPress += (_, eventArgs) =>
@@ -108,7 +110,8 @@
                     container.GetRequiredService<RedemptionFeeder>(),
                     container.GetRequiredService<CexMovementFeeder>(),
                     container.GetRequiredService<CfeVersionFeeder>(),
-                    container.GetRequiredService<SwapLimitsFeeder>()
+                    container.GetRequiredService<SwapLimitsFeeder>(),
+                    container.GetRequiredService<PastVolumeFeeder>()
                 };
 
                 var tasks = new List<Task>();
@@ -271,6 +274,7 @@
             RegisterFeeder<CexMovementFeeder, CexMovementInfo>(builder, ct);
             RegisterFeeder<CfeVersionFeeder, CfeVersionsInfo>(builder, ct);
             RegisterFeeder<SwapLimitsFeeder, SwapLimitsInfo>(builder, ct);
+            RegisterFeeder<PastVolumeFeeder, PastVolumeInfo>(builder, ct);
             
             builder
                 .RegisterType<DiscordConsumer>()

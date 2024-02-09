@@ -66,6 +66,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public bool? EnablePastVolume
+        {
+            get; init;
+        } 
+        
+        [Required]
+        [NotNull]
         public bool? EnableDiscord
         {
             get; init;
@@ -192,6 +199,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public string? ExplorerPoolsUrl
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
         public string? SwapUrl
         {
             get; init;
@@ -290,6 +304,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public int? PastVolumeQueryDelay
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
         public string? LastSwapIdLocation
         {
             get; init;
@@ -340,6 +361,13 @@ namespace ChainflipInsights.Configuration
         [Required]
         [NotNull]
         public string? LastSwapLimitsLocation
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public string? LastPastVolumeLocation
         {
             get; init;
         }
@@ -578,6 +606,35 @@ namespace ChainflipInsights.Configuration
         [Required]
         [NotNull]
         public bool? DiscordSwapLimitsEnabled
+        {
+            get; init;
+        }
+        
+                
+        [Required]
+        [NotNull]
+        public bool? MastodonPastVolumeEnabled
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public bool? TwitterPastVolumeEnabled
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public bool? TelegramPastVolumeEnabled
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public bool? DiscordPastVolumeEnabled
         {
             get; init;
         }
