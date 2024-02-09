@@ -186,7 +186,20 @@ namespace ChainflipInsights.Feeders.Swap
                     new MediaTypeHeaderValue(MediaTypeNames.Application.Json)), 
                 cancellationToken);
 
-            return await response.Content.ReadFromJsonAsync<SwapsResponse>(cancellationToken: cancellationToken);
+            if (response.IsSuccessStatusCode)
+            {
+                return await response
+                    .Content
+                    .ReadFromJsonAsync<SwapsResponse>(cancellationToken: cancellationToken);
+            }
+            
+            _logger.LogError(
+                "GetSwaps returned {StatusCode}: {Error}\nRequest: {Request}",
+                response.StatusCode,
+                await response.Content.ReadAsStringAsync(cancellationToken),
+                graphQuery);
+
+            return null;
         }
 
         private async Task<SwapResponse?> GetSwap(

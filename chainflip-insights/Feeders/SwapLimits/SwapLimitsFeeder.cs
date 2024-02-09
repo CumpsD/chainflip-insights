@@ -159,7 +159,20 @@ namespace ChainflipInsights.Feeders.SwapLimits
                     new MediaTypeHeaderValue(MediaTypeNames.Application.Json)), 
                 cancellationToken);
 
-            return await response.Content.ReadFromJsonAsync<SwapLimitResponse>(cancellationToken: cancellationToken);
+            if (response.IsSuccessStatusCode)
+            {
+                return await response
+                    .Content
+                    .ReadFromJsonAsync<SwapLimitResponse>(cancellationToken: cancellationToken);
+            }
+            
+            _logger.LogError(
+                "GetSwapLimit returned {StatusCode}: {Error}\nRequest: {Request}",
+                response.StatusCode,
+                await response.Content.ReadAsStringAsync(cancellationToken),
+                rpcQuery);
+
+            return null;
         }
     }
 }

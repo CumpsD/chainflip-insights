@@ -184,7 +184,20 @@ namespace ChainflipInsights.Feeders.Funding
                     new MediaTypeHeaderValue(MediaTypeNames.Application.Json)), 
                 cancellationToken);
 
-            return await response.Content.ReadFromJsonAsync<FundingResponse>(cancellationToken: cancellationToken);
+            if (response.IsSuccessStatusCode)
+            {
+                return await response
+                    .Content
+                    .ReadFromJsonAsync<FundingResponse>(cancellationToken: cancellationToken);
+            }
+            
+            _logger.LogError(
+                "GetFunding returned {StatusCode}: {Error}\nRequest: {Request}",
+                response.StatusCode,
+                await response.Content.ReadAsStringAsync(cancellationToken),
+                graphQuery);
+
+            return null;
         }
     }
 }

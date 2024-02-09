@@ -184,7 +184,20 @@ namespace ChainflipInsights.Feeders.Redemption
                     new MediaTypeHeaderValue(MediaTypeNames.Application.Json)), 
                 cancellationToken);
 
-            return await response.Content.ReadFromJsonAsync<RedemptionResponse>(cancellationToken: cancellationToken);
+            if (response.IsSuccessStatusCode)
+            {
+                return await response
+                    .Content
+                    .ReadFromJsonAsync<RedemptionResponse>(cancellationToken: cancellationToken);
+            }
+            
+            _logger.LogError(
+                "GetRedemption returned {StatusCode}: {Error}\nRequest: {Request}",
+                response.StatusCode,
+                await response.Content.ReadAsStringAsync(cancellationToken),
+                graphQuery);
+
+            return null;
         }
     }
 }

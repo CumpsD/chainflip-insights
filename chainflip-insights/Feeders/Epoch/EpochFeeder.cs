@@ -194,7 +194,20 @@ namespace ChainflipInsights.Feeders.Epoch
                     new MediaTypeHeaderValue(MediaTypeNames.Application.Json)), 
                 cancellationToken);
 
-            return await response.Content.ReadFromJsonAsync<EpochResponse>(cancellationToken: cancellationToken);
+            if (response.IsSuccessStatusCode)
+            {
+                return await response
+                    .Content
+                    .ReadFromJsonAsync<EpochResponse>(cancellationToken: cancellationToken);
+            }
+            
+            _logger.LogError(
+                "GetEpoch returned {StatusCode}: {Error}\nRequest: {Request}",
+                response.StatusCode,
+                await response.Content.ReadAsStringAsync(cancellationToken),
+                graphQuery);
+
+            return null;
         }
     }
 }

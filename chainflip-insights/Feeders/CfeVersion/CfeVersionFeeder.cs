@@ -184,7 +184,20 @@ namespace ChainflipInsights.Feeders.CfeVersion
                     new MediaTypeHeaderValue(MediaTypeNames.Application.Json)), 
                 cancellationToken);
 
-            return await response.Content.ReadFromJsonAsync<CfeVersionResponse>(cancellationToken: cancellationToken);
+            if (response.IsSuccessStatusCode)
+            {
+                return await response
+                    .Content
+                    .ReadFromJsonAsync<CfeVersionResponse>(cancellationToken: cancellationToken);
+            }
+            
+            _logger.LogError(
+                "GetCfeVersion returned {StatusCode}: {Error}\nRequest: {Request}",
+                response.StatusCode,
+                await response.Content.ReadAsStringAsync(cancellationToken),
+                graphQuery);
+
+            return null;
         }
         
         private async Task<LastBlockResponse?> GetLastBlock(
@@ -201,7 +214,20 @@ namespace ChainflipInsights.Feeders.CfeVersion
                     new MediaTypeHeaderValue(MediaTypeNames.Application.Json)), 
                 cancellationToken);
 
-            return await response.Content.ReadFromJsonAsync<LastBlockResponse>(cancellationToken: cancellationToken);
+            if (response.IsSuccessStatusCode)
+            {
+                return await response
+                    .Content
+                    .ReadFromJsonAsync<LastBlockResponse>(cancellationToken: cancellationToken);
+            }
+            
+            _logger.LogError(
+                "GetLastBlock returned {StatusCode}: {Error}\nRequest: {Request}",
+                response.StatusCode,
+                await response.Content.ReadAsStringAsync(cancellationToken),
+                graphQuery);
+
+            return null;
         }
     }
 }
