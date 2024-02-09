@@ -14,6 +14,7 @@ namespace ChainflipInsights.Consumers.Twitter
     using ChainflipInsights.Feeders.Epoch;
     using ChainflipInsights.Feeders.Funding;
     using ChainflipInsights.Feeders.Liquidity;
+    using ChainflipInsights.Feeders.PastVolume;
     using ChainflipInsights.Feeders.Redemption;
     using ChainflipInsights.Feeders.Swap;
     using ChainflipInsights.Feeders.SwapLimits;
@@ -89,6 +90,9 @@ namespace ChainflipInsights.Consumers.Twitter
                     if (input.SwapLimitsInfo != null)
                         ProcessSwapLimitsInfo(input.SwapLimitsInfo);
                     
+                    if (input.PastVolumeInfo != null)
+                        ProcessPastVolumeInfo(input.PastVolumeInfo);
+                    
                     Task
                         .Delay(1500, cancellationToken)
                         .GetAwaiter()
@@ -114,7 +118,7 @@ namespace ChainflipInsights.Consumers.Twitter
             if (swap.DepositValueUsd < _configuration.TwitterSwapAmountThreshold)
             {
                 _logger.LogInformation(
-                    "Swap did not meet treshold (${Threshold}) for Twitter: {IngressAmount} {IngressTicker} to {EgressAmount} {EgressTicker} -> {ExplorerUrl}",
+                    "Swap did not meet threshold (${Threshold}) for Twitter: {IngressAmount} {IngressTicker} to {EgressAmount} {EgressTicker} -> {ExplorerUrl}",
                     _configuration.TwitterSwapAmountThreshold,
                     swap.DepositAmountFormatted,
                     swap.SourceAsset,
@@ -164,7 +168,7 @@ namespace ChainflipInsights.Consumers.Twitter
             if (liquidity.DepositValueUsd < _configuration.TwitterLiquidityAmountThreshold)
             {
                 _logger.LogInformation(
-                    "Incoming Liquidity did not meet treshold (${Threshold}) for Twitter: {IngressAmount} {IngressTicker} (${IngressUsdAmount}) -> {ExplorerUrl}",
+                    "Incoming Liquidity did not meet threshold (${Threshold}) for Twitter: {IngressAmount} {IngressTicker} (${IngressUsdAmount}) -> {ExplorerUrl}",
                     _configuration.DiscordLiquidityAmountThreshold,
                     liquidity.DepositAmountFormatted,
                     liquidity.SourceAsset,
@@ -256,7 +260,7 @@ namespace ChainflipInsights.Consumers.Twitter
             if (funding.AmountConverted < _configuration.TwitterFundingAmountThreshold)
             {
                 _logger.LogInformation(
-                    "Funding did not meet treshold (${Threshold}) for Twitter: {Validator} added {Amount} FLIP -> {ExplorerUrl}",
+                    "Funding did not meet threshold (${Threshold}) for Twitter: {Validator} added {Amount} FLIP -> {ExplorerUrl}",
                     _configuration.TwitterFundingAmountThreshold,
                     funding.Validator,
                     funding.AmountFormatted,
@@ -301,7 +305,7 @@ namespace ChainflipInsights.Consumers.Twitter
             if (redemption.AmountConverted < _configuration.TwitterRedemptionAmountThreshold)
             {
                 _logger.LogInformation(
-                    "Redemption did not meet treshold (${Threshold}) for Twitter: {Validator} added {Amount} $FLIP -> {ExplorerUrl}",
+                    "Redemption did not meet threshold (${Threshold}) for Twitter: {Validator} added {Amount} $FLIP -> {ExplorerUrl}",
                     _configuration.TwitterRedemptionAmountThreshold,
                     redemption.Validator,
                     redemption.AmountFormatted,
@@ -412,6 +416,56 @@ namespace ChainflipInsights.Consumers.Twitter
                     $"🫡 Swap Limits have changed! " +
                     $"The new limits are:\n" +
                     $"{string.Join("\n", swapLimits.SwapLimits.Select(x => $"{x.SwapLimit} ${x.Asset.Ticker}"))}\n" +
+                    $"#chainflip #flip";
+                
+                _twitterClient.Execute
+                    .AdvanceRequestAsync(x =>
+                    {
+                        x.Query.Url = "https://api.twitter.com/2/tweets";
+                        x.Query.HttpMethod = Tweetinvi.Models.HttpMethod.POST;
+                        x.Query.HttpContent = JsonContent.Create(
+                            new TweetV2PostRequest { Text = text },
+                            mediaType: new MediaTypeHeaderValue(MediaTypeNames.Application.Json));
+                    })
+                    .GetAwaiter()
+                    .GetResult();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Twitter meh.");
+            }
+        }
+
+        private void ProcessPastVolumeInfo(PastVolumeInfo pastVolume)
+        {
+            if (!_configuration.TwitterPastVolumeEnabled.Value)
+            {
+                _logger.LogInformation(
+                    "Past Volume disabled for Twitter. {Date}: {Pairs} Past 24h Volume pairs.",
+                    pastVolume.Date,
+                    pastVolume.VolumePairs.Count);
+                
+                return;
+            }
+            
+            try
+            {
+                _logger.LogInformation(
+                    "Announcing Volume for {Date} on Twitter: {Pairs} Past 24h Volume Pairs.",
+                    pastVolume.Date,
+                    pastVolume.VolumePairs.Count);
+
+                var totalVolume = pastVolume
+                    .VolumePairs
+                    .Sum(x => x.Value.Value);
+                
+                var totalFees = pastVolume
+                    .VolumePairs
+                    .Sum(x => x.Value.Fees);
+
+                var text =
+                    $"📊 On {pastVolume.Date} we had a volume of " +
+                    $"${totalVolume:0.00} and ${totalFees:0.00} in fees!n" +
                     $"#chainflip #flip";
                 
                 _twitterClient.Execute

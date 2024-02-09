@@ -10,6 +10,7 @@ namespace ChainflipInsights.Consumers.Mastodon
     using ChainflipInsights.Feeders.Epoch;
     using ChainflipInsights.Feeders.Funding;
     using ChainflipInsights.Feeders.Liquidity;
+    using ChainflipInsights.Feeders.PastVolume;
     using ChainflipInsights.Feeders.Redemption;
     using ChainflipInsights.Feeders.Swap;
     using ChainflipInsights.Feeders.SwapLimits;
@@ -71,6 +72,9 @@ namespace ChainflipInsights.Consumers.Mastodon
                     if (input.SwapLimitsInfo != null)
                         ProcessSwapLimitsInfo(input.SwapLimitsInfo);
                     
+                    if (input.PastVolumeInfo != null)
+                        ProcessPastVolumeInfo(input.PastVolumeInfo);
+                    
                     Task
                         .Delay(1500, cancellationToken)
                         .GetAwaiter()
@@ -96,7 +100,7 @@ namespace ChainflipInsights.Consumers.Mastodon
             if (swap.DepositValueUsd < _configuration.MastodonSwapAmountThreshold)
             {
                 _logger.LogInformation(
-                    "Swap did not meet treshold (${Threshold}) for Mastodon: {IngressAmount} {IngressTicker} to {EgressAmount} {EgressTicker} -> {ExplorerUrl}",
+                    "Swap did not meet threshold (${Threshold}) for Mastodon: {IngressAmount} {IngressTicker} to {EgressAmount} {EgressTicker} -> {ExplorerUrl}",
                     _configuration.MastodonSwapAmountThreshold,
                     swap.DepositAmountFormatted,
                     swap.SourceAsset,
@@ -146,7 +150,7 @@ namespace ChainflipInsights.Consumers.Mastodon
             if (liquidity.DepositValueUsd < _configuration.MastodonLiquidityAmountThreshold)
             {
                 _logger.LogInformation(
-                    "Incoming Liquidity did not meet treshold (${Threshold}) for Mastodon: {IngressAmount} {IngressTicker} (${IngressUsdAmount}) -> {ExplorerUrl}",
+                    "Incoming Liquidity did not meet threshold (${Threshold}) for Mastodon: {IngressAmount} {IngressTicker} (${IngressUsdAmount}) -> {ExplorerUrl}",
                     _configuration.DiscordLiquidityAmountThreshold,
                     liquidity.DepositAmountFormatted,
                     liquidity.SourceAsset,
@@ -238,7 +242,7 @@ namespace ChainflipInsights.Consumers.Mastodon
             if (funding.AmountConverted < _configuration.MastodonFundingAmountThreshold)
             {
                 _logger.LogInformation(
-                    "Funding did not meet treshold (${Threshold}) for Mastodon: {Validator} added {Amount} FLIP -> {ExplorerUrl}",
+                    "Funding did not meet threshold (${Threshold}) for Mastodon: {Validator} added {Amount} FLIP -> {ExplorerUrl}",
                     _configuration.MastodonFundingAmountThreshold,
                     funding.Validator,
                     funding.AmountFormatted,
@@ -283,7 +287,7 @@ namespace ChainflipInsights.Consumers.Mastodon
             if (redemption.AmountConverted < _configuration.MastodonRedemptionAmountThreshold)
             {
                 _logger.LogInformation(
-                    "Redemption did not meet treshold (${Threshold}) for Mastodon: {Validator} added {Amount} FLIP -> {ExplorerUrl}",
+                    "Redemption did not meet threshold (${Threshold}) for Mastodon: {Validator} added {Amount} FLIP -> {ExplorerUrl}",
                     _configuration.MastodonRedemptionAmountThreshold,
                     redemption.Validator,
                     redemption.AmountFormatted,
@@ -405,6 +409,55 @@ namespace ChainflipInsights.Consumers.Mastodon
                 
                 _logger.LogInformation(
                     "Announcing Swap Limits on Mastodon as Message {MessageId}",
+                    status.Url);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Mastodon meh.");
+            }
+        }
+
+        private void ProcessPastVolumeInfo(PastVolumeInfo pastVolume)
+        {
+            if (!_configuration.MastodonPastVolumeEnabled.Value)
+            {
+                _logger.LogInformation(
+                    "Past Volume disabled for Mastodon. {Date}: {Pairs} Past 24h Volume pairs.",
+                    pastVolume.Date,
+                    pastVolume.VolumePairs.Count);
+                
+                return;
+            }
+            
+            try
+            {
+                _logger.LogInformation(
+                    "Announcing Volume for {Date} on Mastodon: {Pairs} Past 24h Volume Pairs.",
+                    pastVolume.Date,
+                    pastVolume.VolumePairs.Count);
+
+                var totalVolume = pastVolume
+                    .VolumePairs
+                    .Sum(x => x.Value.Value);
+                
+                var totalFees = pastVolume
+                    .VolumePairs
+                    .Sum(x => x.Value.Fees);
+
+                var text =
+                    $"📊 On {pastVolume.Date} we had a volume of " +
+                    $"${totalVolume:0.00} and ${totalFees:0.00} in fees!n" +
+                    $"#chainflip #flip";
+                
+                var status = _mastodonClient
+                    .PublishStatus(
+                        text,
+                        Visibility.Public)
+                    .GetAwaiter()
+                    .GetResult();
+                
+                _logger.LogInformation(
+                    "Announcing Volume on Mastodon as Message {MessageId}",
                     status.Url);
             }
             catch (Exception e)

@@ -12,6 +12,7 @@ namespace ChainflipInsights.Consumers.Discord
     using ChainflipInsights.Feeders.Funding;
     using ChainflipInsights.Feeders.Redemption;
     using ChainflipInsights.Feeders.Liquidity;
+    using ChainflipInsights.Feeders.PastVolume;
     using ChainflipInsights.Feeders.Swap;
     using ChainflipInsights.Feeders.SwapLimits;
     using ChainflipInsights.Infrastructure.Pipelines;
@@ -19,7 +20,6 @@ namespace ChainflipInsights.Consumers.Discord
     using global::Discord.WebSocket;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
-    using Semver;
 
     public class DiscordConsumer : IConsumer
     {
@@ -78,6 +78,9 @@ namespace ChainflipInsights.Consumers.Discord
                     
                     if (input.SwapLimitsInfo != null)
                         ProcessSwapLimitsInfo(input.SwapLimitsInfo);
+                    
+                    if (input.PastVolumeInfo != null)
+                        ProcessPastVolumeInfo(input.PastVolumeInfo);
                 },
                 new ExecutionDataflowBlockOptions
                 {
@@ -117,7 +120,7 @@ namespace ChainflipInsights.Consumers.Discord
             if (swap.DepositValueUsd < _configuration.DiscordSwapAmountThreshold)
             {
                 _logger.LogInformation(
-                    "Swap did not meet treshold (${Threshold}) for Discord: {IngressAmount} {IngressTicker} to {EgressAmount} {EgressTicker} -> {ExplorerUrl}",
+                    "Swap did not meet threshold (${Threshold}) for Discord: {IngressAmount} {IngressTicker} to {EgressAmount} {EgressTicker} -> {ExplorerUrl}",
                     _configuration.DiscordSwapAmountThreshold,
                     swap.DepositAmountFormatted,
                     swap.SourceAsset,
@@ -173,7 +176,7 @@ namespace ChainflipInsights.Consumers.Discord
             if (liquidity.DepositValueUsd < _configuration.DiscordLiquidityAmountThreshold)
             {
                 _logger.LogInformation(
-                    "Incoming Liquidity did not meet treshold (${Threshold}) for Discord: {IngressAmount} {IngressTicker} (${IngressUsdAmount}) -> {ExplorerUrl}",
+                    "Incoming Liquidity did not meet threshold (${Threshold}) for Discord: {IngressAmount} {IngressTicker} (${IngressUsdAmount}) -> {ExplorerUrl}",
                     _configuration.DiscordLiquidityAmountThreshold,
                     liquidity.DepositAmountFormatted,
                     liquidity.SourceAsset,
@@ -275,7 +278,7 @@ namespace ChainflipInsights.Consumers.Discord
             if (funding.AmountConverted < _configuration.DiscordFundingAmountThreshold)
             {
                 _logger.LogInformation(
-                    "Funding did not meet treshold (${Threshold}) for Discord: {Validator} added {Amount} FLIP -> {ExplorerUrl}",
+                    "Funding did not meet threshold (${Threshold}) for Discord: {Validator} added {Amount} FLIP -> {ExplorerUrl}",
                     _configuration.DiscordFundingAmountThreshold,
                     funding.Validator,
                     funding.AmountFormatted,
@@ -331,7 +334,7 @@ namespace ChainflipInsights.Consumers.Discord
             if (redemption.AmountConverted < _configuration.DiscordRedemptionAmountThreshold)
             {
                 _logger.LogInformation(
-                    "Redemption did not meet treshold (${Threshold}) for Discord: {Validator} added {Amount} FLIP -> {ExplorerUrl}",
+                    "Redemption did not meet threshold (${Threshold}) for Discord: {Validator} added {Amount} FLIP -> {ExplorerUrl}",
                     _configuration.DiscordRedemptionAmountThreshold,
                     redemption.Validator,
                     redemption.AmountFormatted,
@@ -533,6 +536,61 @@ namespace ChainflipInsights.Consumers.Discord
                 
                 _logger.LogInformation(
                     "Announcing Swap Limits on Discord as Message {MessageId}",
+                    message.Id);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Discord meh.");
+            }
+        }
+
+        private void ProcessPastVolumeInfo(PastVolumeInfo pastVolume)
+        {
+            if (!_configuration.DiscordPastVolumeEnabled.Value)
+            {
+                _logger.LogInformation(
+                    "Past Volume disabled for Discord. {Date}: {Pairs} Past 24h Volume pairs.",
+                    pastVolume.Date,
+                    pastVolume.VolumePairs.Count);
+                
+                return;
+            }
+            
+            if (_discordClient.ConnectionState != ConnectionState.Connected)
+                return;
+            
+            try
+            {
+                _logger.LogInformation(
+                    "Announcing Volume for {Date} on Discord: {Pairs} Past 24h Volume Pairs.",
+                    pastVolume.Date,
+                    pastVolume.VolumePairs.Count);
+
+                var totalVolume = pastVolume
+                    .VolumePairs
+                    .Sum(x => x.Value.Value);
+                
+                var totalFees = pastVolume
+                    .VolumePairs
+                    .Sum(x => x.Value.Fees);
+
+                var text =
+                    $"📊 On **{pastVolume.Date}** we had a volume of " +
+                    $"**${totalVolume:0.00}** and **${totalFees:0.00}** in fees!";
+                
+                var infoChannel = (ITextChannel)_discordClient
+                    .GetChannel(_configuration.DiscordSwapInfoChannelId.Value);
+                
+                var message = infoChannel
+                    .SendMessageAsync(
+                        text,
+                        flags: MessageFlags.SuppressEmbeds)
+                    .GetAwaiter()
+                    .GetResult();
+                
+                _logger.LogInformation(
+                    "Announcing Volume {Day} on Discord as Message {MessageId}",
+                    pastVolume.Date,
                     message.Id);
             }
             catch (Exception e)

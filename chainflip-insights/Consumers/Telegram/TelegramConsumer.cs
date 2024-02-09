@@ -10,6 +10,7 @@ namespace ChainflipInsights.Consumers.Telegram
     using ChainflipInsights.Feeders.Epoch;
     using ChainflipInsights.Feeders.Funding;
     using ChainflipInsights.Feeders.Liquidity;
+    using ChainflipInsights.Feeders.PastVolume;
     using ChainflipInsights.Feeders.Redemption;
     using ChainflipInsights.Feeders.Swap;
     using ChainflipInsights.Feeders.SwapLimits;
@@ -73,6 +74,9 @@ namespace ChainflipInsights.Consumers.Telegram
                     if (input.SwapLimitsInfo != null)
                         ProcessSwapLimitsInfo(input.SwapLimitsInfo, cancellationToken);
                     
+                    if (input.PastVolumeInfo != null)
+                        ProcessPastVolumeInfo(input.PastVolumeInfo, cancellationToken);
+                    
                     Task
                         .Delay(1500, cancellationToken)
                         .GetAwaiter()
@@ -100,7 +104,7 @@ namespace ChainflipInsights.Consumers.Telegram
             if (swap.DepositValueUsd < _configuration.TelegramSwapAmountThreshold)
             {
                 _logger.LogInformation(
-                    "Swap did not meet treshold (${Threshold}) for Telegram: {IngressAmount} {IngressTicker} to {EgressAmount} {EgressTicker} -> {ExplorerUrl}",
+                    "Swap did not meet threshold (${Threshold}) for Telegram: {IngressAmount} {IngressTicker} to {EgressAmount} {EgressTicker} -> {ExplorerUrl}",
                     _configuration.TelegramSwapAmountThreshold,
                     swap.DepositAmountFormatted,
                     swap.SourceAsset,
@@ -156,7 +160,7 @@ namespace ChainflipInsights.Consumers.Telegram
             if (liquidity.DepositValueUsd < _configuration.TelegramLiquidityAmountThreshold)
             {
                 _logger.LogInformation(
-                    "Incoming Liquidity did not meet treshold (${Threshold}) for Telegram: {IngressAmount} {IngressTicker} (${IngressUsdAmount}) -> {ExplorerUrl}",
+                    "Incoming Liquidity did not meet threshold (${Threshold}) for Telegram: {IngressAmount} {IngressTicker} (${IngressUsdAmount}) -> {ExplorerUrl}",
                     _configuration.DiscordLiquidityAmountThreshold,
                     liquidity.DepositAmountFormatted,
                     liquidity.SourceAsset,
@@ -258,7 +262,7 @@ namespace ChainflipInsights.Consumers.Telegram
             if (funding.AmountConverted < _configuration.TelegramFundingAmountThreshold)
             {
                 _logger.LogInformation(
-                    "Funding did not meet treshold (${Threshold}) for Telegram: {Validator} added {Amount} FLIP -> {ExplorerUrl}",
+                    "Funding did not meet threshold (${Threshold}) for Telegram: {Validator} added {Amount} FLIP -> {ExplorerUrl}",
                     _configuration.TelegramFundingAmountThreshold,
                     funding.Validator,
                     funding.AmountFormatted,
@@ -314,7 +318,7 @@ namespace ChainflipInsights.Consumers.Telegram
             if (redemption.AmountConverted < _configuration.TelegramRedemptionAmountThreshold)
             {
                 _logger.LogInformation(
-                    "Redemption did not meet treshold (${Threshold}) for Telegram: {Validator} added {Amount} FLIP -> {ExplorerUrl}",
+                    "Redemption did not meet threshold (${Threshold}) for Telegram: {Validator} added {Amount} FLIP -> {ExplorerUrl}",
                     _configuration.TelegramRedemptionAmountThreshold,
                     redemption.Validator,
                     redemption.AmountFormatted,
@@ -454,6 +458,60 @@ namespace ChainflipInsights.Consumers.Telegram
 
                 _logger.LogInformation(
                     "Announcing Swap Limits on Telegram as Message {MessageId}",
+                    message.MessageId);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Telegram meh.");
+            } 
+        }
+
+        private void ProcessPastVolumeInfo(
+            PastVolumeInfo pastVolume,
+            CancellationToken cancellationToken)
+        {
+            if (!_configuration.TelegramPastVolumeEnabled.Value)
+            {
+                _logger.LogInformation(
+                    "Past Volume disabled for Telegram. {Date}: {Pairs} Past 24h Volume pairs.",
+                    pastVolume.Date,
+                    pastVolume.VolumePairs.Count);
+                
+                return;
+            }
+            
+            try
+            {
+                _logger.LogInformation(
+                    "Announcing Volume for {Date} on Telegram: {Pairs} Past 24h Volume Pairs.",
+                    pastVolume.Date,
+                    pastVolume.VolumePairs.Count);
+
+                var totalVolume = pastVolume
+                    .VolumePairs
+                    .Sum(x => x.Value.Value);
+                
+                var totalFees = pastVolume
+                    .VolumePairs
+                    .Sum(x => x.Value.Fees);
+
+                var text =
+                    $"📊 On **{pastVolume.Date}** we had a volume of " +
+                    $"**${totalVolume:0.00}** and **${totalFees:0.00}** in fees!";
+                
+                var message = _telegramClient
+                    .SendTextMessageAsync(
+                        new ChatId(_configuration.TelegramSwapInfoChannelId.Value),
+                        text,
+                        parseMode: ParseMode.Markdown,
+                        disableNotification: true,
+                        allowSendingWithoutReply: true,
+                        cancellationToken: cancellationToken)
+                    .GetAwaiter()
+                    .GetResult();
+
+                _logger.LogInformation(
+                    "Announcing Volume on Telegram as Message {MessageId}",
                     message.MessageId);
             }
             catch (Exception e)
