@@ -465,7 +465,7 @@ namespace ChainflipInsights.Consumers.Twitter
 
                 var text =
                     $"📊 On {pastVolume.Date} we had a volume of " +
-                    $"${totalVolume:0.00} and ${totalFees:0.00} in fees!n" +
+                    $"${totalVolume:0.00} and ${totalFees:0.00} in fees!\n" +
                     $"#chainflip #flip";
                 
                 _twitterClient.Execute

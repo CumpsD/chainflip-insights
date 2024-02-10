@@ -106,8 +106,8 @@ namespace ChainflipInsights.Feeders.PastVolume
                 }
                 
                 var pastVolumeInfo = await GetPastVolume(
-                    yesterday.AddDays(-1),
                     yesterday,
+                    yesterday.AddDays(1),
                     cancellationToken);
                 
                 if (cancellationToken.IsCancellationRequested)
