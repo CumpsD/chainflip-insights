@@ -73,7 +73,7 @@ namespace ChainflipInsights.Feeders.CexMovement
                 if (cancellationToken.IsCancellationRequested)
                     return;
                 
-                var cexMovement = await GetCexMovement(lastDay, cancellationToken);
+                var cexMovement = await GetCexMovement(cancellationToken);
                 
                 if (cancellationToken.IsCancellationRequested)
                     return;
@@ -144,7 +144,6 @@ namespace ChainflipInsights.Feeders.CexMovement
         }
         
         private async Task<CexMovementResponse?> GetCexMovement(
-            double fromId,
             CancellationToken cancellationToken)
         {
             using var client = _httpClientFactory.CreateClient("Dune");

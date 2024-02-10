@@ -111,7 +111,7 @@ namespace ChainflipInsights.Feeders.CfeVersion
                 if (now == lastVersion)
                 {
                     _logger.LogInformation(
-                        "No new CFE Version to announce. Last CFE Version Info is still {CfeVersion}",
+                        "No new CFE version to announce. Last CFE version info is still {CfeVersion}",
                         lastVersion);
                     
                     await Task.Delay(_configuration.CfeVersionQueryDelay.Value.RandomizeTime(), cancellationToken);
@@ -140,7 +140,7 @@ namespace ChainflipInsights.Feeders.CfeVersion
                     "Broadcasting {TotalVersions} CFE Versions",
                     cfeVersions.Length);
 
-                var allCfeVersions = new CfeVersionsInfo(lastVersion, cfeVersions);
+                var allCfeVersions = new CfeVersionsInfo(now, cfeVersions);
                 await _pipeline.Source.SendAsync(
                     allCfeVersions, 
                     cancellationToken);

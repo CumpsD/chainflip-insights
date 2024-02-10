@@ -98,7 +98,7 @@ namespace ChainflipInsights.Feeders.PastVolume
                 if (dateString == lastVolume)
                 {
                     _logger.LogInformation(
-                        "No new Past Volume to announce. Last Volume Info is still {PastVolume}",
+                        "No new past volume to announce. Last volume info is still {PastVolume}",
                         lastVolume);
                     
                     await Task.Delay(_configuration.PastVolumeQueryDelay.Value.RandomizeTime(), cancellationToken);
@@ -128,7 +128,7 @@ namespace ChainflipInsights.Feeders.PastVolume
                     "Broadcasting {TotalLastVolumePairs} Past 24h Volume Pairs",
                     pastVolumePairs.Length);
 
-                var pastVolume = new PastVolumeInfo(lastVolume, pastVolumePairs);
+                var pastVolume = new PastVolumeInfo(dateString, pastVolumePairs);
                 await _pipeline.Source.SendAsync(
                     pastVolume, 
                     cancellationToken);
