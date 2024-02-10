@@ -1,11 +1,8 @@
-<div align="center">
-	<img width="160" src="https://github.com/CumpsD/chainflip-insights/raw/main/assets/logo.png" />
-	<h1>FLIP InfoBot</h1>
-	<p>
-		<b>Designed to provide insights in a user friendly format</b>
-	</p>
-	<br>
-</div>
+![a](https://github.com/CumpsD/chainflip-insights/raw/main/assets/banner.gif "a")
+
+# FLIP InfoBot
+
+> **Designed to provide insights in a user friendly format**
 
 ## What is Chainflip? 
 
