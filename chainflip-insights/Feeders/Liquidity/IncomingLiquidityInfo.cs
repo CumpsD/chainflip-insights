@@ -36,7 +36,7 @@ namespace ChainflipInsights.Feeders.Liquidity
             Id = liquidity.Id;
             DepositAmount = liquidity.DepositAmount;
             DepositValueUsd = liquidity.DepositValueUsd;
-            SourceAsset = liquidity.Channel.Asset;
+            SourceAsset = liquidity.Channel.Asset.ToUpperInvariant();
 
             BlockId = liquidity.Channel.IssuedBlockId;
             Network = liquidity.Channel.Chain;
