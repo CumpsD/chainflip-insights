@@ -1,6 +1,5 @@
 namespace ChainflipInsights.Feeders.CfeVersion
 {
-    using System;
     using System.Text.Json.Serialization;
 
     public class CfeVersionResponse
