@@ -59,7 +59,7 @@ namespace ChainflipInsights.Feeders.Swap
         public SwapInfo(
             SwapsResponseNode swap)
         {
-            Id = swap.Id;
+            Id = swap.NativeId;
             DepositAmount = swap.DepositAmount;
             DepositValueUsd = swap.DepositValueUsd;
             SourceAsset = swap.SourceAsset.ToUpperInvariant();
