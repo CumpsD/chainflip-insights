@@ -39,7 +39,9 @@ namespace ChainflipInsights.Feeders.Epoch
                                     node {
                                         validatorId
                                         validatorByValidatorId {
-                                            idSs58
+                                            accountByAccountId {
+                                                idSs58
+                                            }
                                         }
                                         bid
                                         reward

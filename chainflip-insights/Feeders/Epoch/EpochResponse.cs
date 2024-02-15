@@ -42,7 +42,9 @@ namespace ChainflipInsights.Feeders.Epoch
         //             "node": {
         //                 "validatorId": 66,
         //                 "validatorByValidatorId": {
-        //                     "idSs58": "cFHsUrS1t97KUgK8m6yU3RufoUSBpfYyqueeGswAuJScXcWAD"
+        //                      "accountByAccountId": {
+        //                          "idSs58": "cFHvVdAeCipWTM6VRHkQoU9g8MKunXfz4zAJtkeaswicoKTDs"
+        //                      }
         //                 },
         //                 "bid": "180050930793365340000000",
         //                 "reward": "36440906077714169992"
