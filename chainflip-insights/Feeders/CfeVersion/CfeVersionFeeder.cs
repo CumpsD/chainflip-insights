@@ -16,7 +16,6 @@ namespace ChainflipInsights.Feeders.CfeVersion
     using ChainflipInsights.Infrastructure.Pipelines;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
-    using Semver;
 
     public class CfeVersionFeeder : IFeeder
     {
@@ -30,7 +29,9 @@ namespace ChainflipInsights.Feeders.CfeVersion
                             validatorsByCfeVersionId {
                                 edges {
                                     node {
-                                        idSs58
+                                        accountByAccountId {
+                                            idSs58
+                                        }
                                         lastHeartbeatBlockId
                                     }
                                 }

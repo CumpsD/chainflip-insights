@@ -33,7 +33,9 @@ namespace ChainflipInsights.Feeders.CfeVersion
         //     "edges": [
         //       {
         //         "node": {
-        //           "idSs58": "cFKzr7DwLCRtSkou5H5moKri7g9WwJ4tAbVJv6dZGhLb811Tc",
+        //            "accountByAccountId": {
+        //                "idSs58": "cFP2cGErEhxzJfVUxk1gHVuE1ALxHJQx335o19bT7QoSWwjhU"
+        //            }
         //           "lastHeartbeatBlockId": 1202408
         //         }
         //        ...
@@ -60,10 +62,16 @@ namespace ChainflipInsights.Feeders.CfeVersion
 
     public class CfeVersionValidatorsNode
     {
-        [JsonPropertyName("idSs58")] 
-        public string Name { get; set; }
+        [JsonPropertyName("accountByAccountId")] 
+        public CfeVersionAccountNode Account { get; set; }
         
         [JsonPropertyName("lastHeartbeatBlockId")]
         public double? LastHeartBeat { get; set; }
+    }
+    
+    public class CfeVersionAccountNode
+    {
+        [JsonPropertyName("idSs58")] 
+        public string Name { get; set; }
     }
 }

@@ -35,7 +35,7 @@ namespace ChainflipInsights.Feeders.CfeVersion
             Validators = cfeVersion
                 .Validators
                 .Data
-                .Select(x => new CfeVersionValidatorInfo(x.Data.Name, x.Data.LastHeartBeat, lastBlockId))
+                .Select(x => new CfeVersionValidatorInfo(x.Data.Account.Name, x.Data.LastHeartBeat, lastBlockId))
                 .ToList();
         }
     }
