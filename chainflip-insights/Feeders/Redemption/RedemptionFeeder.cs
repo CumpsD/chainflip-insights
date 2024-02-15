@@ -22,7 +22,7 @@ namespace ChainflipInsights.Feeders.Redemption
         private const string RedemptionQuery = 
             """
             {
-                allValidatorFundingEvents(orderBy: ID_ASC, first: 50, filter: {
+                allAccountFundingEvents(orderBy: ID_ASC, first: 50, filter: {
                     and: {
                         id: { greaterThan: LAST_ID }
                         type: { equalTo: REDEEMED }
@@ -31,17 +31,18 @@ namespace ChainflipInsights.Feeders.Redemption
                     edges {
                         node {
                             id
+                            
                             amount
                             epochId
-                            validatorByValidatorId {
+                            accountByAccountId {
                                 alias
                                 idSs58
-                                cfeVersionId
+                                role
                             }
                             eventByEventId {
-                            blockByBlockId {
-                                timestamp
-                            }
+                                blockByBlockId {
+                                    timestamp
+                                }
                             }
                         }
                     }
@@ -131,6 +132,13 @@ namespace ChainflipInsights.Feeders.Redemption
                 // Redemption is in increasing order
                 foreach (var redemptionDetails in redemption.TakeWhile(_ => !cancellationToken.IsCancellationRequested))
                 {
+                    if (redemptionDetails.Account.Role != "VALIDATOR")
+                    {
+                        lastId = redemptionDetails.Id;
+                        await StoreLastRedemptionId(lastId);
+                        continue;
+                    }
+
                     var redemptionDetail = new RedemptionInfo(redemptionDetails);
 
                     _logger.LogInformation(

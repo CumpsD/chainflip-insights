@@ -11,7 +11,7 @@ namespace ChainflipInsights.Feeders.Funding
     
     public class FundingInfoResponseData
     {
-        [JsonPropertyName("allValidatorFundingEvents")] 
+        [JsonPropertyName("allAccountFundingEvents")] 
         public FundingInfoResponseAllFunding Data { get; set; }
     }
 
@@ -32,10 +32,10 @@ namespace ChainflipInsights.Feeders.Funding
         // "id": 3093,
         // "amount": "600000000000000000000",
         // "epochId": 77,
-        // "validatorByValidatorId": {
+        // "accountByAccountId": {
         //     "alias": "StakedFLIP (Chorus One #10)",
         //     "idSs58": "cFNwGhUje3AJzBykDGs45umgFoGKS9xouSVn1UNz7VG1y4j4n",
-        //     "cfeVersionId": "1.1.6"
+        //     "role": "VALIDATOR"
         // },
         // "eventByEventId": {
         //     "blockByBlockId": {
@@ -52,20 +52,23 @@ namespace ChainflipInsights.Feeders.Funding
         [JsonPropertyName("epochId")] 
         public double Epoch { get; set; }
         
-        [JsonPropertyName("validatorByValidatorId")] 
-        public FundingInfoValidator Validator { get; set; }
+        [JsonPropertyName("accountByAccountId")] 
+        public FundingInfoAccount Account { get; set; }
         
         [JsonPropertyName("eventByEventId")] 
         public FundingInfoEvent Event { get; set; }
     }
 
-    public class FundingInfoValidator
+    public class FundingInfoAccount
     {
         [JsonPropertyName("alias")] 
         public string Alias { get; set; }
 
         [JsonPropertyName("idSs58")] 
         public string Name { get; set; }
+        
+        [JsonPropertyName("role")] 
+        public string Role { get; set; }
     }
 
     public class FundingInfoEvent

@@ -30,8 +30,8 @@ namespace ChainflipInsights.Feeders.Funding
             Id = funding.Id;
             Amount = funding.Amount;
             Epoch = funding.Epoch;
-            ValidatorAlias = funding.Validator.Alias;
-            ValidatorName = funding.Validator.Name;
+            ValidatorAlias = funding.Account.Alias;
+            ValidatorName = funding.Account.Name;
             Timestamp = funding.Event.Block.Timestamp;
             
             Validator =

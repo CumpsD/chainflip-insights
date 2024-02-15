@@ -30,8 +30,8 @@ namespace ChainflipInsights.Feeders.Redemption
             Id = redemption.Id;
             Amount = redemption.Amount;
             Epoch = redemption.Epoch;
-            ValidatorAlias = redemption.Validator.Alias;
-            ValidatorName = redemption.Validator.Name;
+            ValidatorAlias = redemption.Account.Alias;
+            ValidatorName = redemption.Account.Name;
             Timestamp = redemption.Event.Block.Timestamp;
             
             Validator =

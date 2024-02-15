@@ -22,7 +22,7 @@ namespace ChainflipInsights.Feeders.Funding
         private const string FundingQuery = 
             """
             {
-                allValidatorFundingEvents(orderBy: ID_ASC, first: 50, filter: {
+                allAccountFundingEvents(orderBy: ID_ASC, first: 50, filter: {
                     and: {
                         id: { greaterThan: LAST_ID }
                         type: { equalTo: FUNDED }
@@ -31,17 +31,18 @@ namespace ChainflipInsights.Feeders.Funding
                     edges {
                         node {
                             id
+                            
                             amount
                             epochId
-                            validatorByValidatorId {
+                            accountByAccountId {
                                 alias
                                 idSs58
-                                cfeVersionId
+                                role
                             }
                             eventByEventId {
-                            blockByBlockId {
-                                timestamp
-                            }
+                                blockByBlockId {
+                                    timestamp
+                                }
                             }
                         }
                     }
@@ -131,6 +132,13 @@ namespace ChainflipInsights.Feeders.Funding
                 // Funding is in increasing order
                 foreach (var fundingDetails in funding.TakeWhile(_ => !cancellationToken.IsCancellationRequested))
                 {
+                    if (fundingDetails.Account.Role != "VALIDATOR")
+                    {
+                        lastId = fundingDetails.Id;
+                        await StoreLastFundingId(lastId);
+                        continue;
+                    }
+
                     var fundingDetail = new FundingInfo(fundingDetails);
 
                     _logger.LogInformation(
