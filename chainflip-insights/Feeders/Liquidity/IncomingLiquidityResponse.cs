@@ -30,7 +30,6 @@ namespace ChainflipInsights.Feeders.Liquidity
     {
         // "node": {
         //     "id": 96,
-        //     "accountId": "cFKZarxpf9MVwzzmYUtQfV61PRkYgTj9wUgUCeuKpKgMLrTow",
         //     "depositAmount": "90000000000",
         //     "depositValueUsd": "90000.000000000000000000000000000000",
         //     "channel": {
@@ -45,9 +44,6 @@ namespace ChainflipInsights.Feeders.Liquidity
                 
         [JsonPropertyName("id")] 
         public double Id { get; set; }
-        
-        [JsonPropertyName("accountId")] 
-        public string AccountId { get; set; }
         
         [JsonPropertyName("depositAmount")] 
         public double DepositAmount { get; set; }

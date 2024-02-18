@@ -28,7 +28,6 @@ namespace ChainflipInsights.Feeders.Liquidity
                     edges {
                         node {
                             id
-                            accountId
                             depositAmount
                             depositValueUsd
                             channel: liquidityDepositChannelByLiquidityDepositChannelId {
