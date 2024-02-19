@@ -110,6 +110,10 @@ namespace ChainflipInsights.Feeders.Swap
 
                 if (swapsInfo == null)
                 {
+                    _logger.LogInformation(
+                        "Fetching swaps failed. Last swap is still {SwapId}",
+                        lastId);
+                    
                     await Task.Delay(_configuration.SwapQueryDelay.Value.RandomizeTime(), cancellationToken);
                     continue;                    
                 }
@@ -125,6 +129,9 @@ namespace ChainflipInsights.Feeders.Swap
                     _logger.LogInformation(
                         "No new swaps to announce. Last swap is still {SwapId}",
                         lastId);
+                    
+                    await Task.Delay(_configuration.SwapQueryDelay.Value.RandomizeTime(), cancellationToken);
+                    continue;
                 }
                 
                 // Swaps are in increasing order
@@ -174,31 +181,40 @@ namespace ChainflipInsights.Feeders.Swap
             double fromId,
             CancellationToken cancellationToken)
         {
-            using var client = _httpClientFactory.CreateClient("Graph");
-
-            var query = SwapsQuery.Replace("LAST_ID", fromId.ToString(CultureInfo.InvariantCulture));
-            var graphQuery = $"{{ \"query\": \"{query.ReplaceLineEndings("\\n")}\" }}";
-            
-            var response = await client.PostAsync(
-                string.Empty,
-                new StringContent(
-                    graphQuery, 
-                    new MediaTypeHeaderValue(MediaTypeNames.Application.Json)), 
-                cancellationToken);
-
-            if (response.IsSuccessStatusCode)
+            try
             {
-                return await response
-                    .Content
-                    .ReadFromJsonAsync<SwapsResponse>(cancellationToken: cancellationToken);
+                using var client = _httpClientFactory.CreateClient("Graph");
+
+                var query = SwapsQuery.Replace("LAST_ID", fromId.ToString(CultureInfo.InvariantCulture));
+                var graphQuery = $"{{ \"query\": \"{query.ReplaceLineEndings("\\n")}\" }}";
+
+                var response = await client.PostAsync(
+                    string.Empty,
+                    new StringContent(
+                        graphQuery,
+                        new MediaTypeHeaderValue(MediaTypeNames.Application.Json)),
+                    cancellationToken);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return await response
+                        .Content
+                        .ReadFromJsonAsync<SwapsResponse>(cancellationToken: cancellationToken);
+                }
+
+                _logger.LogError(
+                    "GetSwaps returned {StatusCode}: {Error}\nRequest: {Request}",
+                    response.StatusCode,
+                    await response.Content.ReadAsStringAsync(cancellationToken),
+                    graphQuery);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(
+                    e,
+                    "Fetching swaps failed.");
             }
             
-            _logger.LogError(
-                "GetSwaps returned {StatusCode}: {Error}\nRequest: {Request}",
-                response.StatusCode,
-                await response.Content.ReadAsStringAsync(cancellationToken),
-                graphQuery);
-
             return null;
         }
 
