@@ -180,30 +180,39 @@ namespace ChainflipInsights.Feeders.Redemption
             double fromId,
             CancellationToken cancellationToken)
         {
-            using var client = _httpClientFactory.CreateClient("Graph");
-
-            var query = RedemptionQuery.Replace("LAST_ID", fromId.ToString(CultureInfo.InvariantCulture));
-            var graphQuery = $"{{ \"query\": \"{query.ReplaceLineEndings("\\n")}\" }}";
-            
-            var response = await client.PostAsync(
-                string.Empty,
-                new StringContent(
-                    graphQuery, 
-                    new MediaTypeHeaderValue(MediaTypeNames.Application.Json)), 
-                cancellationToken);
-
-            if (response.IsSuccessStatusCode)
+            try
             {
-                return await response
-                    .Content
-                    .ReadFromJsonAsync<RedemptionResponse>(cancellationToken: cancellationToken);
+                using var client = _httpClientFactory.CreateClient("Graph");
+
+                var query = RedemptionQuery.Replace("LAST_ID", fromId.ToString(CultureInfo.InvariantCulture));
+                var graphQuery = $"{{ \"query\": \"{query.ReplaceLineEndings("\\n")}\" }}";
+
+                var response = await client.PostAsync(
+                    string.Empty,
+                    new StringContent(
+                        graphQuery,
+                        new MediaTypeHeaderValue(MediaTypeNames.Application.Json)),
+                    cancellationToken);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return await response
+                        .Content
+                        .ReadFromJsonAsync<RedemptionResponse>(cancellationToken: cancellationToken);
+                }
+
+                _logger.LogError(
+                    "GetRedemption returned {StatusCode}: {Error}\nRequest: {Request}",
+                    response.StatusCode,
+                    await response.Content.ReadAsStringAsync(cancellationToken),
+                    graphQuery);
             }
-            
-            _logger.LogError(
-                "GetRedemption returned {StatusCode}: {Error}\nRequest: {Request}",
-                response.StatusCode,
-                await response.Content.ReadAsStringAsync(cancellationToken),
-                graphQuery);
+            catch (Exception e)
+            {
+                _logger.LogError(
+                    e,
+                    "Fetching redemption failed.");
+            }
 
             return null;
         }

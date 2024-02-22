@@ -163,32 +163,41 @@ namespace ChainflipInsights.Feeders.PastVolume
             DateTimeOffset timeTo,
             CancellationToken cancellationToken)
         {
-            using var client = _httpClientFactory.CreateClient("Graph");
-
-            var query = PastVolumeQuery
-                .Replace("TIME_FROM", timeFrom.ToString("yyyy-MM-ddT00:00:00.000Z"))
-                .Replace("TIME_TO", timeTo.ToString("yyyy-MM-ddT00:00:00.000Z"));
-            var graphQuery = $"{{ \"query\": \"{query.ReplaceLineEndings("\\n")}\" }}";
-            
-            var response = await client.PostAsync(
-                string.Empty,
-                new StringContent(
-                    graphQuery, 
-                    new MediaTypeHeaderValue(MediaTypeNames.Application.Json)), 
-                cancellationToken);
-
-            if (response.IsSuccessStatusCode)
+            try
             {
-                return await response
-                    .Content
-                    .ReadFromJsonAsync<PastVolumeResponse>(cancellationToken: cancellationToken);
+                using var client = _httpClientFactory.CreateClient("Graph");
+
+                var query = PastVolumeQuery
+                    .Replace("TIME_FROM", timeFrom.ToString("yyyy-MM-ddT00:00:00.000Z"))
+                    .Replace("TIME_TO", timeTo.ToString("yyyy-MM-ddT00:00:00.000Z"));
+                var graphQuery = $"{{ \"query\": \"{query.ReplaceLineEndings("\\n")}\" }}";
+
+                var response = await client.PostAsync(
+                    string.Empty,
+                    new StringContent(
+                        graphQuery,
+                        new MediaTypeHeaderValue(MediaTypeNames.Application.Json)),
+                    cancellationToken);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return await response
+                        .Content
+                        .ReadFromJsonAsync<PastVolumeResponse>(cancellationToken: cancellationToken);
+                }
+
+                _logger.LogError(
+                    "GetPastVolume returned {StatusCode}: {Error}\nRequest: {Request}",
+                    response.StatusCode,
+                    await response.Content.ReadAsStringAsync(cancellationToken),
+                    graphQuery);
             }
-            
-            _logger.LogError(
-                "GetPastVolume returned {StatusCode}: {Error}\nRequest: {Request}",
-                response.StatusCode,
-                await response.Content.ReadAsStringAsync(cancellationToken),
-                graphQuery);
+            catch (Exception e)
+            {
+                _logger.LogError(
+                    e,
+                    "Fetching past volume failed.");
+            }
 
             return null;
         }

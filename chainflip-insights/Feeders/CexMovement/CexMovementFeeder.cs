@@ -146,11 +146,22 @@ namespace ChainflipInsights.Feeders.CexMovement
         private async Task<CexMovementResponse?> GetCexMovement(
             CancellationToken cancellationToken)
         {
-            using var client = _httpClientFactory.CreateClient("Dune");
+            try
+            {
+                using var client = _httpClientFactory.CreateClient("Dune");
 
-            return await client.GetFromJsonAsync<CexMovementResponse>(
-                $"{_configuration.DuneUrl}{_configuration.DuneCexMovementQuery}/results?api_key={_configuration.DuneApiKey}",
-                cancellationToken);
+                return await client.GetFromJsonAsync<CexMovementResponse>(
+                    $"{_configuration.DuneUrl}{_configuration.DuneCexMovementQuery}/results?api_key={_configuration.DuneApiKey}",
+                    cancellationToken);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(
+                    e,
+                    "Fetching CEX movement failed.");
+
+                return null;
+            }
         }
     }
 }

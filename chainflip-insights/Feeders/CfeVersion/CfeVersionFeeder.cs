@@ -174,29 +174,38 @@ namespace ChainflipInsights.Feeders.CfeVersion
         private async Task<CfeVersionResponse?> GetCfeVersion(
             CancellationToken cancellationToken)
         {
-            using var client = _httpClientFactory.CreateClient("Graph");
-
-            var graphQuery = $"{{ \"query\": \"{CfeVersionQuery.ReplaceLineEndings("\\n")}\" }}";
-            
-            var response = await client.PostAsync(
-                string.Empty,
-                new StringContent(
-                    graphQuery, 
-                    new MediaTypeHeaderValue(MediaTypeNames.Application.Json)), 
-                cancellationToken);
-
-            if (response.IsSuccessStatusCode)
+            try
             {
-                return await response
-                    .Content
-                    .ReadFromJsonAsync<CfeVersionResponse>(cancellationToken: cancellationToken);
+                using var client = _httpClientFactory.CreateClient("Graph");
+
+                var graphQuery = $"{{ \"query\": \"{CfeVersionQuery.ReplaceLineEndings("\\n")}\" }}";
+
+                var response = await client.PostAsync(
+                    string.Empty,
+                    new StringContent(
+                        graphQuery,
+                        new MediaTypeHeaderValue(MediaTypeNames.Application.Json)),
+                    cancellationToken);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return await response
+                        .Content
+                        .ReadFromJsonAsync<CfeVersionResponse>(cancellationToken: cancellationToken);
+                }
+
+                _logger.LogError(
+                    "GetCfeVersion returned {StatusCode}: {Error}\nRequest: {Request}",
+                    response.StatusCode,
+                    await response.Content.ReadAsStringAsync(cancellationToken),
+                    graphQuery);
             }
-            
-            _logger.LogError(
-                "GetCfeVersion returned {StatusCode}: {Error}\nRequest: {Request}",
-                response.StatusCode,
-                await response.Content.ReadAsStringAsync(cancellationToken),
-                graphQuery);
+            catch (Exception e)
+            {
+                _logger.LogError(
+                    e,
+                    "Fetching CFE versions failed.");
+            }
 
             return null;
         }
@@ -204,29 +213,38 @@ namespace ChainflipInsights.Feeders.CfeVersion
         private async Task<LastBlockResponse?> GetLastBlock(
             CancellationToken cancellationToken)
         {
-            using var client = _httpClientFactory.CreateClient("Graph");
-
-            var graphQuery = $"{{ \"query\": \"{LastBlockQuery.ReplaceLineEndings("\\n")}\" }}";
-            
-            var response = await client.PostAsync(
-                string.Empty,
-                new StringContent(
-                    graphQuery, 
-                    new MediaTypeHeaderValue(MediaTypeNames.Application.Json)), 
-                cancellationToken);
-
-            if (response.IsSuccessStatusCode)
+            try
             {
-                return await response
-                    .Content
-                    .ReadFromJsonAsync<LastBlockResponse>(cancellationToken: cancellationToken);
+                using var client = _httpClientFactory.CreateClient("Graph");
+
+                var graphQuery = $"{{ \"query\": \"{LastBlockQuery.ReplaceLineEndings("\\n")}\" }}";
+                
+                var response = await client.PostAsync(
+                    string.Empty,
+                    new StringContent(
+                        graphQuery, 
+                        new MediaTypeHeaderValue(MediaTypeNames.Application.Json)), 
+                    cancellationToken);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return await response
+                        .Content
+                        .ReadFromJsonAsync<LastBlockResponse>(cancellationToken: cancellationToken);
+                }
+                
+                _logger.LogError(
+                    "GetLastBlock returned {StatusCode}: {Error}\nRequest: {Request}",
+                    response.StatusCode,
+                    await response.Content.ReadAsStringAsync(cancellationToken),
+                    graphQuery);
             }
-            
-            _logger.LogError(
-                "GetLastBlock returned {StatusCode}: {Error}\nRequest: {Request}",
-                response.StatusCode,
-                await response.Content.ReadAsStringAsync(cancellationToken),
-                graphQuery);
+            catch (Exception e)
+            {
+                _logger.LogError(
+                    e,
+                    "Fetching last block failed.");
+            }
 
             return null;
         }
