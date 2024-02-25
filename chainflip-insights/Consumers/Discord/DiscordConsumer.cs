@@ -471,11 +471,14 @@ namespace ChainflipInsights.Consumers.Discord
                     .Versions
                     .Where(x => x.Key < maxVersion && x.Value.Validators.Any(v => v.ValidatorStatus == ValidatorStatus.Online))
                     .ToList();
+
+                var outdatedSum = outdatedValidators
+                    .Sum(x => x.Value.Validators.Count(v => v.ValidatorStatus == ValidatorStatus.Online));
                 
                 var text =
                     $"📜 CFE overview for **{cfeVersionInfo.Date}**! " +
                     $"The current version is **{maxVersion}**, which **{upToDateValidators} online validators** are running. " +
-                    $"There are **{outdatedValidators.Sum(x => x.Value.Validators.Count(v => v.ValidatorStatus == ValidatorStatus.Online))} online validators** on older versions: " +
+                    $"There are **{outdatedSum} online validators** on older versions{(outdatedSum != 0 ? ": " : "")}" +
                     $"{string.Join(", ", outdatedValidators.Select(x => $"**{x.Value.Validators.Count(v => v.ValidatorStatus == ValidatorStatus.Online)}** on **{x.Key}**"))}";
                 
                 var infoChannel = (ITextChannel)_discordClient
