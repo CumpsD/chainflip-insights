@@ -1,6 +1,7 @@
 namespace ChainflipInsights.Consumers.Telegram
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
@@ -26,6 +27,7 @@ namespace ChainflipInsights.Consumers.Telegram
         private readonly ILogger<TelegramConsumer> _logger;
         private readonly BotConfiguration _configuration;
         private readonly TelegramBotClient _telegramClient;
+        private readonly Dictionary<string,string> _brokers;
 
         public TelegramConsumer(
             ILogger<TelegramConsumer> logger,
@@ -35,6 +37,12 @@ namespace ChainflipInsights.Consumers.Telegram
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _configuration = options.Value ?? throw new ArgumentNullException(nameof(options));
             _telegramClient = telegramClient ?? throw new ArgumentNullException(nameof(telegramClient));
+            
+            _brokers = _configuration
+                .Brokers
+                .ToDictionary(
+                    x => x.Address,
+                    x => x.Name);
         }
 
         public ITargetBlock<BroadcastInfo> Build(
@@ -117,18 +125,22 @@ namespace ChainflipInsights.Consumers.Telegram
 
             try
             {
+                var brokerExists = _brokers.TryGetValue(swap.Broker, out var broker);
+                
                 _logger.LogInformation(
-                    "Announcing Swap on Telegram: {IngressAmount} {IngressTicker} to {EgressAmount} {EgressTicker} -> {ExplorerUrl}",
+                    "Announcing Swap on Telegram: {IngressAmount} {IngressTicker} to {EgressAmount} {EgressTicker}{Broker} -> {ExplorerUrl}",
                     swap.DepositAmountFormatted,
                     swap.SourceAsset,
                     swap.EgressAmountFormatted,
                     swap.DestinationAsset,
+                    brokerExists ? $" @ {broker}" : string.Empty,
                     $"{_configuration.ExplorerSwapsUrl}{swap.Id}");
 
                 var text =
                     $"{swap.Emoji} Swapped " +
                     $"**{swap.DepositAmountFormatted} {swap.SourceAsset}** (*${swap.DepositValueUsdFormatted}*) → " +
                     $"**{swap.EgressAmountFormatted} {swap.DestinationAsset}** (*${swap.EgressValueUsdFormatted}*) " +
+                    $"{(brokerExists ? $"@ {broker} " : string.Empty)}" +
                     $"// **[view swap on explorer]({_configuration.ExplorerSwapsUrl}{swap.Id})**";
 
                 var message = _telegramClient
