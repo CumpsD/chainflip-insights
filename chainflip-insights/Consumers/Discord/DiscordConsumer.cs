@@ -29,6 +29,9 @@ namespace ChainflipInsights.Consumers.Discord
         private readonly DiscordSocketClient _discordClient;
         private readonly Dictionary<string,string> _brokers;
 
+        private readonly Emoji _tadaEmoji = new("🎉");
+        private readonly Emoji _angryEmoji = new("🤬");
+
         public DiscordConsumer(
             ILogger<DiscordConsumer> logger,
             IOptions<BotConfiguration> options,
@@ -171,6 +174,22 @@ namespace ChainflipInsights.Consumers.Discord
                         flags: MessageFlags.SuppressEmbeds)
                     .GetAwaiter()
                     .GetResult();
+
+                if (swap.SourceAsset.Equals("flip", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    message
+                        .AddReactionAsync(_angryEmoji)
+                        .GetAwaiter()
+                        .GetResult();
+                }
+                
+                if (swap.DestinationAsset.Equals("flip", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    message
+                        .AddReactionAsync(_tadaEmoji)
+                        .GetAwaiter()
+                        .GetResult();
+                }
 
                 _logger.LogInformation(
                     "Announcing Swap {SwapId} on Discord as Message {MessageId}",
