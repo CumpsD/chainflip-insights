@@ -1,6 +1,7 @@
 namespace ChainflipInsights.Consumers.Discord
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
@@ -26,6 +27,7 @@ namespace ChainflipInsights.Consumers.Discord
         private readonly ILogger<DiscordConsumer> _logger;
         private readonly BotConfiguration _configuration;
         private readonly DiscordSocketClient _discordClient;
+        private readonly Dictionary<string,string> _brokers;
 
         public DiscordConsumer(
             ILogger<DiscordConsumer> logger,
@@ -35,6 +37,12 @@ namespace ChainflipInsights.Consumers.Discord
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _configuration = options.Value ?? throw new ArgumentNullException(nameof(options));
             _discordClient = discordClient ?? throw new ArgumentNullException(nameof(discordClient));
+
+            _brokers = _configuration
+                .Brokers
+                .ToDictionary(
+                    x => x.Address,
+                    x => x.Name);
         }
 
         public ITargetBlock<BroadcastInfo> Build(
@@ -136,18 +144,22 @@ namespace ChainflipInsights.Consumers.Discord
 
             try
             {
+                var brokerExists = _brokers.TryGetValue(swap.Broker, out var broker);
+                
                 _logger.LogInformation(
-                    "Announcing Swap on Discord: {IngressAmount} {IngressTicker} to {EgressAmount} {EgressTicker} -> {ExplorerUrl}",
+                    "Announcing Swap on Discord: {IngressAmount} {IngressTicker} to {EgressAmount} {EgressTicker}{Broker} -> {ExplorerUrl}",
                     swap.DepositAmountFormatted,
                     swap.SourceAsset,
                     swap.EgressAmountFormatted,
                     swap.DestinationAsset,
+                    brokerExists ? $" @ {broker}" : string.Empty,
                     $"{_configuration.ExplorerSwapsUrl}{swap.Id}");
 
                 var text =
                     $"{swap.Emoji} Swapped " +
                     $"**{swap.DepositAmountFormatted} {swap.SourceAsset}** (*${swap.DepositValueUsdFormatted}*) → " +
                     $"**{swap.EgressAmountFormatted} {swap.DestinationAsset}** (*${swap.EgressValueUsdFormatted}*) " +
+                    $"{(brokerExists ? $"@ {broker} " : string.Empty)}" +
                     $"// **[view swap on explorer]({_configuration.ExplorerSwapsUrl}{swap.Id})**";
 
                 var infoChannel = (ITextChannel)_discordClient

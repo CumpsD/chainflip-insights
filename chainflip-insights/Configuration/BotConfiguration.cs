@@ -638,5 +638,29 @@ namespace ChainflipInsights.Configuration
         {
             get; init;
         }
+        
+        [Required]
+        [NotNull]
+        public Broker[]? Brokers
+        {
+            get; init;
+        }
+    }
+
+    public class Broker
+    {
+        [Required]
+        [NotNull]
+        public string? Address
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public string? Name
+        {
+            get; init;
+        }
     }
 }

@@ -42,6 +42,14 @@ namespace ChainflipInsights.Feeders.Swap
             
                             intermediateAmount
                             intermediateValueUsd
+                            
+                            swapChannelByDepositChannelId {
+                                brokerByBrokerId {
+                                    accountByAccountId {
+                                        idSs58
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -140,13 +148,14 @@ namespace ChainflipInsights.Feeders.Swap
                     var swapInfo = new SwapInfo(swap);
                     
                     _logger.LogInformation(
-                        "Broadcasting Swap: {IngressAmount} {IngressTicker} (${IngressUsdAmount}) to {EgressAmount} {EgressTicker} (${EgressUsdAmount}) -> {ExplorerUrl}",
+                        "Broadcasting Swap: {IngressAmount} {IngressTicker} (${IngressUsdAmount}) to {EgressAmount} {EgressTicker} (${EgressUsdAmount}) @ {Broker} -> {ExplorerUrl}",
                         swapInfo.DepositAmountFormatted,
                         swapInfo.SourceAsset,
                         swapInfo.DepositValueUsdFormatted,
                         swapInfo.EgressAmountFormatted,
                         swapInfo.DestinationAsset,
                         swapInfo.EgressValueUsdFormatted,
+                        swapInfo.Broker,
                         $"{_configuration.ExplorerSwapsUrl}{swapInfo.Id}");
                     
                     await _pipeline.Source.SendAsync(

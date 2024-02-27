@@ -45,6 +45,8 @@ namespace ChainflipInsights.Feeders.Swap
         public AssetInfo DestinationAssetInfo { get; }
         
         public string SwapScheduledBlockTimestamp { get; }
+        
+        public string Broker { get; }
 
         public string Emoji =>
             DepositValueUsd switch
@@ -72,6 +74,12 @@ namespace ChainflipInsights.Feeders.Swap
 
             SourceAssetInfo = Constants.SupportedAssets[SourceAsset.ToLowerInvariant()];
             DestinationAssetInfo = Constants.SupportedAssets[DestinationAsset.ToLowerInvariant()];
+
+            Broker = swap
+                .SwapChannel
+                .Broker
+                .Account
+                .Ss58;
         }
     }
 }
