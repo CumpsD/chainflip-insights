@@ -140,7 +140,7 @@ namespace ChainflipInsights.Consumers.Telegram
                     $"{swap.Emoji} Swapped " +
                     $"**{swap.DepositAmountFormatted} {swap.SourceAsset}** (*${swap.DepositValueUsdFormatted}*) → " +
                     $"**{swap.EgressAmountFormatted} {swap.DestinationAsset}** (*${swap.EgressValueUsdFormatted}*) " +
-                    $"{(brokerExists ? $"@ {broker} " : string.Empty)}" +
+                    $"{(brokerExists ? $"@ **{broker}** " : string.Empty)}" +
                     $"// **[view swap on explorer]({_configuration.ExplorerSwapsUrl}{swap.Id})**";
 
                 var message = _telegramClient
