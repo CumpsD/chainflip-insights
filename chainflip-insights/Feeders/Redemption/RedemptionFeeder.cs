@@ -69,28 +69,38 @@ namespace ChainflipInsights.Feeders.Redemption
         
         public async Task Start()
         {
-            if (!_configuration.EnableRedemption.Value)
+            try
             {
-                _logger.LogInformation(
-                    "Redemption not enabled. Skipping {TaskName}",
-                    nameof(RedemptionFeeder));
-                
-                return;
-            }
-            
-            _logger.LogInformation(
-                "Starting {TaskName}",
-                nameof(RedemptionFeeder));
+                if (!_configuration.EnableRedemption.Value)
+                {
+                    _logger.LogInformation(
+                        "Redemption not enabled. Skipping {TaskName}",
+                        nameof(RedemptionFeeder));
 
-            // Give the consumers some time to connect
-            await Task.Delay(_configuration.FeedingDelay.Value, _pipeline.CancellationToken);
-            
-            // Start a loop fetching Redemption Info
-            await ProvideRedemptionInfo(_pipeline.CancellationToken);
-            
-            _logger.LogInformation(
-                "Stopping {TaskName}",
-                nameof(RedemptionFeeder));
+                    return;
+                }
+
+                _logger.LogInformation(
+                    "Starting {TaskName}",
+                    nameof(RedemptionFeeder));
+
+                // Give the consumers some time to connect
+                await Task.Delay(_configuration.FeedingDelay.Value, _pipeline.CancellationToken);
+
+                // Start a loop fetching Redemption Info
+                await ProvideRedemptionInfo(_pipeline.CancellationToken);
+
+                _logger.LogInformation(
+                    "Stopping {TaskName}",
+                    nameof(RedemptionFeeder));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(
+                    e,
+                    "Something went wrong in {TaskName}",
+                    nameof(RedemptionFeeder));
+            }
         }
 
         private async Task ProvideRedemptionInfo(CancellationToken cancellationToken)

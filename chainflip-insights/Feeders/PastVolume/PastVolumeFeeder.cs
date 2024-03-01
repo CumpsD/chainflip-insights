@@ -57,28 +57,38 @@ namespace ChainflipInsights.Feeders.PastVolume
         
         public async Task Start()
         {
-            if (!_configuration.EnablePastVolume.Value)
+            try
             {
-                _logger.LogInformation(
-                    "Past Volume not enabled. Skipping {TaskName}",
-                    nameof(PastVolumeFeeder));
-                
-                return;
-            }
-            
-            _logger.LogInformation(
-                "Starting {TaskName}",
-                nameof(PastVolumeFeeder));
+                if (!_configuration.EnablePastVolume.Value)
+                {
+                    _logger.LogInformation(
+                        "Past Volume not enabled. Skipping {TaskName}",
+                        nameof(PastVolumeFeeder));
 
-            // Give the consumers some time to connect
-            await Task.Delay(_configuration.FeedingDelay.Value, _pipeline.CancellationToken);
-            
-            // Start a loop fetching PastVolume Info
-            await ProvidePastVolumeInfo(_pipeline.CancellationToken);
-            
-            _logger.LogInformation(
-                "Stopping {TaskName}",
-                nameof(PastVolumeFeeder));
+                    return;
+                }
+
+                _logger.LogInformation(
+                    "Starting {TaskName}",
+                    nameof(PastVolumeFeeder));
+
+                // Give the consumers some time to connect
+                await Task.Delay(_configuration.FeedingDelay.Value, _pipeline.CancellationToken);
+
+                // Start a loop fetching PastVolume Info
+                await ProvidePastVolumeInfo(_pipeline.CancellationToken);
+
+                _logger.LogInformation(
+                    "Stopping {TaskName}",
+                    nameof(PastVolumeFeeder));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(
+                    e,
+                    "Something went wrong in {TaskName}",
+                    nameof(PastVolumeFeeder));
+            }
         }
 
         private async Task ProvidePastVolumeInfo(CancellationToken cancellationToken)

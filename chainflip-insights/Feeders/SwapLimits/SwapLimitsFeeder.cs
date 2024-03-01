@@ -50,28 +50,38 @@ namespace ChainflipInsights.Feeders.SwapLimits
         
         public async Task Start()
         {
-            if (!_configuration.EnableSwapLimits.Value)
+            try
             {
-                _logger.LogInformation(
-                    "SwapLimits not enabled. Skipping {TaskName}",
-                    nameof(SwapLimitsFeeder));
-                
-                return;
-            }
-            
-            _logger.LogInformation(
-                "Starting {TaskName}",
-                nameof(SwapLimitsFeeder));
+                if (!_configuration.EnableSwapLimits.Value)
+                {
+                    _logger.LogInformation(
+                        "SwapLimits not enabled. Skipping {TaskName}",
+                        nameof(SwapLimitsFeeder));
 
-            // Give the consumers some time to connect
-            await Task.Delay(_configuration.FeedingDelay.Value, _pipeline.CancellationToken);
-            
-            // Start a loop fetching SwapLimits Info
-            await ProvideSwapLimitsInfo(_pipeline.CancellationToken);
-            
-            _logger.LogInformation(
-                "Stopping {TaskName}",
-                nameof(SwapLimitsFeeder));
+                    return;
+                }
+
+                _logger.LogInformation(
+                    "Starting {TaskName}",
+                    nameof(SwapLimitsFeeder));
+
+                // Give the consumers some time to connect
+                await Task.Delay(_configuration.FeedingDelay.Value, _pipeline.CancellationToken);
+
+                // Start a loop fetching SwapLimits Info
+                await ProvideSwapLimitsInfo(_pipeline.CancellationToken);
+
+                _logger.LogInformation(
+                    "Stopping {TaskName}",
+                    nameof(SwapLimitsFeeder));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(
+                    e,
+                    "Something went wrong in {TaskName}",
+                    nameof(SwapLimitsFeeder));
+            }
         }
 
         private async Task ProvideSwapLimitsInfo(CancellationToken cancellationToken)

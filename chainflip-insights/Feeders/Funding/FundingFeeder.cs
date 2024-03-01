@@ -69,28 +69,38 @@ namespace ChainflipInsights.Feeders.Funding
         
         public async Task Start()
         {
-            if (!_configuration.EnableFunding.Value)
+            try
             {
-                _logger.LogInformation(
-                    "Funding not enabled. Skipping {TaskName}",
-                    nameof(FundingFeeder));
-                
-                return;
-            }
-            
-            _logger.LogInformation(
-                "Starting {TaskName}",
-                nameof(FundingFeeder));
+                if (!_configuration.EnableFunding.Value)
+                {
+                    _logger.LogInformation(
+                        "Funding not enabled. Skipping {TaskName}",
+                        nameof(FundingFeeder));
 
-            // Give the consumers some time to connect
-            await Task.Delay(_configuration.FeedingDelay.Value, _pipeline.CancellationToken);
-            
-            // Start a loop fetching Funding Info
-            await ProvideFundingInfo(_pipeline.CancellationToken);
-            
-            _logger.LogInformation(
-                "Stopping {TaskName}",
-                nameof(FundingFeeder));
+                    return;
+                }
+
+                _logger.LogInformation(
+                    "Starting {TaskName}",
+                    nameof(FundingFeeder));
+
+                // Give the consumers some time to connect
+                await Task.Delay(_configuration.FeedingDelay.Value, _pipeline.CancellationToken);
+
+                // Start a loop fetching Funding Info
+                await ProvideFundingInfo(_pipeline.CancellationToken);
+
+                _logger.LogInformation(
+                    "Stopping {TaskName}",
+                    nameof(FundingFeeder));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(
+                    e,
+                    "Something went wrong in {TaskName}",
+                    nameof(FundingFeeder));
+            }
         }
 
         private async Task ProvideFundingInfo(CancellationToken cancellationToken)

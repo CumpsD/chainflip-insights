@@ -37,28 +37,38 @@ namespace ChainflipInsights.Feeders.CexMovement
         
         public async Task Start()
         {
-            if (!_configuration.EnableCexMovement.Value)
+            try
             {
-                _logger.LogInformation(
-                    "CexMovement not enabled. Skipping {TaskName}",
-                    nameof(CexMovementFeeder));
-                
-                return;
-            }
-            
-            _logger.LogInformation(
-                "Starting {TaskName}",
-                nameof(CexMovementFeeder));
+                if (!_configuration.EnableCexMovement.Value)
+                {
+                    _logger.LogInformation(
+                        "CexMovement not enabled. Skipping {TaskName}",
+                        nameof(CexMovementFeeder));
 
-            // Give the consumers some time to connect
-            await Task.Delay(_configuration.FeedingDelay.Value, _pipeline.CancellationToken);
-            
-            // Start a loop fetching CexMovement Info
-            await ProvideCexMovementInfo(_pipeline.CancellationToken);
-            
-            _logger.LogInformation(
-                "Stopping {TaskName}",
-                nameof(CexMovementFeeder));
+                    return;
+                }
+
+                _logger.LogInformation(
+                    "Starting {TaskName}",
+                    nameof(CexMovementFeeder));
+
+                // Give the consumers some time to connect
+                await Task.Delay(_configuration.FeedingDelay.Value, _pipeline.CancellationToken);
+
+                // Start a loop fetching CexMovement Info
+                await ProvideCexMovementInfo(_pipeline.CancellationToken);
+
+                _logger.LogInformation(
+                    "Stopping {TaskName}",
+                    nameof(CexMovementFeeder));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(
+                    e,
+                    "Something went wrong in {TaskName}",
+                    nameof(CexMovementFeeder));
+            }
         }
 
         private async Task ProvideCexMovementInfo(CancellationToken cancellationToken)

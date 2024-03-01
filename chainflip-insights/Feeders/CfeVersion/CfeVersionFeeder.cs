@@ -72,28 +72,38 @@ namespace ChainflipInsights.Feeders.CfeVersion
         
         public async Task Start()
         {
-            if (!_configuration.EnableCfeVersion.Value)
+            try
             {
-                _logger.LogInformation(
-                    "CfeVersion not enabled. Skipping {TaskName}",
-                    nameof(CfeVersionFeeder));
-                
-                return;
-            }
-            
-            _logger.LogInformation(
-                "Starting {TaskName}",
-                nameof(CfeVersionFeeder));
+                if (!_configuration.EnableCfeVersion.Value)
+                {
+                    _logger.LogInformation(
+                        "CfeVersion not enabled. Skipping {TaskName}",
+                        nameof(CfeVersionFeeder));
 
-            // Give the consumers some time to connect
-            await Task.Delay(_configuration.FeedingDelay.Value, _pipeline.CancellationToken);
-            
-            // Start a loop fetching CfeVersion Info
-            await ProvideCfeVersionInfo(_pipeline.CancellationToken);
-            
-            _logger.LogInformation(
-                "Stopping {TaskName}",
-                nameof(CfeVersionFeeder));
+                    return;
+                }
+
+                _logger.LogInformation(
+                    "Starting {TaskName}",
+                    nameof(CfeVersionFeeder));
+
+                // Give the consumers some time to connect
+                await Task.Delay(_configuration.FeedingDelay.Value, _pipeline.CancellationToken);
+
+                // Start a loop fetching CfeVersion Info
+                await ProvideCfeVersionInfo(_pipeline.CancellationToken);
+
+                _logger.LogInformation(
+                    "Stopping {TaskName}",
+                    nameof(CfeVersionFeeder));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(
+                    e,
+                    "Something went wrong in {TaskName}",
+                    nameof(CfeVersionFeeder));
+            }
         }
 
         private async Task ProvideCfeVersionInfo(CancellationToken cancellationToken)

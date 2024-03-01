@@ -73,28 +73,38 @@ namespace ChainflipInsights.Feeders.Epoch
         
         public async Task Start()
         {
-            if (!_configuration.EnableEpoch.Value)
+            try
             {
-                _logger.LogInformation(
-                    "Epoch not enabled. Skipping {TaskName}",
-                    nameof(EpochFeeder));
-                
-                return;
-            }
-            
-            _logger.LogInformation(
-                "Starting {TaskName}",
-                nameof(EpochFeeder));
+                if (!_configuration.EnableEpoch.Value)
+                {
+                    _logger.LogInformation(
+                        "Epoch not enabled. Skipping {TaskName}",
+                        nameof(EpochFeeder));
 
-            // Give the consumers some time to connect
-            await Task.Delay(_configuration.FeedingDelay.Value, _pipeline.CancellationToken);
-            
-            // Start a loop fetching Epoch Info
-            await ProvideEpochInfo(_pipeline.CancellationToken);
-            
-            _logger.LogInformation(
-                "Stopping {TaskName}",
-                nameof(EpochFeeder));
+                    return;
+                }
+
+                _logger.LogInformation(
+                    "Starting {TaskName}",
+                    nameof(EpochFeeder));
+
+                // Give the consumers some time to connect
+                await Task.Delay(_configuration.FeedingDelay.Value, _pipeline.CancellationToken);
+
+                // Start a loop fetching Epoch Info
+                await ProvideEpochInfo(_pipeline.CancellationToken);
+
+                _logger.LogInformation(
+                    "Stopping {TaskName}",
+                    nameof(EpochFeeder));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(
+                    e,
+                    "Something went wrong in {TaskName}",
+                    nameof(EpochFeeder));
+            }
         }
 
         private async Task ProvideEpochInfo(CancellationToken cancellationToken)

@@ -63,28 +63,38 @@ namespace ChainflipInsights.Feeders.Liquidity
         
         public async Task Start()
         {
-            if (!_configuration.EnableLiquidity.Value)
+            try
             {
-                _logger.LogInformation(
-                    "Liquidity not enabled. Skipping {TaskName}",
-                    nameof(IncomingLiquidityFeeder));
-                
-                return;
-            }
-            
-            _logger.LogInformation(
-                "Starting {TaskName}",
-                nameof(IncomingLiquidityFeeder));
+                if (!_configuration.EnableLiquidity.Value)
+                {
+                    _logger.LogInformation(
+                        "Liquidity not enabled. Skipping {TaskName}",
+                        nameof(IncomingLiquidityFeeder));
 
-            // Give the consumers some time to connect
-            await Task.Delay(_configuration.FeedingDelay.Value, _pipeline.CancellationToken);
-            
-            // Start a loop fetching Liquidity Info
-            await ProvideIncomingLiquidityInfo(_pipeline.CancellationToken);
-            
-            _logger.LogInformation(
-                "Stopping {TaskName}",
-                nameof(IncomingLiquidityFeeder));
+                    return;
+                }
+
+                _logger.LogInformation(
+                    "Starting {TaskName}",
+                    nameof(IncomingLiquidityFeeder));
+
+                // Give the consumers some time to connect
+                await Task.Delay(_configuration.FeedingDelay.Value, _pipeline.CancellationToken);
+
+                // Start a loop fetching Liquidity Info
+                await ProvideIncomingLiquidityInfo(_pipeline.CancellationToken);
+
+                _logger.LogInformation(
+                    "Stopping {TaskName}",
+                    nameof(IncomingLiquidityFeeder));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(
+                    e,
+                    "Something went wrong in {TaskName}",
+                    nameof(IncomingLiquidityFeeder));
+            }
         }
 
         private async Task ProvideIncomingLiquidityInfo(CancellationToken cancellationToken)
