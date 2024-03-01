@@ -75,28 +75,38 @@ namespace ChainflipInsights.Feeders.Swap
         
         public async Task Start()
         {
-            if (!_configuration.EnableSwaps.Value)
+            try
             {
-                _logger.LogInformation(
-                    "Swaps not enabled. Skipping {TaskName}",
-                    nameof(SwapFeeder));
-                
-                return;
-            }
-            
-            _logger.LogInformation(
-                "Starting {TaskName}",
-                nameof(SwapFeeder));
+                if (!_configuration.EnableSwaps.Value)
+                {
+                    _logger.LogInformation(
+                        "Swaps not enabled. Skipping {TaskName}",
+                        nameof(SwapFeeder));
 
-            // Give the consumers some time to connect
-            await Task.Delay(_configuration.FeedingDelay.Value, _pipeline.CancellationToken);
-            
-            // Start a loop fetching Swap Info
-            await ProvideSwapInfo(_pipeline.CancellationToken);
-            
-            _logger.LogInformation(
-                "Stopping {TaskName}",
-                nameof(SwapFeeder));
+                    return;
+                }
+
+                _logger.LogInformation(
+                    "Starting {TaskName}",
+                    nameof(SwapFeeder));
+
+                // Give the consumers some time to connect
+                await Task.Delay(_configuration.FeedingDelay.Value, _pipeline.CancellationToken);
+
+                // Start a loop fetching Swap Info
+                await ProvideSwapInfo(_pipeline.CancellationToken);
+
+                _logger.LogInformation(
+                    "Stopping {TaskName}",
+                    nameof(SwapFeeder));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(
+                    e,
+                    "Something went wrong in {TaskName}",
+                    nameof(SwapFeeder));
+            }
         }
         
         private async Task ProvideSwapInfo(CancellationToken cancellationToken)
@@ -142,28 +152,45 @@ namespace ChainflipInsights.Feeders.Swap
                     continue;
                 }
                 
+                _logger.LogInformation(
+                    "{NewSwaps} new swaps to announce.",
+                    swaps.Count);
+                
                 // Swaps are in increasing order
                 foreach (var swap in swaps.TakeWhile(_ => !cancellationToken.IsCancellationRequested))
                 {
-                    var swapInfo = new SwapInfo(swap);
-                    
-                    _logger.LogInformation(
-                        "Broadcasting Swap: {IngressAmount} {IngressTicker} (${IngressUsdAmount}) to {EgressAmount} {EgressTicker} (${EgressUsdAmount}) @ {Broker} -> {ExplorerUrl}",
-                        swapInfo.DepositAmountFormatted,
-                        swapInfo.SourceAsset,
-                        swapInfo.DepositValueUsdFormatted,
-                        swapInfo.EgressAmountFormatted,
-                        swapInfo.DestinationAsset,
-                        swapInfo.EgressValueUsdFormatted,
-                        swapInfo.Broker,
-                        $"{_configuration.ExplorerSwapsUrl}{swapInfo.Id}");
-                    
-                    await _pipeline.Source.SendAsync(
-                        swapInfo, 
-                        cancellationToken);
-                   
-                    lastId = swap.Id;
-                    await StoreLastSwapId(lastId);
+                    try
+                    {
+                        var swapInfo = new SwapInfo(swap);
+
+                        _logger.LogInformation(
+                            "Broadcasting Swap {SwapId}: {IngressAmount} {IngressTicker} (${IngressUsdAmount}) to {EgressAmount} {EgressTicker} (${EgressUsdAmount}) @ {Broker} -> {ExplorerUrl}",
+                            swap.Id,
+                            swapInfo.DepositAmountFormatted,
+                            swapInfo.SourceAsset,
+                            swapInfo.DepositValueUsdFormatted,
+                            swapInfo.EgressAmountFormatted,
+                            swapInfo.DestinationAsset,
+                            swapInfo.EgressValueUsdFormatted,
+                            swapInfo.Broker ?? "n/a",
+                            $"{_configuration.ExplorerSwapsUrl}{swapInfo.Id}");
+
+                        await _pipeline.Source.SendAsync(
+                            swapInfo,
+                            cancellationToken);
+
+                        lastId = swap.Id;
+                        await StoreLastSwapId(lastId);
+                    }
+                    catch (Exception e)
+                    {
+                        _logger.LogError(
+                            e,
+                            "Error on broadcasting Swap {SwapId}",
+                            swap.Id);
+
+                        throw;
+                    }
                 }
                 
                 await Task.Delay(_configuration.SwapQueryDelay.Value.RandomizeTime(), cancellationToken);

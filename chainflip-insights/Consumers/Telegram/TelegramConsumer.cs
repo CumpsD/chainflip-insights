@@ -125,7 +125,7 @@ namespace ChainflipInsights.Consumers.Telegram
 
             try
             {
-                var brokerExists = _brokers.TryGetValue(swap.Broker, out var broker);
+                var brokerExists = _brokers.TryGetValue(swap.Broker ?? string.Empty, out var broker);
                 
                 _logger.LogInformation(
                     "Announcing Swap on Telegram: {IngressAmount} {IngressTicker} to {EgressAmount} {EgressTicker}{Broker} -> {ExplorerUrl}",

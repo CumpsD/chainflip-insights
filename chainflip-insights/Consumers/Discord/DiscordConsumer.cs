@@ -27,7 +27,7 @@ namespace ChainflipInsights.Consumers.Discord
         private readonly ILogger<DiscordConsumer> _logger;
         private readonly BotConfiguration _configuration;
         private readonly DiscordSocketClient _discordClient;
-        private readonly Dictionary<string,string> _brokers;
+        private readonly Dictionary<string, string> _brokers;
 
         private readonly Emoji _tadaEmoji = new("🎉");
         private readonly Emoji _angryEmoji = new("🤬");
@@ -147,7 +147,7 @@ namespace ChainflipInsights.Consumers.Discord
 
             try
             {
-                var brokerExists = _brokers.TryGetValue(swap.Broker, out var broker);
+                var brokerExists =  _brokers.TryGetValue(swap.Broker ?? string.Empty, out var broker);
                 
                 _logger.LogInformation(
                     "Announcing Swap on Discord: {IngressAmount} {IngressTicker} to {EgressAmount} {EgressTicker}{Broker} -> {ExplorerUrl}",
