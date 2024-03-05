@@ -163,8 +163,8 @@ namespace ChainflipInsights.Feeders.Liquidity
                 return double.Parse(await File.ReadAllTextAsync(_configuration.LastIncomingLiquidityIdLocation, cancellationToken));
             
             await using var file = File.CreateText(_configuration.LastIncomingLiquidityIdLocation);
-            await file.WriteAsync("95");
-            return 95;
+            await file.WriteAsync("118");
+            return 118;
         }
         
         private async Task StoreLastIncomingLiquidityId(double incomingLiquidityId)

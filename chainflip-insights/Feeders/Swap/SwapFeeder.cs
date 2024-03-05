@@ -203,8 +203,8 @@ namespace ChainflipInsights.Feeders.Swap
                 return double.Parse(await File.ReadAllTextAsync(_configuration.LastSwapIdLocation, cancellationToken));
             
             await using var file = File.CreateText(_configuration.LastSwapIdLocation);
-            await file.WriteAsync("462");
-            return 462;
+            await file.WriteAsync("1285");
+            return 1285;
         }
 
         private async Task StoreLastSwapId(double swapId)

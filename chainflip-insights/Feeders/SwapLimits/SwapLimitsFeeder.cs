@@ -144,8 +144,8 @@ namespace ChainflipInsights.Feeders.SwapLimits
                 return await File.ReadAllTextAsync(_configuration.LastSwapLimitsLocation, cancellationToken);
             
             await using var file = File.CreateText(_configuration.LastSwapLimitsLocation);
-            await file.WriteAsync("x");
-            return "x";
+            await file.WriteAsync("ETH: 22.00, BTC: 1.20, DOT: 7500.00, FLIP: 10000.00, USDC: 50000.00");
+            return "ETH: 22.00, BTC: 1.20, DOT: 7500.00, FLIP: 10000.00, USDC: 50000.00";
         }
         
         private async Task StoreLastSwapLimits(string swapLimits)

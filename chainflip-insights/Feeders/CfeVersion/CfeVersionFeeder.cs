@@ -168,11 +168,9 @@ namespace ChainflipInsights.Feeders.CfeVersion
             if (File.Exists(_configuration.LastCfeVersionLocation))
                 return await File.ReadAllTextAsync(_configuration.LastCfeVersionLocation, cancellationToken);
 
-            var yesterday = $"{DateTime.UtcNow.Date.AddDays(-1):yyyy-MM-dd}";
-            
             await using var file = File.CreateText(_configuration.LastCfeVersionLocation);
-            await file.WriteAsync(yesterday);
-            return yesterday;
+            await file.WriteAsync("2024-03-05");
+            return "2024-03-05";
         }
         
         private async Task StoreLastCfeVersion(string cfeVersion)

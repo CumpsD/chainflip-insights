@@ -147,7 +147,7 @@ namespace ChainflipInsights.Consumers.Discord
 
             try
             {
-                var brokerExists =  _brokers.TryGetValue(swap.Broker ?? string.Empty, out var broker);
+                var brokerExists = _brokers.TryGetValue(swap.Broker ?? string.Empty, out var broker);
                 
                 _logger.LogInformation(
                     "Announcing Swap on Discord: {IngressAmount} {IngressTicker} to {EgressAmount} {EgressTicker}{Broker} -> {ExplorerUrl}",

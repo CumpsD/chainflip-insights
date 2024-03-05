@@ -155,11 +155,9 @@ namespace ChainflipInsights.Feeders.PastVolume
             if (File.Exists(_configuration.LastPastVolumeLocation))
                 return await File.ReadAllTextAsync(_configuration.LastPastVolumeLocation, cancellationToken);
 
-            var thePast = $"{DateTime.UtcNow.Date.AddDays(-2):yyyy-MM-dd}";
-            
             await using var file = File.CreateText(_configuration.LastPastVolumeLocation);
-            await file.WriteAsync(thePast);
-            return thePast;
+            await file.WriteAsync("2024-03-04");
+            return "2024-03-04";
         }
         
         private async Task StoreLastPastVolume(string lastVolume)
