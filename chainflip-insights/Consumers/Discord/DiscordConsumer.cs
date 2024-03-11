@@ -556,7 +556,7 @@ namespace ChainflipInsights.Consumers.Discord
                 var text =
                     $"🫡 Swap Limits have changed! " +
                     $"The new limits are: " +
-                    $"- {string.Join(", ", swapLimits.SwapLimits.Select(x => $"**{x.SwapLimit} {x.Asset.Ticker}**"))}";
+                    $"{string.Join(", ", swapLimits.SwapLimits.Select(x => $"**{x.SwapLimit} {x.Asset.Ticker}**"))}";
                 
                 var infoChannel = (ITextChannel)_discordClient
                     .GetChannel(_configuration.DiscordSwapInfoChannelId.Value);
