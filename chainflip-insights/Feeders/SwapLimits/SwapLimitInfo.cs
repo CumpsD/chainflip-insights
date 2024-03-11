@@ -18,9 +18,16 @@ namespace ChainflipInsights.Feeders.SwapLimits
 
         public SwapLimitInfo(SwapLimitResponse swapLimit, AssetInfo asset)
         {
-            SwapLimit = Math
-                .Round(swapLimit.Result / Math.Pow(10, asset.Decimals), 8)
-                .ToString(asset.FormatString);
+            if (swapLimit.Result == null)
+            {
+                SwapLimit = "Unlimited";
+            }
+            else
+            {
+                SwapLimit = Math
+                    .Round(swapLimit.Result.Value / Math.Pow(10, asset.Decimals), 8)
+                    .ToString(asset.FormatString);
+            }
             
             Asset = asset;
         }

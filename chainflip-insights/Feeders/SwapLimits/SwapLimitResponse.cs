@@ -5,6 +5,6 @@ namespace ChainflipInsights.Feeders.SwapLimits
     public class SwapLimitResponse
     {
         [JsonPropertyName("result")] 
-        public double Result { get; set; }
+        public double? Result { get; set; }
     }
 }
