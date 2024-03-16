@@ -10,7 +10,7 @@ namespace ChainflipInsights.Feeders
         public const string Sub10K = "🦈";
         public const string Whale = "🐳";
         
-        public const string DollarString = "0.00";
+        public const string DollarString = "###,###,###,###,##0.00";
 
         public const string BTC = "btc";
         public const string DOT = "dot";
@@ -95,7 +95,7 @@ namespace ChainflipInsights.Feeders
             Network = network;
             Decimals = decimals;
             
-            FormatString = $"0.00{new string('#', decimals - 2)}";
+            FormatString = $"###,###,###,###,##0.00{new string('#', decimals - 2)}";
         }
     }
 }
