@@ -509,7 +509,9 @@ namespace ChainflipInsights.Consumers.Discord
                 var text =
                     $"📜 CFE overview for **{cfeVersionInfo.Date}**! " +
                     $"The current version is **{maxVersion}**, which **{upToDateValidators} online validators** are running. " +
-                    $"There {(outdatedSum == 1 ? "is" : "are")} **{outdatedSum} online {(outdatedSum == 1 ? "validator" : "validators")}** on older versions{(outdatedSum != 0 ? ": " : ".")}" +
+                    (outdatedSum == 1 
+                        ? $"There is **{outdatedSum} online validator** on an older version: "
+                        : $"There are **{outdatedSum} online validators** on older versions{(outdatedSum != 0 ? ": " : ".")}") +
                     $"{string.Join(", ", outdatedValidators.Select(x => $"**{x.Value.Validators.Count(v => v.ValidatorStatus == ValidatorStatus.Online)}** on **{x.Key}**"))}";
                 
                 var infoChannel = (ITextChannel)_discordClient
