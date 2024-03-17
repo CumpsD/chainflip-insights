@@ -388,6 +388,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public string? SwapWhitelist
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
         public double? MastodonSwapAmountThreshold
         {
             get; init;

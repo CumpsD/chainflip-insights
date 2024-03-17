@@ -109,7 +109,8 @@ namespace ChainflipInsights.Consumers.Telegram
             SwapInfo swap,
             CancellationToken cancellationToken)
         {
-            if (swap.DepositValueUsd < _configuration.TelegramSwapAmountThreshold)
+            if (swap.DepositValueUsd < _configuration.TelegramSwapAmountThreshold && 
+                !_configuration.SwapWhitelist.Contains(swap.SourceAsset, StringComparison.InvariantCultureIgnoreCase))
             {
                 _logger.LogInformation(
                     "Swap did not meet threshold (${Threshold}) for Telegram: {IngressAmount} {IngressTicker} to {EgressAmount} {EgressTicker} -> {ExplorerUrl}",
