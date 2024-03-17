@@ -38,7 +38,7 @@ namespace ChainflipInsights.Feeders.Epoch
         public string TotalRewardsFormatted 
             => Math
                 .Round(TotalRewards / Math.Pow(10, FlipDecimals), 3)
-                .ToString("0.00");
+                .ToString("###,###,###,###,##0.00");
         
         public EpochInfo? PreviousEpoch { get; }
 
