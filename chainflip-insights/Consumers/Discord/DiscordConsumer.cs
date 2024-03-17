@@ -129,7 +129,7 @@ namespace ChainflipInsights.Consumers.Discord
         private void ProcessSwap(SwapInfo swap)
         {
             if (swap.DepositValueUsd < _configuration.DiscordSwapAmountThreshold && 
-                !_configuration.SwapWhitelist.Contains(swap.SourceAsset, StringComparison.InvariantCultureIgnoreCase))
+                !_configuration.SwapWhitelist.Contains(swap.DestinationAsset, StringComparison.InvariantCultureIgnoreCase))
             {
                 _logger.LogInformation(
                     "Swap did not meet threshold (${Threshold}) for Discord: {IngressAmount} {IngressTicker} to {EgressAmount} {EgressTicker} -> {ExplorerUrl}",
