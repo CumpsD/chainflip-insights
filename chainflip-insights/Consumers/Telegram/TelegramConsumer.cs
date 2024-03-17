@@ -509,7 +509,7 @@ namespace ChainflipInsights.Consumers.Telegram
 
                 var text =
                     $"📊 On **{pastVolume.Date}** we had a volume of " +
-                    $"**${totalVolume:0.00}** and **${totalFees:0.00}** in fees!";
+                    $"**${totalVolume:###,###,###,###,##0.00}** and **${totalFees:###,###,###,###,##0.00}** in fees!";
                 
                 var message = _telegramClient
                     .SendTextMessageAsync(

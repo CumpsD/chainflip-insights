@@ -612,7 +612,7 @@ namespace ChainflipInsights.Consumers.Discord
 
                 var text =
                     $"📊 On **{pastVolume.Date}** we had a volume of " +
-                    $"**${totalVolume:0.00}** and **${totalFees:0.00}** in fees!";
+                    $"**${totalVolume:###,###,###,###,##0.00}** and **${totalFees:###,###,###,###,##0.00}** in fees!";
                 
                 var infoChannel = (ITextChannel)_discordClient
                     .GetChannel(_configuration.DiscordSwapInfoChannelId.Value);

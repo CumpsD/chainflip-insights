@@ -12,7 +12,10 @@ namespace ChainflipInsights.Feeders.Funding
         
         public double AmountConverted => Amount / Math.Pow(10, FlipDecimals);
         
-        public string AmountFormatted => Math.Round(Amount / Math.Pow(10, FlipDecimals), 3).ToString("0.00");
+        public string AmountFormatted 
+            => Math
+                .Round(Amount / Math.Pow(10, FlipDecimals), 3)
+                .ToString("###,###,###,###,##0.00");
         
         public double Epoch { get; }
         
