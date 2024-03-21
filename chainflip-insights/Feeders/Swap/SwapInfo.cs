@@ -52,10 +52,10 @@ namespace ChainflipInsights.Feeders.Swap
             DepositValueUsd switch
             {
                 > 100_000 => Constants.Whale,
-                >  50_000 => Constants.Sub10K,
-                >  25_000 => Constants.Sub5K,
-                >  10_000 => Constants.Sub2_5K,
-                _ => Constants.Sub1K
+                >  50_000 => Constants.Shark,
+                >  25_000 => Constants.Crab,
+                >  10_000 => Constants.Fish,
+                _ => Constants.Shrimp
             };
 
         public SwapInfo(

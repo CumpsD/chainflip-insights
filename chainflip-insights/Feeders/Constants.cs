@@ -4,10 +4,10 @@ namespace ChainflipInsights.Feeders
 
     public static class Constants
     {
-        public const string Sub1K = "🦐";
-        public const string Sub2_5K = "🐟";
-        public const string Sub5K = "🦀";
-        public const string Sub10K = "🦈";
+        public const string Shrimp = "🦐";
+        public const string Fish = "🐟";
+        public const string Crab = "🦀";
+        public const string Shark = "🦈";
         public const string Whale = "🐳";
         
         public const string DollarString = "###,###,###,###,##0.00";
