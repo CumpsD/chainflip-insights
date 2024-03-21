@@ -51,10 +51,10 @@ namespace ChainflipInsights.Feeders.Swap
         public string Emoji =>
             DepositValueUsd switch
             {
-                > 10000 => Constants.Whale,
-                > 5000 => Constants.Sub10K,
-                > 2500 => Constants.Sub5K,
-                > 1000 => Constants.Sub2_5K,
+                > 100_000 => Constants.Whale,
+                >  50_000 => Constants.Sub10K,
+                >  25_000 => Constants.Sub5K,
+                >  10_000 => Constants.Sub2_5K,
                 _ => Constants.Sub1K
             };
 
