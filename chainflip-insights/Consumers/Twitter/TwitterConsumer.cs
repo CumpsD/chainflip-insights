@@ -158,7 +158,7 @@ namespace ChainflipInsights.Consumers.Twitter
                     $"{swap.Emoji} Swapped {_configuration.ExplorerSwapsUrl}{swap.Id}\n" +
                     $"➡️ {swap.DepositAmountFormatted} ${swap.SourceAsset} (${swap.DepositValueUsdFormatted})\n" +
                     $"⬅️ {swap.EgressAmountFormatted} ${swap.DestinationAsset} (${swap.EgressValueUsdFormatted})\n" +
-                    $"{(brokerExists ? $"☑️ via {broker})\n" : string.Empty)}" +
+                    $"{(brokerExists ? $"☑️ via {broker}\n" : string.Empty)}" +
                     $"#chainflip #flip";
 
                 _twitterClient.Execute
