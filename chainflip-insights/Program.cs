@@ -25,6 +25,7 @@
     using ChainflipInsights.Feeders.Redemption;
     using ChainflipInsights.Feeders.Liquidity;
     using ChainflipInsights.Feeders.PastVolume;
+    using ChainflipInsights.Feeders.StakedFlip;
     using ChainflipInsights.Feeders.Swap;
     using ChainflipInsights.Feeders.SwapLimits;
     using ChainflipInsights.Infrastructure;
@@ -78,6 +79,21 @@
                 container.GetRequiredService<Pipeline<CfeVersionsInfo>>(),
                 container.GetRequiredService<Pipeline<SwapLimitsInfo>>(),
                 container.GetRequiredService<Pipeline<PastVolumeInfo>>(),
+                container.GetRequiredService<Pipeline<StakedFlipInfo>>(),
+            };
+            
+            var feeders = new IFeeder[]
+            {
+                container.GetRequiredService<SwapFeeder>(),
+                container.GetRequiredService<IncomingLiquidityFeeder>(),
+                container.GetRequiredService<EpochFeeder>(),
+                container.GetRequiredService<FundingFeeder>(),
+                container.GetRequiredService<RedemptionFeeder>(),
+                container.GetRequiredService<CexMovementFeeder>(),
+                container.GetRequiredService<CfeVersionFeeder>(),
+                container.GetRequiredService<SwapLimitsFeeder>(),
+                container.GetRequiredService<PastVolumeFeeder>(),
+                container.GetRequiredService<StakedFlipFeeder>()
             };
             
             Console.CancelKeyPress += (_, eventArgs) =>
@@ -100,20 +116,7 @@
                 #endif
                 
                 var runner = container.GetRequiredService<Runner>();
-
-                var feeders = new IFeeder[]
-                {
-                    container.GetRequiredService<SwapFeeder>(),
-                    container.GetRequiredService<IncomingLiquidityFeeder>(),
-                    container.GetRequiredService<EpochFeeder>(),
-                    container.GetRequiredService<FundingFeeder>(),
-                    container.GetRequiredService<RedemptionFeeder>(),
-                    container.GetRequiredService<CexMovementFeeder>(),
-                    container.GetRequiredService<CfeVersionFeeder>(),
-                    container.GetRequiredService<SwapLimitsFeeder>(),
-                    container.GetRequiredService<PastVolumeFeeder>()
-                };
-
+                
                 var tasks = new List<Task>();
                 tasks.AddRange(runner.Start());
                 tasks.AddRange(feeders.Select(feeder => feeder.Start()));
@@ -164,6 +167,16 @@
                     x =>
                     {
                         x.BaseAddress = new Uri(botConfiguration.GraphUrl);
+                        x.DefaultRequestHeaders.UserAgent.ParseAdd("discord-chainflip-insights");
+                    })
+                
+                .Services
+                    
+                .AddHttpClient(
+                    "StakedFlipGraph",
+                    x =>
+                    {
+                        x.BaseAddress = new Uri(botConfiguration.StakedFlipGraphUrl);
                         x.DefaultRequestHeaders.UserAgent.ParseAdd("discord-chainflip-insights");
                     })
                 
@@ -275,6 +288,7 @@
             RegisterFeeder<CfeVersionFeeder, CfeVersionsInfo>(builder, ct);
             RegisterFeeder<SwapLimitsFeeder, SwapLimitsInfo>(builder, ct);
             RegisterFeeder<PastVolumeFeeder, PastVolumeInfo>(builder, ct);
+            RegisterFeeder<StakedFlipFeeder, StakedFlipInfo>(builder, ct);
             
             builder
                 .RegisterType<DiscordConsumer>()

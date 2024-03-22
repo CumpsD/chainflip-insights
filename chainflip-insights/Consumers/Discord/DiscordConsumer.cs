@@ -14,6 +14,7 @@ namespace ChainflipInsights.Consumers.Discord
     using ChainflipInsights.Feeders.Redemption;
     using ChainflipInsights.Feeders.Liquidity;
     using ChainflipInsights.Feeders.PastVolume;
+    using ChainflipInsights.Feeders.StakedFlip;
     using ChainflipInsights.Feeders.Swap;
     using ChainflipInsights.Feeders.SwapLimits;
     using ChainflipInsights.Infrastructure.Pipelines;
@@ -92,6 +93,9 @@ namespace ChainflipInsights.Consumers.Discord
                     
                     if (input.PastVolumeInfo != null)
                         ProcessPastVolumeInfo(input.PastVolumeInfo);
+                    
+                    if (input.StakedFlipInfo != null)
+                        ProcessStakedFlipInfo(input.StakedFlipInfo);
                 },
                 new ExecutionDataflowBlockOptions
                 {
@@ -448,7 +452,7 @@ namespace ChainflipInsights.Consumers.Discord
                 var text =
                     $"🔀 CEX Movements for **{cexMovement.Date:yyyy-MM-dd}** are in! " +
                     $"**{cexMovement.MovementInFormatted} FLIP** moved towards CEX, **{cexMovement.MovementOutFormatted} FLIP** moved towards DEX. " +
-                    $"In total, **{(cexMovement.NetMovement == NetMovement.MoreTowardsCex ? "CEX" : "DEX" )}** gained **{cexMovement.TotalMovementFormatted} FLIP** {(cexMovement.NetMovement == NetMovement.MoreTowardsCex ? "🔴" : "🟢" )}";
+                    $"In total, **{(cexMovement.NetMovement == Feeders.CexMovement.NetMovement.MoreTowardsCex ? "CEX" : "DEX" )}** gained **{cexMovement.TotalMovementFormatted} FLIP** {(cexMovement.NetMovement == Feeders.CexMovement.NetMovement.MoreTowardsCex ? "🔴" : "🟢" )}";
 
                 var infoChannel = (ITextChannel)_discordClient
                     .GetChannel(_configuration.DiscordSwapInfoChannelId.Value);
@@ -628,6 +632,60 @@ namespace ChainflipInsights.Consumers.Discord
                 _logger.LogInformation(
                     "Announcing Volume {Day} on Discord as Message {MessageId}",
                     pastVolume.Date,
+                    message.Id);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Discord meh.");
+            }
+        }
+
+        private void ProcessStakedFlipInfo(StakedFlipInfo stakedFlip)
+        {
+            if (!_configuration.DiscordStakedFlipEnabled.Value)
+            {
+                _logger.LogInformation(
+                    "Staked Flip disabled for Discord. {Date}: {MovementIn} FLIP staked, {MovementOut} FLIP unstaked, {Movement} FLIP {NetMovement}.",
+                    stakedFlip.Date.ToString("yyyy-MM-dd"),
+                    stakedFlip.StakedFormatted,
+                    stakedFlip.UnstakedFormatted,
+                    stakedFlip.TotalMovementFormatted,
+                    stakedFlip.NetMovement);
+                
+                return;
+            }
+            
+            if (_discordClient.ConnectionState != ConnectionState.Connected)
+                return;
+            
+            try
+            {
+                _logger.LogInformation(
+                    "Announcing Staked Flip for {Date} on Discord: {MovementIn} FLIP in, {MovementOut} FLIP out, {Movement} FLIP {NetMovement}.",
+                    stakedFlip.Date.ToString("yyyy-MM-dd"),
+                    stakedFlip.StakedFormatted,
+                    stakedFlip.UnstakedFormatted,
+                    stakedFlip.TotalMovementFormatted,
+                    stakedFlip.NetMovement);
+
+                var text =
+                    $"🏦 stFLIP Movements for **{stakedFlip.Date:yyyy-MM-dd}** are in! " +
+                    $"**{stakedFlip.StakedFormatted} FLIP** got staked, **{stakedFlip.UnstakedFormatted} FLIP** got unstaked. " +
+                    $"In total, **{stakedFlip.TotalMovementFormatted} FLIP** was **{(stakedFlip.NetMovement == Feeders.StakedFlip.NetMovement.MoreStaked ? "staked" : "unstaked" )}** {(stakedFlip.NetMovement == Feeders.StakedFlip.NetMovement.MoreUnstaked ? "🔴" : "🟢" )}";
+
+                var infoChannel = (ITextChannel)_discordClient
+                    .GetChannel(_configuration.DiscordSwapInfoChannelId.Value);
+
+                var message = infoChannel
+                    .SendMessageAsync(
+                        text,
+                        flags: MessageFlags.SuppressEmbeds)
+                    .GetAwaiter()
+                    .GetResult();
+
+                _logger.LogInformation(
+                    "Announcing Staked Flip {Date} on Discord as Message {MessageId}",
+                    stakedFlip.Date,
                     message.Id);
             }
             catch (Exception e)

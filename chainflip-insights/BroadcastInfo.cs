@@ -8,6 +8,7 @@ namespace ChainflipInsights
     using ChainflipInsights.Feeders.Liquidity;
     using ChainflipInsights.Feeders.PastVolume;
     using ChainflipInsights.Feeders.Redemption;
+    using ChainflipInsights.Feeders.StakedFlip;
     using ChainflipInsights.Feeders.Swap;
     using ChainflipInsights.Feeders.SwapLimits;
 
@@ -22,6 +23,7 @@ namespace ChainflipInsights
         public CfeVersionsInfo? CfeVersionInfo { get; }
         public SwapLimitsInfo? SwapLimitsInfo { get; }
         public PastVolumeInfo? PastVolumeInfo { get; }
+        public StakedFlipInfo? StakedFlipInfo { get; }
 
         public BroadcastInfo(SwapInfo swapInfo) 
             => SwapInfo = swapInfo ?? throw new ArgumentNullException(nameof(swapInfo));
@@ -49,5 +51,8 @@ namespace ChainflipInsights
 
         public BroadcastInfo(PastVolumeInfo pastVolumeInfo) 
             => PastVolumeInfo = pastVolumeInfo ?? throw new ArgumentNullException(nameof(pastVolumeInfo));
+
+        public BroadcastInfo(StakedFlipInfo stakedFlipInfo)
+            => StakedFlipInfo = stakedFlipInfo ?? throw new ArgumentNullException(nameof(stakedFlipInfo));
     }
 }

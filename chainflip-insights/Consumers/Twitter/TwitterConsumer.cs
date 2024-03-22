@@ -17,6 +17,7 @@ namespace ChainflipInsights.Consumers.Twitter
     using ChainflipInsights.Feeders.Liquidity;
     using ChainflipInsights.Feeders.PastVolume;
     using ChainflipInsights.Feeders.Redemption;
+    using ChainflipInsights.Feeders.StakedFlip;
     using ChainflipInsights.Feeders.Swap;
     using ChainflipInsights.Feeders.SwapLimits;
     using ChainflipInsights.Infrastructure.Pipelines;
@@ -100,6 +101,9 @@ namespace ChainflipInsights.Consumers.Twitter
                     
                     if (input.PastVolumeInfo != null)
                         ProcessPastVolumeInfo(input.PastVolumeInfo);
+                    
+                    if (input.StakedFlipInfo != null)
+                        ProcessStakedFlipInfo(input.StakedFlipInfo);
                     
                     Task
                         .Delay(1500, cancellationToken)
@@ -386,7 +390,7 @@ namespace ChainflipInsights.Consumers.Twitter
                     $"🔀 CEX Movements for {cexMovement.Date:yyyy-MM-dd} are in!\n" +
                     $"⬆️ {cexMovement.MovementInFormatted} $FLIP moved towards CEX\n" +
                     $"⬇️ {cexMovement.MovementOutFormatted} $FLIP moved towards DEX\n" +
-                    $"{(cexMovement.NetMovement == NetMovement.MoreTowardsCex ? "🔴" : "🟢" )} {(cexMovement.NetMovement == NetMovement.MoreTowardsCex ? "CEX" : "DEX" )} gained {cexMovement.TotalMovementFormatted} $FLIP\n" +
+                    $"{(cexMovement.NetMovement == Feeders.CexMovement.NetMovement.MoreTowardsCex ? "🔴" : "🟢" )} {(cexMovement.NetMovement == Feeders.CexMovement.NetMovement.MoreTowardsCex ? "CEX" : "DEX" )} gained {cexMovement.TotalMovementFormatted} $FLIP\n" +
                     $"#chainflip #flip";
                 
                 _twitterClient.Execute
@@ -478,6 +482,56 @@ namespace ChainflipInsights.Consumers.Twitter
                 var text =
                     $"📊 On {pastVolume.Date} we had a volume of " +
                     $"${totalVolume:###,###,###,###,##0.00} and ${totalFees:###,###,###,###,##0.00} in fees!\n" +
+                    $"#chainflip #flip";
+                
+                _twitterClient.Execute
+                    .AdvanceRequestAsync(x =>
+                    {
+                        x.Query.Url = "https://api.twitter.com/2/tweets";
+                        x.Query.HttpMethod = Tweetinvi.Models.HttpMethod.POST;
+                        x.Query.HttpContent = JsonContent.Create(
+                            new TweetV2PostRequest { Text = text },
+                            mediaType: new MediaTypeHeaderValue(MediaTypeNames.Application.Json));
+                    })
+                    .GetAwaiter()
+                    .GetResult();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Twitter meh.");
+            }
+        }
+        
+        private void ProcessStakedFlipInfo(StakedFlipInfo stakedFlip)
+        {
+            if (!_configuration.TwitterStakedFlipEnabled.Value)
+            {
+                _logger.LogInformation(
+                    "Staked Flip disabled for Twitter. {Date}: {MovementIn} FLIP staked, {MovementOut} FLIP unstaked, {Movement} FLIP {NetMovement}.",
+                    stakedFlip.Date.ToString("yyyy-MM-dd"),
+                    stakedFlip.StakedFormatted,
+                    stakedFlip.UnstakedFormatted,
+                    stakedFlip.TotalMovementFormatted,
+                    stakedFlip.NetMovement);
+                
+                return;
+            }
+            
+            try
+            {
+                _logger.LogInformation(
+                    "Announcing Staked Flip for {Date} on Twitter: {MovementIn} FLIP in, {MovementOut} FLIP out, {Movement} FLIP {NetMovement}.",
+                    stakedFlip.Date.ToString("yyyy-MM-dd"),
+                    stakedFlip.StakedFormatted,
+                    stakedFlip.UnstakedFormatted,
+                    stakedFlip.TotalMovementFormatted,
+                    stakedFlip.NetMovement);
+                
+                var text =
+                    $"🏦 stFLIP Movements for {stakedFlip.Date:yyyy-MM-dd} are in!\n" +
+                    $"⬆️ {stakedFlip.StakedFormatted} $FLIP got staked\n" +
+                    $"⬇️ {stakedFlip.UnstakedFormatted} $FLIP got unstaked\n" +
+                    $"{(stakedFlip.NetMovement == Feeders.StakedFlip.NetMovement.MoreUnstaked ? "🔴" : "🟢" )} {stakedFlip.TotalMovementFormatted} #FLIP got {(stakedFlip.NetMovement == Feeders.StakedFlip.NetMovement.MoreUnstaked ? "unstaked" : "staked" )}\n" +
                     $"#chainflip #flip";
                 
                 _twitterClient.Execute

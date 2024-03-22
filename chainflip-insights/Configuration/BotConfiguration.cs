@@ -73,6 +73,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public bool? EnableStakedFlip
+        {
+            get; init;
+        } 
+        
+        [Required]
+        [NotNull]
         public bool? EnableDiscord
         {
             get; init;
@@ -234,6 +241,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public string? StakedFlipGraphUrl
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
         public int? DuneCexMovementQuery
         {
             get; init;
@@ -311,6 +325,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public int? StakedFlipQueryDelay
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
         public string? LastSwapIdLocation
         {
             get; init;
@@ -368,6 +389,13 @@ namespace ChainflipInsights.Configuration
         [Required]
         [NotNull]
         public string? LastPastVolumeLocation
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public string? LastStakedFlipLocation
         {
             get; init;
         }
@@ -617,7 +645,6 @@ namespace ChainflipInsights.Configuration
             get; init;
         }
         
-                
         [Required]
         [NotNull]
         public bool? MastodonPastVolumeEnabled
@@ -642,6 +669,34 @@ namespace ChainflipInsights.Configuration
         [Required]
         [NotNull]
         public bool? DiscordPastVolumeEnabled
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public bool? MastodonStakedFlipEnabled
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public bool? TwitterStakedFlipEnabled
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public bool? TelegramStakedFlipEnabled
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public bool? DiscordStakedFlipEnabled
         {
             get; init;
         }
