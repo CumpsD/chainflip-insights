@@ -531,7 +531,7 @@ namespace ChainflipInsights.Consumers.Twitter
                     $"🏦 stFLIP Movements for {stakedFlip.Date:yyyy-MM-dd} are in!\n" +
                     $"⬆️ {stakedFlip.StakedFormatted} $FLIP got staked\n" +
                     $"⬇️ {stakedFlip.UnstakedFormatted} $FLIP got unstaked\n" +
-                    $"{(stakedFlip.NetMovement == Feeders.StakedFlip.NetMovement.MoreUnstaked ? "🔴" : "🟢" )} {stakedFlip.TotalMovementFormatted} #FLIP got {(stakedFlip.NetMovement == Feeders.StakedFlip.NetMovement.MoreUnstaked ? "unstaked" : "staked" )}\n" +
+                    $"{(stakedFlip.NetMovement == Feeders.StakedFlip.NetMovement.MoreUnstaked ? "🔴" : "🟢" )} {stakedFlip.TotalMovementFormatted} $FLIP got {(stakedFlip.NetMovement == Feeders.StakedFlip.NetMovement.MoreUnstaked ? "unstaked" : "staked" )}\n" +
                     $"#chainflip #flip";
                 
                 _twitterClient.Execute
