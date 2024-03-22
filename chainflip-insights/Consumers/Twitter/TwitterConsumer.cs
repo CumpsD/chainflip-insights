@@ -1,6 +1,7 @@
 namespace ChainflipInsights.Consumers.Twitter
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Net.Http.Headers;
     using System.Net.Http.Json;
@@ -42,6 +43,7 @@ namespace ChainflipInsights.Consumers.Twitter
         private readonly ILogger<TwitterConsumer> _logger;
         private readonly BotConfiguration _configuration;
         private readonly TwitterClient _twitterClient;
+        private readonly Dictionary<string, string> _brokers;
 
         public TwitterConsumer(
             ILogger<TwitterConsumer> logger,
@@ -51,6 +53,12 @@ namespace ChainflipInsights.Consumers.Twitter
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _configuration = options.Value ?? throw new ArgumentNullException(nameof(options));
             _twitterClient = twitterClient ?? throw new ArgumentNullException(nameof(twitterClient));
+            
+            _brokers = _configuration
+                .Brokers
+                .ToDictionary(
+                    x => x.Address,
+                    x => x.Name);
         }
 
         public ITargetBlock<BroadcastInfo> Build(
@@ -132,6 +140,8 @@ namespace ChainflipInsights.Consumers.Twitter
 
             try
             {
+                var brokerExists = _brokers.TryGetValue(swap.Broker ?? string.Empty, out var broker);
+                
                 _logger.LogInformation(
                     "Announcing Swap on Twitter: {IngressAmount} {IngressTicker} to {EgressAmount} {EgressTicker} -> {ExplorerUrl}",
                     swap.DepositAmountFormatted,
@@ -144,6 +154,7 @@ namespace ChainflipInsights.Consumers.Twitter
                     $"{swap.Emoji} Swapped {_configuration.ExplorerSwapsUrl}{swap.Id}\n" +
                     $"➡️ {swap.DepositAmountFormatted} ${swap.SourceAsset} (${swap.DepositValueUsdFormatted})\n" +
                     $"⬅️ {swap.EgressAmountFormatted} ${swap.DestinationAsset} (${swap.EgressValueUsdFormatted})\n" +
+                    $"{(brokerExists ? $"☑️ via {broker})\n" : string.Empty)}" +
                     $"#chainflip #flip";
 
                 _twitterClient.Execute

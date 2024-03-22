@@ -1,6 +1,7 @@
 namespace ChainflipInsights.Consumers.Mastodon
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
@@ -24,6 +25,7 @@ namespace ChainflipInsights.Consumers.Mastodon
         private readonly ILogger<MastodonConsumer> _logger;
         private readonly MastodonClient _mastodonClient;
         private readonly BotConfiguration _configuration;
+        private readonly Dictionary<string, string> _brokers;
 
         public MastodonConsumer(
             ILogger<MastodonConsumer> logger,
@@ -33,6 +35,12 @@ namespace ChainflipInsights.Consumers.Mastodon
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _mastodonClient = mastodonClient ?? throw new ArgumentNullException(nameof(mastodonClient));
             _configuration = options.Value ?? throw new ArgumentNullException(nameof(options));
+            
+            _brokers = _configuration
+                .Brokers
+                .ToDictionary(
+                    x => x.Address,
+                    x => x.Name);
         }
         
         public ITargetBlock<BroadcastInfo> Build(
@@ -114,6 +122,8 @@ namespace ChainflipInsights.Consumers.Mastodon
 
             try
             {
+                var brokerExists = _brokers.TryGetValue(swap.Broker ?? string.Empty, out var broker);
+                
                 _logger.LogInformation(
                     "Announcing Swap on Mastodon: {IngressAmount} {IngressTicker} to {EgressAmount} {EgressTicker} -> {ExplorerUrl}",
                     swap.DepositAmountFormatted,
@@ -126,6 +136,7 @@ namespace ChainflipInsights.Consumers.Mastodon
                     $"{swap.Emoji} Swapped {_configuration.ExplorerSwapsUrl}{swap.Id}\n" +
                     $"➡️ {swap.DepositAmountFormatted} #{swap.SourceAsset} (${swap.DepositValueUsdFormatted})\n" +
                     $"⬅️ {swap.EgressAmountFormatted} #{swap.DestinationAsset} (${swap.EgressValueUsdFormatted})\n" +
+                    $"{(brokerExists ? $"☑️ via {broker})\n" : string.Empty)}" +
                     $"#chainflip #flip";
 
                 var status = _mastodonClient
