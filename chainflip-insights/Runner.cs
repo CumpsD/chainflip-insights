@@ -7,6 +7,7 @@ namespace ChainflipInsights
     using System.Threading.Tasks.Dataflow;
     using ChainflipInsights.Consumers;
     using ChainflipInsights.Consumers.Discord;
+    using ChainflipInsights.Consumers.FullTelegram;
     using ChainflipInsights.Consumers.Mastodon;
     using ChainflipInsights.Consumers.Telegram;
     using ChainflipInsights.Consumers.Twitter;

@@ -14,6 +14,7 @@
     using Discord.WebSocket;
     using ChainflipInsights.Configuration;
     using ChainflipInsights.Consumers.Discord;
+    using ChainflipInsights.Consumers.FullTelegram;
     using ChainflipInsights.Consumers.Mastodon;
     using ChainflipInsights.Consumers.Telegram;
     using ChainflipInsights.Consumers.Twitter;

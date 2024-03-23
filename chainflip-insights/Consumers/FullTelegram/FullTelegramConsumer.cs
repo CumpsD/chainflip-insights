@@ -1,4 +1,4 @@
-namespace ChainflipInsights.Consumers.Mastodon
+namespace ChainflipInsights.Consumers.FullTelegram
 {
     using System;
     using System.Collections.Generic;
@@ -8,25 +8,25 @@ namespace ChainflipInsights.Consumers.Mastodon
     using System.Threading.Tasks.Dataflow;
     using ChainflipInsights.Configuration;
     using ChainflipInsights.Infrastructure.Pipelines;
-    using Mastonet;
+    using global::Telegram.Bot;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
 
-    public partial class MastodonConsumer : IConsumer
+    public partial class FullTelegramConsumer : IConsumer
     {
-        private readonly ILogger<MastodonConsumer> _logger;
-        private readonly MastodonClient _mastodonClient;
+        private readonly ILogger<FullTelegramConsumer> _logger;
         private readonly BotConfiguration _configuration;
-        private readonly Dictionary<string, string> _brokers;
+        private readonly TelegramBotClient _telegramClient;
+        private readonly Dictionary<string,string> _brokers;
 
-        public MastodonConsumer(
-            ILogger<MastodonConsumer> logger,
+        public FullTelegramConsumer(
+            ILogger<FullTelegramConsumer> logger,
             IOptions<BotConfiguration> options,
-            MastodonClient mastodonClient)
+            TelegramBotClient telegramClient)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _mastodonClient = mastodonClient ?? throw new ArgumentNullException(nameof(mastodonClient));
             _configuration = options.Value ?? throw new ArgumentNullException(nameof(options));
+            _telegramClient = telegramClient ?? throw new ArgumentNullException(nameof(telegramClient));
             
             _brokers = _configuration
                 .Brokers
@@ -34,55 +34,58 @@ namespace ChainflipInsights.Consumers.Mastodon
                     x => x.Address,
                     x => x.Name);
         }
-        
+
         public ITargetBlock<BroadcastInfo> Build(
             CancellationToken cancellationToken)
         {
             var announcer = BuildAnnouncer(cancellationToken);
             return new EncapsulatingTarget<BroadcastInfo, BroadcastInfo>(announcer, announcer);
         }
-        
+
         private ActionBlock<BroadcastInfo> BuildAnnouncer(
             CancellationToken cancellationToken)
         {
             var logging = new ActionBlock<BroadcastInfo>(
                 input =>
                 {
-                    if (!_configuration.EnableMastodon.Value)
+                    if (!_configuration.EnableTelegram.Value)
                         return;
 
                     if (input.SwapInfo != null)
-                        ProcessSwap(input.SwapInfo);
+                        ProcessSwap(input.SwapInfo, cancellationToken);
                     
                     if (input.IncomingLiquidityInfo != null)
-                        ProcessIncomingLiquidityInfo(input.IncomingLiquidityInfo);
+                        ProcessIncomingLiquidityInfo(input.IncomingLiquidityInfo, cancellationToken);
                     
                     if (input.EpochInfo != null)
-                        ProcessEpochInfo(input.EpochInfo);
+                        ProcessEpochInfo(input.EpochInfo, cancellationToken);
                     
                     if (input.FundingInfo != null)
-                        ProcessFundingInfo(input.FundingInfo);
+                        ProcessFundingInfo(input.FundingInfo, cancellationToken);
                     
                     if (input.RedemptionInfo != null)
-                        ProcessRedemptionInfo(input.RedemptionInfo);
+                        ProcessRedemptionInfo(input.RedemptionInfo, cancellationToken);
                     
                     if (input.CexMovementInfo != null)
-                        ProcessCexMovementInfo(input.CexMovementInfo);
+                        ProcessCexMovementInfo(input.CexMovementInfo, cancellationToken);
+                    
+                    if (input.CfeVersionInfo != null)
+                        ProcessCfeVersionInfo(input.CfeVersionInfo, cancellationToken);
                     
                     if (input.SwapLimitsInfo != null)
-                        ProcessSwapLimitsInfo(input.SwapLimitsInfo);
+                        ProcessSwapLimitsInfo(input.SwapLimitsInfo, cancellationToken);
                     
                     if (input.PastVolumeInfo != null)
-                        ProcessPastVolumeInfo(input.PastVolumeInfo);
+                        ProcessPastVolumeInfo(input.PastVolumeInfo, cancellationToken);
                     
                     if (input.StakedFlipInfo != null)
-                        ProcessStakedFlipInfo(input.StakedFlipInfo);
+                        ProcessStakedFlipInfo(input.StakedFlipInfo, cancellationToken);
                     
                     if (input.BrokerOverviewInfo != null)
-                        ProcessBrokerOverviewInfo(input.BrokerOverviewInfo);
+                        ProcessBrokerOverviewInfo(input.BrokerOverviewInfo, cancellationToken);
                     
                     if (input.BigStakedFlipInfo != null)
-                        ProcessBigStakedFlipInfo(input.BigStakedFlipInfo);
+                        ProcessBigStakedFlipInfo(input.BigStakedFlipInfo, cancellationToken);
                     
                     Task
                         .Delay(1500, cancellationToken)
@@ -97,7 +100,7 @@ namespace ChainflipInsights.Consumers.Mastodon
 
             logging.Completion.ContinueWith(
                 task => _logger.LogInformation(
-                    "Mastodon Logging completed, {Status}",
+                    "Telegram Logging completed, {Status}",
                     task.Status),
                 cancellationToken);
 
