@@ -22,6 +22,7 @@ namespace ChainflipInsights.Consumers.Discord
     using ChainflipInsights.Infrastructure.Pipelines;
     using global::Discord;
     using global::Discord.WebSocket;
+    using Humanizer;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
 
@@ -622,7 +623,7 @@ namespace ChainflipInsights.Consumers.Discord
 
                 var text =
                     $"📊 On **{pastVolume.Date}** we had a volume of " +
-                    $"**${totalVolume:###,###,###,###,##0.00}** and **${totalFees:###,###,###,###,##0.00}** in fees!";
+                    $"**${totalVolume.ToMetric(decimals: 2)}** and **${totalFees.ToMetric(decimals: 2)}** in fees!";
                 
                 var infoChannel = (ITextChannel)_discordClient
                     .GetChannel(_configuration.DiscordSwapInfoChannelId.Value);

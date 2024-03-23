@@ -19,6 +19,7 @@ namespace ChainflipInsights.Consumers.Mastodon
     using ChainflipInsights.Feeders.Swap;
     using ChainflipInsights.Feeders.SwapLimits;
     using ChainflipInsights.Infrastructure.Pipelines;
+    using Humanizer;
     using Mastonet;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
@@ -467,7 +468,7 @@ namespace ChainflipInsights.Consumers.Mastodon
 
                 var text =
                     $"📊 On {pastVolume.Date} we had a volume of " +
-                    $"${totalVolume:###,###,###,###,##0.00} and ${totalFees:###,###,###,###,##0.00} in fees!\n" +
+                    $"${totalVolume.ToMetric(decimals: 2)} and ${totalFees.ToMetric(decimals: 2)} in fees!\n" +
                     $"#chainflip #flip";
                 
                 var status = _mastodonClient

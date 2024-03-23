@@ -22,6 +22,7 @@ namespace ChainflipInsights.Consumers.Telegram
     using global::Telegram.Bot;
     using global::Telegram.Bot.Types;
     using global::Telegram.Bot.Types.Enums;
+    using Humanizer;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
 
@@ -519,7 +520,7 @@ namespace ChainflipInsights.Consumers.Telegram
 
                 var text =
                     $"📊 On **{pastVolume.Date}** we had a volume of " +
-                    $"**${totalVolume:###,###,###,###,##0.00}** and **${totalFees:###,###,###,###,##0.00}** in fees!";
+                    $"**${totalVolume.ToMetric(decimals: 2)}** and **${totalFees.ToMetric(decimals: 2)}** in fees!";
                 
                 var message = _telegramClient
                     .SendTextMessageAsync(

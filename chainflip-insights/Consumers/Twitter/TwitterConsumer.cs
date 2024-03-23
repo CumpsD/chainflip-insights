@@ -23,6 +23,7 @@ namespace ChainflipInsights.Consumers.Twitter
     using ChainflipInsights.Feeders.Swap;
     using ChainflipInsights.Feeders.SwapLimits;
     using ChainflipInsights.Infrastructure.Pipelines;
+    using Humanizer;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
     using Tweetinvi;
@@ -486,7 +487,7 @@ namespace ChainflipInsights.Consumers.Twitter
 
                 var text =
                     $"📊 On {pastVolume.Date} we had a volume of " +
-                    $"${totalVolume:###,###,###,###,##0.00} and ${totalFees:###,###,###,###,##0.00} in fees!\n" +
+                    $"${totalVolume.ToMetric(decimals: 2)} and ${totalFees.ToMetric(decimals: 2)} in fees!\n" +
                     $"#chainflip #flip";
                 
                 _twitterClient.Execute
