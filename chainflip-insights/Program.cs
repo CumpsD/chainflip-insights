@@ -307,6 +307,10 @@
                 .SingleInstance();
             
             builder
+                .RegisterType<FullTelegramConsumer>()
+                .SingleInstance();
+            
+            builder
                 .RegisterType<TwitterConsumer>()
                 .SingleInstance();
             

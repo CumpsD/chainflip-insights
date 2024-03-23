@@ -30,11 +30,13 @@ namespace ChainflipInsights
         private readonly ILogger<Runner> _logger;
         private readonly DiscordConsumer _discordConsumer;
         private readonly TelegramConsumer _telegramConsumer;
+        private readonly FullTelegramConsumer _fullTelegramConsumer;
         private readonly TwitterConsumer _twitterConsumer;
         private readonly MastodonConsumer _mastodonConsumer;
 
         private ITargetBlock<BroadcastInfo> _discordPipelineTarget = null!;
         private ITargetBlock<BroadcastInfo> _telegramPipelineTarget = null!;
+        private ITargetBlock<BroadcastInfo> _fullTelegramPipelineTarget = null!;
         private ITargetBlock<BroadcastInfo> _twitterPipelineTarget = null!;
         private ITargetBlock<BroadcastInfo> _mastodonPipelineTarget = null!;
 
@@ -54,12 +56,14 @@ namespace ChainflipInsights
             Pipeline<BigStakedFlipInfo> bigStakedFlipPipeline,
             DiscordConsumer discordConsumer,
             TelegramConsumer telegramConsumer,
+            FullTelegramConsumer fullTelegramConsumer,
             TwitterConsumer twitterConsumer,
             MastodonConsumer mastodonConsumer)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _discordConsumer = discordConsumer ?? throw new ArgumentNullException(nameof(discordConsumer));
             _telegramConsumer = telegramConsumer ?? throw new ArgumentNullException(nameof(telegramConsumer));
+            _fullTelegramConsumer = fullTelegramConsumer ?? throw new ArgumentNullException(nameof(fullTelegramConsumer));
             _twitterConsumer = twitterConsumer ?? throw new ArgumentNullException(nameof(twitterConsumer));
             _mastodonConsumer = mastodonConsumer ?? throw new ArgumentNullException(nameof(mastodonConsumer));
 
@@ -204,6 +208,13 @@ namespace ChainflipInsights
             _telegramPipelineTarget = SetupConsumerPipeline(
                 "Telegram",
                 _telegramConsumer,
+                broadcast,
+                linkOptions, 
+                swapPipeline.CancellationToken);
+            
+            _fullTelegramPipelineTarget = SetupConsumerPipeline(
+                "Full Telegram",
+                _fullTelegramConsumer,
                 broadcast,
                 linkOptions, 
                 swapPipeline.CancellationToken);

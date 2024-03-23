@@ -465,6 +465,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public long? TelegramInfoChannelId 
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
         public string? SwapWhitelist
         {
             get; init;
