@@ -87,6 +87,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public bool? EnableBigStakedFlip
+        {
+            get; init;
+        } 
+        
+        [Required]
+        [NotNull]
         public bool? EnableDiscord
         {
             get; init;
@@ -220,6 +227,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public string? EtherScanUrl
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
         public string? SwapUrl
         {
             get; init;
@@ -346,6 +360,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public int? BigStakedFlipQueryDelay
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
         public string? LastSwapIdLocation
         {
             get; init;
@@ -417,6 +438,13 @@ namespace ChainflipInsights.Configuration
         [Required]
         [NotNull]
         public string? LastBrokerOverviewLocation
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public string? LastBigStakedFlipLocation
         {
             get; init;
         }
@@ -752,6 +780,34 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public double? MastodonStakedFlipAmountThreshold
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public double? TwitterStakedFlipAmountThreshold
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public double? TelegramStakedFlipAmountThreshold
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public double? DiscordStakedFlipAmountThreshold
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
         public Broker[]? Brokers
         {
             get; init;
@@ -770,6 +826,11 @@ namespace ChainflipInsights.Configuration
         [Required]
         [NotNull]
         public string? Name
+        {
+            get; init;
+        }
+        
+        public string? Twitter
         {
             get; init;
         }

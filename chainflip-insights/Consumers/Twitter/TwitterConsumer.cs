@@ -12,6 +12,7 @@ namespace ChainflipInsights.Consumers.Twitter
     using System.Threading.Tasks;
     using System.Threading.Tasks.Dataflow;
     using ChainflipInsights.Configuration;
+    using ChainflipInsights.Feeders.BigStakedFlip;
     using ChainflipInsights.Feeders.BrokerOverview;
     using ChainflipInsights.Feeders.CexMovement;
     using ChainflipInsights.Feeders.Epoch;
@@ -110,6 +111,9 @@ namespace ChainflipInsights.Consumers.Twitter
                     
                     if (input.BrokerOverviewInfo != null)
                         ProcessBrokerOverviewInfo(input.BrokerOverviewInfo);
+                    
+                    if (input.BigStakedFlipInfo != null)
+                        ProcessBigStakedFlipInfo(input.BigStakedFlipInfo);
                     
                     Task
                         .Delay(1500, cancellationToken)
@@ -607,6 +611,49 @@ namespace ChainflipInsights.Consumers.Twitter
                         x.Query.HttpMethod = Tweetinvi.Models.HttpMethod.POST;
                         x.Query.HttpContent = JsonContent.Create(
                             new TweetV2PostRequest { Text = text.ToString() },
+                            mediaType: new MediaTypeHeaderValue(MediaTypeNames.Application.Json));
+                    })
+                    .GetAwaiter()
+                    .GetResult();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Twitter meh.");
+            }
+        }
+        
+        private void ProcessBigStakedFlipInfo(BigStakedFlipInfo bigStakedFlipInfo)
+        {
+            if (bigStakedFlipInfo.Staked < _configuration.TwitterLiquidityAmountThreshold)
+            {
+                _logger.LogInformation(
+                    "Staked flip did not meet threshold (${Threshold}) for Twitter: {Amount} FLIP",
+                    _configuration.TwitterLiquidityAmountThreshold,
+                    bigStakedFlipInfo.StakedFormatted);
+
+                return;
+            }
+
+            try
+            {
+                _logger.LogInformation(
+                    "Announcing staked flip on Twitter: {Amount} FLIP -> {ExplorerUrl}",
+                    bigStakedFlipInfo.StakedFormatted,
+                    $"{_configuration.EtherScanUrl}{bigStakedFlipInfo.TransactionHash}");
+                
+                var text =
+                    $"🔥 Big $stFLIP Alert! " +
+                    $"{bigStakedFlipInfo.StakedFormatted} $FLIP just got staked! " +
+                    $"// {_configuration.EtherScanUrl}{bigStakedFlipInfo.TransactionHash}\n" +
+                    $"#chainflip #flip";
+                
+                _twitterClient.Execute
+                    .AdvanceRequestAsync(x =>
+                    {
+                        x.Query.Url = "https://api.twitter.com/2/tweets";
+                        x.Query.HttpMethod = Tweetinvi.Models.HttpMethod.POST;
+                        x.Query.HttpContent = JsonContent.Create(
+                            new TweetV2PostRequest { Text = text },
                             mediaType: new MediaTypeHeaderValue(MediaTypeNames.Application.Json));
                     })
                     .GetAwaiter()

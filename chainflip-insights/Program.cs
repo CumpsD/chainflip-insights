@@ -18,6 +18,7 @@
     using ChainflipInsights.Consumers.Telegram;
     using ChainflipInsights.Consumers.Twitter;
     using ChainflipInsights.Feeders;
+    using ChainflipInsights.Feeders.BigStakedFlip;
     using ChainflipInsights.Feeders.BrokerOverview;
     using ChainflipInsights.Feeders.CexMovement;
     using ChainflipInsights.Feeders.CfeVersion;
@@ -82,6 +83,7 @@
                 container.GetRequiredService<Pipeline<PastVolumeInfo>>(),
                 container.GetRequiredService<Pipeline<StakedFlipInfo>>(),
                 container.GetRequiredService<Pipeline<BrokerOverviewInfo>>(),
+                container.GetRequiredService<Pipeline<BigStakedFlipInfo>>(),
             };
             
             var feeders = new IFeeder[]
@@ -97,6 +99,7 @@
                 container.GetRequiredService<PastVolumeFeeder>(),
                 container.GetRequiredService<StakedFlipFeeder>(),
                 container.GetRequiredService<BrokerOverviewFeeder>(),
+                container.GetRequiredService<BigStakedFlipFeeder>(),
             };
             
             Console.CancelKeyPress += (_, eventArgs) =>
@@ -293,6 +296,7 @@
             RegisterFeeder<PastVolumeFeeder, PastVolumeInfo>(builder, ct);
             RegisterFeeder<StakedFlipFeeder, StakedFlipInfo>(builder, ct);
             RegisterFeeder<BrokerOverviewFeeder, BrokerOverviewInfo>(builder, ct);
+            RegisterFeeder<BigStakedFlipFeeder, BigStakedFlipInfo>(builder, ct);
             
             builder
                 .RegisterType<DiscordConsumer>()

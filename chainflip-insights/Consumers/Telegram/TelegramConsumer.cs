@@ -8,6 +8,7 @@ namespace ChainflipInsights.Consumers.Telegram
     using System.Threading.Tasks;
     using System.Threading.Tasks.Dataflow;
     using ChainflipInsights.Configuration;
+    using ChainflipInsights.Feeders.BigStakedFlip;
     using ChainflipInsights.Feeders.BrokerOverview;
     using ChainflipInsights.Feeders.CexMovement;
     using ChainflipInsights.Feeders.Epoch;
@@ -94,6 +95,9 @@ namespace ChainflipInsights.Consumers.Telegram
                     
                     if (input.BrokerOverviewInfo != null)
                         ProcessBrokerOverviewInfo(input.BrokerOverviewInfo, cancellationToken);
+                    
+                    if (input.BigStakedFlipInfo != null)
+                        ProcessBigStakedFlipInfo(input.BigStakedFlipInfo, cancellationToken);
                     
                     Task
                         .Delay(1500, cancellationToken)
@@ -653,6 +657,54 @@ namespace ChainflipInsights.Consumers.Telegram
                 _logger.LogInformation(
                     "Announcing Broker Overview {Date} on Telegram as Message {MessageId}",
                     brokerOverview.Date.ToString("yyyy-MM-dd"),
+                    message.MessageId);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Telegram meh.");
+            }
+        }
+        
+        private void ProcessBigStakedFlipInfo(
+            BigStakedFlipInfo bigStakedFlipInfo,
+            CancellationToken cancellationToken)
+        {
+            if (bigStakedFlipInfo.Staked < _configuration.TelegramStakedFlipAmountThreshold)
+            {
+                _logger.LogInformation(
+                    "Staked flip did not meet threshold (${Threshold}) for Telegram: {Amount} FLIP",
+                    _configuration.TelegramStakedFlipAmountThreshold,
+                    bigStakedFlipInfo.StakedFormatted);
+                
+                return;
+            }
+
+            try
+            {
+                _logger.LogInformation(
+                    "Announcing staked flip on Telegram: {Amount} FLIP -> {ExplorerUrl}",
+                    bigStakedFlipInfo.StakedFormatted,
+                    $"{_configuration.EtherScanUrl}{bigStakedFlipInfo.TransactionHash}");
+
+                var text =
+                    $"🔥 **Big stFLIP Alert**! " +
+                    $"**{bigStakedFlipInfo.StakedFormatted} FLIP** just got staked! " +
+                    $"// **[view transaction on explorer]({_configuration.EtherScanUrl}{bigStakedFlipInfo.TransactionHash})**";
+                
+                var message = _telegramClient
+                    .SendTextMessageAsync(
+                        new ChatId(_configuration.TelegramSwapInfoChannelId.Value),
+                        text,
+                        parseMode: ParseMode.Markdown,
+                        disableNotification: true,
+                        allowSendingWithoutReply: true,
+                        cancellationToken: cancellationToken)
+                    .GetAwaiter()
+                    .GetResult();
+
+                _logger.LogInformation(
+                    "Announcing staked flip {TransactionHash} on Telegram as Message {MessageId}",
+                    bigStakedFlipInfo.TransactionHash,
                     message.MessageId);
             }
             catch (Exception e)

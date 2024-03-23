@@ -8,6 +8,7 @@ namespace ChainflipInsights.Consumers.Mastodon
     using System.Threading.Tasks;
     using System.Threading.Tasks.Dataflow;
     using ChainflipInsights.Configuration;
+    using ChainflipInsights.Feeders.BigStakedFlip;
     using ChainflipInsights.Feeders.BrokerOverview;
     using ChainflipInsights.Feeders.CexMovement;
     using ChainflipInsights.Feeders.Epoch;
@@ -92,6 +93,9 @@ namespace ChainflipInsights.Consumers.Mastodon
                     
                     if (input.BrokerOverviewInfo != null)
                         ProcessBrokerOverviewInfo(input.BrokerOverviewInfo);
+                    
+                    if (input.BigStakedFlipInfo != null)
+                        ProcessBigStakedFlipInfo(input.BigStakedFlipInfo);
                     
                     Task
                         .Delay(1500, cancellationToken)
@@ -591,6 +595,49 @@ namespace ChainflipInsights.Consumers.Mastodon
                     "Announcing Broker Overview {Date} on Mastodon as Message {MessageId}",
                     brokerOverview.Date.ToString("yyyy-MM-dd"),
                     status.Id);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Mastodon meh.");
+            }
+        }
+        
+        private void ProcessBigStakedFlipInfo(BigStakedFlipInfo bigStakedFlipInfo)
+        {
+            if (bigStakedFlipInfo.Staked < _configuration.MastodonStakedFlipAmountThreshold)
+            {
+                _logger.LogInformation(
+                    "Staked flip did not meet threshold (${Threshold}) for Mastodon: {Amount} FLIP",
+                    _configuration.MastodonStakedFlipAmountThreshold,
+                    bigStakedFlipInfo.StakedFormatted);
+
+                return;
+            }
+
+            try
+            {
+                _logger.LogInformation(
+                    "Announcing staked flip on Mastodon: {Amount} FLIP -> {ExplorerUrl}",
+                    bigStakedFlipInfo.StakedFormatted,
+                    $"{_configuration.EtherScanUrl}{bigStakedFlipInfo.TransactionHash}");
+
+                var text =
+                    $"🔥 Big #stFLIP Alert! " +
+                    $"{bigStakedFlipInfo.StakedFormatted} #FLIP just got staked! " +
+                    $"// {_configuration.EtherScanUrl}{bigStakedFlipInfo.TransactionHash}\n" +
+                    $"#chainflip #flip";
+                
+                var status = _mastodonClient
+                    .PublishStatus(
+                        text,
+                        Visibility.Public)
+                    .GetAwaiter()
+                    .GetResult();
+                
+                _logger.LogInformation(
+                    "Announcing staked flip {TransactionHash} on Mastodon as Message {MessageId}",
+                    bigStakedFlipInfo.TransactionHash,
+                    status.Url);
             }
             catch (Exception e)
             {
