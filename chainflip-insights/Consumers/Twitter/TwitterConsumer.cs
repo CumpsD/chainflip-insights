@@ -156,6 +156,12 @@ namespace ChainflipInsights.Consumers.Twitter
             {
                 var brokerExists = _brokers.TryGetValue(swap.Broker ?? string.Empty, out var broker);
                 
+                var brokerName = brokerExists 
+                    ? string.IsNullOrWhiteSpace(broker!.Twitter)
+                        ? broker.Name
+                        : broker.Twitter
+                    : string.Empty;
+                
                 _logger.LogInformation(
                     "Announcing Swap on Twitter: {IngressAmount} {IngressTicker} to {EgressAmount} {EgressTicker} -> {ExplorerUrl}",
                     swap.DepositAmountFormatted,
@@ -168,7 +174,7 @@ namespace ChainflipInsights.Consumers.Twitter
                     $"{swap.Emoji} Swapped {_configuration.ExplorerSwapsUrl}{swap.Id}\n" +
                     $"➡️ {swap.DepositAmountFormatted} ${swap.SourceAsset} (${swap.DepositValueUsdFormatted})\n" +
                     $"⬅️ {swap.EgressAmountFormatted} ${swap.DestinationAsset} (${swap.EgressValueUsdFormatted})\n" +
-                    $"{(brokerExists ? $"☑️ via {broker.Name}\n" : string.Empty)}" +
+                    $"{(brokerExists ? $"☑️ via {brokerName}\n" : string.Empty)}" +
                     $"#chainflip #flip";
 
                 _twitterClient.Execute
