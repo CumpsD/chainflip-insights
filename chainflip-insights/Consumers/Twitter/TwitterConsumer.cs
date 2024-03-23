@@ -48,7 +48,7 @@ namespace ChainflipInsights.Consumers.Twitter
         private readonly ILogger<TwitterConsumer> _logger;
         private readonly BotConfiguration _configuration;
         private readonly TwitterClient _twitterClient;
-        private readonly Dictionary<string, string> _brokers;
+        private readonly Dictionary<string, Broker> _brokers;
 
         public TwitterConsumer(
             ILogger<TwitterConsumer> logger,
@@ -63,7 +63,7 @@ namespace ChainflipInsights.Consumers.Twitter
                 .Brokers
                 .ToDictionary(
                     x => x.Address,
-                    x => x.Name);
+                    x => x);
         }
 
         public ITargetBlock<BroadcastInfo> Build(
@@ -168,7 +168,7 @@ namespace ChainflipInsights.Consumers.Twitter
                     $"{swap.Emoji} Swapped {_configuration.ExplorerSwapsUrl}{swap.Id}\n" +
                     $"➡️ {swap.DepositAmountFormatted} ${swap.SourceAsset} (${swap.DepositValueUsdFormatted})\n" +
                     $"⬅️ {swap.EgressAmountFormatted} ${swap.DestinationAsset} (${swap.EgressValueUsdFormatted})\n" +
-                    $"{(brokerExists ? $"☑️ via {broker}\n" : string.Empty)}" +
+                    $"{(brokerExists ? $"☑️ via {broker.Name}\n" : string.Empty)}" +
                     $"#chainflip #flip";
 
                 _twitterClient.Execute
@@ -597,7 +597,11 @@ namespace ChainflipInsights.Consumers.Twitter
                 {
                     var brokerInfo = brokerOverview.Brokers[i];
                     var brokerExists = _brokers.TryGetValue(brokerInfo.Ss58, out var broker);
-                    var name = brokerExists ? broker : brokerInfo.Ss58;
+                    var name = brokerExists 
+                        ? string.IsNullOrWhiteSpace(broker!.Twitter)
+                            ? broker.Name
+                            : broker.Twitter
+                        : brokerInfo.Ss58;
 
                     text.AppendLine($"{emojis[i]} {name} (${brokerInfo.VolumeFormatted} Volume, ${brokerInfo.FeesFormatted} Fees)");
                 }
