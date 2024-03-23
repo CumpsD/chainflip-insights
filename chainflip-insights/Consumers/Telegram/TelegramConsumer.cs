@@ -672,7 +672,7 @@ namespace ChainflipInsights.Consumers.Telegram
             if (bigStakedFlipInfo.Staked < _configuration.TelegramStakedFlipAmountThreshold)
             {
                 _logger.LogInformation(
-                    "Staked flip did not meet threshold (${Threshold}) for Telegram: {Amount} FLIP",
+                    "Staked flip did not meet threshold ({Threshold} FLIP) for Telegram: {Amount} FLIP",
                     _configuration.TelegramStakedFlipAmountThreshold,
                     bigStakedFlipInfo.StakedFormatted);
                 

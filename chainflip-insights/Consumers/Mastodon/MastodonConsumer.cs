@@ -607,7 +607,7 @@ namespace ChainflipInsights.Consumers.Mastodon
             if (bigStakedFlipInfo.Staked < _configuration.MastodonStakedFlipAmountThreshold)
             {
                 _logger.LogInformation(
-                    "Staked flip did not meet threshold (${Threshold}) for Mastodon: {Amount} FLIP",
+                    "Staked flip did not meet threshold ({Threshold} FLIP) for Mastodon: {Amount} FLIP",
                     _configuration.MastodonStakedFlipAmountThreshold,
                     bigStakedFlipInfo.StakedFormatted);
 

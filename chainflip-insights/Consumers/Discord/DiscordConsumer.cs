@@ -773,7 +773,7 @@ namespace ChainflipInsights.Consumers.Discord
             if (bigStakedFlipInfo.Staked < _configuration.DiscordStakedFlipAmountThreshold)
             {
                 _logger.LogInformation(
-                    "Staked flip did not meet threshold (${Threshold}) for Discord: {Amount} FLIP",
+                    "Staked flip did not meet threshold ({Threshold} FLIP) for Discord: {Amount} FLIP",
                     _configuration.DiscordStakedFlipAmountThreshold,
                     bigStakedFlipInfo.StakedFormatted);
                 

@@ -624,11 +624,11 @@ namespace ChainflipInsights.Consumers.Twitter
         
         private void ProcessBigStakedFlipInfo(BigStakedFlipInfo bigStakedFlipInfo)
         {
-            if (bigStakedFlipInfo.Staked < _configuration.TwitterLiquidityAmountThreshold)
+            if (bigStakedFlipInfo.Staked < _configuration.TwitterStakedFlipAmountThreshold)
             {
                 _logger.LogInformation(
-                    "Staked flip did not meet threshold (${Threshold}) for Twitter: {Amount} FLIP",
-                    _configuration.TwitterLiquidityAmountThreshold,
+                    "Staked flip did not meet threshold ({Threshold} FLIP) for Twitter: {Amount} FLIP",
+                    _configuration.TwitterStakedFlipAmountThreshold,
                     bigStakedFlipInfo.StakedFormatted);
 
                 return;
