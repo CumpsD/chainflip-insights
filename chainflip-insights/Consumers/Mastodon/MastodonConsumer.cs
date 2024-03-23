@@ -528,7 +528,7 @@ namespace ChainflipInsights.Consumers.Mastodon
                 
                 _logger.LogInformation(
                     "Announcing Staked Flip {Date} on Mastodon as Message {MessageId}",
-                    stakedFlip.Date,
+                    stakedFlip.Date.ToString("yyyy-MM-dd"),
                     status.Id);
             }
             catch (Exception e)
@@ -588,7 +588,7 @@ namespace ChainflipInsights.Consumers.Mastodon
                 
                 _logger.LogInformation(
                     "Announcing Broker Overview {Date} on Mastodon as Message {MessageId}",
-                    brokerOverview.Date,
+                    brokerOverview.Date.ToString("yyyy-MM-dd"),
                     status.Id);
             }
             catch (Exception e)

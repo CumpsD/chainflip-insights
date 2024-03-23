@@ -587,7 +587,7 @@ namespace ChainflipInsights.Consumers.Telegram
 
                 _logger.LogInformation(
                     "Announcing Staked Flip {Date} on Telegram as Message {MessageId}",
-                    stakedFlip.Date,
+                    stakedFlip.Date.ToString("yyyy-MM-dd"),
                     message.MessageId);
             }
             catch (Exception e)
@@ -651,7 +651,7 @@ namespace ChainflipInsights.Consumers.Telegram
 
                 _logger.LogInformation(
                     "Announcing Broker Overview {Date} on Telegram as Message {MessageId}",
-                    brokerOverview.Date,
+                    brokerOverview.Date.ToString("yyyy-MM-dd"),
                     message.MessageId);
             }
             catch (Exception e)

@@ -690,7 +690,7 @@ namespace ChainflipInsights.Consumers.Discord
 
                 _logger.LogInformation(
                     "Announcing Staked Flip {Date} on Discord as Message {MessageId}",
-                    stakedFlip.Date,
+                    stakedFlip.Date.ToString("yyyy-MM-dd"),
                     message.Id);
             }
             catch (Exception e)
@@ -754,7 +754,7 @@ namespace ChainflipInsights.Consumers.Discord
 
                 _logger.LogInformation(
                     "Announcing Broker Overview {Date} on Discord as Message {MessageId}",
-                    brokerOverview.Date,
+                    brokerOverview.Date.ToString("yyyy-MM-dd"),
                     message.Id);
             }
             catch (Exception e)
