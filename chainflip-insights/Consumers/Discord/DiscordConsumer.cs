@@ -3,10 +3,12 @@ namespace ChainflipInsights.Consumers.Discord
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
     using System.Threading.Tasks.Dataflow;
     using ChainflipInsights.Configuration;
+    using ChainflipInsights.Feeders.BrokerOverview;
     using ChainflipInsights.Feeders.CexMovement;
     using ChainflipInsights.Feeders.CfeVersion;
     using ChainflipInsights.Feeders.Epoch;
@@ -48,7 +50,7 @@ namespace ChainflipInsights.Consumers.Discord
                     x => x.Address,
                     x => x.Name);
         }
-
+        
         public ITargetBlock<BroadcastInfo> Build(
             CancellationToken cancellationToken)
         {
@@ -96,6 +98,9 @@ namespace ChainflipInsights.Consumers.Discord
                     
                     if (input.StakedFlipInfo != null)
                         ProcessStakedFlipInfo(input.StakedFlipInfo);
+                    
+                    if (input.BrokerOverviewInfo != null)
+                        ProcessBrokerOverviewInfo(input.BrokerOverviewInfo);
                 },
                 new ExecutionDataflowBlockOptions
                 {
@@ -686,6 +691,70 @@ namespace ChainflipInsights.Consumers.Discord
                 _logger.LogInformation(
                     "Announcing Staked Flip {Date} on Discord as Message {MessageId}",
                     stakedFlip.Date,
+                    message.Id);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Discord meh.");
+            }
+        }
+        
+        private void ProcessBrokerOverviewInfo(BrokerOverviewInfo brokerOverview)
+        {
+            if (!_configuration.DiscordBrokerOverviewEnabled.Value)
+            {
+                _logger.LogInformation(
+                    "Broker Overview disabled for Discord. {Date}: {Brokers} top brokers.",
+                    brokerOverview.Date.ToString("yyyy-MM-dd"),
+                    brokerOverview.Brokers.Count);
+                
+                return;
+            }
+            
+            if (_discordClient.ConnectionState != ConnectionState.Connected)
+                return;
+            
+            try
+            {
+                _logger.LogInformation(
+                    "Announcing Broker Overview for {Date} on Discord: {Brokers} top brokers.",
+                    brokerOverview.Date.ToString("yyyy-MM-dd"),
+                    brokerOverview.Brokers.Count);
+
+                var text = new StringBuilder();
+                text.AppendLine($"🏭 Top Brokers for **{brokerOverview.Date:yyyy-MM-dd}** are in!");
+
+                var emojis = new[]
+                {
+                    "🥇",
+                    "🥈",
+                    "🥉",
+                    "🏅",
+                    "🏅"
+                };
+
+                for (var i = 0; i < brokerOverview.Brokers.Count; i++)
+                {
+                    var brokerInfo = brokerOverview.Brokers[i];
+                    var brokerExists = _brokers.TryGetValue(brokerInfo.Ss58, out var broker);
+                    var name = brokerExists ? broker : brokerInfo.Ss58;
+
+                    text.AppendLine($"{emojis[i]} **{name}** (**${brokerInfo.VolumeFormatted}** Volume, **${brokerInfo.FeesFormatted}** Fees)");
+                }
+
+                var infoChannel = (ITextChannel)_discordClient
+                    .GetChannel(_configuration.DiscordSwapInfoChannelId.Value);
+
+                var message = infoChannel
+                    .SendMessageAsync(
+                        text.ToString(),
+                        flags: MessageFlags.SuppressEmbeds)
+                    .GetAwaiter()
+                    .GetResult();
+
+                _logger.LogInformation(
+                    "Announcing Broker Overview {Date} on Discord as Message {MessageId}",
+                    brokerOverview.Date,
                     message.Id);
             }
             catch (Exception e)

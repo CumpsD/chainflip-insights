@@ -80,6 +80,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public bool? EnableBrokerOverview
+        {
+            get; init;
+        } 
+        
+        [Required]
+        [NotNull]
         public bool? EnableDiscord
         {
             get; init;
@@ -332,6 +339,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public int? BrokerOverviewQueryDelay
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
         public string? LastSwapIdLocation
         {
             get; init;
@@ -396,6 +410,13 @@ namespace ChainflipInsights.Configuration
         [Required]
         [NotNull]
         public string? LastStakedFlipLocation
+        {
+            get; init;
+        }
+                
+        [Required]
+        [NotNull]
+        public string? LastBrokerOverviewLocation
         {
             get; init;
         }
@@ -697,6 +718,34 @@ namespace ChainflipInsights.Configuration
         [Required]
         [NotNull]
         public bool? DiscordStakedFlipEnabled
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public bool? MastodonBrokerOverviewEnabled
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public bool? TwitterBrokerOverviewEnabled
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public bool? TelegramBrokerOverviewEnabled
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public bool? DiscordBrokerOverviewEnabled
         {
             get; init;
         }

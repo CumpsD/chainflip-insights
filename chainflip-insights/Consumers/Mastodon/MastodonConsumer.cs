@@ -3,10 +3,12 @@ namespace ChainflipInsights.Consumers.Mastodon
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
     using System.Threading.Tasks.Dataflow;
     using ChainflipInsights.Configuration;
+    using ChainflipInsights.Feeders.BrokerOverview;
     using ChainflipInsights.Feeders.CexMovement;
     using ChainflipInsights.Feeders.Epoch;
     using ChainflipInsights.Feeders.Funding;
@@ -86,6 +88,9 @@ namespace ChainflipInsights.Consumers.Mastodon
                     
                     if (input.StakedFlipInfo != null)
                         ProcessStakedFlipInfo(input.StakedFlipInfo);
+                    
+                    if (input.BrokerOverviewInfo != null)
+                        ProcessBrokerOverviewInfo(input.BrokerOverviewInfo);
                     
                     Task
                         .Delay(1500, cancellationToken)
@@ -167,7 +172,7 @@ namespace ChainflipInsights.Consumers.Mastodon
             {
                 _logger.LogInformation(
                     "Incoming Liquidity did not meet threshold (${Threshold}) for Mastodon: {IngressAmount} {IngressTicker} (${IngressUsdAmount}) -> {ExplorerUrl}",
-                    _configuration.DiscordLiquidityAmountThreshold,
+                    _configuration.MastodonLiquidityAmountThreshold,
                     liquidity.DepositAmountFormatted,
                     liquidity.SourceAsset,
                     liquidity.DepositValueUsdFormatted,
@@ -524,6 +529,66 @@ namespace ChainflipInsights.Consumers.Mastodon
                 _logger.LogInformation(
                     "Announcing Staked Flip {Date} on Mastodon as Message {MessageId}",
                     stakedFlip.Date,
+                    status.Id);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Mastodon meh.");
+            }
+        }
+        
+        private void ProcessBrokerOverviewInfo(BrokerOverviewInfo brokerOverview)
+        {
+            if (!_configuration.MastodonBrokerOverviewEnabled.Value)
+            {
+                _logger.LogInformation(
+                    "Broker Overview disabled for Mastodon. {Date}: {Brokers} top brokers.",
+                    brokerOverview.Date.ToString("yyyy-MM-dd"),
+                    brokerOverview.Brokers.Count);
+                
+                return;
+            }
+            
+            try
+            {
+                _logger.LogInformation(
+                    "Announcing Broker Overview for {Date} on Mastodon: {Brokers} top brokers.",
+                    brokerOverview.Date.ToString("yyyy-MM-dd"),
+                    brokerOverview.Brokers.Count);
+                
+                var text = new StringBuilder();
+                text.AppendLine($"🏭 Top Brokers for {brokerOverview.Date:yyyy-MM-dd} are in!");
+
+                var emojis = new[]
+                {
+                    "🥇",
+                    "🥈",
+                    "🥉",
+                    "🏅",
+                    "🏅"
+                };
+
+                for (var i = 0; i < brokerOverview.Brokers.Count; i++)
+                {
+                    var brokerInfo = brokerOverview.Brokers[i];
+                    var brokerExists = _brokers.TryGetValue(brokerInfo.Ss58, out var broker);
+                    var name = brokerExists ? broker : brokerInfo.Ss58;
+
+                    text.AppendLine($"{emojis[i]} {name} (${brokerInfo.VolumeFormatted} Volume, ${brokerInfo.FeesFormatted} Fees)");
+                }
+
+                text.AppendLine("#chainflip #flip");
+   
+                var status = _mastodonClient
+                    .PublishStatus(
+                        text.ToString(),
+                        Visibility.Public)
+                    .GetAwaiter()
+                    .GetResult();
+                
+                _logger.LogInformation(
+                    "Announcing Broker Overview {Date} on Mastodon as Message {MessageId}",
+                    brokerOverview.Date,
                     status.Id);
             }
             catch (Exception e)

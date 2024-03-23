@@ -1,6 +1,7 @@
 namespace ChainflipInsights
 {
     using System;
+    using ChainflipInsights.Feeders.BrokerOverview;
     using ChainflipInsights.Feeders.CexMovement;
     using ChainflipInsights.Feeders.CfeVersion;
     using ChainflipInsights.Feeders.Epoch;
@@ -24,6 +25,7 @@ namespace ChainflipInsights
         public SwapLimitsInfo? SwapLimitsInfo { get; }
         public PastVolumeInfo? PastVolumeInfo { get; }
         public StakedFlipInfo? StakedFlipInfo { get; }
+        public BrokerOverviewInfo? BrokerOverviewInfo { get; }
 
         public BroadcastInfo(SwapInfo swapInfo) 
             => SwapInfo = swapInfo ?? throw new ArgumentNullException(nameof(swapInfo));
@@ -54,5 +56,8 @@ namespace ChainflipInsights
 
         public BroadcastInfo(StakedFlipInfo stakedFlipInfo)
             => StakedFlipInfo = stakedFlipInfo ?? throw new ArgumentNullException(nameof(stakedFlipInfo));
+
+        public BroadcastInfo(BrokerOverviewInfo brokerOverviewInfo)
+            => BrokerOverviewInfo = brokerOverviewInfo ?? throw new ArgumentNullException(nameof(brokerOverviewInfo));
     }
 }

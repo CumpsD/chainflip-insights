@@ -10,6 +10,7 @@ namespace ChainflipInsights
     using ChainflipInsights.Consumers.Mastodon;
     using ChainflipInsights.Consumers.Telegram;
     using ChainflipInsights.Consumers.Twitter;
+    using ChainflipInsights.Feeders.BrokerOverview;
     using ChainflipInsights.Feeders.CexMovement;
     using ChainflipInsights.Feeders.CfeVersion;
     using ChainflipInsights.Feeders.Epoch;
@@ -48,6 +49,7 @@ namespace ChainflipInsights
             Pipeline<SwapLimitsInfo> swapLimitsPipeline,
             Pipeline<PastVolumeInfo> pastVolumePipeline,
             Pipeline<StakedFlipInfo> stakedFlipPipeline,
+            Pipeline<BrokerOverviewInfo> brokerOverviewPipeline,
             DiscordConsumer discordConsumer,
             TelegramConsumer telegramConsumer,
             TwitterConsumer twitterConsumer,
@@ -69,7 +71,8 @@ namespace ChainflipInsights
                 cfeVersionPipeline,
                 swapLimitsPipeline,
                 pastVolumePipeline,
-                stakedFlipPipeline);
+                stakedFlipPipeline,
+                brokerOverviewPipeline);
         }
 
         private void SetupPipelines(
@@ -82,7 +85,8 @@ namespace ChainflipInsights
             Pipeline<CfeVersionsInfo> cfeVersionPipeline, 
             Pipeline<SwapLimitsInfo> swapLimitsPipeline,
             Pipeline<PastVolumeInfo> pastVolumePipeline,
-            Pipeline<StakedFlipInfo> stakedFlipPipeline)
+            Pipeline<StakedFlipInfo> stakedFlipPipeline,
+            Pipeline<BrokerOverviewInfo> brokerOverviewPipeline)
         {
             var linkOptions = new DataflowLinkOptions
             {
@@ -168,6 +172,13 @@ namespace ChainflipInsights
             SetupFeederPipeline(
                 "Staked Flip",
                 stakedFlipPipeline,
+                linkOptions,
+                broadcast,
+                x => new BroadcastInfo(x));
+            
+            SetupFeederPipeline(
+                "Broker Overview",
+                brokerOverviewPipeline,
                 linkOptions,
                 broadcast,
                 x => new BroadcastInfo(x));
