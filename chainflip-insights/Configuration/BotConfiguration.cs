@@ -192,6 +192,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public string? SubstrateEndpoint
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
         public string? GraphUrl
         {
             get; init;

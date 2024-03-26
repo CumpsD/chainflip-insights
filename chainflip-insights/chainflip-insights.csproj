@@ -74,5 +74,11 @@
       <PackageReference Include="System.Threading.Tasks.Dataflow" Version="8.0.0" />
       <PackageReference Include="Telegram.Bot" Version="19.0.0" />
       <PackageReference Include="TweetinviAPI" Version="5.0.4" />
+      <PackageReference Include="Substrate.ServiceLayer " Version="0.5.3" />
+      <PackageReference Include="Nethereum.Util" Version="4.19.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Substrate.NetApiExt\Substrate.NetApiExt.csproj" />
     </ItemGroup>
 </Project>

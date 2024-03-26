@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "chainflip-insights", "chainflip-insights\chainflip-insights.csproj", "{778782D7-1FF1-4EDD-938A-822F32A7FDF6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Substrate.NetApiExt", "Substrate.NetApiExt\Substrate.NetApiExt.csproj", "{CF0C21C2-4034-4FB9-98C6-76B8BA105F7F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{778782D7-1FF1-4EDD-938A-822F32A7FDF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{778782D7-1FF1-4EDD-938A-822F32A7FDF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{778782D7-1FF1-4EDD-938A-822F32A7FDF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF0C21C2-4034-4FB9-98C6-76B8BA105F7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF0C21C2-4034-4FB9-98C6-76B8BA105F7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF0C21C2-4034-4FB9-98C6-76B8BA105F7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF0C21C2-4034-4FB9-98C6-76B8BA105F7F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
