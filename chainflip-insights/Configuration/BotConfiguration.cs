@@ -7,6 +7,13 @@ namespace ChainflipInsights.Configuration
     {
         [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Convention for configuration is .Section")]
         public const string Section = "Bot";
+     
+        [Required]
+        [NotNull]
+        public bool? EnableSubstrate
+        {
+            get; init;
+        } 
         
         [Required]
         [NotNull]
@@ -284,6 +291,13 @@ namespace ChainflipInsights.Configuration
         [Required]
         [NotNull]
         public int? FeedingDelay
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public int? SubstrateQueryDelay
         {
             get; init;
         }

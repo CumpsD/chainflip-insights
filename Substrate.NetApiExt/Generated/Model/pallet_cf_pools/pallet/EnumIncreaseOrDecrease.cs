@@ -33,7 +33,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_pools.pallet
     }
     
     /// <summary>
-    /// >> 298 - Variant[pallet_cf_pools.pallet.IncreaseOrDecrease]
+    /// >> 299 - Variant[pallet_cf_pools.pallet.IncreaseOrDecrease]
     /// </summary>
     public sealed class EnumIncreaseOrDecrease : BaseEnumExt<IncreaseOrDecrease, Substrate.NetApiExt.Generated.Model.pallet_cf_pools.pallet.RangeOrderChange, Substrate.NetApiExt.Generated.Model.pallet_cf_pools.pallet.RangeOrderChange>
     {

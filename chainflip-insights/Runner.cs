@@ -21,6 +21,7 @@ namespace ChainflipInsights
     using ChainflipInsights.Feeders.Liquidity;
     using ChainflipInsights.Feeders.PastVolume;
     using ChainflipInsights.Feeders.StakedFlip;
+    using ChainflipInsights.Feeders.Substrate;
     using ChainflipInsights.Feeders.Swap;
     using ChainflipInsights.Feeders.SwapLimits;
     using ChainflipInsights.Infrastructure.Pipelines;
@@ -43,6 +44,7 @@ namespace ChainflipInsights
 
         public Runner(
             ILogger<Runner> logger,
+            Pipeline<SubstrateInfo> substratePipeline,
             Pipeline<SwapInfo> swapPipeline,
             Pipeline<IncomingLiquidityInfo> incomingLiquidityPipeline,
             Pipeline<EpochInfo> epochPipeline,
@@ -69,6 +71,7 @@ namespace ChainflipInsights
             _mastodonConsumer = mastodonConsumer ?? throw new ArgumentNullException(nameof(mastodonConsumer));
 
             SetupPipelines(
+                substratePipeline,
                 swapPipeline,
                 incomingLiquidityPipeline,
                 epochPipeline,
@@ -84,6 +87,7 @@ namespace ChainflipInsights
         }
 
         private void SetupPipelines(
+            Pipeline<SubstrateInfo> substratePipeline, 
             Pipeline<SwapInfo> swapPipeline, 
             Pipeline<IncomingLiquidityInfo> incomingLiquidityPipeline, 
             Pipeline<EpochInfo> epochPipeline, 
@@ -115,6 +119,13 @@ namespace ChainflipInsights
                     task.Status),
                 swapPipeline.CancellationToken);
 
+            SetupFeederPipeline(
+                "Substrate",
+                substratePipeline,
+                linkOptions,
+                broadcast,
+                x => new BroadcastInfo(x));
+            
             SetupFeederPipeline(
                 "Swap",
                 swapPipeline,
@@ -303,6 +314,7 @@ namespace ChainflipInsights
                 [
                     _discordPipelineTarget.Completion,
                     _telegramPipelineTarget.Completion,
+                    _fullTelegramPipelineTarget.Completion,
                     _twitterPipelineTarget.Completion,
                     _mastodonPipelineTarget.Completion
                 ];

@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_funding
     
     
     /// <summary>
-    /// >> 324 - Composite[pallet_cf_funding.PendingRedemptionInfo]
+    /// >> 325 - Composite[pallet_cf_funding.PendingRedemptionInfo]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class PendingRedemptionInfo : BaseType

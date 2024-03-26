@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.dot
     
     
     /// <summary>
-    /// >> 280 - Composite[cf_chains.dot.PolkadotTransactionData]
+    /// >> 281 - Composite[cf_chains.dot.PolkadotTransactionData]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class PolkadotTransactionData : BaseType

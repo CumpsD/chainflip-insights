@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.evm
     
     
     /// <summary>
-    /// >> 278 - Composite[cf_chains.evm.Transaction]
+    /// >> 279 - Composite[cf_chains.evm.Transaction]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class Transaction : BaseType

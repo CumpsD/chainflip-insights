@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_validator.rotation_state
     
     
     /// <summary>
-    /// >> 259 - Composite[pallet_cf_validator.rotation_state.RotationState]
+    /// >> 260 - Composite[pallet_cf_validator.rotation_state.RotationState]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class RotationState : BaseType

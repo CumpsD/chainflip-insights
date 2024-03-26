@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Types.Base
     
     
     /// <summary>
-    /// >> 314 - Composite[Cow]
+    /// >> 315 - Composite[Cow]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class Cow : BaseType

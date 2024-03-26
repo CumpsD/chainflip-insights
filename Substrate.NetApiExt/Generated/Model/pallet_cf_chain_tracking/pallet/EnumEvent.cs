@@ -30,7 +30,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_chain_tracking.pallet
     }
     
     /// <summary>
-    /// >> 269 - Variant[pallet_cf_chain_tracking.pallet.Event]
+    /// >> 270 - Variant[pallet_cf_chain_tracking.pallet.Event]
     /// The `Event` enum of this pallet
     /// </summary>
     public sealed class EnumEvent : BaseEnumExt<Event, Substrate.NetApiExt.Generated.Model.cf_chains.ChainStateT3>

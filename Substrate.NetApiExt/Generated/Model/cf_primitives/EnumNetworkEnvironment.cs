@@ -38,7 +38,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_primitives
     }
     
     /// <summary>
-    /// >> 319 - Variant[cf_primitives.NetworkEnvironment]
+    /// >> 320 - Variant[cf_primitives.NetworkEnvironment]
     /// </summary>
     public sealed class EnumNetworkEnvironment : BaseEnum<NetworkEnvironment>
     {

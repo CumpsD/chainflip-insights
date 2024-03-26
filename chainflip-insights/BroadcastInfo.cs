@@ -11,11 +11,13 @@ namespace ChainflipInsights
     using ChainflipInsights.Feeders.PastVolume;
     using ChainflipInsights.Feeders.Redemption;
     using ChainflipInsights.Feeders.StakedFlip;
+    using ChainflipInsights.Feeders.Substrate;
     using ChainflipInsights.Feeders.Swap;
     using ChainflipInsights.Feeders.SwapLimits;
 
     public class BroadcastInfo
     {
+        public SubstrateInfo? SubstrateInfo { get; }
         public SwapInfo? SwapInfo { get; }
         public IncomingLiquidityInfo? IncomingLiquidityInfo { get; }
         public EpochInfo? EpochInfo { get; }
@@ -29,6 +31,9 @@ namespace ChainflipInsights
         public BrokerOverviewInfo? BrokerOverviewInfo { get; }
         public BigStakedFlipInfo? BigStakedFlipInfo { get; }
 
+        public BroadcastInfo(SubstrateInfo substrateInfo)
+            => SubstrateInfo = substrateInfo ?? throw new ArgumentNullException(nameof(substrateInfo));
+        
         public BroadcastInfo(SwapInfo swapInfo) 
             => SwapInfo = swapInfo ?? throw new ArgumentNullException(nameof(swapInfo));
 

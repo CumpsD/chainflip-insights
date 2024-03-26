@@ -102,7 +102,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_validator.pallet
     }
     
     /// <summary>
-    /// >> 344 - Variant[pallet_cf_validator.pallet.Error]
+    /// >> 345 - Variant[pallet_cf_validator.pallet.Error]
     /// The `Error` enum of this pallet.
     /// </summary>
     public sealed class EnumError : BaseEnum<Error>

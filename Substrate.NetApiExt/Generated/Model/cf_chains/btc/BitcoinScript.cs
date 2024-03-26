@@ -53,6 +53,9 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.btc
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new BoundedVecT1();
+            
+            // Bytes = new byte[bytesLength];
+            // System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

@@ -85,7 +85,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_broadcast.pallet
     }
     
     /// <summary>
-    /// >> 281 - Variant[pallet_cf_broadcast.pallet.Event]
+    /// >> 282 - Variant[pallet_cf_broadcast.pallet.Event]
     /// The `Event` enum of this pallet
     /// </summary>
     public sealed class EnumEvent : BaseEnumExt<Event, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Model.cf_chains.btc.BitcoinTransactionData, Substrate.NetApiExt.Generated.Types.Base.Arr32U8>, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Primitive.U32>, Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Primitive.U32, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApiExt.Generated.Types.Base.Arr32U8>, Substrate.NetApi.Model.Types.Primitive.U32, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApiExt.Generated.Types.Base.EnumResult>, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_chains.btc.EnumScriptPubkey, Substrate.NetApi.Model.Types.Primitive.U64>, Substrate.NetApiExt.Generated.Model.cf_chains.btc.EnumScriptPubkey, Substrate.NetApi.Model.Types.Primitive.U32>

@@ -42,7 +42,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_account_roles.pallet
     }
     
     /// <summary>
-    /// >> 329 - Variant[pallet_cf_account_roles.pallet.Error]
+    /// >> 330 - Variant[pallet_cf_account_roles.pallet.Error]
     /// The `Error` enum of this pallet.
     /// </summary>
     public sealed class EnumError : BaseEnum<Error>

@@ -53,7 +53,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_validator
     }
     
     /// <summary>
-    /// >> 258 - Variant[pallet_cf_validator.RotationPhase]
+    /// >> 259 - Variant[pallet_cf_validator.RotationPhase]
     /// </summary>
     public sealed class EnumRotationPhase : BaseEnumExt<RotationPhase, BaseVoid, Substrate.NetApiExt.Generated.Model.pallet_cf_validator.rotation_state.RotationState, Substrate.NetApiExt.Generated.Model.pallet_cf_validator.rotation_state.RotationState, Substrate.NetApiExt.Generated.Model.pallet_cf_validator.rotation_state.RotationState, Substrate.NetApiExt.Generated.Model.pallet_cf_validator.rotation_state.RotationState, Substrate.NetApiExt.Generated.Model.pallet_cf_validator.rotation_state.RotationState>
     {

@@ -38,7 +38,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_swapping
     }
     
     /// <summary>
-    /// >> 285 - Variant[pallet_cf_swapping.SwapType]
+    /// >> 286 - Variant[pallet_cf_swapping.SwapType]
     /// </summary>
     public sealed class EnumSwapType : BaseEnumExt<SwapType, Substrate.NetApiExt.Generated.Model.cf_chains.address.EnumForeignChainAddress, Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApi.Model.Types.Primitive.U64>
     {

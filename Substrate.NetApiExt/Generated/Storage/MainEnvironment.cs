@@ -555,7 +555,7 @@ namespace Substrate.NetApiExt.Generated.Storage
         public Substrate.NetApiExt.Generated.Model.cf_primitives.SemVer CurrentReleaseVersion()
         {
             var result = new Substrate.NetApiExt.Generated.Model.cf_primitives.SemVer();
-            result.Create("0x010200");
+            result.Create("0x010201");
             return result;
         }
     }

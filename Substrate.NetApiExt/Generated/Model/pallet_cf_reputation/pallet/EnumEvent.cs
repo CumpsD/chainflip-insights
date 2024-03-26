@@ -48,7 +48,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_reputation.pallet
     }
     
     /// <summary>
-    /// >> 266 - Variant[pallet_cf_reputation.pallet.Event]
+    /// >> 267 - Variant[pallet_cf_reputation.pallet.Event]
     /// The `Event` enum of this pallet
     /// </summary>
     public sealed class EnumEvent : BaseEnumExt<Event, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Model.state_chain_runtime.chainflip.offences.EnumOffence, Substrate.NetApi.Model.Types.Primitive.I32>, BaseTuple<Substrate.NetApi.Model.Types.Primitive.I32, Substrate.NetApi.Model.Types.Primitive.U32>, Substrate.NetApi.Model.Types.Primitive.I32, BaseTuple<Substrate.NetApiExt.Generated.Model.state_chain_runtime.chainflip.offences.EnumOffence, Substrate.NetApiExt.Generated.Model.pallet_cf_reputation.Penalty, Substrate.NetApiExt.Generated.Model.pallet_cf_reputation.Penalty>>

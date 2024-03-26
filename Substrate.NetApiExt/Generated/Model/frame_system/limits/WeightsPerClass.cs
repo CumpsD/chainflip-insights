@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.frame_system.limits
     
     
     /// <summary>
-    /// >> 308 - Composite[frame_system.limits.WeightsPerClass]
+    /// >> 309 - Composite[frame_system.limits.WeightsPerClass]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class WeightsPerClass : BaseType

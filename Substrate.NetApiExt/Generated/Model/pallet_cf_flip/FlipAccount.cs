@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_flip
     
     
     /// <summary>
-    /// >> 321 - Composite[pallet_cf_flip.FlipAccount]
+    /// >> 322 - Composite[pallet_cf_flip.FlipAccount]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class FlipAccount : BaseType

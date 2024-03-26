@@ -54,7 +54,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_witnesser.pallet
     }
     
     /// <summary>
-    /// >> 335 - Variant[pallet_cf_witnesser.pallet.Error]
+    /// >> 336 - Variant[pallet_cf_witnesser.pallet.Error]
     /// The `Error` enum of this pallet.
     /// </summary>
     public sealed class EnumError : BaseEnum<Error>

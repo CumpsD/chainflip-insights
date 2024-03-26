@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.bounded_collections.weak_bounded_v
     
     
     /// <summary>
-    /// >> 355 - Composite[bounded_collections.weak_bounded_vec.WeakBoundedVec]
+    /// >> 356 - Composite[bounded_collections.weak_bounded_vec.WeakBoundedVec]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class WeakBoundedVec : BaseType

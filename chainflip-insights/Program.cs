@@ -29,6 +29,7 @@
     using ChainflipInsights.Feeders.Liquidity;
     using ChainflipInsights.Feeders.PastVolume;
     using ChainflipInsights.Feeders.StakedFlip;
+    using ChainflipInsights.Feeders.Substrate;
     using ChainflipInsights.Feeders.Swap;
     using ChainflipInsights.Feeders.SwapLimits;
     using ChainflipInsights.Infrastructure;
@@ -73,6 +74,7 @@
 
             var pipelines = new IPipeline[]
             {
+                container.GetRequiredService<Pipeline<SubstrateInfo>>(),
                 container.GetRequiredService<Pipeline<SwapInfo>>(),
                 container.GetRequiredService<Pipeline<IncomingLiquidityInfo>>(),
                 container.GetRequiredService<Pipeline<EpochInfo>>(),
@@ -89,6 +91,7 @@
             
             var feeders = new IFeeder[]
             {
+                container.GetRequiredService<SubstrateFeeder>(),
                 container.GetRequiredService<SwapFeeder>(),
                 container.GetRequiredService<IncomingLiquidityFeeder>(),
                 container.GetRequiredService<EpochFeeder>(),
@@ -286,6 +289,7 @@
                 .Register(_ => new MastodonClient("mastodon.social", botConfiguration.MastodonAccessToken))
                 .SingleInstance();
             
+            RegisterFeeder<SubstrateFeeder, SubstrateInfo>(builder, ct);
             RegisterFeeder<SwapFeeder, SwapInfo>(builder, ct);
             RegisterFeeder<IncomingLiquidityFeeder, IncomingLiquidityInfo>(builder, ct);
             RegisterFeeder<EpochFeeder, EpochInfo>(builder, ct);

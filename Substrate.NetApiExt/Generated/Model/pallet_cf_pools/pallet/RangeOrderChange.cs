@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_pools.pallet
     
     
     /// <summary>
-    /// >> 299 - Composite[pallet_cf_pools.pallet.RangeOrderChange]
+    /// >> 300 - Composite[pallet_cf_pools.pallet.RangeOrderChange]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class RangeOrderChange : BaseType

@@ -33,7 +33,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains
     }
     
     /// <summary>
-    /// >> 284 - Variant[cf_chains.SwapOrigin]
+    /// >> 285 - Variant[cf_chains.SwapOrigin]
     /// </summary>
     public sealed class EnumSwapOrigin : BaseEnumExt<SwapOrigin, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_chains.address.EnumEncodedAddress, Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApi.Model.Types.Primitive.U64>, Substrate.NetApiExt.Generated.Types.Base.Arr32U8>
     {

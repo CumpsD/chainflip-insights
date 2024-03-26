@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Types.Base
     
     
     /// <summary>
-    /// >> 337 - Composite[BTreeMapT2]
+    /// >> 338 - Composite[BTreeMapT2]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class BTreeMapT2 : BaseType

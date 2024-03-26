@@ -43,6 +43,7 @@ namespace Substrate.NetApiExt.Generated.Storage
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("LiquidityPools", "CollectedNetworkFee"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U128)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("LiquidityPools", "ScheduledLimitOrderUpdates"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
                             Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApi.Model.Types.Primitive.U32), typeof(Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.pallet_cf_pools.pallet.LimitOrderUpdate>)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("LiquidityPools", "MaximumRelativeSlippage"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U32)));
         }
         
         /// <summary>
@@ -193,6 +194,35 @@ namespace Substrate.NetApiExt.Generated.Storage
             var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.pallet_cf_pools.pallet.LimitOrderUpdate>>(parameters, blockhash, token);
             return result;
         }
+        
+        /// <summary>
+        /// >> MaximumRelativeSlippageParams
+        ///  Maximum relative slippage for a single swap, measured in number of ticks.
+        /// </summary>
+        public static string MaximumRelativeSlippageParams()
+        {
+            return RequestGenerator.GetStorage("LiquidityPools", "MaximumRelativeSlippage", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
+        }
+        
+        /// <summary>
+        /// >> MaximumRelativeSlippageDefault
+        /// Default value as hex string
+        /// </summary>
+        public static string MaximumRelativeSlippageDefault()
+        {
+            return "0x00";
+        }
+        
+        /// <summary>
+        /// >> MaximumRelativeSlippage
+        ///  Maximum relative slippage for a single swap, measured in number of ticks.
+        /// </summary>
+        public async Task<Substrate.NetApi.Model.Types.Primitive.U32> MaximumRelativeSlippage(string blockhash, CancellationToken token)
+        {
+            string parameters = LiquidityPoolsStorage.MaximumRelativeSlippageParams();
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U32>(parameters, blockhash, token);
+            return result;
+        }
     }
     
     /// <summary>
@@ -311,6 +341,17 @@ namespace Substrate.NetApiExt.Generated.Storage
             byteArray.AddRange(call.Encode());
             byteArray.AddRange(dispatch_at.Encode());
             return new Method(35, "LiquidityPools", 8, "schedule_limit_order_update", byteArray.ToArray());
+        }
+        
+        /// <summary>
+        /// >> set_maximum_relative_slippage
+        /// Contains a variant per dispatchable extrinsic that this pallet has.
+        /// </summary>
+        public static Method SetMaximumRelativeSlippage(Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Model.Types.Primitive.U32> ticks)
+        {
+            System.Collections.Generic.List<byte> byteArray = new List<byte>();
+            byteArray.AddRange(ticks.Encode());
+            return new Method(35, "LiquidityPools", 9, "set_maximum_relative_slippage", byteArray.ToArray());
         }
     }
     

@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.btc
     
     
     /// <summary>
-    /// >> 282 - Composite[cf_chains.btc.BitcoinTransactionData]
+    /// >> 283 - Composite[cf_chains.btc.BitcoinTransactionData]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class BitcoinTransactionData : BaseType
