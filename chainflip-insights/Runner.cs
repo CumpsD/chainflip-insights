@@ -12,7 +12,8 @@ namespace ChainflipInsights
     using ChainflipInsights.Consumers.Telegram;
     using ChainflipInsights.Consumers.Twitter;
     using ChainflipInsights.Feeders.BigStakedFlip;
-    using ChainflipInsights.Feeders.BrokerOverview;
+    using ChainflipInsights.Feeders.BrokerOverview;   
+    using ChainflipInsights.Feeders.Burn;
     using ChainflipInsights.Feeders.CexMovement;
     using ChainflipInsights.Feeders.CfeVersion;
     using ChainflipInsights.Feeders.Epoch;
@@ -21,7 +22,6 @@ namespace ChainflipInsights
     using ChainflipInsights.Feeders.Liquidity;
     using ChainflipInsights.Feeders.PastVolume;
     using ChainflipInsights.Feeders.StakedFlip;
-    using ChainflipInsights.Feeders.Substrate;
     using ChainflipInsights.Feeders.Swap;
     using ChainflipInsights.Feeders.SwapLimits;
     using ChainflipInsights.Infrastructure.Pipelines;
@@ -44,7 +44,7 @@ namespace ChainflipInsights
 
         public Runner(
             ILogger<Runner> logger,
-            Pipeline<SubstrateInfo> substratePipeline,
+            Pipeline<BurnInfo> burnPipeline,
             Pipeline<SwapInfo> swapPipeline,
             Pipeline<IncomingLiquidityInfo> incomingLiquidityPipeline,
             Pipeline<EpochInfo> epochPipeline,
@@ -71,7 +71,7 @@ namespace ChainflipInsights
             _mastodonConsumer = mastodonConsumer ?? throw new ArgumentNullException(nameof(mastodonConsumer));
 
             SetupPipelines(
-                substratePipeline,
+                burnPipeline,
                 swapPipeline,
                 incomingLiquidityPipeline,
                 epochPipeline,
@@ -87,7 +87,7 @@ namespace ChainflipInsights
         }
 
         private void SetupPipelines(
-            Pipeline<SubstrateInfo> substratePipeline, 
+            Pipeline<BurnInfo> burnPipeline, 
             Pipeline<SwapInfo> swapPipeline, 
             Pipeline<IncomingLiquidityInfo> incomingLiquidityPipeline, 
             Pipeline<EpochInfo> epochPipeline, 
@@ -118,13 +118,6 @@ namespace ChainflipInsights
                     "Broadcast completed, {Status}",
                     task.Status),
                 swapPipeline.CancellationToken);
-
-            SetupFeederPipeline(
-                "Substrate",
-                substratePipeline,
-                linkOptions,
-                broadcast,
-                x => new BroadcastInfo(x));
             
             SetupFeederPipeline(
                 "Swap",
@@ -206,6 +199,13 @@ namespace ChainflipInsights
             SetupFeederPipeline(
                 "Big Staked Flip",
                 bigStakedFlipPipeline,
+                linkOptions,
+                broadcast,
+                x => new BroadcastInfo(x));
+            
+            SetupFeederPipeline(
+                "Burn",
+                burnPipeline,
                 linkOptions,
                 broadcast,
                 x => new BroadcastInfo(x));

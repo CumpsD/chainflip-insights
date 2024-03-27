@@ -3,6 +3,7 @@
 .idea/
 .ionide/
 .paket/
+.mono/
 
 [Pp]ackages/
 [Pp]aket-files/

@@ -21,6 +21,7 @@
     using ChainflipInsights.Feeders;
     using ChainflipInsights.Feeders.BigStakedFlip;
     using ChainflipInsights.Feeders.BrokerOverview;
+    using ChainflipInsights.Feeders.Burn;
     using ChainflipInsights.Feeders.CexMovement;
     using ChainflipInsights.Feeders.CfeVersion;
     using ChainflipInsights.Feeders.Epoch;
@@ -29,7 +30,6 @@
     using ChainflipInsights.Feeders.Liquidity;
     using ChainflipInsights.Feeders.PastVolume;
     using ChainflipInsights.Feeders.StakedFlip;
-    using ChainflipInsights.Feeders.Substrate;
     using ChainflipInsights.Feeders.Swap;
     using ChainflipInsights.Feeders.SwapLimits;
     using ChainflipInsights.Infrastructure;
@@ -74,7 +74,6 @@
 
             var pipelines = new IPipeline[]
             {
-                container.GetRequiredService<Pipeline<SubstrateInfo>>(),
                 container.GetRequiredService<Pipeline<SwapInfo>>(),
                 container.GetRequiredService<Pipeline<IncomingLiquidityInfo>>(),
                 container.GetRequiredService<Pipeline<EpochInfo>>(),
@@ -87,11 +86,11 @@
                 container.GetRequiredService<Pipeline<StakedFlipInfo>>(),
                 container.GetRequiredService<Pipeline<BrokerOverviewInfo>>(),
                 container.GetRequiredService<Pipeline<BigStakedFlipInfo>>(),
+                container.GetRequiredService<Pipeline<BurnInfo>>(),
             };
             
             var feeders = new IFeeder[]
             {
-                container.GetRequiredService<SubstrateFeeder>(),
                 container.GetRequiredService<SwapFeeder>(),
                 container.GetRequiredService<IncomingLiquidityFeeder>(),
                 container.GetRequiredService<EpochFeeder>(),
@@ -104,6 +103,7 @@
                 container.GetRequiredService<StakedFlipFeeder>(),
                 container.GetRequiredService<BrokerOverviewFeeder>(),
                 container.GetRequiredService<BigStakedFlipFeeder>(),
+                container.GetRequiredService<BurnFeeder>(),
             };
             
             Console.CancelKeyPress += (_, eventArgs) =>
@@ -289,7 +289,6 @@
                 .Register(_ => new MastodonClient("mastodon.social", botConfiguration.MastodonAccessToken))
                 .SingleInstance();
             
-            RegisterFeeder<SubstrateFeeder, SubstrateInfo>(builder, ct);
             RegisterFeeder<SwapFeeder, SwapInfo>(builder, ct);
             RegisterFeeder<IncomingLiquidityFeeder, IncomingLiquidityInfo>(builder, ct);
             RegisterFeeder<EpochFeeder, EpochInfo>(builder, ct);
@@ -302,7 +301,8 @@
             RegisterFeeder<StakedFlipFeeder, StakedFlipInfo>(builder, ct);
             RegisterFeeder<BrokerOverviewFeeder, BrokerOverviewInfo>(builder, ct);
             RegisterFeeder<BigStakedFlipFeeder, BigStakedFlipInfo>(builder, ct);
-            
+            RegisterFeeder<BurnFeeder, BurnInfo>(builder, ct);
+
             builder
                 .RegisterType<DiscordConsumer>()
                 .SingleInstance();

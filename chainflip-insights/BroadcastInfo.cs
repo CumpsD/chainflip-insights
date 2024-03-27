@@ -3,6 +3,7 @@ namespace ChainflipInsights
     using System;
     using ChainflipInsights.Feeders.BigStakedFlip;
     using ChainflipInsights.Feeders.BrokerOverview;
+    using ChainflipInsights.Feeders.Burn;
     using ChainflipInsights.Feeders.CexMovement;
     using ChainflipInsights.Feeders.CfeVersion;
     using ChainflipInsights.Feeders.Epoch;
@@ -11,13 +12,11 @@ namespace ChainflipInsights
     using ChainflipInsights.Feeders.PastVolume;
     using ChainflipInsights.Feeders.Redemption;
     using ChainflipInsights.Feeders.StakedFlip;
-    using ChainflipInsights.Feeders.Substrate;
     using ChainflipInsights.Feeders.Swap;
     using ChainflipInsights.Feeders.SwapLimits;
 
     public class BroadcastInfo
     {
-        public SubstrateInfo? SubstrateInfo { get; }
         public SwapInfo? SwapInfo { get; }
         public IncomingLiquidityInfo? IncomingLiquidityInfo { get; }
         public EpochInfo? EpochInfo { get; }
@@ -30,9 +29,7 @@ namespace ChainflipInsights
         public StakedFlipInfo? StakedFlipInfo { get; }
         public BrokerOverviewInfo? BrokerOverviewInfo { get; }
         public BigStakedFlipInfo? BigStakedFlipInfo { get; }
-
-        public BroadcastInfo(SubstrateInfo substrateInfo)
-            => SubstrateInfo = substrateInfo ?? throw new ArgumentNullException(nameof(substrateInfo));
+        public BurnInfo? BurnInfo { get; }
         
         public BroadcastInfo(SwapInfo swapInfo) 
             => SwapInfo = swapInfo ?? throw new ArgumentNullException(nameof(swapInfo));
@@ -69,5 +66,8 @@ namespace ChainflipInsights
 
         public BroadcastInfo(BigStakedFlipInfo bigStakedFlipInfo)
             => BigStakedFlipInfo = bigStakedFlipInfo ?? throw new ArgumentNullException(nameof(bigStakedFlipInfo));
+        
+        public BroadcastInfo(BurnInfo burnInfo)
+            => BurnInfo = burnInfo ?? throw new ArgumentNullException(nameof(burnInfo));
     }
 }

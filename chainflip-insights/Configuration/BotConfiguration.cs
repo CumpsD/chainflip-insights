@@ -7,13 +7,6 @@ namespace ChainflipInsights.Configuration
     {
         [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Convention for configuration is .Section")]
         public const string Section = "Bot";
-     
-        [Required]
-        [NotNull]
-        public bool? EnableSubstrate
-        {
-            get; init;
-        } 
         
         [Required]
         [NotNull]
@@ -95,6 +88,13 @@ namespace ChainflipInsights.Configuration
         [Required]
         [NotNull]
         public bool? EnableBigStakedFlip
+        {
+            get; init;
+        } 
+        
+        [Required]
+        [NotNull]
+        public bool? EnableBurn
         {
             get; init;
         } 
@@ -297,13 +297,6 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
-        public int? SubstrateQueryDelay
-        {
-            get; init;
-        }
-        
-        [Required]
-        [NotNull]
         public int? EpochQueryDelay
         {
             get; init;
@@ -382,6 +375,13 @@ namespace ChainflipInsights.Configuration
         [Required]
         [NotNull]
         public int? BigStakedFlipQueryDelay
+        {
+            get; init;
+        }        
+        
+        [Required]
+        [NotNull]
+        public int? BurnQueryDelay
         {
             get; init;
         }
@@ -466,6 +466,13 @@ namespace ChainflipInsights.Configuration
         [Required]
         [NotNull]
         public string? LastBigStakedFlipLocation
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public string? LastBurnLocation
         {
             get; init;
         }
@@ -830,6 +837,35 @@ namespace ChainflipInsights.Configuration
         [Required]
         [NotNull]
         public double? DiscordStakedFlipAmountThreshold
+        {
+            get; init;
+        }
+        
+        
+        [Required]
+        [NotNull]
+        public bool? MastodonBurnEnabled
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public bool? TwitterBurnEnabled
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public bool? TelegramBurnEnabled
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public bool? DiscordBurnEnabled
         {
             get; init;
         }
