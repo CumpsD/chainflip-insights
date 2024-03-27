@@ -1,0 +1,66 @@
+namespace ChainflipInsights.Consumers.FullTelegram
+{
+    using System;
+    using System.Threading;
+    using ChainflipInsights.Feeders.Burn;
+    using global::Telegram.Bot;
+    using global::Telegram.Bot.Types;
+    using global::Telegram.Bot.Types.Enums;
+    using Microsoft.Extensions.Logging;
+
+    public partial class FullTelegramConsumer
+    {
+        private void ProcessBurnInfo(
+            BurnInfo burn,
+            CancellationToken cancellationToken)
+        {
+            if (!_configuration.DiscordBurnEnabled.Value)
+            {
+                _logger.LogInformation(
+                    "Burn disabled for Full Telegram. Burn {BurnBlock} ({BurnBlockHash}) -> {BlockUrl}",
+                    burn.LastSupplyUpdateBlock,
+                    burn.LastSupplyUpdateBlockHash,
+                    $"{_configuration.ExplorerBlocksUrl}{burn.LastSupplyUpdateBlock}");
+
+                return;
+            }
+
+            try
+            {
+                _logger.LogInformation(
+                    "Announcing Burn {BurnBlock} ({BurnBlockHash}) on Full Telegram -> {BlockUrl}",
+                    burn.LastSupplyUpdateBlock,
+                    burn.LastSupplyUpdateBlockHash,
+                    $"{_configuration.ExplorerBlocksUrl}{burn.LastSupplyUpdateBlock}");
+
+                var text =
+                    burn.BurnSkipped
+                        ? $"🔥 Burn was **skipped** due to not meeting burn threshold, **{burn.FlipToBurnFormatted} FLIP** waiting to be burned! " +
+                          $"// **[view block on explorer]({_configuration.ExplorerBlocksUrl}{burn.LastSupplyUpdateBlock})**"
+                        : $"🔥 Burned **{burn.FlipBurnedFormatted} FLIP**! " +
+                          $"// **[view block on explorer]({_configuration.ExplorerBlocksUrl}{burn.LastSupplyUpdateBlock})**";
+
+                var message = _telegramClient
+                    .SendTextMessageAsync(
+                        new ChatId(_configuration.TelegramInfoChannelId.Value),
+                        text,
+                        parseMode: ParseMode.Markdown,
+                        disableNotification: true,
+                        allowSendingWithoutReply: true,
+                        cancellationToken: cancellationToken)
+                    .GetAwaiter()
+                    .GetResult();
+
+                _logger.LogInformation(
+                    "Announcing Burn {BurnBlock} ({BurnBlockHash}) on Full Telegram as Message {MessageId}",
+                    burn.LastSupplyUpdateBlock,
+                    burn.LastSupplyUpdateBlockHash,
+                    message.MessageId);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Full Telegram meh.");
+            }
+        }
+    }
+}

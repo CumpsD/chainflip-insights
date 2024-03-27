@@ -92,6 +92,9 @@ namespace ChainflipInsights.Consumers.Discord
                     
                     if (input.BigStakedFlipInfo != null)
                         ProcessBigStakedFlipInfo(input.BigStakedFlipInfo);
+                    
+                    if (input.BurnInfo != null)
+                        ProcessBurnInfo(input.BurnInfo);
                 },
                 new ExecutionDataflowBlockOptions
                 {

@@ -99,6 +99,9 @@ namespace ChainflipInsights.Consumers.Twitter
                     if (input.BigStakedFlipInfo != null)
                         ProcessBigStakedFlipInfo(input.BigStakedFlipInfo);
                     
+                    if (input.BurnInfo != null)
+                        ProcessBurnInfo(input.BurnInfo);
+                    
                     Task
                         .Delay(1500, cancellationToken)
                         .GetAwaiter()

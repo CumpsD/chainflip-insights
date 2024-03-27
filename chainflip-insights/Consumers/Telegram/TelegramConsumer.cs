@@ -84,6 +84,9 @@ namespace ChainflipInsights.Consumers.Telegram
                     if (input.BigStakedFlipInfo != null)
                         ProcessBigStakedFlipInfo(input.BigStakedFlipInfo, cancellationToken);
                     
+                    if (input.BurnInfo != null)
+                        ProcessBurnInfo(input.BurnInfo, cancellationToken);
+                    
                     Task
                         .Delay(1500, cancellationToken)
                         .GetAwaiter()
