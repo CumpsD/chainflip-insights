@@ -153,10 +153,125 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_vaults.pallet
     }
     
     /// <summary>
+    /// >> 271 - Variant[pallet_cf_vaults.pallet.Event]
+    /// The `Event` enum of this pallet
+    /// </summary>
+    public sealed class EnumEventEth : BaseEnumExt<
+        Event,
+        BaseTuple<
+            Substrate.NetApi.Model.Types.Primitive.U64, 
+            Substrate.NetApiExt.Generated.Types.Base.BTreeSetT1, 
+            Substrate.NetApi.Model.Types.Primitive.U32>, 
+        BaseTuple<
+            Substrate.NetApi.Model.Types.Primitive.U64, 
+            Substrate.NetApi.Model.Types.Primitive.U32, 
+            Substrate.NetApiExt.Generated.Model.cf_chains.evm.AggKey, 
+            Substrate.NetApiExt.Generated.Types.Base.BTreeSetT1, 
+            Substrate.NetApiExt.Generated.Types.Base.BTreeSetT1, 
+            Substrate.NetApiExt.Generated.Model.cf_chains.evm.AggKey, 
+            Substrate.NetApi.Model.Types.Primitive.U32>, 
+        BaseVoid, 
+        Substrate.NetApiExt.Generated.Model.cf_chains.evm.AggKey, 
+        Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, 
+        Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, 
+        Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, 
+        Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, 
+        Substrate.NetApi.Model.Types.Primitive.U64,
+        Substrate.NetApi.Model.Types.Primitive.U64,
+        BaseVoid, 
+        Substrate.NetApiExt.Generated.Model.cf_chains.evm.AggKey,
+        Substrate.NetApiExt.Generated.Model.cf_chains.evm.AggKey, 
+        Substrate.NetApi.Model.Types.Primitive.U64,
+        Substrate.NetApi.Model.Types.Primitive.U64,
+        Substrate.NetApi.Model.Types.Primitive.U64, 
+        Substrate.NetApi.Model.Types.Primitive.U64,
+        Substrate.NetApi.Model.Types.Primitive.U64, 
+        Substrate.NetApi.Model.Types.Primitive.U32, 
+        Substrate.NetApiExt.Generated.Model.cf_chains.evm.AggKey,
+        Substrate.NetApi.Model.Types.Primitive.U64,
+        BaseVoid>
+    {
+    }
+    
+    /// <summary>
+    /// >> 272 - Variant[pallet_cf_vaults.pallet.Event]
+    /// The `Event` enum of this pallet
+    /// </summary>
+    public sealed class EnumEventDot : BaseEnumExt<
+        Event,
+        BaseTuple<
+            Substrate.NetApi.Model.Types.Primitive.U64, 
+            Substrate.NetApiExt.Generated.Types.Base.BTreeSetT1, 
+            Substrate.NetApi.Model.Types.Primitive.U32>, 
+        BaseTuple<
+            Substrate.NetApi.Model.Types.Primitive.U64, 
+            Substrate.NetApi.Model.Types.Primitive.U32, 
+            Substrate.NetApiExt.Generated.Model.cf_chains.dot.PolkadotAccountId, 
+            Substrate.NetApiExt.Generated.Types.Base.BTreeSetT1, 
+            Substrate.NetApiExt.Generated.Types.Base.BTreeSetT1, 
+            Substrate.NetApiExt.Generated.Model.cf_chains.dot.PolkadotAccountId, 
+            Substrate.NetApi.Model.Types.Primitive.U32>, 
+        BaseVoid, 
+        Substrate.NetApiExt.Generated.Model.cf_chains.dot.PolkadotAccountId, 
+        Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, 
+        Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, 
+        Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, 
+        Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, 
+        Substrate.NetApi.Model.Types.Primitive.U64,
+        Substrate.NetApi.Model.Types.Primitive.U64,
+        BaseVoid, 
+        Substrate.NetApiExt.Generated.Model.cf_chains.dot.PolkadotAccountId,
+        Substrate.NetApiExt.Generated.Model.cf_chains.dot.PolkadotAccountId, 
+        Substrate.NetApi.Model.Types.Primitive.U64,
+        Substrate.NetApi.Model.Types.Primitive.U64,
+        Substrate.NetApi.Model.Types.Primitive.U64, 
+        Substrate.NetApi.Model.Types.Primitive.U64,
+        Substrate.NetApi.Model.Types.Primitive.U64, 
+        Substrate.NetApi.Model.Types.Primitive.U32, 
+        Substrate.NetApiExt.Generated.Model.cf_chains.dot.PolkadotAccountId,
+        Substrate.NetApi.Model.Types.Primitive.U64,
+        BaseVoid>
+    {
+    }
+    
+    /// <summary>
     /// >> 273 - Variant[pallet_cf_vaults.pallet.Event]
     /// The `Event` enum of this pallet
     /// </summary>
-    public sealed class EnumEvent : BaseEnumExt<Event, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApiExt.Generated.Types.Base.BTreeSetT1, Substrate.NetApi.Model.Types.Primitive.U32>, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApiExt.Generated.Model.cf_chains.btc.AggKey, Substrate.NetApiExt.Generated.Types.Base.BTreeSetT1, Substrate.NetApiExt.Generated.Types.Base.BTreeSetT1, Substrate.NetApiExt.Generated.Model.cf_chains.btc.AggKey, Substrate.NetApi.Model.Types.Primitive.U32>, BaseVoid, Substrate.NetApiExt.Generated.Model.cf_chains.btc.AggKey, Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApi.Model.Types.Primitive.U64, BaseVoid, Substrate.NetApiExt.Generated.Model.cf_chains.btc.AggKey, Substrate.NetApiExt.Generated.Model.cf_chains.btc.AggKey, Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApiExt.Generated.Model.cf_chains.btc.AggKey, Substrate.NetApi.Model.Types.Primitive.U64, BaseVoid>
+    public sealed class EnumEventBtc : BaseEnumExt<
+        Event,
+        BaseTuple<
+            Substrate.NetApi.Model.Types.Primitive.U64, 
+            Substrate.NetApiExt.Generated.Types.Base.BTreeSetT1, 
+            Substrate.NetApi.Model.Types.Primitive.U32>, 
+        BaseTuple<
+            Substrate.NetApi.Model.Types.Primitive.U64, 
+            Substrate.NetApi.Model.Types.Primitive.U32, 
+            Substrate.NetApiExt.Generated.Model.cf_chains.btc.AggKey, 
+            Substrate.NetApiExt.Generated.Types.Base.BTreeSetT1, 
+            Substrate.NetApiExt.Generated.Types.Base.BTreeSetT1, 
+            Substrate.NetApiExt.Generated.Model.cf_chains.btc.AggKey, 
+            Substrate.NetApi.Model.Types.Primitive.U32>, 
+        BaseVoid, 
+        Substrate.NetApiExt.Generated.Model.cf_chains.btc.AggKey, 
+        Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, 
+        Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, 
+        Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, 
+        Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, 
+        Substrate.NetApi.Model.Types.Primitive.U64,
+        Substrate.NetApi.Model.Types.Primitive.U64,
+        BaseVoid, 
+        Substrate.NetApiExt.Generated.Model.cf_chains.btc.AggKey,
+        Substrate.NetApiExt.Generated.Model.cf_chains.btc.AggKey, 
+        Substrate.NetApi.Model.Types.Primitive.U64,
+        Substrate.NetApi.Model.Types.Primitive.U64,
+        Substrate.NetApi.Model.Types.Primitive.U64, 
+        Substrate.NetApi.Model.Types.Primitive.U64,
+        Substrate.NetApi.Model.Types.Primitive.U64, 
+        Substrate.NetApi.Model.Types.Primitive.U32, 
+        Substrate.NetApiExt.Generated.Model.cf_chains.btc.AggKey,
+        Substrate.NetApi.Model.Types.Primitive.U64, 
+        BaseVoid>
     {
     }
 }

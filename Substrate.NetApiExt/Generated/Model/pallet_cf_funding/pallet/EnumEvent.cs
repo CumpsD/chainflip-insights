@@ -111,7 +111,39 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_funding.pallet
     /// >> 60 - Variant[pallet_cf_funding.pallet.Event]
     /// The `Event` enum of this pallet
     /// </summary>
-    public sealed class EnumEvent : BaseEnumExt<Event, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Types.Base.Arr32U8, Substrate.NetApi.Model.Types.Primitive.U128, Substrate.NetApi.Model.Types.Primitive.U128>, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Model.Types.Primitive.U128, Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Primitive.U64>, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Model.Types.Primitive.U128>, Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Model.primitive_types.H160, Substrate.NetApiExt.Generated.Model.primitive_types.H160, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Model.primitive_types.H160, Substrate.NetApi.Model.Types.Primitive.U128>, Substrate.NetApi.Model.Types.Primitive.U128, Substrate.NetApi.Model.Types.Primitive.U128, Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Model.primitive_types.H160>, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Model.primitive_types.H160>>
+    public sealed class EnumEvent : BaseEnumExt<
+        Event, 
+        BaseTuple<
+            Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32,
+            Substrate.NetApiExt.Generated.Types.Base.Arr32U8,
+            Substrate.NetApi.Model.Types.Primitive.U128, 
+            Substrate.NetApi.Model.Types.Primitive.U128>, 
+        BaseTuple<
+            Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, 
+            Substrate.NetApi.Model.Types.Primitive.U128, 
+            Substrate.NetApi.Model.Types.Primitive.U32, 
+            Substrate.NetApi.Model.Types.Primitive.U64>, 
+        BaseTuple<
+            Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, 
+            Substrate.NetApi.Model.Types.Primitive.U128>, 
+        Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, 
+        Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32,
+        Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32,
+        Substrate.NetApiExt.Generated.Model.primitive_types.H160, 
+        Substrate.NetApiExt.Generated.Model.primitive_types.H160, 
+        BaseTuple<
+            Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, 
+            Substrate.NetApiExt.Generated.Model.primitive_types.H160,
+            Substrate.NetApi.Model.Types.Primitive.U128>, 
+        Substrate.NetApi.Model.Types.Primitive.U128,
+        Substrate.NetApi.Model.Types.Primitive.U128, 
+        Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, 
+        BaseTuple<
+            Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, 
+            Substrate.NetApiExt.Generated.Model.primitive_types.H160>, 
+        BaseTuple<
+            Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, 
+            Substrate.NetApiExt.Generated.Model.primitive_types.H160>>
     {
     }
 }

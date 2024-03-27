@@ -32,7 +32,11 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_account_roles.pallet
     /// >> 61 - Variant[pallet_cf_account_roles.pallet.Event]
     /// The `Event` enum of this pallet
     /// </summary>
-    public sealed class EnumEvent : BaseEnumExt<Event, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Model.cf_primitives.EnumAccountRole>>
+    public sealed class EnumEvent : BaseEnumExt<
+        Event, 
+        BaseTuple<
+            Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, 
+            Substrate.NetApiExt.Generated.Model.cf_primitives.EnumAccountRole>>
     {
     }
 }

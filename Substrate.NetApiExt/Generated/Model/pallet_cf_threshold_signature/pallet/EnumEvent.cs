@@ -68,10 +68,10 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_threshold_signature.pall
     }
     
     /// <summary>
-    /// >> 277 - Variant[pallet_cf_threshold_signature.pallet.Event]
+    /// >> 274 - Variant[pallet_cf_threshold_signature.pallet.Event]
     /// The `Event` enum of this pallet
     /// </summary>
-    public sealed class EnumEvent : BaseEnumExt<
+    public sealed class EnumEventEth : BaseEnumExt<
         Event, 
         BaseTuple<
             Substrate.NetApi.Model.Types.Primitive.U32, 
@@ -91,7 +91,87 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_threshold_signature.pall
         BaseTuple<
             Substrate.NetApi.Model.Types.Primitive.U32,
             Substrate.NetApi.Model.Types.Primitive.U64, 
-            Substrate.NetApiExt.Generated.Types.Base.EnumResult>, 
+            Substrate.NetApiExt.Generated.Types.Base.EnumDispatchResult>, 
+        BaseTuple<
+            Substrate.NetApi.Model.Types.Primitive.U32, 
+            Substrate.NetApi.Model.Types.Primitive.U64>, 
+        BaseTuple<
+            Substrate.NetApi.Model.Types.Primitive.U32,
+            Substrate.NetApi.Model.Types.Primitive.U64, 
+            Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>, 
+        BaseTuple<
+            Substrate.NetApi.Model.Types.Primitive.U32, 
+            Substrate.NetApi.Model.Types.Primitive.U32>, 
+        Substrate.NetApi.Model.Types.Primitive.U32>
+    {
+    }
+    
+    /// <summary>
+    /// >> 276 - Variant[pallet_cf_threshold_signature.pallet.Event]
+    /// The `Event` enum of this pallet
+    /// </summary>
+    public sealed class EnumEventDot : BaseEnumExt<
+        Event, 
+        BaseTuple<
+            Substrate.NetApi.Model.Types.Primitive.U32, 
+            Substrate.NetApi.Model.Types.Primitive.U64, 
+            Substrate.NetApi.Model.Types.Primitive.U32, 
+            Substrate.NetApiExt.Generated.Model.cf_chains.dot.PolkadotAccountId, 
+            Substrate.NetApiExt.Generated.Types.Base.BTreeSetT1, 
+            Substrate.NetApiExt.Generated.Model.cf_chains.dot.EncodedPolkadotPayload>, 
+        BaseTuple<
+            Substrate.NetApi.Model.Types.Primitive.U32, 
+            Substrate.NetApi.Model.Types.Primitive.U64, 
+            Substrate.NetApi.Model.Types.Base.BaseVec<
+                Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>>, 
+        BaseTuple<
+            Substrate.NetApi.Model.Types.Primitive.U32, 
+            Substrate.NetApi.Model.Types.Primitive.U64>, 
+        BaseTuple<
+            Substrate.NetApi.Model.Types.Primitive.U32,
+            Substrate.NetApi.Model.Types.Primitive.U64, 
+            Substrate.NetApiExt.Generated.Types.Base.EnumDispatchResult>, 
+        BaseTuple<
+            Substrate.NetApi.Model.Types.Primitive.U32, 
+            Substrate.NetApi.Model.Types.Primitive.U64>, 
+        BaseTuple<
+            Substrate.NetApi.Model.Types.Primitive.U32,
+            Substrate.NetApi.Model.Types.Primitive.U64, 
+            Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>, 
+        BaseTuple<
+            Substrate.NetApi.Model.Types.Primitive.U32, 
+            Substrate.NetApi.Model.Types.Primitive.U32>, 
+        Substrate.NetApi.Model.Types.Primitive.U32>
+    {
+    }
+    
+    /// <summary>
+    /// >> 277 - Variant[pallet_cf_threshold_signature.pallet.Event]
+    /// The `Event` enum of this pallet
+    /// </summary>
+    public sealed class EnumEventBtc : BaseEnumExt<
+        Event, 
+        BaseTuple<
+            Substrate.NetApi.Model.Types.Primitive.U32, 
+            Substrate.NetApi.Model.Types.Primitive.U64, 
+            Substrate.NetApi.Model.Types.Primitive.U32, 
+            Substrate.NetApiExt.Generated.Model.cf_chains.btc.AggKey, 
+            Substrate.NetApiExt.Generated.Types.Base.BTreeSetT1, 
+            Substrate.NetApi.Model.Types.Base.BaseVec<
+                Substrate.NetApi.Model.Types.Base.BaseTuple<
+                    Substrate.NetApiExt.Generated.Model.cf_chains.btc.EnumPreviousOrCurrent>>>, 
+        BaseTuple<
+            Substrate.NetApi.Model.Types.Primitive.U32, 
+            Substrate.NetApi.Model.Types.Primitive.U64, 
+            Substrate.NetApi.Model.Types.Base.BaseVec<
+                Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>>, 
+        BaseTuple<
+            Substrate.NetApi.Model.Types.Primitive.U32, 
+            Substrate.NetApi.Model.Types.Primitive.U64>, 
+        BaseTuple<
+            Substrate.NetApi.Model.Types.Primitive.U32,
+            Substrate.NetApi.Model.Types.Primitive.U64, 
+            Substrate.NetApiExt.Generated.Types.Base.EnumDispatchResult>, 
         BaseTuple<
             Substrate.NetApi.Model.Types.Primitive.U32, 
             Substrate.NetApi.Model.Types.Primitive.U64>, 

@@ -34,7 +34,12 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_transaction_payment.pallet
     /// >> 63 - Variant[pallet_transaction_payment.pallet.Event]
     /// The `Event` enum of this pallet
     /// </summary>
-    public sealed class EnumEvent : BaseEnumExt<Event, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Model.Types.Primitive.U128, Substrate.NetApi.Model.Types.Primitive.U128>>
+    public sealed class EnumEvent : BaseEnumExt<
+        Event, 
+        BaseTuple<
+            Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32,
+            Substrate.NetApi.Model.Types.Primitive.U128, 
+            Substrate.NetApi.Model.Types.Primitive.U128>>
     {
     }
 }

@@ -2386,13 +2386,13 @@
                       fields: [
                         {
                           name: who
-                          type: 53
+                          type: 53 (pallet_cf_flip.imbalances.ImbalanceSource)
                           typeName: ImbalanceSource<T::AccountId>
                           docs: []
                         }
                         {
                           name: remaining_imbalance
-                          type: 55
+                          type: 55 (U128)
                           typeName: T::Balance
                           docs: []
                         }
@@ -2413,7 +2413,7 @@
                         }
                         {
                           name: amount
-                          type: 55
+                          type: 55 (U128)
                           typeName: T::Balance
                           docs: []
                         }
@@ -2432,7 +2432,7 @@
                         }
                         {
                           name: dust_burned
-                          type: 55
+                          type: 55 (U128)
                           typeName: T::Balance
                           docs: []
                         }
@@ -2445,7 +2445,7 @@
                       fields: [
                         {
                           name: slashing_rate
-                          type: 56
+                          type: 56 (sp_arithmetic.per_things.Permill)
                           typeName: Permill
                           docs: []
                         }
@@ -2694,7 +2694,7 @@
                         }
                         {
                           name: amount
-                          type: 55
+                          type: 55 (U128)
                           typeName: T::FlipBalance
                           docs: []
                         }
@@ -2709,13 +2709,13 @@
                       fields: [
                         {
                           name: amount
-                          type: 55
+                          type: 55 (U128)
                           typeName: AssetAmount
                           docs: []
                         }
                         {
                           name: egress_id
-                          type: 58
+                          type: 58 (Tuple<cf_primitives.chains.ForeignChain, U64>)
                           typeName: EgressId
                           docs: []
                         }
@@ -2832,13 +2832,13 @@
                         }
                         {
                           name: funds_added
-                          type: 55
+                          type: 55 (U128)
                           typeName: FlipBalance<T>
                           docs: []
                         }
                         {
                           name: total_balance
-                          type: 55
+                          type: 55 (U128)
                           typeName: FlipBalance<T>
                           docs: []
                         }
@@ -2859,7 +2859,7 @@
                         }
                         {
                           name: amount
-                          type: 55
+                          type: 55 (U128)
                           typeName: FlipBalance<T>
                           docs: []
                         }
@@ -2890,7 +2890,7 @@
                         }
                         {
                           name: null
-                          type: 55
+                          type: 55 (U128)
                           typeName: FlipBalance<T>
                           docs: []
                         }
@@ -2993,7 +2993,7 @@
                         }
                         {
                           name: amount
-                          type: 55
+                          type: 55 (U128)
                           typeName: FlipBalance<T>
                           docs: []
                         }
@@ -3008,7 +3008,7 @@
                       fields: [
                         {
                           name: new_minimum
-                          type: 55
+                          type: 55 (U128)
                           typeName: T::Amount
                           docs: []
                         }
@@ -3023,7 +3023,7 @@
                       fields: [
                         {
                           name: amount
-                          type: 55
+                          type: 55 (U128)
                           typeName: T::Amount
                           docs: []
                         }
@@ -3126,7 +3126,7 @@
                         }
                         {
                           name: role
-                          type: 62
+                          type: 62 (cf_primitives.AccountRole)
                           typeName: AccountRole
                           docs: []
                         }
@@ -3211,13 +3211,13 @@
                         }
                         {
                           name: actual_fee
-                          type: 55
+                          type: 55 (U128)
                           typeName: BalanceOf<T>
                           docs: []
                         }
                         {
                           name: tip
-                          type: 55
+                          type: 55 (U128)
                           typeName: BalanceOf<T>
                           docs: []
                         }
@@ -3258,7 +3258,7 @@
                       fields: [
                         {
                           name: call_hash
-                          type: 65
+                          type: 65 (pallet_cf_witnesser.pallet.CallHash)
                           typeName: CallHash
                           docs: []
                         }
@@ -3279,7 +3279,7 @@
                       fields: [
                         {
                           name: call
-                          type: 66
+                          type: 66 (state_chain_runtime.RuntimeCall)
                           typeName: <T as Config>::RuntimeCall
                           docs: []
                         }
@@ -4203,7 +4203,7 @@
                       fields: [
                         {
                           name: slashing_rate
-                          type: 56
+                          type: 56 (sp_arithmetic.per_things.Permill)
                           typeName: Permill
                           docs: []
                         }
@@ -4319,7 +4319,7 @@
                         }
                         {
                           name: amount
-                          type: 55
+                          type: 55 (U128)
                           typeName: FlipBalance<T>
                           docs: []
                         }
@@ -4379,7 +4379,7 @@
                         }
                         {
                           name: redeemed_amount
-                          type: 55
+                          type: 55 (U128)
                           typeName: FlipBalance<T>
                           docs: []
                         }
@@ -4437,7 +4437,7 @@
                       fields: [
                         {
                           name: minimum_funding
-                          type: 55
+                          type: 55 (U128)
                           typeName: T::Amount
                           docs: []
                         }
@@ -4488,7 +4488,7 @@
                       fields: [
                         {
                           name: amount
-                          type: 55
+                          type: 55 (U128)
                           typeName: T::Amount
                           docs: []
                         }
@@ -4532,7 +4532,7 @@
               params: [
                 {
                   name: T
-                  type: 55
+                  type: 55 (U128)
                 }
               ]
               def: {
@@ -4549,7 +4549,7 @@
                       fields: [
                         {
                           name: null
-                          type: 55
+                          type: 55 (U128)
                           typeName: T
                           docs: []
                         }
@@ -4652,7 +4652,7 @@
                         }
                         {
                           name: role
-                          type: 62
+                          type: 62 (cf_primitives.AccountRole)
                           typeName: AccountRole
                           docs: []
                         }
@@ -4692,7 +4692,7 @@
                       fields: [
                         {
                           name: call
-                          type: 66
+                          type: 66 (state_chain_runtime.RuntimeCall)
                           typeName: Box<<T as Config>::RuntimeCall>
                           docs: []
                         }
@@ -4713,7 +4713,7 @@
                       fields: [
                         {
                           name: call
-                          type: 66
+                          type: 66 (state_chain_runtime.RuntimeCall)
                           typeName: Box<<T as Config>::RuntimeCall>
                           docs: []
                         }
@@ -4734,7 +4734,7 @@
                       fields: [
                         {
                           name: call
-                          type: 66
+                          type: 66 (state_chain_runtime.RuntimeCall)
                           typeName: Box<<T as Config>::RuntimeCall>
                           docs: []
                         }
@@ -4774,7 +4774,7 @@
                       fields: [
                         {
                           name: update
-                          type: 85
+                          type: 85 (pallet_cf_validator.PalletConfigUpdate)
                           typeName: PalletConfigUpdate
                           docs: []
                         }
@@ -4818,19 +4818,19 @@
                       fields: [
                         {
                           name: peer_id
-                          type: 93
+                          type: 93 (sp_core.ed25519.Public)
                           typeName: Ed25519PublicKey
                           docs: []
                         }
                         {
                           name: port
-                          type: 94
+                          type: 94 (U16)
                           typeName: Port
                           docs: []
                         }
                         {
                           name: ip_address
-                          type: 55
+                          type: 55 (U128)
                           typeName: Ipv6Addr
                           docs: []
                         }
@@ -4851,7 +4851,7 @@
                       fields: [
                         {
                           name: new_version
-                          type: 88
+                          type: 88 (cf_primitives.SemVer)
                           typeName: Version
                           docs: []
                         }
@@ -4999,7 +4999,7 @@
                       fields: [
                         {
                           name: version
-                          type: 88
+                          type: 88 (cf_primitives.SemVer)
                           typeName: SemVer
                           docs: []
                         }
@@ -5214,7 +5214,7 @@
                   fields: [
                     {
                       name: null
-                      type: 93
+                      type: 93 (sp_core.ed25519.Public)
                       typeName: ed25519::Public
                       docs: []
                     }
@@ -5273,7 +5273,7 @@
                   fields: [
                     {
                       name: null
-                      type: 96
+                      type: 96 (Arr64U8)
                       typeName: [u8; 64]
                       docs: []
                     }
@@ -5822,7 +5822,7 @@
                       fields: [
                         {
                           name: call
-                          type: 66
+                          type: 66 (state_chain_runtime.RuntimeCall)
                           typeName: Box<<T as Config>::RuntimeCall>
                           docs: []
                         }
@@ -5843,7 +5843,7 @@
                       fields: [
                         {
                           name: accounts
-                          type: 111
+                          type: 111 (Vec<sp_core.crypto.AccountId32>)
                           typeName: Vec<T::AccountId>
                           docs: []
                         }
@@ -5894,7 +5894,7 @@
                       fields: [
                         {
                           name: call
-                          type: 66
+                          type: 66 (state_chain_runtime.RuntimeCall)
                           typeName: Box<<T as Config>::RuntimeCall>
                           docs: []
                         }
@@ -5924,7 +5924,7 @@
                       fields: [
                         {
                           name: call
-                          type: 66
+                          type: 66 (state_chain_runtime.RuntimeCall)
                           typeName: Box<<T as Config>::RuntimeCall>
                           docs: []
                         }
@@ -6125,7 +6125,7 @@
                       fields: [
                         {
                           name: null
-                          type: 59
+                          type: 59 (cf_primitives.chains.ForeignChain)
                           typeName: ForeignChain
                           docs: []
                         }
@@ -6380,7 +6380,7 @@
                       fields: [
                         {
                           name: new_chain_state
-                          type: 121
+                          type: 121 (cf_chains.ChainStateT1)
                           typeName: ChainState<T::TargetChain>
                           docs: []
                         }
@@ -6422,7 +6422,7 @@
                     }
                     {
                       name: tracked_data
-                      type: 123
+                      type: 123 (cf_chains.eth.EthereumTrackedData)
                       typeName: C::TrackedData
                       docs: []
                     }
@@ -6463,13 +6463,13 @@
                   fields: [
                     {
                       name: base_fee
-                      type: 55
+                      type: 55 (U128)
                       typeName: <Ethereum as Chain>::ChainAmount
                       docs: []
                     }
                     {
                       name: priority_fee
-                      type: 55
+                      type: 55 (U128)
                       typeName: <Ethereum as Chain>::ChainAmount
                       docs: []
                     }
@@ -6505,7 +6505,7 @@
                       fields: [
                         {
                           name: new_chain_state
-                          type: 125
+                          type: 125 (cf_chains.ChainStateT2)
                           typeName: ChainState<T::TargetChain>
                           docs: []
                         }
@@ -6547,7 +6547,7 @@
                     }
                     {
                       name: tracked_data
-                      type: 127
+                      type: 127 (cf_chains.dot.PolkadotTrackedData)
                       typeName: C::TrackedData
                       docs: []
                     }
@@ -6588,13 +6588,13 @@
                   fields: [
                     {
                       name: median_tip
-                      type: 55
+                      type: 55 (U128)
                       typeName: PolkadotBalance
                       docs: []
                     }
                     {
                       name: runtime_version
-                      type: 128
+                      type: 128 (cf_chains.dot.RuntimeVersion)
                       typeName: RuntimeVersion
                       docs: []
                     }
@@ -6660,7 +6660,7 @@
                       fields: [
                         {
                           name: new_chain_state
-                          type: 130
+                          type: 130 (cf_chains.ChainStateT3)
                           typeName: ChainState<T::TargetChain>
                           docs: []
                         }
@@ -6702,7 +6702,7 @@
                     }
                     {
                       name: tracked_data
-                      type: 132
+                      type: 132 (cf_chains.btc.BitcoinTrackedData)
                       typeName: C::TrackedData
                       docs: []
                     }
@@ -6743,7 +6743,7 @@
                   fields: [
                     {
                       name: btc_fee_info
-                      type: 133
+                      type: 133 (cf_chains.btc.BitcoinFeeInfo)
                       typeName: BitcoinFeeInfo
                       docs: []
                     }
@@ -6962,7 +6962,7 @@
                       fields: [
                         {
                           name: amount_to_slash
-                          type: 55
+                          type: 55 (U128)
                           typeName: FlipBalance
                           docs: []
                         }
@@ -7108,7 +7108,7 @@
                   fields: [
                     {
                       name: null
-                      type: 111
+                      type: 111 (Vec<sp_core.crypto.AccountId32>)
                       typeName: null
                       docs: []
                     }
@@ -7303,7 +7303,7 @@
                       fields: [
                         {
                           name: amount_to_slash
-                          type: 55
+                          type: 55 (U128)
                           typeName: FlipBalance
                           docs: []
                         }
@@ -7557,7 +7557,7 @@
                       fields: [
                         {
                           name: amount_to_slash
-                          type: 55
+                          type: 55 (U128)
                           typeName: FlipBalance
                           docs: []
                         }
@@ -7658,7 +7658,7 @@
                         }
                         {
                           name: signature
-                          type: 144
+                          type: 144 (cf_chains.evm.SchnorrVerificationComponents)
                           typeName: SignatureFor<T, I>
                           docs: []
                         }
@@ -7774,7 +7774,7 @@
                         }
                         {
                           name: signature
-                          type: 146
+                          type: 146 (cf_chains.dot.PolkadotSignature)
                           typeName: SignatureFor<T, I>
                           docs: []
                         }
@@ -7866,7 +7866,7 @@
                   fields: [
                     {
                       name: null
-                      type: 96
+                      type: 96 (Arr64U8)
                       typeName: [u8; 64]
                       docs: []
                     }
@@ -7908,7 +7908,7 @@
                         }
                         {
                           name: signature
-                          type: 149
+                          type: 149 (BaseVec<Arr64U8>)
                           typeName: SignatureFor<T, I>
                           docs: []
                         }
@@ -7969,7 +7969,7 @@
               params: []
               def: {
                 Sequence: {
-                  type: 96
+                  type: 96 (Arr64U8)
                 }
               }
               docs: []
@@ -8061,7 +8061,7 @@
                       fields: [
                         {
                           name: tx_out_id
-                          type: 144
+                          type: 144 (cf_chains.evm.SchnorrVerificationComponents)
                           typeName: TransactionOutIdFor<T, I>
                           docs: []
                         }
@@ -9046,7 +9046,7 @@
                     }
                     {
                       name: amount
-                      type: 55
+                      type: 55 (U128)
                       typeName: AssetAmount
                       docs: []
                     }
@@ -9132,7 +9132,7 @@
                     }
                     {
                       name: gas_budget
-                      type: 55
+                      type: 55 (U128)
                       typeName: <Ethereum as Chain>::ChainAmount
                       docs: []
                     }
@@ -9230,13 +9230,13 @@
                   fields: [
                     {
                       name: effective_gas_price
-                      type: 55
+                      type: 55 (U128)
                       typeName: EthAmount
                       docs: []
                     }
                     {
                       name: gas_used
-                      type: 55
+                      type: 55 (U128)
                       typeName: u128
                       docs: []
                     }
@@ -9375,7 +9375,7 @@
                         }
                         {
                           name: threshold_signature_payload
-                          type: 185
+                          type: 185 (cf_chains.dot.EncodedPolkadotPayload)
                           typeName: PayloadFor<T, I>
                           docs: []
                         }
@@ -9414,7 +9414,7 @@
                       fields: [
                         {
                           name: tx_out_id
-                          type: 146
+                          type: 146 (cf_chains.dot.PolkadotSignature)
                           typeName: TransactionOutIdFor<T, I>
                           docs: []
                         }
@@ -9426,7 +9426,7 @@
                         }
                         {
                           name: tx_fee
-                          type: 55
+                          type: 55 (U128)
                           typeName: TransactionFeeFor<T, I>
                           docs: []
                         }
@@ -9871,7 +9871,7 @@
               params: []
               def: {
                 Compact: {
-                  type: 55
+                  type: 55 (U128)
                 }
               }
               docs: []
@@ -9907,7 +9907,7 @@
                       fields: [
                         {
                           name: index
-                          type: 94
+                          type: 94 (U16)
                           typeName: u16
                           docs: []
                         }
@@ -10076,7 +10076,7 @@
                         }
                         {
                           name: index
-                          type: 94
+                          type: 94 (U16)
                           typeName: u16
                           docs: []
                         }
@@ -10101,7 +10101,7 @@
                         }
                         {
                           name: index
-                          type: 94
+                          type: 94 (U16)
                           typeName: u16
                           docs: []
                         }
@@ -10373,7 +10373,7 @@
               params: [
                 {
                   name: T
-                  type: 146
+                  type: 146 (cf_chains.dot.PolkadotSignature)
                 }
               ]
               def: {
@@ -10390,7 +10390,7 @@
                       fields: [
                         {
                           name: null
-                          type: 146
+                          type: 146 (cf_chains.dot.PolkadotSignature)
                           typeName: null
                           docs: []
                         }
@@ -10708,7 +10708,7 @@
                     }
                     {
                       name: signatures
-                      type: 149
+                      type: 149 (BaseVec<Arr64U8>)
                       typeName: Vec<Signature>
                       docs: []
                     }
@@ -11225,7 +11225,7 @@
                         }
                         {
                           name: broker_commission_bps
-                          type: 94
+                          type: 94 (U16)
                           typeName: BasisPoints
                           docs: []
                         }
@@ -11279,7 +11279,7 @@
                         }
                         {
                           name: deposit_amount
-                          type: 55
+                          type: 55 (U128)
                           typeName: AssetAmount
                           docs: []
                         }
@@ -11312,7 +11312,7 @@
                         }
                         {
                           name: deposit_amount
-                          type: 55
+                          type: 55 (U128)
                           typeName: AssetAmount
                           docs: []
                         }
@@ -11549,7 +11549,7 @@
                     }
                     {
                       name: gas_budget
-                      type: 55
+                      type: 55 (U128)
                       typeName: AssetAmount
                       docs: []
                     }
@@ -11644,7 +11644,7 @@
                   fields: [
                     {
                       name: source_chain
-                      type: 59
+                      type: 59 (cf_primitives.chains.ForeignChain)
                       typeName: ForeignChain
                       docs: []
                     }
@@ -11772,7 +11772,7 @@
               params: [
                 {
                   name: T
-                  type: 55
+                  type: 55 (U128)
                 }
               ]
               def: {
@@ -11789,7 +11789,7 @@
                       fields: [
                         {
                           name: null
-                          type: 55
+                          type: 55 (U128)
                           typeName: null
                           docs: []
                         }
@@ -11840,7 +11840,7 @@
                       fields: [
                         {
                           name: amount
-                          type: 55
+                          type: 55 (U128)
                           typeName: AssetAmount
                           docs: []
                         }
@@ -11982,7 +11982,7 @@
                         }
                         {
                           name: minimum_deposit
-                          type: 55
+                          type: 55 (U128)
                           typeName: TargetChainAmount<T, I>
                           docs: []
                         }
@@ -12003,7 +12003,7 @@
                         }
                         {
                           name: amount
-                          type: 55
+                          type: 55 (U128)
                           typeName: TargetChainAmount<T, I>
                           docs: []
                         }
@@ -12086,7 +12086,7 @@
                     }
                     {
                       name: amount
-                      type: 55
+                      type: 55 (U128)
                       typeName: C::ChainAmount
                       docs: []
                     }
@@ -12191,7 +12191,7 @@
                         }
                         {
                           name: minimum_deposit
-                          type: 55
+                          type: 55 (U128)
                           typeName: TargetChainAmount<T, I>
                           docs: []
                         }
@@ -12212,7 +12212,7 @@
                         }
                         {
                           name: amount
-                          type: 55
+                          type: 55 (U128)
                           typeName: TargetChainAmount<T, I>
                           docs: []
                         }
@@ -12334,7 +12334,7 @@
                     }
                     {
                       name: amount
-                      type: 55
+                      type: 55 (U128)
                       typeName: C::ChainAmount
                       docs: []
                     }
@@ -12821,7 +12821,7 @@
                         }
                         {
                           name: sell_amount
-                          type: 55
+                          type: 55 (U128)
                           typeName: AssetAmount
                           docs: []
                         }
@@ -13060,7 +13060,7 @@
                       fields: [
                         {
                           name: liquidity
-                          type: 55
+                          type: 55 (U128)
                           typeName: Liquidity
                           docs: []
                         }
@@ -13084,7 +13084,7 @@
               params: [
                 {
                   name: S
-                  type: 55
+                  type: 55 (U128)
                 }
               ]
               def: {
@@ -13092,13 +13092,13 @@
                   fields: [
                     {
                       name: base
-                      type: 55
+                      type: 55 (U128)
                       typeName: S
                       docs: []
                     }
                     {
                       name: quote
-                      type: 55
+                      type: 55 (U128)
                       typeName: S
                       docs: []
                     }
@@ -13189,7 +13189,7 @@
               params: [
                 {
                   name: T
-                  type: 55
+                  type: 55 (U128)
                 }
               ]
               def: {
@@ -13200,7 +13200,7 @@
                       fields: [
                         {
                           name: null
-                          type: 55
+                          type: 55 (U128)
                           typeName: T
                           docs: []
                         }
@@ -13213,7 +13213,7 @@
                       fields: [
                         {
                           name: null
-                          type: 55
+                          type: 55 (U128)
                           typeName: T
                           docs: []
                         }
@@ -13312,7 +13312,7 @@
                       fields: [
                         {
                           name: new_phase
-                          type: 259
+                          type: 259 (pallet_cf_validator.RotationPhase)
                           typeName: RotationPhase<T>
                           docs: []
                         }
@@ -13333,13 +13333,13 @@
                         }
                         {
                           name: old_version
-                          type: 88
+                          type: 88 (cf_primitives.SemVer)
                           typeName: Version
                           docs: []
                         }
                         {
                           name: new_version
-                          type: 88
+                          type: 88 (cf_primitives.SemVer)
                           typeName: Version
                           docs: []
                         }
@@ -13360,19 +13360,19 @@
                         }
                         {
                           name: null
-                          type: 93
+                          type: 93 (sp_core.ed25519.Public)
                           typeName: Ed25519PublicKey
                           docs: []
                         }
                         {
                           name: null
-                          type: 94
+                          type: 94 (U16)
                           typeName: Port
                           docs: []
                         }
                         {
                           name: null
-                          type: 55
+                          type: 55 (U128)
                           typeName: Ipv6Addr
                           docs: []
                         }
@@ -13394,7 +13394,7 @@
                         }
                         {
                           name: null
-                          type: 93
+                          type: 93 (sp_core.ed25519.Public)
                           typeName: Ed25519PublicKey
                           docs: []
                         }
@@ -13430,13 +13430,13 @@
                       fields: [
                         {
                           name: null
-                          type: 111
+                          type: 111 (Vec<sp_core.crypto.AccountId32>)
                           typeName: Vec<ValidatorIdOf<T>>
                           docs: []
                         }
                         {
                           name: null
-                          type: 55
+                          type: 55 (U128)
                           typeName: T::Amount
                           docs: []
                         }
@@ -13451,7 +13451,7 @@
                       fields: [
                         {
                           name: update
-                          type: 85
+                          type: 85 (pallet_cf_validator.PalletConfigUpdate)
                           typeName: PalletConfigUpdate
                           docs: []
                         }
@@ -13577,7 +13577,7 @@
                 }
                 {
                   name: Amount
-                  type: 55
+                  type: 55 (U128)
                 }
               ]
               def: {
@@ -13585,13 +13585,13 @@
                   fields: [
                     {
                       name: primary_candidates
-                      type: 111
+                      type: 111 (Vec<sp_core.crypto.AccountId32>)
                       typeName: Vec<Id>
                       docs: []
                     }
                     {
                       name: secondary_candidates
-                      type: 111
+                      type: 111 (Vec<sp_core.crypto.AccountId32>)
                       typeName: Vec<Id>
                       docs: []
                     }
@@ -13603,7 +13603,7 @@
                     }
                     {
                       name: bond
-                      type: 55
+                      type: 55 (U128)
                       typeName: Amount
                       docs: []
                     }
@@ -13981,7 +13981,7 @@
                       fields: [
                         {
                           name: chain
-                          type: 59
+                          type: 59 (cf_primitives.chains.ForeignChain)
                           typeName: ForeignChain
                           docs: []
                         }
@@ -14002,7 +14002,7 @@
                       fields: [
                         {
                           name: chain
-                          type: 59
+                          type: 59 (cf_primitives.chains.ForeignChain)
                           typeName: ForeignChain
                           docs: []
                         }
@@ -14167,7 +14167,7 @@
                       fields: [
                         {
                           name: new_chain_state
-                          type: 121
+                          type: 121 (cf_chains.ChainStateT1)
                           typeName: ChainState<T::TargetChain>
                           docs: []
                         }
@@ -14211,7 +14211,7 @@
                       fields: [
                         {
                           name: new_chain_state
-                          type: 125
+                          type: 125 (cf_chains.ChainStateT2)
                           typeName: ChainState<T::TargetChain>
                           docs: []
                         }
@@ -14255,7 +14255,7 @@
                       fields: [
                         {
                           name: new_chain_state
-                          type: 130
+                          type: 130 (cf_chains.ChainStateT3)
                           typeName: ChainState<T::TargetChain>
                           docs: []
                         }
@@ -15509,7 +15509,7 @@
                         }
                         {
                           name: offenders
-                          type: 111
+                          type: 111 (Vec<sp_core.crypto.AccountId32>)
                           typeName: Vec<T::ValidatorId>
                           docs: []
                         }
@@ -15760,7 +15760,7 @@
                         }
                         {
                           name: payload
-                          type: 185
+                          type: 185 (cf_chains.dot.EncodedPolkadotPayload)
                           typeName: PayloadFor<T, I>
                           docs: []
                         }
@@ -15785,7 +15785,7 @@
                         }
                         {
                           name: offenders
-                          type: 111
+                          type: 111 (Vec<sp_core.crypto.AccountId32>)
                           typeName: Vec<T::ValidatorId>
                           docs: []
                         }
@@ -16010,7 +16010,7 @@
                         }
                         {
                           name: offenders
-                          type: 111
+                          type: 111 (Vec<sp_core.crypto.AccountId32>)
                           typeName: Vec<T::ValidatorId>
                           docs: []
                         }
@@ -16192,13 +16192,13 @@
                         }
                         {
                           name: transaction_payload
-                          type: 279
+                          type: 279 (cf_chains.evm.Transaction)
                           typeName: TransactionFor<T, I>
                           docs: []
                         }
                         {
                           name: transaction_out_id
-                          type: 144
+                          type: 144 (cf_chains.evm.SchnorrVerificationComponents)
                           typeName: TransactionOutIdFor<T, I>
                           docs: []
                         }
@@ -16270,7 +16270,7 @@
                         }
                         {
                           name: transaction_out_id
-                          type: 144
+                          type: 144 (cf_chains.evm.SchnorrVerificationComponents)
                           typeName: TransactionOutIdFor<T, I>
                           docs: []
                         }
@@ -16328,7 +16328,7 @@
                         }
                         {
                           name: amount
-                          type: 55
+                          type: 55 (U128)
                           typeName: ChainAmountFor<T, I>
                           docs: []
                         }
@@ -16474,13 +16474,13 @@
                         }
                         {
                           name: transaction_payload
-                          type: 281
+                          type: 281 (cf_chains.dot.PolkadotTransactionData)
                           typeName: TransactionFor<T, I>
                           docs: []
                         }
                         {
                           name: transaction_out_id
-                          type: 146
+                          type: 146 (cf_chains.dot.PolkadotSignature)
                           typeName: TransactionOutIdFor<T, I>
                           docs: []
                         }
@@ -16552,7 +16552,7 @@
                         }
                         {
                           name: transaction_out_id
-                          type: 146
+                          type: 146 (cf_chains.dot.PolkadotSignature)
                           typeName: TransactionOutIdFor<T, I>
                           docs: []
                         }
@@ -16610,7 +16610,7 @@
                         }
                         {
                           name: amount
-                          type: 55
+                          type: 55 (U128)
                           typeName: ChainAmountFor<T, I>
                           docs: []
                         }
@@ -16980,7 +16980,7 @@
                         }
                         {
                           name: broker_commission_rate
-                          type: 94
+                          type: 94 (U16)
                           typeName: BasisPoints
                           docs: []
                         }
@@ -17019,7 +17019,7 @@
                         }
                         {
                           name: deposit_amount
-                          type: 55
+                          type: 55 (U128)
                           typeName: AssetAmount
                           docs: []
                         }
@@ -17076,13 +17076,13 @@
                         }
                         {
                           name: deposit_amount
-                          type: 55
+                          type: 55 (U128)
                           typeName: AssetAmount
                           docs: []
                         }
                         {
                           name: swap_input
-                          type: 55
+                          type: 55 (U128)
                           typeName: AssetAmount
                           docs: []
                         }
@@ -17094,13 +17094,13 @@
                         }
                         {
                           name: egress_amount
-                          type: 55
+                          type: 55 (U128)
                           typeName: AssetAmount
                           docs: []
                         }
                         {
                           name: swap_output
-                          type: 55
+                          type: 55 (U128)
                           typeName: AssetAmount
                           docs: []
                         }
@@ -17127,7 +17127,7 @@
                         }
                         {
                           name: egress_id
-                          type: 58
+                          type: 58 (Tuple<cf_primitives.chains.ForeignChain, U64>)
                           typeName: EgressId
                           docs: []
                         }
@@ -17139,13 +17139,13 @@
                         }
                         {
                           name: amount
-                          type: 55
+                          type: 55 (U128)
                           typeName: AssetAmount
                           docs: []
                         }
                         {
                           name: fee
-                          type: 55
+                          type: 55 (U128)
                           typeName: AssetAmount
                           docs: []
                         }
@@ -17160,19 +17160,19 @@
                       fields: [
                         {
                           name: egress_id
-                          type: 58
+                          type: 58 (Tuple<cf_primitives.chains.ForeignChain, U64>)
                           typeName: EgressId
                           docs: []
                         }
                         {
                           name: egress_amount
-                          type: 55
+                          type: 55 (U128)
                           typeName: AssetAmount
                           docs: []
                         }
                         {
                           name: egress_fee
-                          type: 55
+                          type: 55 (U128)
                           typeName: AssetAmount
                           docs: []
                         }
@@ -17205,7 +17205,7 @@
                         }
                         {
                           name: amount
-                          type: 55
+                          type: 55 (U128)
                           typeName: AssetAmount
                           docs: []
                         }
@@ -17227,7 +17227,7 @@
                         }
                         {
                           name: egress_id
-                          type: 58
+                          type: 58 (Tuple<cf_primitives.chains.ForeignChain, U64>)
                           typeName: EgressId
                           docs: []
                         }
@@ -17258,7 +17258,7 @@
                         }
                         {
                           name: deposit_amount
-                          type: 55
+                          type: 55 (U128)
                           typeName: AssetAmount
                           docs: []
                         }
@@ -17345,13 +17345,13 @@
                         }
                         {
                           name: total_amount
-                          type: 55
+                          type: 55 (U128)
                           typeName: AssetAmount
                           docs: []
                         }
                         {
                           name: confiscated_amount
-                          type: 55
+                          type: 55 (U128)
                           typeName: AssetAmount
                           docs: []
                         }
@@ -17376,7 +17376,7 @@
                         }
                         {
                           name: amount
-                          type: 55
+                          type: 55 (U128)
                           typeName: AssetAmount
                           docs: []
                         }
@@ -17641,7 +17641,7 @@
                         }
                         {
                           name: amount_debited
-                          type: 55
+                          type: 55 (U128)
                           typeName: AssetAmount
                           docs: []
                         }
@@ -17666,7 +17666,7 @@
                         }
                         {
                           name: amount_credited
-                          type: 55
+                          type: 55 (U128)
                           typeName: AssetAmount
                           docs: []
                         }
@@ -17716,7 +17716,7 @@
                       fields: [
                         {
                           name: egress_id
-                          type: 58
+                          type: 58 (Tuple<cf_primitives.chains.ForeignChain, U64>)
                           typeName: EgressId
                           docs: []
                         }
@@ -17728,7 +17728,7 @@
                         }
                         {
                           name: amount
-                          type: 55
+                          type: 55 (U128)
                           typeName: AssetAmount
                           docs: []
                         }
@@ -17740,7 +17740,7 @@
                         }
                         {
                           name: fee
-                          type: 55
+                          type: 55 (U128)
                           typeName: AssetAmount
                           docs: []
                         }
@@ -17759,7 +17759,7 @@
                         }
                         {
                           name: chain
-                          type: 59
+                          type: 59 (cf_primitives.chains.ForeignChain)
                           typeName: ForeignChain
                           docs: []
                         }
@@ -17790,7 +17790,7 @@
                         }
                         {
                           name: amount_credited
-                          type: 55
+                          type: 55 (U128)
                           typeName: AssetAmount
                           docs: []
                         }
@@ -17844,7 +17844,7 @@
                         }
                         {
                           name: amount
-                          type: 55
+                          type: 55 (U128)
                           typeName: TargetChainAmount<T, I>
                           docs: []
                         }
@@ -17856,7 +17856,7 @@
                         }
                         {
                           name: ingress_fee
-                          type: 55
+                          type: 55 (U128)
                           typeName: TargetChainAmount<T, I>
                           docs: []
                         }
@@ -17900,7 +17900,7 @@
                         }
                         {
                           name: egress_id
-                          type: 58
+                          type: 58 (Tuple<cf_primitives.chains.ForeignChain, U64>)
                           typeName: EgressId
                           docs: []
                         }
@@ -17913,7 +17913,7 @@
                       fields: [
                         {
                           name: egress_id
-                          type: 58
+                          type: 58 (Tuple<cf_primitives.chains.ForeignChain, U64>)
                           typeName: EgressId
                           docs: []
                         }
@@ -17976,7 +17976,7 @@
                         }
                         {
                           name: minimum_deposit
-                          type: 55
+                          type: 55 (U128)
                           typeName: TargetChainAmount<T, I>
                           docs: []
                         }
@@ -18001,7 +18001,7 @@
                         }
                         {
                           name: amount
-                          type: 55
+                          type: 55 (U128)
                           typeName: TargetChainAmount<T, I>
                           docs: []
                         }
@@ -18034,7 +18034,7 @@
                         }
                         {
                           name: amount
-                          type: 55
+                          type: 55 (U128)
                           typeName: TargetChainAmount<T, I>
                           docs: []
                         }
@@ -18229,7 +18229,7 @@
               params: []
               def: {
                 Sequence: {
-                  type: 58
+                  type: 58 (Tuple<cf_primitives.chains.ForeignChain, U64>)
                 }
               }
               docs: []
@@ -18302,7 +18302,7 @@
                         }
                         {
                           name: amount
-                          type: 55
+                          type: 55 (U128)
                           typeName: TargetChainAmount<T, I>
                           docs: []
                         }
@@ -18314,7 +18314,7 @@
                         }
                         {
                           name: ingress_fee
-                          type: 55
+                          type: 55 (U128)
                           typeName: TargetChainAmount<T, I>
                           docs: []
                         }
@@ -18358,7 +18358,7 @@
                         }
                         {
                           name: egress_id
-                          type: 58
+                          type: 58 (Tuple<cf_primitives.chains.ForeignChain, U64>)
                           typeName: EgressId
                           docs: []
                         }
@@ -18371,7 +18371,7 @@
                       fields: [
                         {
                           name: egress_id
-                          type: 58
+                          type: 58 (Tuple<cf_primitives.chains.ForeignChain, U64>)
                           typeName: EgressId
                           docs: []
                         }
@@ -18434,7 +18434,7 @@
                         }
                         {
                           name: minimum_deposit
-                          type: 55
+                          type: 55 (U128)
                           typeName: TargetChainAmount<T, I>
                           docs: []
                         }
@@ -18459,7 +18459,7 @@
                         }
                         {
                           name: amount
-                          type: 55
+                          type: 55 (U128)
                           typeName: TargetChainAmount<T, I>
                           docs: []
                         }
@@ -18492,7 +18492,7 @@
                         }
                         {
                           name: amount
-                          type: 55
+                          type: 55 (U128)
                           typeName: TargetChainAmount<T, I>
                           docs: []
                         }
@@ -18700,7 +18700,7 @@
                         }
                         {
                           name: egress_id
-                          type: 58
+                          type: 58 (Tuple<cf_primitives.chains.ForeignChain, U64>)
                           typeName: EgressId
                           docs: []
                         }
@@ -18713,7 +18713,7 @@
                       fields: [
                         {
                           name: egress_id
-                          type: 58
+                          type: 58 (Tuple<cf_primitives.chains.ForeignChain, U64>)
                           typeName: EgressId
                           docs: []
                         }
@@ -19050,7 +19050,7 @@
                         }
                         {
                           name: liquidity_total
-                          type: 55
+                          type: 55 (U128)
                           typeName: Liquidity
                           docs: []
                         }
@@ -19115,19 +19115,19 @@
                         }
                         {
                           name: sell_amount_total
-                          type: 55
+                          type: 55 (U128)
                           typeName: AssetAmount
                           docs: []
                         }
                         {
                           name: collected_fees
-                          type: 55
+                          type: 55 (U128)
                           typeName: AssetAmount
                           docs: []
                         }
                         {
                           name: bought_amount
-                          type: 55
+                          type: 55 (U128)
                           typeName: AssetAmount
                           docs: []
                         }
@@ -19144,7 +19144,7 @@
                       fields: [
                         {
                           name: fee_amount
-                          type: 55
+                          type: 55 (U128)
                           typeName: AssetAmount
                           docs: []
                         }
@@ -19169,13 +19169,13 @@
                         }
                         {
                           name: input_amount
-                          type: 55
+                          type: 55 (U128)
                           typeName: AssetAmount
                           docs: []
                         }
                         {
                           name: output_amount
-                          type: 55
+                          type: 55 (U128)
                           typeName: AssetAmount
                           docs: []
                         }
@@ -19394,7 +19394,7 @@
                   fields: [
                     {
                       name: liquidity
-                      type: 55
+                      type: 55 (U128)
                       typeName: Liquidity
                       docs: []
                     }
@@ -20099,7 +20099,7 @@
               params: [
                 {
                   name: Amount
-                  type: 55
+                  type: 55 (U128)
                 }
               ]
               def: {
@@ -20107,13 +20107,13 @@
                   fields: [
                     {
                       name: balance
-                      type: 55
+                      type: 55 (U128)
                       typeName: Amount
                       docs: []
                     }
                     {
                       name: bond
-                      type: 55
+                      type: 55 (U128)
                       typeName: Amount
                       docs: []
                     }
@@ -20231,7 +20231,7 @@
               params: [
                 {
                   name: FlipBalance
-                  type: 55
+                  type: 55 (U128)
                 }
               ]
               def: {
@@ -20239,13 +20239,13 @@
                   fields: [
                     {
                       name: total
-                      type: 55
+                      type: 55 (U128)
                       typeName: FlipBalance
                       docs: []
                     }
                     {
                       name: restricted
-                      type: 55
+                      type: 55 (U128)
                       typeName: FlipBalance
                       docs: []
                     }
@@ -20274,7 +20274,7 @@
                 }
                 {
                   name: V
-                  type: 55
+                  type: 55 (U128)
                 }
               ]
               def: {
@@ -20543,7 +20543,7 @@
                   fields: [
                     {
                       name: null
-                      type: 55
+                      type: 55 (U128)
                       typeName: u128
                       docs: []
                     }
@@ -20789,7 +20789,7 @@
                 }
                 {
                   name: V
-                  type: 55
+                  type: 55 (U128)
                 }
               ]
               def: {
@@ -23709,11 +23709,11 @@
               params: [
                 {
                   name: T
-                  type: 144
+                  type: 144 (cf_chains.evm.SchnorrVerificationComponents)
                 }
                 {
                   name: E
-                  type: 111
+                  type: 111 (Vec<sp_core.crypto.AccountId32>)
                 }
               ]
               def: {
@@ -23724,7 +23724,7 @@
                       fields: [
                         {
                           name: null
-                          type: 144
+                          type: 144 (cf_chains.evm.SchnorrVerificationComponents)
                           typeName: null
                           docs: []
                         }
@@ -23737,7 +23737,7 @@
                       fields: [
                         {
                           name: null
-                          type: 111
+                          type: 111 (Vec<sp_core.crypto.AccountId32>)
                           typeName: null
                           docs: []
                         }
@@ -23930,7 +23930,7 @@
                     }
                     {
                       name: payload
-                      type: 185
+                      type: 185 (cf_chains.dot.EncodedPolkadotPayload)
                       typeName: PayloadFor<T, I>
                       docs: []
                     }
@@ -24106,11 +24106,11 @@
               params: [
                 {
                   name: T
-                  type: 146
+                  type: 146 (cf_chains.dot.PolkadotSignature)
                 }
                 {
                   name: E
-                  type: 111
+                  type: 111 (Vec<sp_core.crypto.AccountId32>)
                 }
               ]
               def: {
@@ -24121,7 +24121,7 @@
                       fields: [
                         {
                           name: null
-                          type: 146
+                          type: 146 (cf_chains.dot.PolkadotSignature)
                           typeName: null
                           docs: []
                         }
@@ -24134,7 +24134,7 @@
                       fields: [
                         {
                           name: null
-                          type: 111
+                          type: 111 (Vec<sp_core.crypto.AccountId32>)
                           typeName: null
                           docs: []
                         }
@@ -24490,11 +24490,11 @@
               params: [
                 {
                   name: T
-                  type: 149
+                  type: 149 (BaseVec<Arr64U8>)
                 }
                 {
                   name: E
-                  type: 111
+                  type: 111 (Vec<sp_core.crypto.AccountId32>)
                 }
               ]
               def: {
@@ -24505,7 +24505,7 @@
                       fields: [
                         {
                           name: null
-                          type: 149
+                          type: 149 (BaseVec<Arr64U8>)
                           typeName: null
                           docs: []
                         }
@@ -24518,7 +24518,7 @@
                       fields: [
                         {
                           name: null
-                          type: 111
+                          type: 111 (Vec<sp_core.crypto.AccountId32>)
                           typeName: null
                           docs: []
                         }
@@ -24623,7 +24623,7 @@
                     }
                     {
                       name: transaction_payload
-                      type: 279
+                      type: 279 (cf_chains.evm.Transaction)
                       typeName: TransactionFor<T, I>
                       docs: []
                     }
@@ -24635,7 +24635,7 @@
                     }
                     {
                       name: transaction_out_id
-                      type: 144
+                      type: 144 (cf_chains.evm.SchnorrVerificationComponents)
                       typeName: TransactionOutIdFor<T, I>
                       docs: []
                     }
@@ -24855,19 +24855,19 @@
                     }
                     {
                       name: transaction_payload
-                      type: 281
+                      type: 281 (cf_chains.dot.PolkadotTransactionData)
                       typeName: TransactionFor<T, I>
                       docs: []
                     }
                     {
                       name: threshold_signature_payload
-                      type: 185
+                      type: 185 (cf_chains.dot.EncodedPolkadotPayload)
                       typeName: PayloadFor<T, I>
                       docs: []
                     }
                     {
                       name: transaction_out_id
-                      type: 146
+                      type: 146 (cf_chains.dot.PolkadotSignature)
                       typeName: TransactionOutIdFor<T, I>
                       docs: []
                     }
@@ -25118,7 +25118,7 @@
                     }
                     {
                       name: amount
-                      type: 55
+                      type: 55 (U128)
                       typeName: AssetAmount
                       docs: []
                     }
@@ -25185,7 +25185,7 @@
                     }
                     {
                       name: deposit_amount
-                      type: 55
+                      type: 55 (U128)
                       typeName: AssetAmount
                       docs: []
                     }
@@ -25637,7 +25637,7 @@
                         }
                         {
                           name: broker_commission_bps
-                          type: 94
+                          type: 94 (U16)
                           typeName: BasisPoints
                           docs: []
                         }
@@ -25741,7 +25741,7 @@
                         }
                         {
                           name: amount
-                          type: 55
+                          type: 55 (U128)
                           typeName: C::ChainAmount
                           docs: []
                         }
@@ -25754,7 +25754,7 @@
                       fields: [
                         {
                           name: egress_id
-                          type: 58
+                          type: 58 (Tuple<cf_primitives.chains.ForeignChain, U64>)
                           typeName: EgressId
                           docs: []
                         }
@@ -25772,7 +25772,7 @@
                         }
                         {
                           name: amount
-                          type: 55
+                          type: 55 (U128)
                           typeName: C::ChainAmount
                           docs: []
                         }
@@ -25907,7 +25907,7 @@
                   fields: [
                     {
                       name: egress_id
-                      type: 58
+                      type: 58 (Tuple<cf_primitives.chains.ForeignChain, U64>)
                       typeName: EgressId
                       docs: []
                     }
@@ -25919,7 +25919,7 @@
                     }
                     {
                       name: amount
-                      type: 55
+                      type: 55 (U128)
                       typeName: C::ChainAmount
                       docs: []
                     }
@@ -25937,7 +25937,7 @@
                     }
                     {
                       name: source_chain
-                      type: 59
+                      type: 59 (cf_primitives.chains.ForeignChain)
                       typeName: ForeignChain
                       docs: []
                     }
@@ -25955,7 +25955,7 @@
                     }
                     {
                       name: gas_budget
-                      type: 55
+                      type: 55 (U128)
                       typeName: C::ChainAmount
                       docs: []
                     }
@@ -26030,13 +26030,13 @@
                   fields: [
                     {
                       name: unfetched
-                      type: 55
+                      type: 55 (U128)
                       typeName: TargetChainAmount<T, I>
                       docs: []
                     }
                     {
                       name: fetched
-                      type: 55
+                      type: 55 (U128)
                       typeName: TargetChainAmount<T, I>
                       docs: []
                     }
@@ -26325,7 +26325,7 @@
                         }
                         {
                           name: amount
-                          type: 55
+                          type: 55 (U128)
                           typeName: C::ChainAmount
                           docs: []
                         }
@@ -26338,7 +26338,7 @@
                       fields: [
                         {
                           name: egress_id
-                          type: 58
+                          type: 58 (Tuple<cf_primitives.chains.ForeignChain, U64>)
                           typeName: EgressId
                           docs: []
                         }
@@ -26356,7 +26356,7 @@
                         }
                         {
                           name: amount
-                          type: 55
+                          type: 55 (U128)
                           typeName: C::ChainAmount
                           docs: []
                         }
@@ -26401,7 +26401,7 @@
                   fields: [
                     {
                       name: egress_id
-                      type: 58
+                      type: 58 (Tuple<cf_primitives.chains.ForeignChain, U64>)
                       typeName: EgressId
                       docs: []
                     }
@@ -26413,7 +26413,7 @@
                     }
                     {
                       name: amount
-                      type: 55
+                      type: 55 (U128)
                       typeName: C::ChainAmount
                       docs: []
                     }
@@ -26431,7 +26431,7 @@
                     }
                     {
                       name: source_chain
-                      type: 59
+                      type: 59 (cf_primitives.chains.ForeignChain)
                       typeName: ForeignChain
                       docs: []
                     }
@@ -26449,7 +26449,7 @@
                     }
                     {
                       name: gas_budget
-                      type: 55
+                      type: 55 (U128)
                       typeName: C::ChainAmount
                       docs: []
                     }
@@ -26482,13 +26482,13 @@
                   fields: [
                     {
                       name: unfetched
-                      type: 55
+                      type: 55 (U128)
                       typeName: TargetChainAmount<T, I>
                       docs: []
                     }
                     {
                       name: fetched
-                      type: 55
+                      type: 55 (U128)
                       typeName: TargetChainAmount<T, I>
                       docs: []
                     }
@@ -26773,7 +26773,7 @@
                       fields: [
                         {
                           name: egress_id
-                          type: 58
+                          type: 58 (Tuple<cf_primitives.chains.ForeignChain, U64>)
                           typeName: EgressId
                           docs: []
                         }
@@ -26900,7 +26900,7 @@
                   fields: [
                     {
                       name: egress_id
-                      type: 58
+                      type: 58 (Tuple<cf_primitives.chains.ForeignChain, U64>)
                       typeName: EgressId
                       docs: []
                     }
@@ -26930,7 +26930,7 @@
                     }
                     {
                       name: source_chain
-                      type: 59
+                      type: 59 (cf_primitives.chains.ForeignChain)
                       typeName: ForeignChain
                       docs: []
                     }
@@ -27546,7 +27546,7 @@
                     }
                     {
                       name: next_pool_instance
-                      type: 55
+                      type: 55 (U128)
                       typeName: u128
                       docs: []
                     }
@@ -27666,7 +27666,7 @@
                   fields: [
                     {
                       name: pool_instance
-                      type: 55
+                      type: 55 (U128)
                       typeName: u128
                       docs: []
                     }
@@ -27839,7 +27839,7 @@
                   fields: [
                     {
                       name: pool_instance
-                      type: 55
+                      type: 55 (U128)
                       typeName: u128
                       docs: []
                     }
@@ -27972,7 +27972,7 @@
                     }
                     {
                       name: current_liquidity
-                      type: 55
+                      type: 55 (U128)
                       typeName: Liquidity
                       docs: []
                     }
@@ -28069,7 +28069,7 @@
                     }
                     {
                       name: liquidity_gross
-                      type: 55
+                      type: 55 (U128)
                       typeName: u128
                       docs: []
                     }
@@ -28183,7 +28183,7 @@
                   fields: [
                     {
                       name: liquidity
-                      type: 55
+                      type: 55 (U128)
                       typeName: Liquidity
                       docs: []
                     }
@@ -28642,19 +28642,19 @@
                         }
                         {
                           name: pubkey
-                          type: 93
+                          type: 93 (sp_core.ed25519.Public)
                           typeName: Ed25519PublicKey
                           docs: []
                         }
                         {
                           name: port
-                          type: 94
+                          type: 94 (U16)
                           typeName: Port
                           docs: []
                         }
                         {
                           name: ip
-                          type: 55
+                          type: 55 (U128)
                           typeName: Ipv6Addr
                           docs: []
                         }
@@ -28673,7 +28673,7 @@
                         }
                         {
                           name: pubkey
-                          type: 93
+                          type: 93 (sp_core.ed25519.Public)
                           typeName: Ed25519PublicKey
                           docs: []
                         }
@@ -28789,7 +28789,7 @@
                     }
                     {
                       name: payload
-                      type: 185
+                      type: 185 (cf_chains.dot.EncodedPolkadotPayload)
                       typeName: C::Payload
                       docs: []
                     }
@@ -28997,7 +28997,7 @@
                     }
                     {
                       name: payload
-                      type: 279
+                      type: 279 (cf_chains.evm.Transaction)
                       typeName: C::Transaction
                       docs: []
                     }
@@ -29041,7 +29041,7 @@
                     }
                     {
                       name: payload
-                      type: 281
+                      type: 281 (cf_chains.dot.PolkadotTransactionData)
                       typeName: C::Transaction
                       docs: []
                     }
@@ -29111,7 +29111,7 @@
                 }
                 {
                   name: Call
-                  type: 66
+                  type: 66 (state_chain_runtime.RuntimeCall)
                 }
                 {
                   name: Signature
@@ -33177,7 +33177,7 @@
             }
             {
               name: SS58Prefix
-              type: 94
+              type: 94 (U16)
               value: 0x4008
               docs: [
                  The designated SS58 prefix of this chain.
@@ -33424,7 +33424,7 @@
           constants: [
             {
               name: CurrentReleaseVersion
-              type: 88
+              type: 88 (cf_primitives.SemVer)
               value: 0x010201
               docs: [
                  Used to access the current Chainflip runtime's release version (distinct from the
@@ -34892,7 +34892,7 @@
             }
             {
               name: ProposalFee
-              type: 55
+              type: 55 (U128)
               value: 0x0000a0dec5adc9353600000000000000
               docs: [
                  The cost of a proposal in FLIPPERINOS.
@@ -37827,7 +37827,7 @@
           constants: [
             {
               name: NetworkFee
-              type: 56
+              type: 56 (sp_arithmetic.per_things.Permill)
               value: 0xe8030000
               docs: []
             }

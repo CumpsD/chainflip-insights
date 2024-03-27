@@ -63,7 +63,18 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_environment.pallet
     /// >> 28 - Variant[pallet_cf_environment.pallet.Event]
     /// The `Event` enum of this pallet
     /// </summary>
-    public sealed class EnumEvent : BaseEnumExt<Event, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.eth.EnumAsset, Substrate.NetApiExt.Generated.Model.primitive_types.H160>, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.eth.EnumAsset, Substrate.NetApiExt.Generated.Model.primitive_types.H160>, Substrate.NetApiExt.Generated.Model.cf_chains.dot.PolkadotAccountId, Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApiExt.Generated.Model.pallet_cf_environment.EnumSafeModeUpdate, Substrate.NetApiExt.Generated.Model.cf_chains.btc.ConsolidationParameters>
+    public sealed class EnumEvent : BaseEnumExt<
+        Event, 
+        BaseTuple<
+            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.eth.EnumAsset, 
+            Substrate.NetApiExt.Generated.Model.primitive_types.H160>, 
+        BaseTuple<
+            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.eth.EnumAsset, 
+            Substrate.NetApiExt.Generated.Model.primitive_types.H160>, 
+        Substrate.NetApiExt.Generated.Model.cf_chains.dot.PolkadotAccountId, 
+        Substrate.NetApi.Model.Types.Primitive.U64, 
+        Substrate.NetApiExt.Generated.Model.pallet_cf_environment.EnumSafeModeUpdate, 
+        Substrate.NetApiExt.Generated.Model.cf_chains.btc.ConsolidationParameters>
     {
     }
 }

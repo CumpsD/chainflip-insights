@@ -30,10 +30,32 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_chain_tracking.pallet
     }
     
     /// <summary>
+    /// >> 268 - Variant[pallet_cf_chain_tracking.pallet.Event]
+    /// The `Event` enum of this pallet
+    /// </summary>
+    public sealed class EnumEventEth : BaseEnumExt<
+        Event, 
+        Substrate.NetApiExt.Generated.Model.cf_chains.ChainStateT1>
+    {
+    }
+    
+    /// <summary>
+    /// >> 269 - Variant[pallet_cf_chain_tracking.pallet.Event]
+    /// The `Event` enum of this pallet
+    /// </summary>
+    public sealed class EnumEventDot : BaseEnumExt<
+        Event, 
+        Substrate.NetApiExt.Generated.Model.cf_chains.ChainStateT2>
+    {
+    }
+    
+    /// <summary>
     /// >> 270 - Variant[pallet_cf_chain_tracking.pallet.Event]
     /// The `Event` enum of this pallet
     /// </summary>
-    public sealed class EnumEvent : BaseEnumExt<Event, Substrate.NetApiExt.Generated.Model.cf_chains.ChainStateT3>
+    public sealed class EnumEventBtc : BaseEnumExt<
+        Event, 
+        Substrate.NetApiExt.Generated.Model.cf_chains.ChainStateT3>
     {
     }
 }

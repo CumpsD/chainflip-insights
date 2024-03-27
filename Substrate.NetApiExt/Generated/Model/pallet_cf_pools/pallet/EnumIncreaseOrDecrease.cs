@@ -31,11 +31,17 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_pools.pallet
         /// </summary>
         Decrease = 1,
     }
-    
+
     /// <summary>
     /// >> 299 - Variant[pallet_cf_pools.pallet.IncreaseOrDecrease]
     /// </summary>
-    public sealed class EnumIncreaseOrDecrease : BaseEnumExt<IncreaseOrDecrease, Substrate.NetApiExt.Generated.Model.pallet_cf_pools.pallet.RangeOrderChange, Substrate.NetApiExt.Generated.Model.pallet_cf_pools.pallet.RangeOrderChange>
+    public sealed class EnumIncreaseOrDecrease : BaseEnumExt<
+        IncreaseOrDecrease,
+        Substrate.NetApi.Model.Types.Primitive.U128,
+        Substrate.NetApi.Model.Types.Primitive.U128
+    //     Substrate.NetApiExt.Generated.Model.pallet_cf_pools.pallet.RangeOrderChange,
+    //     Substrate.NetApiExt.Generated.Model.pallet_cf_pools.pallet.RangeOrderChange
+     >
     {
     }
 }

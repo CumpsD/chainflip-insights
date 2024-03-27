@@ -418,7 +418,7 @@ namespace Substrate.NetApiExt.Generated.Storage
         /// >> report_keygen_outcome
         /// Contains a variant per dispatchable extrinsic that this pallet has.
         /// </summary>
-        public static Method ReportKeygenOutcome(Substrate.NetApi.Model.Types.Primitive.U64 ceremony_id, Substrate.NetApiExt.Generated.Types.Base.EnumResult reported_outcome)
+        public static Method ReportKeygenOutcome(Substrate.NetApi.Model.Types.Primitive.U64 ceremony_id, Substrate.NetApiExt.Generated.Types.Base.EnumDispatchResult reported_outcome)
         {
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
             byteArray.AddRange(ceremony_id.Encode());
@@ -430,7 +430,7 @@ namespace Substrate.NetApiExt.Generated.Storage
         /// >> report_key_handover_outcome
         /// Contains a variant per dispatchable extrinsic that this pallet has.
         /// </summary>
-        public static Method ReportKeyHandoverOutcome(Substrate.NetApi.Model.Types.Primitive.U64 ceremony_id, Substrate.NetApiExt.Generated.Types.Base.EnumResult reported_outcome)
+        public static Method ReportKeyHandoverOutcome(Substrate.NetApi.Model.Types.Primitive.U64 ceremony_id, Substrate.NetApiExt.Generated.Types.Base.EnumDispatchResult reported_outcome)
         {
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
             byteArray.AddRange(ceremony_id.Encode());

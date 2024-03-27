@@ -48,7 +48,18 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_flip.pallet
     /// >> 52 - Variant[pallet_cf_flip.pallet.Event]
     /// The `Event` enum of this pallet
     /// </summary>
-    public sealed class EnumEvent : BaseEnumExt<Event, BaseTuple<Substrate.NetApiExt.Generated.Model.pallet_cf_flip.imbalances.EnumImbalanceSource, Substrate.NetApi.Model.Types.Primitive.U128>, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Model.Types.Primitive.U128>, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Model.Types.Primitive.U128>, Substrate.NetApiExt.Generated.Model.sp_arithmetic.per_things.Permill>
+    public sealed class EnumEvent : BaseEnumExt<
+        Event, 
+        BaseTuple<
+            Substrate.NetApiExt.Generated.Model.pallet_cf_flip.imbalances.EnumImbalanceSource, 
+            Substrate.NetApi.Model.Types.Primitive.U128>, 
+        BaseTuple<
+            Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, 
+            Substrate.NetApi.Model.Types.Primitive.U128>, 
+        BaseTuple<
+            Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, 
+            Substrate.NetApi.Model.Types.Primitive.U128>,
+        Substrate.NetApiExt.Generated.Model.sp_arithmetic.per_things.Permill>
     {
     }
 }

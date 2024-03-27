@@ -11,10 +11,13 @@ namespace ChainflipInsights.Feeders.Substrate
     using global::Substrate.NetApi.Model.Extrinsics;
     using global::Substrate.NetApiExt.Generated;
     using global::Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any;
+    using global::Substrate.NetApiExt.Generated.Model.pallet_cf_emissions.pallet;
+    using global::Substrate.NetApiExt.Generated.Model.state_chain_runtime;
     using global::Substrate.NetApiExt.Generated.Storage;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
     using Nethereum.Util;
+    using Constants = ChainflipInsights.Feeders.Constants;
 
     public class SubstrateFeeder : IFeeder
     {
@@ -126,7 +129,8 @@ namespace ChainflipInsights.Feeders.Substrate
                 lastSupplyUpdateBlock.Value);
             
             var lastSupplyUpdateBlockHash = await client.SystemStorage.BlockHash(lastSupplyUpdateBlock, null, cancellationToken);
-            var lastBurnBlockHash = Utils.Bytes2HexString(lastSupplyUpdateBlockHash.Bytes).ToLowerInvariant();
+            var lastBurnBlockHash = "0xfbb8ed3b4ad94846840b8dd27739ae2bfac4d7bad65b1d5242fd7dbe37a75c31";
+            // Utils.Bytes2HexString(lastSupplyUpdateBlockHash.Bytes).ToLowerInvariant();
             _logger.LogInformation(
                 "[Substrate] Supply was last updated at block hash {LastSupplyUpdateBlockHash}",
                 lastBurnBlockHash);
@@ -161,11 +165,25 @@ namespace ChainflipInsights.Feeders.Substrate
             var lastBurnBlock = await client.SystemStorage.Events(
                 lastBurnBlockHash,
                 cancellationToken);
-            // _logger.LogInformation(
-            //     "[Substrate] Last burn amount was {BurnAmount}",
-            //     lastBurnBlock
-            //         .Value
-            //         .First(x => x.Event.ToString()));
+            var emissions = lastBurnBlock
+                .Value
+                .First(x =>
+                    x.Event.Value == RuntimeEvent.Emissions && 
+                    ((EnumEvent)x.Event.Value2).Value == Event.NetworkFeeBurned);
+            
+            var burnEvent = (EnumEvent)emissions.Event.Value2;
+            var burnData = (global::Substrate.NetApi.Model.Types.Base.BaseTuple<
+                global::Substrate.NetApi.Model.Types.Primitive.U128,
+                global::Substrate.NetApi.Model.Types.Base.BaseTuple<
+                    global::Substrate.NetApiExt.Generated.Model.cf_primitives.chains.EnumForeignChain,
+                    global::Substrate.NetApi.Model.Types.Primitive.U64>>)burnEvent.Value2;
+
+            var flip = Constants.SupportedAssets[Constants.FLIP];
+            var flipBurned = Convert.ToDouble(burnData.Value.First().ToString()) / Math.Pow(10, flip.Decimals);
+            
+            _logger.LogInformation(
+                "[Substrate] Last burn amount was {BurnAmount} FLIP",
+                Math.Round(flipBurned, 8).ToString(flip.FormatString));
         }
     }
 }

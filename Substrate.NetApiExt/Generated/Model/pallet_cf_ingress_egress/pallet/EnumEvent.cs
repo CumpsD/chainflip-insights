@@ -98,12 +98,187 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.pallet
         /// </summary>
         UtxoConsolidation = 13,
     }
-    
+
+    /// <summary>
+    /// >> 291 - Variant[pallet_cf_ingress_egress.pallet.Event]
+    /// The `Event` enum of this pallet
+    /// </summary>
+    public sealed class EnumEventEth : BaseEnumExt<
+        Event,
+        BaseTuple<
+            Substrate.NetApiExt.Generated.Model.primitive_types.H160,
+            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.eth.EnumAsset,
+            Substrate.NetApi.Model.Types.Primitive.U128,
+            Substrate.NetApi.Model.Types.Base.BaseTuple,
+            Substrate.NetApi.Model.Types.Primitive.U128,
+            Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.pallet.EnumDepositAction>,
+        BaseTuple<
+            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.eth.EnumAsset,
+            Substrate.NetApi.Model.Types.Primitive.Bool>,
+        BaseTuple<
+            Substrate.NetApi.Model.Types.Primitive.U32,
+            Substrate.NetApi.Model.Types.Base.BaseTuple<
+                Substrate.NetApiExt.Generated.Model.cf_primitives.chains.EnumForeignChain,
+                Substrate.NetApi.Model.Types.Primitive.U64>>,
+        BaseTuple<
+            Substrate.NetApi.Model.Types.Base.BaseTuple<
+                Substrate.NetApiExt.Generated.Model.cf_primitives.chains.EnumForeignChain,
+                Substrate.NetApi.Model.Types.Primitive.U64>,
+            Substrate.NetApiExt.Generated.Model.sp_runtime.EnumDispatchError>,
+        BaseTuple<
+            Substrate.NetApi.Model.Types.Primitive.U64,
+            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.eth.EnumAsset>,
+        BaseTuple<
+            Substrate.NetApi.Model.Types.Primitive.U32,
+            Substrate.NetApi.Model.Types.Base.BaseVec<
+                Substrate.NetApi.Model.Types.Base.BaseTuple<
+                    Substrate.NetApiExt.Generated.Model.cf_primitives.chains.EnumForeignChain,
+                    Substrate.NetApi.Model.Types.Primitive.U64>>>,
+        BaseTuple<
+            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.eth.EnumAsset,
+            Substrate.NetApi.Model.Types.Primitive.U128>,
+        BaseTuple<
+            Substrate.NetApiExt.Generated.Model.primitive_types.H160,
+            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.eth.EnumAsset,
+            Substrate.NetApi.Model.Types.Primitive.U128,
+            Substrate.NetApi.Model.Types.Base.BaseTuple,
+            Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.EnumDepositIgnoredReason>,
+        BaseTuple<
+            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.eth.EnumAsset,
+            Substrate.NetApi.Model.Types.Primitive.U128,
+            Substrate.NetApiExt.Generated.Model.primitive_types.H160,
+            Substrate.NetApi.Model.Types.Primitive.U32>,
+        BaseTuple<
+            Substrate.NetApiExt.Generated.Model.sp_runtime.EnumDispatchError,
+            Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.pallet.DepositWitnessT1>,
+        Substrate.NetApi.Model.Types.Primitive.U32,
+        BaseTuple<
+            Substrate.NetApi.Model.Types.Primitive.U32,
+            Substrate.NetApi.Model.Types.Primitive.U32>,
+        Substrate.NetApi.Model.Types.Primitive.U32,
+        Substrate.NetApi.Model.Types.Primitive.U32>
+    {
+    }
+        
+    /// <summary>
+    /// >> 295 - Variant[pallet_cf_ingress_egress.pallet.Event]
+    /// The `Event` enum of this pallet
+    /// </summary>
+    public sealed class EnumEventDot : BaseEnumExt<
+        Event,
+        BaseTuple<
+            Substrate.NetApiExt.Generated.Model.cf_chains.dot.PolkadotAccountId,
+            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.dot.EnumAsset,
+            Substrate.NetApi.Model.Types.Primitive.U128,
+            Substrate.NetApi.Model.Types.Base.BaseTuple,
+            Substrate.NetApi.Model.Types.Primitive.U128,
+            Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.pallet.EnumDepositAction>,
+        BaseTuple<
+            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.dot.EnumAsset,
+            Substrate.NetApi.Model.Types.Primitive.Bool>,
+        BaseTuple<
+            Substrate.NetApi.Model.Types.Primitive.U32,
+            Substrate.NetApi.Model.Types.Base.BaseTuple<
+                Substrate.NetApiExt.Generated.Model.cf_primitives.chains.EnumForeignChain,
+                Substrate.NetApi.Model.Types.Primitive.U64>>,
+        BaseTuple<
+            Substrate.NetApi.Model.Types.Base.BaseTuple<
+                Substrate.NetApiExt.Generated.Model.cf_primitives.chains.EnumForeignChain,
+                Substrate.NetApi.Model.Types.Primitive.U64>,
+            Substrate.NetApiExt.Generated.Model.sp_runtime.EnumDispatchError>,
+        BaseTuple<
+            Substrate.NetApi.Model.Types.Primitive.U64,
+            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.dot.EnumAsset>,
+        BaseTuple<
+            Substrate.NetApi.Model.Types.Primitive.U32,
+            Substrate.NetApi.Model.Types.Base.BaseVec<
+                Substrate.NetApi.Model.Types.Base.BaseTuple<
+                    Substrate.NetApiExt.Generated.Model.cf_primitives.chains.EnumForeignChain,
+                    Substrate.NetApi.Model.Types.Primitive.U64>>>,
+        BaseTuple<
+            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.dot.EnumAsset,
+            Substrate.NetApi.Model.Types.Primitive.U128>,
+        BaseTuple<
+            Substrate.NetApiExt.Generated.Model.cf_chains.dot.PolkadotAccountId,
+            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.dot.EnumAsset,
+            Substrate.NetApi.Model.Types.Primitive.U128,
+            Substrate.NetApi.Model.Types.Base.BaseTuple,
+            Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.EnumDepositIgnoredReason>,
+        BaseTuple<
+            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.dot.EnumAsset,
+            Substrate.NetApi.Model.Types.Primitive.U128,
+            Substrate.NetApiExt.Generated.Model.cf_chains.dot.PolkadotAccountId,
+            Substrate.NetApi.Model.Types.Primitive.U32>,
+        BaseTuple<
+            Substrate.NetApiExt.Generated.Model.sp_runtime.EnumDispatchError,
+            Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.pallet.DepositWitnessT2>,
+        Substrate.NetApi.Model.Types.Primitive.U32,
+        BaseTuple<
+            Substrate.NetApi.Model.Types.Primitive.U32,
+            Substrate.NetApi.Model.Types.Primitive.U32>,
+        Substrate.NetApi.Model.Types.Primitive.U32,
+        Substrate.NetApi.Model.Types.Primitive.U32>
+    {
+    }
+        
     /// <summary>
     /// >> 296 - Variant[pallet_cf_ingress_egress.pallet.Event]
     /// The `Event` enum of this pallet
     /// </summary>
-    public sealed class EnumEvent : BaseEnumExt<Event, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_chains.btc.EnumScriptPubkey, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.btc.EnumAsset, Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApiExt.Generated.Model.cf_chains.btc.UtxoId, Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.pallet.EnumDepositAction>, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.btc.EnumAsset, Substrate.NetApi.Model.Types.Primitive.Bool>, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.EnumForeignChain, Substrate.NetApi.Model.Types.Primitive.U64>>, BaseTuple<Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.EnumForeignChain, Substrate.NetApi.Model.Types.Primitive.U64>, Substrate.NetApiExt.Generated.Model.sp_runtime.EnumDispatchError>, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.btc.EnumAsset>, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.EnumForeignChain, Substrate.NetApi.Model.Types.Primitive.U64>>>, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.btc.EnumAsset, Substrate.NetApi.Model.Types.Primitive.U64>, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_chains.btc.EnumScriptPubkey, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.btc.EnumAsset, Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApiExt.Generated.Model.cf_chains.btc.UtxoId, Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.EnumDepositIgnoredReason>, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.btc.EnumAsset, Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApiExt.Generated.Model.cf_chains.btc.EnumScriptPubkey, Substrate.NetApi.Model.Types.Primitive.U32>, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_runtime.EnumDispatchError, Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.pallet.DepositWitnessT3>, Substrate.NetApi.Model.Types.Primitive.U32, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Primitive.U32>, Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Primitive.U32>
+    public sealed class EnumEventBtc : BaseEnumExt<
+        Event,
+        BaseTuple<
+            Substrate.NetApiExt.Generated.Model.cf_chains.btc.EnumScriptPubkey,
+            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.btc.EnumAsset,
+            Substrate.NetApi.Model.Types.Primitive.U64,
+            Substrate.NetApiExt.Generated.Model.cf_chains.btc.UtxoId,
+            Substrate.NetApi.Model.Types.Primitive.U64,
+            Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.pallet.EnumDepositAction>,
+        BaseTuple<
+            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.btc.EnumAsset,
+            Substrate.NetApi.Model.Types.Primitive.Bool>,
+        BaseTuple<
+            Substrate.NetApi.Model.Types.Primitive.U32,
+            Substrate.NetApi.Model.Types.Base.BaseTuple<
+                Substrate.NetApiExt.Generated.Model.cf_primitives.chains.EnumForeignChain,
+                Substrate.NetApi.Model.Types.Primitive.U64>>,
+        BaseTuple<
+            Substrate.NetApi.Model.Types.Base.BaseTuple<
+                Substrate.NetApiExt.Generated.Model.cf_primitives.chains.EnumForeignChain,
+                Substrate.NetApi.Model.Types.Primitive.U64>,
+            Substrate.NetApiExt.Generated.Model.sp_runtime.EnumDispatchError>,
+        BaseTuple<
+            Substrate.NetApi.Model.Types.Primitive.U64,
+            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.btc.EnumAsset>,
+        BaseTuple<
+            Substrate.NetApi.Model.Types.Primitive.U32,
+            Substrate.NetApi.Model.Types.Base.BaseVec<
+                Substrate.NetApi.Model.Types.Base.BaseTuple<
+                    Substrate.NetApiExt.Generated.Model.cf_primitives.chains.EnumForeignChain,
+                    Substrate.NetApi.Model.Types.Primitive.U64>>>,
+        BaseTuple<
+            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.btc.EnumAsset,
+            Substrate.NetApi.Model.Types.Primitive.U64>,
+        BaseTuple<
+            Substrate.NetApiExt.Generated.Model.cf_chains.btc.EnumScriptPubkey,
+            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.btc.EnumAsset,
+            Substrate.NetApi.Model.Types.Primitive.U64,
+            Substrate.NetApiExt.Generated.Model.cf_chains.btc.UtxoId,
+            Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.EnumDepositIgnoredReason>,
+        BaseTuple<
+            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.btc.EnumAsset,
+            Substrate.NetApi.Model.Types.Primitive.U64,
+            Substrate.NetApiExt.Generated.Model.cf_chains.btc.EnumScriptPubkey,
+            Substrate.NetApi.Model.Types.Primitive.U32>,
+        BaseTuple<
+            Substrate.NetApiExt.Generated.Model.sp_runtime.EnumDispatchError,
+            Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.pallet.DepositWitnessT3>,
+        Substrate.NetApi.Model.Types.Primitive.U32,
+        BaseTuple<
+            Substrate.NetApi.Model.Types.Primitive.U32,
+            Substrate.NetApi.Model.Types.Primitive.U32>,
+        Substrate.NetApi.Model.Types.Primitive.U32,
+        Substrate.NetApi.Model.Types.Primitive.U32>
     {
     }
 }

@@ -39,7 +39,12 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_witnesser.pallet
     /// >> 64 - Variant[pallet_cf_witnesser.pallet.Event]
     /// The `Event` enum of this pallet
     /// </summary>
-    public sealed class EnumEvent : BaseEnumExt<Event, BaseTuple<Substrate.NetApiExt.Generated.Model.pallet_cf_witnesser.pallet.CallHash, Substrate.NetApiExt.Generated.Model.sp_runtime.EnumDispatchError>, Substrate.NetApiExt.Generated.Model.state_chain_runtime.EnumRuntimeCall>
+    public sealed class EnumEvent : BaseEnumExt<
+        Event, 
+        BaseTuple<
+            Substrate.NetApiExt.Generated.Model.pallet_cf_witnesser.pallet.CallHash, 
+            Substrate.NetApiExt.Generated.Model.sp_runtime.EnumDispatchError>,
+        Substrate.NetApiExt.Generated.Model.state_chain_runtime.EnumRuntimeCall>
     {
     }
 }

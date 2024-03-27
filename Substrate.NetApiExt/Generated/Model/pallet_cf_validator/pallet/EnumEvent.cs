@@ -82,7 +82,32 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_validator.pallet
     /// >> 258 - Variant[pallet_cf_validator.pallet.Event]
     /// The `Event` enum of this pallet
     /// </summary>
-    public sealed class EnumEvent : BaseEnumExt<Event, BaseVoid, Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApiExt.Generated.Model.pallet_cf_validator.EnumRotationPhase, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Model.cf_primitives.SemVer, Substrate.NetApiExt.Generated.Model.cf_primitives.SemVer>, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Model.sp_core.ed25519.Public, Substrate.NetApi.Model.Types.Primitive.U16, Substrate.NetApi.Model.Types.Primitive.U128>, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Model.sp_core.ed25519.Public>, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Model.Types.Primitive.U8>>, BaseTuple<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>, Substrate.NetApi.Model.Types.Primitive.U128>, Substrate.NetApiExt.Generated.Model.pallet_cf_validator.EnumPalletConfigUpdate>
+    public sealed class EnumEvent : BaseEnumExt<
+        Event,
+        BaseVoid, 
+        Substrate.NetApi.Model.Types.Primitive.U32, 
+        Substrate.NetApiExt.Generated.Model.pallet_cf_validator.EnumRotationPhase, 
+        BaseTuple<
+            Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, 
+            Substrate.NetApiExt.Generated.Model.cf_primitives.SemVer, 
+            Substrate.NetApiExt.Generated.Model.cf_primitives.SemVer>, 
+        BaseTuple<
+            Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32,
+            Substrate.NetApiExt.Generated.Model.sp_core.ed25519.Public, 
+            Substrate.NetApi.Model.Types.Primitive.U16, 
+            Substrate.NetApi.Model.Types.Primitive.U128>,
+        BaseTuple<
+            Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, 
+            Substrate.NetApiExt.Generated.Model.sp_core.ed25519.Public>, 
+        BaseTuple<
+            Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, 
+            Substrate.NetApi.Model.Types.Base.BaseVec<
+                Substrate.NetApi.Model.Types.Primitive.U8>>, 
+        BaseTuple<
+            Substrate.NetApi.Model.Types.Base.BaseVec<
+                Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>, 
+            Substrate.NetApi.Model.Types.Primitive.U128>, 
+        Substrate.NetApiExt.Generated.Model.pallet_cf_validator.EnumPalletConfigUpdate>
     {
     }
 }

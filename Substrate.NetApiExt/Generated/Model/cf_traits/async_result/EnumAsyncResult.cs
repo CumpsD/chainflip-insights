@@ -40,7 +40,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_traits.async_result
     /// <summary>
     /// >> 423 - Variant[cf_traits.async_result.AsyncResult]
     /// </summary>
-    public sealed class EnumAsyncResult : BaseEnumExt<AsyncResult, Substrate.NetApiExt.Generated.Types.Base.EnumResult, BaseVoid, BaseVoid>
+    public sealed class EnumAsyncResult : BaseEnumExt<AsyncResult, Substrate.NetApiExt.Generated.Types.Base.EnumDispatchResult, BaseVoid, BaseVoid>
     {
     }
 }
