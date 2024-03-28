@@ -247,8 +247,7 @@ namespace ChainflipInsights.Feeders.Burn
                         Substrate.NetApiExt.Generated.Model.cf_primitives.chains.EnumForeignChain,
                         Substrate.NetApi.Model.Types.Primitive.U64>>)burnEvent.Value2;
 
-                var flip = Constants.SupportedAssets[Constants.FLIP];
-                flipBurned = Convert.ToDouble(burnData.Value.First().ToString()) / Math.Pow(10, flip.Decimals);
+                flipBurned = Convert.ToDouble(burnData.Value.First().ToString());
                 burnSkipped = false;
             }
             else
