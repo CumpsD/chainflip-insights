@@ -17,6 +17,16 @@ namespace ChainflipInsights.Feeders.Burn
         {
             get
             {
+                var flip = Constants.SupportedAssets[Constants.FLIP];
+                var amount = FlipToBurn / Math.Pow(10, flip.Decimals);
+                return Math.Round(amount, 2).ToString(flip.FormatString);
+            }
+        }
+        
+        public string? FlipToBurnFormattedUsd
+        {
+            get
+            {
                 var flipPrice = _priceProvider
                     .GetFlipPriceInUsd()
                     .GetAwaiter()
@@ -25,17 +35,28 @@ namespace ChainflipInsights.Feeders.Burn
                 var flip = Constants.SupportedAssets[Constants.FLIP];
                 var amount = FlipToBurn / Math.Pow(10, flip.Decimals);
                 
-                if (flipPrice == null)
-                    return Math.Round(amount, 2).ToString(flip.FormatString);
-
-                var usdValue = Math.Round(flipPrice.Value * amount, 2);
-                return $"{Math.Round(amount, 2).ToString(flip.FormatString)} (${usdValue})";
+                return flipPrice == null 
+                    ? null
+                    : Math.Round(flipPrice.Value * amount, 2).ToString(Constants.DollarString);
             }
         }
 
         public double? FlipBurned { get; }
         
         public string? FlipBurnedFormatted
+        {
+            get
+            {
+                if (FlipBurned == null)
+                    return null;
+                
+                var flip = Constants.SupportedAssets[Constants.FLIP];
+                var amount = FlipBurned.Value / Math.Pow(10, flip.Decimals);
+                return Math.Round(amount, 2).ToString(flip.FormatString);
+            }
+        }
+        
+        public string? FlipBurnedFormattedUsd
         {
             get
             {
@@ -50,11 +71,9 @@ namespace ChainflipInsights.Feeders.Burn
                 var flip = Constants.SupportedAssets[Constants.FLIP];
                 var amount = FlipBurned.Value / Math.Pow(10, flip.Decimals);
                 
-                if (flipPrice == null)
-                    return Math.Round(amount, 2).ToString(flip.FormatString);
-                
-                var usdValue = Math.Round(flipPrice.Value * amount, 2);
-                return $"{Math.Round(amount, 2).ToString(flip.FormatString)} (${usdValue})";
+                return flipPrice == null 
+                    ? null
+                    : Math.Round(flipPrice.Value * amount, 2).ToString(Constants.DollarString);
             }
         }
         

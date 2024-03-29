@@ -35,9 +35,9 @@ namespace ChainflipInsights.Consumers.Telegram
 
                 var text =
                     burn.BurnSkipped
-                        ? $"🔥 Burn was **skipped** due to not meeting burn threshold, **{burn.FlipToBurnFormatted} FLIP** waiting to be burned! " +
+                        ? $"🔥 Burn was **skipped** due to not meeting burn threshold, **{burn.FlipToBurnFormatted} FLIP**{(string.IsNullOrWhiteSpace(burn.FlipToBurnFormattedUsd) ? string.Empty : $" (**${burn.FlipToBurnFormattedUsd}**)")} waiting to be burned! " +
                           $"// **[view block on explorer]({_configuration.ExplorerBlocksUrl}{burn.LastSupplyUpdateBlock})**"
-                        : $"🔥 Burned **{burn.FlipBurnedFormatted} FLIP**! " +
+                        : $"🔥 Burned **{burn.FlipBurnedFormatted} FLIP**{(string.IsNullOrWhiteSpace(burn.FlipBurnedFormattedUsd) ? string.Empty : $" (**${burn.FlipBurnedFormattedUsd}**)")}! " +
                           $"// **[view block on explorer]({_configuration.ExplorerBlocksUrl}{burn.LastSupplyUpdateBlock})**";
 
                 var message = _telegramClient

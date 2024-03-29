@@ -42,7 +42,7 @@ namespace ChainflipInsights.Consumers.Twitter
                     $"{_configuration.ExplorerBlocksUrl}{burn.LastSupplyUpdateBlock}");
 
                 var text =
-                    $"🔥 Burned {burn.FlipBurnedFormatted} $FLIP {_configuration.ExplorerBlocksUrl}{burn.LastSupplyUpdateBlock}\n" +
+                    $"🔥 Burned {burn.FlipBurnedFormatted} $FLIP{(string.IsNullOrWhiteSpace(burn.FlipBurnedFormattedUsd) ? string.Empty : $" (${burn.FlipBurnedFormattedUsd})")} {_configuration.ExplorerBlocksUrl}{burn.LastSupplyUpdateBlock}\n" +
                     $"#chainflip #flip";
 
                 _twitterClient.Execute
