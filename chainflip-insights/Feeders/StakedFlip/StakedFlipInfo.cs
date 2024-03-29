@@ -3,7 +3,7 @@ namespace ChainflipInsights.Feeders.StakedFlip
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Humanizer;
+    using ChainflipInsights.Infrastructure;
 
     public enum NetMovement
     {
@@ -17,15 +17,15 @@ namespace ChainflipInsights.Feeders.StakedFlip
         
         public double TotalMovement { get; }
         
-        public string TotalMovementFormatted => TotalMovement.ToMetric(decimals: 2);
+        public string TotalMovementFormatted => TotalMovement.ToReadableMetric();
         
         public double Staked { get; }
         
-        public string StakedFormatted  => Staked.ToMetric(decimals: 2);
+        public string StakedFormatted  => Staked.ToReadableMetric();
         
         public double Unstaked { get; }
         
-        public string UnstakedFormatted  => Unstaked.ToMetric(decimals: 2);
+        public string UnstakedFormatted  => Unstaked.ToReadableMetric();
 
         public NetMovement NetMovement { get; }
         

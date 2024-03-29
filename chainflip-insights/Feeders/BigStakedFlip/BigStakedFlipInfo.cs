@@ -1,14 +1,14 @@
 namespace ChainflipInsights.Feeders.BigStakedFlip
 {
     using System;
-    using Humanizer;
+    using ChainflipInsights.Infrastructure;
 
     public class BigStakedFlipInfo
     {
         public DateTimeOffset Date { get; }
         public double Staked { get; }
 
-        public string StakedFormatted  => Staked.ToMetric(decimals: 2);
+        public string StakedFormatted  => Staked.ToReadableMetric();
 
         public string To { get; }
 

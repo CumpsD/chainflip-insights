@@ -6,7 +6,7 @@ namespace ChainflipInsights.Consumers.Twitter
     using System.Net.Http.Json;
     using System.Net.Mime;
     using ChainflipInsights.Feeders.PastVolume;
-    using Humanizer;
+    using ChainflipInsights.Infrastructure;
     using Microsoft.Extensions.Logging;
 
     public partial class TwitterConsumer
@@ -40,7 +40,7 @@ namespace ChainflipInsights.Consumers.Twitter
 
                 var text =
                     $"📊 On {pastVolume.Date} we had a volume of " +
-                    $"${totalVolume.ToMetric(decimals: 2)} and ${totalFees.ToMetric(decimals: 2)} in fees!\n" +
+                    $"${totalVolume.ToReadableMetric()} and ${totalFees.ToReadableMetric()} in fees!\n" +
                     $"#chainflip #flip";
 
                 _twitterClient.Execute

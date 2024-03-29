@@ -3,7 +3,7 @@ namespace ChainflipInsights.Consumers.Mastodon
     using System;
     using System.Linq;
     using ChainflipInsights.Feeders.PastVolume;
-    using Humanizer;
+    using ChainflipInsights.Infrastructure;
     using Mastonet;
     using Microsoft.Extensions.Logging;
 
@@ -38,7 +38,7 @@ namespace ChainflipInsights.Consumers.Mastodon
 
                 var text =
                     $"📊 On {pastVolume.Date} we had a volume of " +
-                    $"${totalVolume.ToMetric(decimals: 2)} and ${totalFees.ToMetric(decimals: 2)} in fees!\n" +
+                    $"${totalVolume.ToReadableMetric()} and ${totalFees.ToReadableMetric()} in fees!\n" +
                     $"#chainflip #flip";
 
                 var status = _mastodonClient

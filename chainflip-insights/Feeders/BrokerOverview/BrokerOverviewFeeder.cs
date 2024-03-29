@@ -149,8 +149,8 @@ namespace ChainflipInsights.Feeders.BrokerOverview
                 return await File.ReadAllTextAsync(_configuration.LastBrokerOverviewLocation, cancellationToken);
 
             await using var file = File.CreateText(_configuration.LastBrokerOverviewLocation);
-            await file.WriteAsync("2024-03-20");
-            return "2024-03-20";
+            await file.WriteAsync("2024-03-27");
+            return "2024-03-27";
         }
         
         private async Task StoreLastBrokerOverview(string lastBrokerOverview)

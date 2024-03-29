@@ -2,7 +2,7 @@ namespace ChainflipInsights.Feeders.Epoch
 {
     using System;
     using System.Linq;
-    using Humanizer;
+    using ChainflipInsights.Infrastructure;
 
     public class EpochInfo
     {
@@ -15,14 +15,14 @@ namespace ChainflipInsights.Feeders.Epoch
         public string MinimumBondFormatted
             => Math
                 .Round(MinimumBond / Math.Pow(10, FlipDecimals), 3)
-                .ToMetric(decimals: 2);
+                .ToReadableMetric();
 
         public double TotalBond { get; }
         
         public string TotalBondFormatted 
             => Math
                 .Round(TotalBond / Math.Pow(10, FlipDecimals), 3)
-                .ToMetric(decimals: 2);
+                .ToReadableMetric();
         
         public DateTimeOffset EpochStart { get; }
         
@@ -31,7 +31,7 @@ namespace ChainflipInsights.Feeders.Epoch
         public string MaxBidFormatted 
             => Math
                 .Round(MaxBid / Math.Pow(10, FlipDecimals), 3)
-                .ToMetric(decimals: 2);
+                .ToReadableMetric();
         
         public double TotalRewards { get; }
         

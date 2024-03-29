@@ -1,7 +1,7 @@
 namespace ChainflipInsights.Feeders.CexMovement
 {
     using System;
-    using Humanizer;
+    using ChainflipInsights.Infrastructure;
     
     public enum NetMovement
     {
@@ -15,17 +15,17 @@ namespace ChainflipInsights.Feeders.CexMovement
         
         public double TotalMovement { get; }
         
-        public string TotalMovementFormatted => TotalMovement.ToMetric(decimals: 2);
+        public string TotalMovementFormatted => TotalMovement.ToReadableMetric();
         
         public NetMovement NetMovement { get; }
         
         public double MovementIn { get; }
         
-        public string MovementInFormatted => MovementIn.ToMetric(decimals: 2);
+        public string MovementInFormatted => MovementIn.ToReadableMetric();
         
         public double MovementOut { get; }
         
-        public string MovementOutFormatted => MovementOut.ToMetric(decimals: 2);
+        public string MovementOutFormatted => MovementOut.ToReadableMetric();
         
         public DateTimeOffset Date { get; }
         

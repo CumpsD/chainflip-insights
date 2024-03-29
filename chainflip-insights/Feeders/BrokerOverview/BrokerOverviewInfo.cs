@@ -3,7 +3,7 @@ namespace ChainflipInsights.Feeders.BrokerOverview
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Humanizer;
+    using ChainflipInsights.Infrastructure;
 
     public class BrokerOverviewInfo
     {
@@ -31,11 +31,11 @@ namespace ChainflipInsights.Feeders.BrokerOverview
 
         public double Fees { get; }
         
-        public string FeesFormatted => Fees.ToMetric(decimals: 2);
+        public string FeesFormatted => Fees.ToReadableMetric();
 
         public double Volume { get; }
         
-        public string VolumeFormatted => Volume.ToMetric(decimals: 2);
+        public string VolumeFormatted => Volume.ToReadableMetric();
 
         
         public BrokerInfo(

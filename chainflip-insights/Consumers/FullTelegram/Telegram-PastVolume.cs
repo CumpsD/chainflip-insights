@@ -4,10 +4,10 @@ namespace ChainflipInsights.Consumers.FullTelegram
     using System.Linq;
     using System.Threading;
     using ChainflipInsights.Feeders.PastVolume;
+    using ChainflipInsights.Infrastructure;
     using global::Telegram.Bot;
     using global::Telegram.Bot.Types;
     using global::Telegram.Bot.Types.Enums;
-    using Humanizer;
     using Microsoft.Extensions.Logging;
 
     public partial class FullTelegramConsumer
@@ -43,7 +43,7 @@ namespace ChainflipInsights.Consumers.FullTelegram
 
                 var text =
                     $"📊 On **{pastVolume.Date}** we had a volume of " +
-                    $"**${totalVolume.ToMetric(decimals: 2)}** and **${totalFees.ToMetric(decimals: 2)}** in fees!";
+                    $"**${totalVolume.ToReadableMetric()}** and **${totalFees.ToReadableMetric()}** in fees!";
 
                 var message = _telegramClient
                     .SendTextMessageAsync(

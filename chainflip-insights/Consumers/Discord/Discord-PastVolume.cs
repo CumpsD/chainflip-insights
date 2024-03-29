@@ -3,8 +3,8 @@ namespace ChainflipInsights.Consumers.Discord
     using System;
     using System.Linq;
     using ChainflipInsights.Feeders.PastVolume;
+    using ChainflipInsights.Infrastructure;
     using global::Discord;
-    using Humanizer;
     using Microsoft.Extensions.Logging;
 
     public partial class DiscordConsumer
@@ -41,7 +41,7 @@ namespace ChainflipInsights.Consumers.Discord
 
                 var text =
                     $"📊 On **{pastVolume.Date}** we had a volume of " +
-                    $"**${totalVolume.ToMetric(decimals: 2)}** and **${totalFees.ToMetric(decimals: 2)}** in fees!";
+                    $"**${totalVolume.ToReadableMetric()}** and **${totalFees.ToReadableMetric()}** in fees!";
 
                 var infoChannel = (ITextChannel)_discordClient
                     .GetChannel(_configuration.DiscordSwapInfoChannelId.Value);
