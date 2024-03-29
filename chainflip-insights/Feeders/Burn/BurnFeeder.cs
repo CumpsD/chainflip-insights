@@ -19,7 +19,6 @@ namespace ChainflipInsights.Feeders.Burn
     using global::Substrate.NetApiExt.Generated.Model.state_chain_runtime;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
-    using Constants = ChainflipInsights.Feeders.Constants;
 
     public class BurnFeeder : IFeeder
     {
@@ -35,6 +34,7 @@ namespace ChainflipInsights.Feeders.Burn
         
         private readonly ILogger<BurnFeeder> _logger;
         private readonly Pipeline<BurnInfo> _pipeline;
+        private readonly PriceProvider _priceProvider;
         private readonly BotConfiguration _configuration;
         private readonly IHttpClientFactory _httpClientFactory;
 
@@ -42,12 +42,14 @@ namespace ChainflipInsights.Feeders.Burn
             ILogger<BurnFeeder> logger,
             IOptions<BotConfiguration> options,
             IHttpClientFactory httpClientFactory,
-            Pipeline<BurnInfo> pipeline)
+            Pipeline<BurnInfo> pipeline,
+            PriceProvider priceProvider)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _configuration = options.Value ?? throw new ArgumentNullException(nameof(options));
             _httpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
+            _priceProvider = priceProvider ?? throw new ArgumentNullException(nameof(priceProvider));
         }
         
         public async Task Start()
@@ -264,6 +266,7 @@ namespace ChainflipInsights.Feeders.Burn
             //     Math.Round(flipBurned, 8).ToString(flip.FormatString));
 
             return new BurnInfo(
+                _priceProvider,
                 lastSupplyUpdateBlock.Value,
                 lastBurnBlockHash,
                 Convert.ToDouble(flipToBurn.Value.ToString()),

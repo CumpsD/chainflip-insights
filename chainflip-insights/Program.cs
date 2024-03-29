@@ -218,6 +218,26 @@
                     {
                         x.BaseAddress = new Uri(botConfiguration.RpcUrl);
                         x.DefaultRequestHeaders.UserAgent.ParseAdd("discord-chainflip-insights");
+                    })
+                
+                .Services
+                    
+                .AddHttpClient(
+                    "UniswapV2Graph",
+                    x =>
+                    {
+                        x.BaseAddress = new Uri(botConfiguration.UniswapV2Graph);
+                        x.DefaultRequestHeaders.UserAgent.ParseAdd("discord-chainflip-insights");
+                    })
+                
+                .Services
+                    
+                .AddHttpClient(
+                    "UniswapV3Graph",
+                    x =>
+                    {
+                        x.BaseAddress = new Uri(botConfiguration.UniswapV3Graph);
+                        x.DefaultRequestHeaders.UserAgent.ParseAdd("discord-chainflip-insights");
                     });
             
             builder
@@ -303,6 +323,10 @@
             RegisterFeeder<BigStakedFlipFeeder, BigStakedFlipInfo>(builder, ct);
             RegisterFeeder<BurnFeeder, BurnInfo>(builder, ct);
 
+            builder
+                .RegisterType<PriceProvider>()
+                .SingleInstance();
+            
             builder
                 .RegisterType<DiscordConsumer>()
                 .SingleInstance();

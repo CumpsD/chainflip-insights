@@ -213,6 +213,20 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public string? UniswapV2Graph
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public string? UniswapV3Graph
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
         public string? ExplorerSwapsUrl
         {
             get; init;
