@@ -38,6 +38,34 @@ namespace ChainflipInsights.Feeders.PastVolume
             }
             """;
 
+        private const string PastFeesQuery =
+            """
+            {
+                allSwaps(orderBy: ID_DESC, filter: {
+                    swapScheduledBlockTimestamp: {
+                        greaterThanOrEqualTo: \"TIME_FROM\", lessThanOrEqualTo: \"TIME_TO\"
+                        }
+                    }) {
+                    nodes {
+                        sourceAsset
+                        sourceChain
+            
+                        swapInputAmount
+                        swapInputValueUsd
+            
+                        intermediateAmount
+                        intermediateValueUsd
+            
+                        swapOutputAmount
+                        swapOutputValueUsd
+            
+                        destinationAsset
+                        destinationChain
+                    }
+                }
+            }
+            """;
+
         private readonly ILogger<PastVolumeFeeder> _logger;
         private readonly Pipeline<PastVolumeInfo> _pipeline;
         private readonly BotConfiguration _configuration;
@@ -129,16 +157,37 @@ namespace ChainflipInsights.Feeders.PastVolume
                     continue;                    
                 }
                 
+                var pastFeesInfo = await GetPastFees(
+                    yesterday,
+                    yesterday.AddDays(1),
+                    cancellationToken);
+
+                if (cancellationToken.IsCancellationRequested)
+                    return;
+                
+                if (pastFeesInfo == null)
+                {
+                    await Task.Delay(_configuration.PastVolumeQueryDelay.Value.RandomizeTime(), cancellationToken);
+                    continue;                    
+                }
+                
                 var pastVolumePairs = pastVolumeInfo
                     .Data.Data.Data
                     .Select(x => new PastVolumePairInfo(x.Assets, x.Sum))
                     .ToArray();
+
+                var pastFees = pastFeesInfo
+                    .Data.Data.Data
+                    .Select(x => new PastFeeInfo(x));
+
+                var networkFees = pastFees.Sum(x => x.NetworkFee);
                 
                 _logger.LogInformation(
-                    "Broadcasting {TotalLastVolumePairs} Past 24h Volume Pairs",
-                    pastVolumePairs.Length);
+                    "Broadcasting {TotalLastVolumePairs} Past 24h Volume Pairs and ${TotalNetworkFees} network fees",
+                    pastVolumePairs.Length,
+                    networkFees);
 
-                var pastVolume = new PastVolumeInfo(dateString, pastVolumePairs);
+                var pastVolume = new PastVolumeInfo(dateString, pastVolumePairs, networkFees);
                 await _pipeline.Source.SendAsync(
                     pastVolume, 
                     cancellationToken);
@@ -205,6 +254,50 @@ namespace ChainflipInsights.Feeders.PastVolume
                 _logger.LogError(
                     e,
                     "Fetching past volume failed.");
+            }
+
+            return null;
+        }
+        
+        private async Task<PastFeesResponse?> GetPastFees(
+            DateTimeOffset timeFrom,
+            DateTimeOffset timeTo,
+            CancellationToken cancellationToken)
+        {
+            try
+            {
+                using var client = _httpClientFactory.CreateClient("Graph");
+
+                var query = PastFeesQuery
+                    .Replace("TIME_FROM", timeFrom.ToString("yyyy-MM-ddT00:00:00.000Z"))
+                    .Replace("TIME_TO", timeTo.ToString("yyyy-MM-ddT00:00:00.000Z"));
+                var graphQuery = $"{{ \"query\": \"{query.ReplaceLineEndings("\\n")}\" }}";
+
+                var response = await client.PostAsync(
+                    string.Empty,
+                    new StringContent(
+                        graphQuery,
+                        new MediaTypeHeaderValue(MediaTypeNames.Application.Json)),
+                    cancellationToken);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return await response
+                        .Content
+                        .ReadFromJsonAsync<PastFeesResponse>(cancellationToken: cancellationToken);
+                }
+
+                _logger.LogError(
+                    "GetPastFees returned {StatusCode}: {Error}\nRequest: {Request}",
+                    response.StatusCode,
+                    await response.Content.ReadAsStringAsync(cancellationToken),
+                    graphQuery);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(
+                    e,
+                    "Fetching past fees failed.");
             }
 
             return null;

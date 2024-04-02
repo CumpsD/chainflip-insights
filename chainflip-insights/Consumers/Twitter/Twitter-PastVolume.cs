@@ -40,7 +40,7 @@ namespace ChainflipInsights.Consumers.Twitter
 
                 var text =
                     $"📊 On {pastVolume.Date} we had a volume of " +
-                    $"${totalVolume.ToReadableMetric()} and ${totalFees.ToReadableMetric()} in fees!\n" +
+                    $"${totalVolume.ToReadableMetric()}, ${pastVolume.NetworkFeesFormatted} in network fees and ${totalFees.ToReadableMetric()} in liquidity provider fees!\n" +
                     $"#chainflip #flip";
 
                 _twitterClient.Execute

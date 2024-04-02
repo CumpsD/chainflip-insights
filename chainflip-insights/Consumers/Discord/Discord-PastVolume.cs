@@ -41,7 +41,7 @@ namespace ChainflipInsights.Consumers.Discord
 
                 var text =
                     $"📊 On **{pastVolume.Date}** we had a volume of " +
-                    $"**${totalVolume.ToReadableMetric()}** and **${totalFees.ToReadableMetric()}** in fees!";
+                    $"**${totalVolume.ToReadableMetric()}**, **${pastVolume.NetworkFeesFormatted}** in network fees and **${totalFees.ToReadableMetric()}** in liquidity provider fees!";
 
                 var infoChannel = (ITextChannel)_discordClient
                     .GetChannel(_configuration.DiscordSwapInfoChannelId.Value);

@@ -3,18 +3,25 @@ namespace ChainflipInsights.Feeders.PastVolume
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using ChainflipInsights.Infrastructure;
 
     public class PastVolumeInfo
     {
         public string Date { get; }
         
+        public double NetworkFees { get; }
+        
+        public string NetworkFeesFormatted  => NetworkFees.ToReadableMetric();
+
         public Dictionary<Tuple<string, string>, PastVolumePairInfo> VolumePairs { get; }
         
         public PastVolumeInfo(
-            string date, 
-            IEnumerable<PastVolumePairInfo> volumePairs)
+            string date,
+            IEnumerable<PastVolumePairInfo> volumePairs, 
+            double networkFees)
         {
             Date = date;
+            NetworkFees = networkFees;
             VolumePairs = volumePairs.ToDictionary(
                 x => x.Pair,
                 x => x);
