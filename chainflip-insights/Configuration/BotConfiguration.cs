@@ -129,6 +129,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public bool? EnableDatabase
+        {
+            get; init;
+        }   
+        
+        [Required]
+        [NotNull]
         public string? DiscordToken
         {
             get; init;
@@ -887,6 +894,13 @@ namespace ChainflipInsights.Configuration
         [Required]
         [NotNull]
         public bool? DiscordBurnEnabled
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public bool? DatabaseBurnEnabled
         {
             get; init;
         }

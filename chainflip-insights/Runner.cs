@@ -6,6 +6,7 @@ namespace ChainflipInsights
     using System.Threading.Tasks;
     using System.Threading.Tasks.Dataflow;
     using ChainflipInsights.Consumers;
+    using ChainflipInsights.Consumers.Database;
     using ChainflipInsights.Consumers.Discord;
     using ChainflipInsights.Consumers.FullTelegram;
     using ChainflipInsights.Consumers.Mastodon;
@@ -35,12 +36,14 @@ namespace ChainflipInsights
         private readonly FullTelegramConsumer _fullTelegramConsumer;
         private readonly TwitterConsumer _twitterConsumer;
         private readonly MastodonConsumer _mastodonConsumer;
+        private readonly DatabaseConsumer _databaseConsumer;
 
         private ITargetBlock<BroadcastInfo> _discordPipelineTarget = null!;
         private ITargetBlock<BroadcastInfo> _telegramPipelineTarget = null!;
         private ITargetBlock<BroadcastInfo> _fullTelegramPipelineTarget = null!;
         private ITargetBlock<BroadcastInfo> _twitterPipelineTarget = null!;
         private ITargetBlock<BroadcastInfo> _mastodonPipelineTarget = null!;
+        private ITargetBlock<BroadcastInfo> _databasePipelineTarget = null!;
 
         public Runner(
             ILogger<Runner> logger,
@@ -61,7 +64,8 @@ namespace ChainflipInsights
             TelegramConsumer telegramConsumer,
             FullTelegramConsumer fullTelegramConsumer,
             TwitterConsumer twitterConsumer,
-            MastodonConsumer mastodonConsumer)
+            MastodonConsumer mastodonConsumer,
+            DatabaseConsumer databaseConsumer)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _discordConsumer = discordConsumer ?? throw new ArgumentNullException(nameof(discordConsumer));
@@ -69,6 +73,7 @@ namespace ChainflipInsights
             _fullTelegramConsumer = fullTelegramConsumer ?? throw new ArgumentNullException(nameof(fullTelegramConsumer));
             _twitterConsumer = twitterConsumer ?? throw new ArgumentNullException(nameof(twitterConsumer));
             _mastodonConsumer = mastodonConsumer ?? throw new ArgumentNullException(nameof(mastodonConsumer));
+            _databaseConsumer = databaseConsumer ?? throw new ArgumentNullException(nameof(databaseConsumer));
 
             SetupPipelines(
                 burnPipeline,
@@ -241,6 +246,13 @@ namespace ChainflipInsights
             _mastodonPipelineTarget = SetupConsumerPipeline(
                 "Mastodon",
                 _mastodonConsumer,
+                broadcast,
+                linkOptions, 
+                swapPipeline.CancellationToken);
+            
+            _databasePipelineTarget = SetupConsumerPipeline(
+                "Database",
+                _databaseConsumer,
                 broadcast,
                 linkOptions, 
                 swapPipeline.CancellationToken);

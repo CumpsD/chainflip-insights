@@ -239,7 +239,7 @@ namespace ChainflipInsights.Feeders.Burn
                     ((EnumEvent)x.Event.Value2).Value == Event.NetworkFeeBurned);
 
             double? flipBurned = null;
-            bool? burnSkipped = null;
+            bool? burnSkipped;
             if (burnEmissions != null)
             {
                 var burnEvent = (EnumEvent)burnEmissions.Event.Value2;

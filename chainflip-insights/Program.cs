@@ -13,11 +13,13 @@
     using Discord;
     using Discord.WebSocket;
     using ChainflipInsights.Configuration;
+    using ChainflipInsights.Consumers.Database;
     using ChainflipInsights.Consumers.Discord;
     using ChainflipInsights.Consumers.FullTelegram;
     using ChainflipInsights.Consumers.Mastodon;
     using ChainflipInsights.Consumers.Telegram;
     using ChainflipInsights.Consumers.Twitter;
+    using ChainflipInsights.EntityFramework;
     using ChainflipInsights.Feeders;
     using ChainflipInsights.Feeders.BigStakedFlip;
     using ChainflipInsights.Feeders.BrokerOverview;
@@ -37,12 +39,14 @@
     using ChainflipInsights.Infrastructure.Pipelines;
     using ChainflipInsights.Modules;
     using Mastonet;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
     using Serilog;
     using Telegram.Bot;
     using Tweetinvi;
+    using BurnInfo = ChainflipInsights.Feeders.Burn.BurnInfo;
 
     public class Program
     {
@@ -67,6 +71,7 @@
             var container = ConfigureServices(configuration, ct);
             var logger = container.GetRequiredService<ILogger<Program>>();
             var applicationName = Assembly.GetEntryAssembly()?.GetName().Name;
+            var efLogger = container.GetRequiredService<EntityFrameworkLogger>();
             
             logger.LogInformation(
                 "Starting {ApplicationName}",
@@ -162,6 +167,8 @@
 
             var builder = new ContainerBuilder();
 
+            var connectionString = configuration.GetConnectionString("Bot");
+            
             builder
                 .RegisterModule(new LoggingModule(configuration, services));
 
@@ -172,6 +179,12 @@
             services
                 .ConfigureAndValidate<BotConfiguration>(configuration.GetSection(BotConfiguration.Section))
                                     
+                .AddDbContextFactory<BotContext>((provider, options) => options
+                    .UseLoggerFactory(provider.GetRequiredService<ILoggerFactory>())
+                    .UseMySql(connectionString, Db.Version))
+                
+                .AddSingleton(x => new EntityFrameworkLogger(x.GetRequiredService<ILoggerFactory>()))
+                
                 .AddHttpClient(
                     "Graph",
                     x =>
@@ -345,6 +358,10 @@
             
             builder
                 .RegisterType<MastodonConsumer>()
+                .SingleInstance();
+            
+            builder
+                .RegisterType<DatabaseConsumer>()
                 .SingleInstance();
             
             builder
