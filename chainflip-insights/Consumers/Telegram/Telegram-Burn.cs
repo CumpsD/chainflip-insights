@@ -24,6 +24,17 @@ namespace ChainflipInsights.Consumers.Telegram
 
                 return;
             }
+            
+            if (burn.BurnSkipped)
+            {
+                _logger.LogInformation(
+                    "Burn did not meet burn threshold. Burn {BurnBlock} ({BurnBlockHash}) -> {BlockUrl}",
+                    burn.LastSupplyUpdateBlock,
+                    burn.LastSupplyUpdateBlockHash,
+                    $"{_configuration.ExplorerBlocksUrl}{burn.LastSupplyUpdateBlock}");
+
+                return;
+            }
 
             try
             {
