@@ -207,7 +207,8 @@ namespace ChainflipInsights.Feeders.Burn
             //     "[Substrate] There is currently {TotalIssuance} FLIP issued",
             //     UnitConversion.Convert.FromWei(totalIssuance.Value));
 
-            var flipToBurn = await client.LiquidityPoolsStorage.FlipToBurn(null, cancellationToken);
+            // TODO: Regenerate substrate and get flip to burn from swapping storage
+            var flipToBurn = new double?(0); // await client.LiquidityPoolsStorage.FlipToBurn(null, cancellationToken);
             // _logger.LogInformation(
             //     "[Substrate] There is currently {FlipToBurn} FLIP waiting to be burned",
             //     UnitConversion.Convert.FromWei(flipToBurn.Value));
