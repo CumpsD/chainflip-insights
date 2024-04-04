@@ -17,6 +17,7 @@ namespace ChainflipInsights.Feeders
         public const string ETH = "eth";
         public const string FLIP = "flip";
         public const string USDC = "usdc";
+        public const string USDT = "usdt";
         
         public static readonly Dictionary<string, AssetInfo> SupportedAssets = new()
         {
@@ -62,6 +63,15 @@ namespace ChainflipInsights.Feeders
                     USDC,
                     "USDC",
                     "ethUSDC",
+                    "Ethereum",
+                    6)
+            },
+            {
+                USDT,
+                new AssetInfo(
+                    USDT,
+                    "USDT",
+                    "ethUSDT",
                     "Ethereum",
                     6)
             },
