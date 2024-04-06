@@ -1,6 +1,7 @@
 namespace ChainflipInsights.Feeders.Swap
 {
     using System;
+    using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
     using System.Linq;
@@ -136,12 +137,25 @@ namespace ChainflipInsights.Feeders.Swap
                     continue;                    
                 }
                 
-                var swaps = swapsInfo
-                    .Data.Data.Data
-                    .Select(x => x.Data)
-                    .OrderBy(x => x.Id)
-                    .ToList();
-                
+                List<SwapsResponseNode> swaps;
+                try
+                {
+                    swaps = swapsInfo
+                        .Data.Data.Data
+                        .Select(x => x.Data)
+                        .OrderBy(x => x.Id)
+                        .ToList();
+                }
+                catch (Exception e)
+                {
+                    _logger.LogError(
+                        e,
+                        "Error on fetching swaps, retrying");
+                    
+                    await Task.Delay(_configuration.SwapQueryDelay.Value.RandomizeTime(), cancellationToken);
+                    continue;  
+                }
+
                 if (swaps.Count <= 0)
                 {
                     _logger.LogInformation(
