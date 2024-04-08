@@ -36,21 +36,24 @@ namespace ChainflipInsights.Consumers.Telegram
                     $"**{bigStakedFlipInfo.StakedFormatted} FLIP** just got staked! " +
                     $"// **[view transaction on explorer]({_configuration.EtherScanUrl}{bigStakedFlipInfo.TransactionHash})**";
 
-                var message = _telegramClient
-                    .SendTextMessageAsync(
-                        new ChatId(_configuration.TelegramSwapInfoChannelId.Value),
-                        text,
-                        parseMode: ParseMode.Markdown,
-                        disableNotification: true,
-                        allowSendingWithoutReply: true,
-                        cancellationToken: cancellationToken)
-                    .GetAwaiter()
-                    .GetResult();
+                foreach (var channelId in _configuration.TelegramSwapInfoChannelId)
+                {
+                    var message = _telegramClient
+                        .SendTextMessageAsync(
+                            new ChatId(channelId),
+                            text,
+                            parseMode: ParseMode.Markdown,
+                            disableNotification: true,
+                            allowSendingWithoutReply: true,
+                            cancellationToken: cancellationToken)
+                        .GetAwaiter()
+                        .GetResult();
 
-                _logger.LogInformation(
-                    "Announcing staked flip {TransactionHash} on Telegram as Message {MessageId}",
-                    bigStakedFlipInfo.TransactionHash,
-                    message.MessageId);
+                    _logger.LogInformation(
+                        "Announcing staked flip {TransactionHash} on Telegram as Message {MessageId}",
+                        bigStakedFlipInfo.TransactionHash,
+                        message.MessageId);
+                }
             }
             catch (Exception e)
             {

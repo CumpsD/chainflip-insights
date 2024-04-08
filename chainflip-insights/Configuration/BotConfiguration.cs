@@ -514,7 +514,7 @@ namespace ChainflipInsights.Configuration
 
         [Required]
         [NotNull]
-        public long? TelegramSwapInfoChannelId 
+        public long[]? TelegramSwapInfoChannelId 
         {
             get; init;
         }

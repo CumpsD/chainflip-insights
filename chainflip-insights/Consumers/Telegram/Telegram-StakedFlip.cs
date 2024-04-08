@@ -42,21 +42,24 @@ namespace ChainflipInsights.Consumers.Telegram
                     $"**{stakedFlip.StakedFormatted} FLIP** got staked, **{stakedFlip.UnstakedFormatted} FLIP** got unstaked. " +
                     $"In total, **{stakedFlip.TotalMovementFormatted} FLIP** was **{(stakedFlip.NetMovement == Feeders.StakedFlip.NetMovement.MoreStaked ? "staked" : "unstaked")}** {(stakedFlip.NetMovement == Feeders.StakedFlip.NetMovement.MoreUnstaked ? "🔴" : "🟢")}";
 
-                var message = _telegramClient
-                    .SendTextMessageAsync(
-                        new ChatId(_configuration.TelegramSwapInfoChannelId.Value),
-                        text,
-                        parseMode: ParseMode.Markdown,
-                        disableNotification: true,
-                        allowSendingWithoutReply: true,
-                        cancellationToken: cancellationToken)
-                    .GetAwaiter()
-                    .GetResult();
+                foreach (var channelId in _configuration.TelegramSwapInfoChannelId)
+                {
+                    var message = _telegramClient
+                        .SendTextMessageAsync(
+                            new ChatId(channelId),
+                            text,
+                            parseMode: ParseMode.Markdown,
+                            disableNotification: true,
+                            allowSendingWithoutReply: true,
+                            cancellationToken: cancellationToken)
+                        .GetAwaiter()
+                        .GetResult();
 
-                _logger.LogInformation(
-                    "Announcing Staked Flip {Date} on Telegram as Message {MessageId}",
-                    stakedFlip.Date.ToString("yyyy-MM-dd"),
-                    message.MessageId);
+                    _logger.LogInformation(
+                        "Announcing Staked Flip {Date} on Telegram as Message {MessageId}",
+                        stakedFlip.Date.ToString("yyyy-MM-dd"),
+                        message.MessageId);
+                }
             }
             catch (Exception e)
             {

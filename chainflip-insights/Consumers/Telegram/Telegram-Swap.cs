@@ -50,21 +50,24 @@ namespace ChainflipInsights.Consumers.Telegram
                     $"{(brokerExists ? $"@ **{broker}** " : string.Empty)}" +
                     $"// **[view swap on explorer]({_configuration.ExplorerSwapsUrl}{swap.Id})**";
 
-                var message = _telegramClient
-                    .SendTextMessageAsync(
-                        new ChatId(_configuration.TelegramSwapInfoChannelId.Value),
-                        text,
-                        parseMode: ParseMode.Markdown,
-                        disableNotification: true,
-                        allowSendingWithoutReply: true,
-                        cancellationToken: cancellationToken)
-                    .GetAwaiter()
-                    .GetResult();
+                foreach (var channelId in _configuration.TelegramSwapInfoChannelId)
+                {
+                    var message = _telegramClient
+                        .SendTextMessageAsync(
+                            new ChatId(channelId),
+                            text,
+                            parseMode: ParseMode.Markdown,
+                            disableNotification: true,
+                            allowSendingWithoutReply: true,
+                            cancellationToken: cancellationToken)
+                        .GetAwaiter()
+                        .GetResult();
 
-                _logger.LogInformation(
-                    "Announcing Swap {SwapId} on Telegram as Message {MessageId}",
-                    swap.Id,
-                    message.MessageId);
+                    _logger.LogInformation(
+                        "Announcing Swap {SwapId} on Telegram as Message {MessageId}",
+                        swap.Id,
+                        message.MessageId);
+                }
             }
             catch (Exception e)
             {

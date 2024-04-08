@@ -54,21 +54,24 @@ namespace ChainflipInsights.Consumers.Telegram
                         $"{emojis[i]} **{name}** (**${brokerInfo.VolumeFormatted}** Volume, **${brokerInfo.FeesFormatted}** Fees)");
                 }
 
-                var message = _telegramClient
-                    .SendTextMessageAsync(
-                        new ChatId(_configuration.TelegramSwapInfoChannelId.Value),
-                        text.ToString(),
-                        parseMode: ParseMode.Markdown,
-                        disableNotification: true,
-                        allowSendingWithoutReply: true,
-                        cancellationToken: cancellationToken)
-                    .GetAwaiter()
-                    .GetResult();
+                foreach (var channelId in _configuration.TelegramSwapInfoChannelId)
+                {
+                    var message = _telegramClient
+                        .SendTextMessageAsync(
+                            new ChatId(channelId),
+                            text.ToString(),
+                            parseMode: ParseMode.Markdown,
+                            disableNotification: true,
+                            allowSendingWithoutReply: true,
+                            cancellationToken: cancellationToken)
+                        .GetAwaiter()
+                        .GetResult();
 
-                _logger.LogInformation(
-                    "Announcing Broker Overview {Date} on Telegram as Message {MessageId}",
-                    brokerOverview.Date.ToString("yyyy-MM-dd"),
-                    message.MessageId);
+                    _logger.LogInformation(
+                        "Announcing Broker Overview {Date} on Telegram as Message {MessageId}",
+                        brokerOverview.Date.ToString("yyyy-MM-dd"),
+                        message.MessageId);
+                }
             }
             catch (Exception e)
             {

@@ -42,21 +42,24 @@ namespace ChainflipInsights.Consumers.Telegram
                     $"**{cexMovement.MovementInFormatted} FLIP** moved towards CEX, **{cexMovement.MovementOutFormatted} FLIP** moved towards DEX. " +
                     $"In total, **{(cexMovement.NetMovement == Feeders.CexMovement.NetMovement.MoreTowardsCex ? "CEX" : "DEX")}** gained **{cexMovement.TotalMovementFormatted} FLIP** {(cexMovement.NetMovement == Feeders.CexMovement.NetMovement.MoreTowardsCex ? "🔴" : "🟢")}";
 
-                var message = _telegramClient
-                    .SendTextMessageAsync(
-                        new ChatId(_configuration.TelegramSwapInfoChannelId.Value),
-                        text,
-                        parseMode: ParseMode.Markdown,
-                        disableNotification: true,
-                        allowSendingWithoutReply: true,
-                        cancellationToken: cancellationToken)
-                    .GetAwaiter()
-                    .GetResult();
+                foreach (var channelId in _configuration.TelegramSwapInfoChannelId)
+                {
+                    var message = _telegramClient
+                        .SendTextMessageAsync(
+                            new ChatId(channelId),
+                            text,
+                            parseMode: ParseMode.Markdown,
+                            disableNotification: true,
+                            allowSendingWithoutReply: true,
+                            cancellationToken: cancellationToken)
+                        .GetAwaiter()
+                        .GetResult();
 
-                _logger.LogInformation(
-                    "Announcing CEX Movements {Day} on Telegram as Message {MessageId}",
-                    cexMovement.DayOfYear,
-                    message.MessageId);
+                    _logger.LogInformation(
+                        "Announcing CEX Movements {Day} on Telegram as Message {MessageId}",
+                        cexMovement.DayOfYear,
+                        message.MessageId);
+                }
             }
             catch (Exception e)
             {

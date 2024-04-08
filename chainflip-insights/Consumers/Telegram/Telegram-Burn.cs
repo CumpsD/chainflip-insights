@@ -51,22 +51,25 @@ namespace ChainflipInsights.Consumers.Telegram
                         : $"🔥 Burned **{burn.FlipBurnedFormatted} FLIP**{(string.IsNullOrWhiteSpace(burn.FlipBurnedFormattedUsd) ? string.Empty : $" (**${burn.FlipBurnedFormattedUsd}**)")}! " +
                           $"// **[view block on explorer]({_configuration.ExplorerBlocksUrl}{burn.LastSupplyUpdateBlock})**";
 
-                var message = _telegramClient
-                    .SendTextMessageAsync(
-                        new ChatId(_configuration.TelegramSwapInfoChannelId.Value),
-                        text,
-                        parseMode: ParseMode.Markdown,
-                        disableNotification: true,
-                        allowSendingWithoutReply: true,
-                        cancellationToken: cancellationToken)
-                    .GetAwaiter()
-                    .GetResult();
+                foreach (var channelId in _configuration.TelegramSwapInfoChannelId)
+                {
+                    var message = _telegramClient
+                        .SendTextMessageAsync(
+                            new ChatId(channelId),
+                            text,
+                            parseMode: ParseMode.Markdown,
+                            disableNotification: true,
+                            allowSendingWithoutReply: true,
+                            cancellationToken: cancellationToken)
+                        .GetAwaiter()
+                        .GetResult();
 
-                _logger.LogInformation(
-                    "Announcing Burn {BurnBlock} ({BurnBlockHash}) on Telegram as Message {MessageId}",
-                    burn.LastSupplyUpdateBlock,
-                    burn.LastSupplyUpdateBlockHash,
-                    message.MessageId);
+                    _logger.LogInformation(
+                        "Announcing Burn {BurnBlock} ({BurnBlockHash}) on Telegram as Message {MessageId}",
+                        burn.LastSupplyUpdateBlock,
+                        burn.LastSupplyUpdateBlockHash,
+                        message.MessageId);
+                }
             }
             catch (Exception e)
             {

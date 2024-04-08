@@ -37,21 +37,24 @@ namespace ChainflipInsights.Consumers.Telegram
                     $"Last Epoch distributed **{epoch.PreviousEpoch.TotalRewardsFormatted}** FLIP as rewards. " +
                     $"// **[view authority set on explorer]({_configuration.ExplorerAuthorityUrl}{epoch.Id})**";
 
-                var message = _telegramClient
-                    .SendTextMessageAsync(
-                        new ChatId(_configuration.TelegramSwapInfoChannelId.Value),
-                        text,
-                        parseMode: ParseMode.Markdown,
-                        disableNotification: true,
-                        allowSendingWithoutReply: true,
-                        cancellationToken: cancellationToken)
-                    .GetAwaiter()
-                    .GetResult();
+                foreach (var channelId in _configuration.TelegramSwapInfoChannelId)
+                {
+                    var message = _telegramClient
+                        .SendTextMessageAsync(
+                            new ChatId(channelId),
+                            text,
+                            parseMode: ParseMode.Markdown,
+                            disableNotification: true,
+                            allowSendingWithoutReply: true,
+                            cancellationToken: cancellationToken)
+                        .GetAwaiter()
+                        .GetResult();
 
-                _logger.LogInformation(
-                    "Announcing Epoch {Epoch} on Telegram as Message {MessageId}",
-                    epoch.Id,
-                    message.MessageId);
+                    _logger.LogInformation(
+                        "Announcing Epoch {Epoch} on Telegram as Message {MessageId}",
+                        epoch.Id,
+                        message.MessageId);
+                }
             }
             catch (Exception e)
             {
