@@ -15,8 +15,7 @@ namespace ChainflipInsights.Consumers.FullTelegram
             CancellationToken cancellationToken)
         {
             if (swap.DepositValueUsd < _configuration.DiscordSwapAmountThreshold &&
-                !_configuration.SwapWhitelist.Contains(swap.DestinationAsset,
-                    StringComparison.InvariantCultureIgnoreCase))
+                !_configuration.SwapWhitelist.Contains(swap.DestinationAsset, StringComparison.InvariantCultureIgnoreCase))
             {
                 _logger.LogInformation(
                     "Swap did not meet threshold (${Threshold}) for Full Telegram: {IngressAmount} {IngressTicker} to {EgressAmount} {EgressTicker} -> {ExplorerUrl}",

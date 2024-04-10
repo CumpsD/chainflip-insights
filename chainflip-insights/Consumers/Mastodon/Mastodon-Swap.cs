@@ -10,8 +10,7 @@ namespace ChainflipInsights.Consumers.Mastodon
         private void ProcessSwap(SwapInfo swap)
         {
             if (swap.DepositValueUsd < _configuration.MastodonSwapAmountThreshold &&
-                !_configuration.SwapWhitelist.Contains(swap.DestinationAsset,
-                    StringComparison.InvariantCultureIgnoreCase))
+                !_configuration.SwapWhitelist.Contains(swap.DestinationAsset, StringComparison.InvariantCultureIgnoreCase))
             {
                 _logger.LogInformation(
                     "Swap did not meet threshold (${Threshold}) for Mastodon: {IngressAmount} {IngressTicker} to {EgressAmount} {EgressTicker} -> {ExplorerUrl}",
