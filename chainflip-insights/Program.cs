@@ -226,6 +226,16 @@
                 .Services
                 
                 .AddHttpClient(
+                    "DuneUpload",
+                    x =>
+                    {
+                        x.BaseAddress = new Uri(botConfiguration.DuneUploadUrl);
+                        x.DefaultRequestHeaders.UserAgent.ParseAdd("discord-chainflip-insights");
+                    })
+                
+                .Services
+                
+                .AddHttpClient(
                     "Rpc",
                     x =>
                     {

@@ -297,6 +297,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public string? DuneUploadUrl
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
         public string? RpcUrl
         {
             get; init;

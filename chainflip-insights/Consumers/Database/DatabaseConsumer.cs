@@ -3,6 +3,7 @@ namespace ChainflipInsights.Consumers.Database
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
     using System.Threading.Tasks.Dataflow;
@@ -17,16 +18,19 @@ namespace ChainflipInsights.Consumers.Database
     {
         private readonly ILogger<DatabaseConsumer> _logger;
         private readonly IDbContextFactory<BotContext> _dbContextFactory;
+        private readonly IHttpClientFactory _httpClientFactory;
         private readonly BotConfiguration _configuration;
         private readonly Dictionary<string, Broker> _brokers;
 
         public DatabaseConsumer(
             ILogger<DatabaseConsumer> logger,
             IOptions<BotConfiguration> options,
-            IDbContextFactory<BotContext> dbContextFactory)
+            IDbContextFactory<BotContext> dbContextFactory,
+            IHttpClientFactory httpClientFactory)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _dbContextFactory = dbContextFactory ?? throw new ArgumentNullException(nameof(dbContextFactory));
+            _httpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));
             _configuration = options.Value ?? throw new ArgumentNullException(nameof(options));
             
             _brokers = _configuration

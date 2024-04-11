@@ -5,9 +5,11 @@ namespace ChainflipInsights.Consumers.Database
     using System.Globalization;
     using System.IO;
     using System.Linq;
+    using System.Net.Http.Json;
+    using System.Threading;
+    using System.Threading.Tasks;
     using ChainflipInsights.Feeders.Burn;
     using CsvHelper;
-    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Logging;
 
     public partial class DatabaseConsumer
@@ -56,7 +58,7 @@ namespace ChainflipInsights.Consumers.Database
                         BurnAmount = burn.FlipBurned!.Value,
                         ExplorerUrl = $"{_configuration.ExplorerBlocksUrl}{burn.LastSupplyUpdateBlock}"
                     });
-
+                
                 dbContext.SaveChanges();
                 
                 _logger.LogInformation(
@@ -65,24 +67,74 @@ namespace ChainflipInsights.Consumers.Database
                     burn.LastSupplyUpdateBlockHash,
                     $"{_configuration.ExplorerBlocksUrl}{burn.LastSupplyUpdateBlock}");
                 
-                // TODO: Generate CSV and upload to dune
                 var burnInfo = dbContext
                     .BurnInfo
                     .OrderBy(x => x.BurnDate)
                     .ToList()
                     .Select(x => new
                     {
-                        x.BurnDate,
-                        x.BurnAmount
+                        BurnDate = x.BurnDate.ToString("yyyy-MM-dd"),
+                        BurnAmount = (x.BurnAmount / 1000000000000000000).ToString("###,###,###,###,##0.000000000000000000")
                     });
 
                 using var writer = new StreamWriter(_configuration.BurnCsvLocation, false);
                 using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
                 csv.WriteRecords((IEnumerable)burnInfo);
+                csv.Flush();
+                
+                _logger.LogInformation(
+                    "Generated Burn CSV {CsvPath}",
+                    _configuration.BurnCsvLocation);
+
+                UploadCsv(File.ReadAllText(_configuration.BurnCsvLocation));
             }
             catch (Exception e)
             {
                 _logger.LogError(e, "Database meh.");
+            }
+        }
+        
+        private void UploadCsv(string csv)
+        {
+            try
+            {
+                using var client = _httpClientFactory.CreateClient("DuneUpload");
+
+                var csvUpload = new
+                {
+                    data = csv,
+                    description = "Chainflip Burns",
+                    table_name = "flip_burns",
+                };
+
+                _logger.LogInformation(
+                    "Uploading Burn CSV {CsvPath}",
+                    _configuration.BurnCsvLocation);
+
+                var result = client.PostAsJsonAsync(
+                    $"{_configuration.DuneUploadUrl}?api_key={_configuration.DuneApiKey}",
+                    csvUpload).GetAwaiter().GetResult();
+
+                if (result.IsSuccessStatusCode)
+                {
+                    _logger.LogInformation(
+                        "Uploaded Burn CSV {Result} -> {Response}",
+                        result.StatusCode,
+                        result.Content.ReadAsStringAsync().GetAwaiter().GetResult());
+                }
+                else
+                {
+                    _logger.LogError(
+                        "Uploaded Burn CSV {Result} -> {Response}",
+                        result.StatusCode,
+                        result.Content.ReadAsStringAsync().GetAwaiter().GetResult());
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(
+                    e,
+                    "Uploading CSV to Dune failed.");
             }
         }
     }
