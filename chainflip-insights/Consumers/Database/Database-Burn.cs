@@ -1,7 +1,13 @@
 namespace ChainflipInsights.Consumers.Database
 {
     using System;
+    using System.Collections;
+    using System.Globalization;
+    using System.IO;
+    using System.Linq;
     using ChainflipInsights.Feeders.Burn;
+    using CsvHelper;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Logging;
 
     public partial class DatabaseConsumer
@@ -58,6 +64,21 @@ namespace ChainflipInsights.Consumers.Database
                     burn.LastSupplyUpdateBlock,
                     burn.LastSupplyUpdateBlockHash,
                     $"{_configuration.ExplorerBlocksUrl}{burn.LastSupplyUpdateBlock}");
+                
+                // TODO: Generate CSV and upload to dune
+                var burnInfo = dbContext
+                    .BurnInfo
+                    .OrderBy(x => x.BurnDate)
+                    .ToList()
+                    .Select(x => new
+                    {
+                        x.BurnDate,
+                        x.BurnAmount
+                    });
+
+                using var writer = new StreamWriter(_configuration.BurnCsvLocation, false);
+                using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
+                csv.WriteRecords((IEnumerable)burnInfo);
             }
             catch (Exception e)
             {

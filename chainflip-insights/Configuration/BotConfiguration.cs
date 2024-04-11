@@ -416,6 +416,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public string? BurnCsvLocation
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
         public string? LastSwapIdLocation
         {
             get; init;
