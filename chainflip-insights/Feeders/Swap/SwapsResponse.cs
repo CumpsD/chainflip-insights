@@ -62,10 +62,10 @@ namespace ChainflipInsights.Feeders.Swap
         public string SourceAsset { get; set; }
         
         [JsonPropertyName("egressAmount")] 
-        public double EgressAmount { get; set; }
+        public double? EgressAmount { get; set; }
         
         [JsonPropertyName("egressValueUsd")] 
-        public double EgressValueUsd { get; set; }
+        public double? EgressValueUsd { get; set; }
         
         [JsonPropertyName("destinationAsset")] 
         public string DestinationAsset { get; set; }

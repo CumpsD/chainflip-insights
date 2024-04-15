@@ -66,8 +66,8 @@ namespace ChainflipInsights.Feeders.Swap
             DepositValueUsd = swap.DepositValueUsd;
             SourceAsset = swap.SourceAsset.ToUpperInvariant();
             
-            EgressAmount = swap.EgressAmount;
-            EgressValueUsd = swap.EgressValueUsd;
+            EgressAmount = swap.EgressAmount ?? 0;
+            EgressValueUsd = swap.EgressValueUsd ?? 0;
             DestinationAsset = swap.DestinationAsset.ToUpperInvariant();
 
             SwapScheduledBlockTimestamp = swap.SwapScheduledBlockTimestamp;
