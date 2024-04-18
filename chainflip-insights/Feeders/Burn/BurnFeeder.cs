@@ -186,7 +186,7 @@ namespace ChainflipInsights.Feeders.Burn
             return substrateInfo;
         }
 
-        private async Task<BurnInfo?> FetchSubstrateInfo(
+        private async Task<BurnInfo> FetchSubstrateInfo(
             SubstrateClientExt client,
             uint lastBurn,
             CancellationToken cancellationToken)
@@ -230,7 +230,7 @@ namespace ChainflipInsights.Feeders.Burn
             //     lastSupplyUpdateBlock.Value);
 
             if (lastBurn == lastSupplyUpdateBlock.Value)
-                return null;
+                return new BurnInfo(lastBurn);
             
             var lastSupplyUpdateBlockHash = await GetBlockHash(lastSupplyUpdateBlock.Value, cancellationToken);
             var lastBurnBlockHash = lastSupplyUpdateBlockHash.Result;

@@ -79,6 +79,11 @@ namespace ChainflipInsights.Feeders.Burn
         
         public bool BurnSkipped { get; }
 
+        public BurnInfo(uint lastSupplyUpdateBlock)
+        {
+            LastSupplyUpdateBlock = lastSupplyUpdateBlock;
+        }
+
         public BurnInfo(
             PriceProvider priceProvider,
             uint lastSupplyUpdateBlock,
