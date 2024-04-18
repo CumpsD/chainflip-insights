@@ -100,7 +100,7 @@ namespace ChainflipInsights.Feeders.Burn
                 if (cancellationToken.IsCancellationRequested)
                     return;
 
-                var substrateInfo = await GetSubstrateInfo(cancellationToken);
+                var substrateInfo = await GetSubstrateInfo(lastBurn, cancellationToken);
                 if (substrateInfo == null)
                 {
                     await Task.Delay(_configuration.BurnQueryDelay.Value.RandomizeTime(), cancellationToken);
@@ -145,7 +145,9 @@ namespace ChainflipInsights.Feeders.Burn
             }
         }
 
-        private async Task<BurnInfo?> GetSubstrateInfo(CancellationToken cancellationToken)
+        private async Task<BurnInfo?> GetSubstrateInfo(
+            uint lastBurn, 
+            CancellationToken cancellationToken)
         {
             BurnInfo? substrateInfo = null;
             
@@ -159,7 +161,10 @@ namespace ChainflipInsights.Feeders.Burn
 
                 if (client.IsConnected)
                 {
-                    substrateInfo = await FetchSubstrateInfo(client, cancellationToken);
+                    substrateInfo = await FetchSubstrateInfo(
+                        client, 
+                        lastBurn,
+                        cancellationToken);
                         
                     await client.CloseAsync(cancellationToken);
                 }
@@ -181,8 +186,9 @@ namespace ChainflipInsights.Feeders.Burn
             return substrateInfo;
         }
 
-        private async Task<BurnInfo> FetchSubstrateInfo(
-            SubstrateClientExt client, 
+        private async Task<BurnInfo?> FetchSubstrateInfo(
+            SubstrateClientExt client,
+            uint lastBurn,
             CancellationToken cancellationToken)
         {
             // var swappingEnabled = await client.AccountRolesStorage.SwappingEnabled(null, cancellationToken);
@@ -223,6 +229,9 @@ namespace ChainflipInsights.Feeders.Burn
             //     "[Substrate] Supply was last updated at block {LastSupplyUpdateBlock}",
             //     lastSupplyUpdateBlock.Value);
 
+            if (lastBurn == lastSupplyUpdateBlock.Value)
+                return null;
+            
             var lastSupplyUpdateBlockHash = await GetBlockHash(lastSupplyUpdateBlock.Value, cancellationToken);
             var lastBurnBlockHash = lastSupplyUpdateBlockHash.Result;
             // _logger.LogInformation(
