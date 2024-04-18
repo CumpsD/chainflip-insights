@@ -39,9 +39,16 @@ namespace ChainflipInsights.Consumers.Discord
                     .VolumePairs
                     .Sum(x => x.Value.Fees);
 
+                var burn = GetBurn(pastVolume.Date);
+                
                 var text =
                     $"📊 On **{pastVolume.Date}** we had a volume of " +
-                    $"**${totalVolume.ToReadableMetric()}**, **${pastVolume.NetworkFeesFormatted}** in network fees and **${totalFees.ToReadableMetric()}** in liquidity provider fees!";
+                    $"**${totalVolume.ToReadableMetric()}**, " +
+                    $"**${pastVolume.NetworkFeesFormatted}** in network fees " +
+                    $"and **${totalFees.ToReadableMetric()}** in liquidity provider fees!";
+
+                if (!string.IsNullOrWhiteSpace(burn))
+                    text += $" We also burned {burn} FLIP!";
 
                 var infoChannel = (ITextChannel)_discordClient
                     .GetChannel(_configuration.DiscordSwapInfoChannelId.Value);
@@ -61,6 +68,24 @@ namespace ChainflipInsights.Consumers.Discord
             catch (Exception e)
             {
                 _logger.LogError(e, "Discord meh.");
+            }
+        }
+
+        private string? GetBurn(string date)
+        {
+            try
+            {
+                using var dbContext = _dbContextFactory.CreateDbContext();
+                
+                var burnDate = DateTimeOffset.Parse(date);
+
+                var burn = dbContext.BurnInfo.SingleOrDefault(x => x.BurnDate.Date == burnDate.Date);
+
+                return (burn?.BurnAmount / 1000000000000000000)?.ToString("###,###,###,###,##0.00");
+            }
+            catch
+            {
+                return null;
             }
         }
     }

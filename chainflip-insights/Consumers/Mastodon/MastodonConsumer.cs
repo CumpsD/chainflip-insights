@@ -7,14 +7,17 @@ namespace ChainflipInsights.Consumers.Mastodon
     using System.Threading.Tasks;
     using System.Threading.Tasks.Dataflow;
     using ChainflipInsights.Configuration;
+    using ChainflipInsights.EntityFramework;
     using ChainflipInsights.Infrastructure.Pipelines;
     using Mastonet;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
 
     public partial class MastodonConsumer : IConsumer
     {
         private readonly ILogger<MastodonConsumer> _logger;
+        private readonly IDbContextFactory<BotContext> _dbContextFactory;
         private readonly MastodonClient _mastodonClient;
         private readonly BotConfiguration _configuration;
         private readonly Dictionary<string, string> _brokers;
@@ -22,9 +25,11 @@ namespace ChainflipInsights.Consumers.Mastodon
         public MastodonConsumer(
             ILogger<MastodonConsumer> logger,
             IOptions<BotConfiguration> options,
+            IDbContextFactory<BotContext> dbContextFactory,
             MastodonClient mastodonClient)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _dbContextFactory = dbContextFactory ?? throw new ArgumentNullException(nameof(dbContextFactory));
             _mastodonClient = mastodonClient ?? throw new ArgumentNullException(nameof(mastodonClient));
             _configuration = options.Value ?? throw new ArgumentNullException(nameof(options));
             

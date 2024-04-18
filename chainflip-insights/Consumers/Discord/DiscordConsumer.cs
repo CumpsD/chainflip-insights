@@ -7,15 +7,18 @@ namespace ChainflipInsights.Consumers.Discord
     using System.Threading.Tasks;
     using System.Threading.Tasks.Dataflow;
     using ChainflipInsights.Configuration;
+    using ChainflipInsights.EntityFramework;
     using ChainflipInsights.Infrastructure.Pipelines;
     using global::Discord;
     using global::Discord.WebSocket;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
 
     public partial class DiscordConsumer : IConsumer
     {
         private readonly ILogger<DiscordConsumer> _logger;
+        private readonly IDbContextFactory<BotContext> _dbContextFactory;
         private readonly BotConfiguration _configuration;
         private readonly DiscordSocketClient _discordClient;
         private readonly Dictionary<string, string> _brokers;
@@ -26,9 +29,11 @@ namespace ChainflipInsights.Consumers.Discord
         public DiscordConsumer(
             ILogger<DiscordConsumer> logger,
             IOptions<BotConfiguration> options,
+            IDbContextFactory<BotContext> dbContextFactory,
             DiscordSocketClient discordClient)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _dbContextFactory = dbContextFactory ?? throw new ArgumentNullException(nameof(dbContextFactory));
             _configuration = options.Value ?? throw new ArgumentNullException(nameof(options));
             _discordClient = discordClient ?? throw new ArgumentNullException(nameof(discordClient));
 

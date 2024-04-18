@@ -7,14 +7,17 @@ namespace ChainflipInsights.Consumers.FullTelegram
     using System.Threading.Tasks;
     using System.Threading.Tasks.Dataflow;
     using ChainflipInsights.Configuration;
+    using ChainflipInsights.EntityFramework;
     using ChainflipInsights.Infrastructure.Pipelines;
     using global::Telegram.Bot;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
 
     public partial class FullTelegramConsumer : IConsumer
     {
         private readonly ILogger<FullTelegramConsumer> _logger;
+        private readonly IDbContextFactory<BotContext> _dbContextFactory;
         private readonly BotConfiguration _configuration;
         private readonly TelegramBotClient _telegramClient;
         private readonly Dictionary<string,string> _brokers;
@@ -22,9 +25,11 @@ namespace ChainflipInsights.Consumers.FullTelegram
         public FullTelegramConsumer(
             ILogger<FullTelegramConsumer> logger,
             IOptions<BotConfiguration> options,
+            IDbContextFactory<BotContext> dbContextFactory,
             TelegramBotClient telegramClient)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _dbContextFactory = dbContextFactory ?? throw new ArgumentNullException(nameof(dbContextFactory));
             _configuration = options.Value ?? throw new ArgumentNullException(nameof(options));
             _telegramClient = telegramClient ?? throw new ArgumentNullException(nameof(telegramClient));
             

@@ -6,8 +6,6 @@ namespace ChainflipInsights.Consumers.Database
     using System.IO;
     using System.Linq;
     using System.Net.Http.Json;
-    using System.Threading;
-    using System.Threading.Tasks;
     using ChainflipInsights.Feeders.Burn;
     using ChainflipInsights.Infrastructure;
     using CsvHelper;
@@ -47,59 +45,60 @@ namespace ChainflipInsights.Consumers.Database
                     burn.LastSupplyUpdateBlockHash,
                     $"{_configuration.ExplorerBlocksUrl}{burn.LastSupplyUpdateBlock}");
 
-                using var dbContext = _dbContextFactory.CreateDbContext();
-                
-                dbContext
-                    .BurnInfo
-                    .Add(new EntityFramework.BurnInfo
-                    {
-                        BurnDate = DateTimeOffset.UtcNow,
-                        BurnBlock = burn.LastSupplyUpdateBlock,
-                        BurnHash = burn.LastSupplyUpdateBlockHash,
-                        BurnAmount = burn.FlipBurned!.Value,
-                        ExplorerUrl = $"{_configuration.ExplorerBlocksUrl}{burn.LastSupplyUpdateBlock}"
-                    });
-                
-                dbContext.SaveChanges();
-                
-                _logger.LogInformation(
-                    "Stored Burn {BurnBlock} ({BurnBlockHash}) in Database -> {BlockUrl}",
-                    burn.LastSupplyUpdateBlock,
-                    burn.LastSupplyUpdateBlockHash,
-                    $"{_configuration.ExplorerBlocksUrl}{burn.LastSupplyUpdateBlock}");
-                
-                var burnInfo = dbContext
-                    .BurnInfo
-                    .OrderBy(x => x.BurnDate)
-                    .ToList();
-                
-                var burnDates = burnInfo.Select(x => x.BurnDate.Date);
-                var startDate = burnInfo.Min(x => x.BurnDate).Date;
-                var endDate = burnInfo.Max(x => x.BurnDate).Date;
-                var missing = startDate.Range(endDate).Except(burnDates);
-                
-                var burns = burnInfo
-                    .Select(x => new
-                    {
-                        BurnDate = x.BurnDate.Date.ToString("yyyy-MM-dd"),
-                        BurnAmount = (x.BurnAmount / 1000000000000000000).ToString("###,###,###,###,##0.000000000000000000")
-                    })
-                    .ToList();
-
-                burns.AddRange(missing.Select(x => new
+                using (var dbContext = _dbContextFactory.CreateDbContext())
                 {
-                    BurnDate = x.ToString("yyyy-MM-dd"),
-                    BurnAmount = "0.000000000000000000"
-                }));
-                
-                using var writer = new StreamWriter(_configuration.BurnCsvLocation, false);
-                using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
-                csv.WriteRecords((IEnumerable)burns.OrderBy(x => x.BurnDate).ToList());
-                csv.Flush();
-                
-                _logger.LogInformation(
-                    "Generated Burn CSV {CsvPath}",
-                    _configuration.BurnCsvLocation);
+                    dbContext
+                        .BurnInfo
+                        .Add(new EntityFramework.BurnInfo
+                        {
+                            BurnDate = DateTimeOffset.UtcNow,
+                            BurnBlock = burn.LastSupplyUpdateBlock,
+                            BurnHash = burn.LastSupplyUpdateBlockHash,
+                            BurnAmount = burn.FlipBurned!.Value,
+                            ExplorerUrl = $"{_configuration.ExplorerBlocksUrl}{burn.LastSupplyUpdateBlock}"
+                        });
+
+                    dbContext.SaveChanges();
+
+                    _logger.LogInformation(
+                        "Stored Burn {BurnBlock} ({BurnBlockHash}) in Database -> {BlockUrl}",
+                        burn.LastSupplyUpdateBlock,
+                        burn.LastSupplyUpdateBlockHash,
+                        $"{_configuration.ExplorerBlocksUrl}{burn.LastSupplyUpdateBlock}");
+
+                    var burnInfo = dbContext
+                        .BurnInfo
+                        .OrderBy(x => x.BurnDate)
+                        .ToList();
+
+                    var burnDates = burnInfo.Select(x => x.BurnDate.Date);
+                    var startDate = burnInfo.Min(x => x.BurnDate).Date;
+                    var endDate = burnInfo.Max(x => x.BurnDate).Date;
+                    var missing = startDate.Range(endDate).Except(burnDates);
+
+                    var burns = burnInfo
+                        .Select(x => new
+                        {
+                            BurnDate = x.BurnDate.Date.ToString("yyyy-MM-dd"),
+                            BurnAmount = (x.BurnAmount / 1000000000000000000).ToString("###,###,###,###,##0.000000000000000000")
+                        })
+                        .ToList();
+
+                    burns.AddRange(missing.Select(x => new
+                    {
+                        BurnDate = x.ToString("yyyy-MM-dd"),
+                        BurnAmount = "0.000000000000000000"
+                    }));
+
+                    using var writer = new StreamWriter(_configuration.BurnCsvLocation, false);
+                    using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
+                    csv.WriteRecords((IEnumerable)burns.OrderBy(x => x.BurnDate).ToList());
+                    csv.Flush();
+                    
+                    _logger.LogInformation(
+                        "Generated Burn CSV {CsvPath}",
+                        _configuration.BurnCsvLocation);
+                }
 
                 UploadCsv(File.ReadAllText(_configuration.BurnCsvLocation));
             }

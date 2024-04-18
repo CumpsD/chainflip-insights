@@ -8,7 +8,9 @@ namespace ChainflipInsights.Consumers.Twitter
     using System.Threading.Tasks;
     using System.Threading.Tasks.Dataflow;
     using ChainflipInsights.Configuration;
+    using ChainflipInsights.EntityFramework;
     using ChainflipInsights.Infrastructure.Pipelines;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
     using Tweetinvi;
@@ -30,6 +32,7 @@ namespace ChainflipInsights.Consumers.Twitter
     public partial class TwitterConsumer : IConsumer
     {
         private readonly ILogger<TwitterConsumer> _logger;
+        private readonly IDbContextFactory<BotContext> _dbContextFactory;
         private readonly BotConfiguration _configuration;
         private readonly TwitterClient _twitterClient;
         private readonly Dictionary<string, Broker> _brokers;
@@ -37,9 +40,11 @@ namespace ChainflipInsights.Consumers.Twitter
         public TwitterConsumer(
             ILogger<TwitterConsumer> logger,
             IOptions<BotConfiguration> options,
+            IDbContextFactory<BotContext> dbContextFactory,
             TwitterClient twitterClient)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _dbContextFactory = dbContextFactory ?? throw new ArgumentNullException(nameof(dbContextFactory));
             _configuration = options.Value ?? throw new ArgumentNullException(nameof(options));
             _twitterClient = twitterClient ?? throw new ArgumentNullException(nameof(twitterClient));
             
