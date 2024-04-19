@@ -43,12 +43,12 @@ namespace ChainflipInsights.Consumers.Discord
                 
                 var text =
                     $"📊 On **{pastVolume.Date}** we had a volume of " +
-                    $"**${totalVolume.ToReadableMetric()}**, " +
+                    $"**${totalVolume.ToReadableMetric()}** with " +
                     $"**${pastVolume.NetworkFeesFormatted}** in network fees " +
-                    $"and **${totalFees.ToReadableMetric()}** in liquidity provider fees!";
+                    $"and **${totalFees.ToReadableMetric()}** in liquidity provider fees.";
 
                 if (!string.IsNullOrWhiteSpace(burn))
-                    text += $" We also burned {burn} FLIP!";
+                    text += $" We also burned **{burn} FLIP**!";
 
                 var infoChannel = (ITextChannel)_discordClient
                     .GetChannel(_configuration.DiscordSwapInfoChannelId.Value);

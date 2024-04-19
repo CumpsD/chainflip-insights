@@ -41,10 +41,17 @@ namespace ChainflipInsights.Consumers.FullTelegram
                     .VolumePairs
                     .Sum(x => x.Value.Fees);
 
+                var burn = GetBurn(pastVolume.Date);
+                
                 var text =
                     $"📊 On **{pastVolume.Date}** we had a volume of " +
-                    $"**${totalVolume.ToReadableMetric()}**, **${pastVolume.NetworkFeesFormatted}** in network fees and **${totalFees.ToReadableMetric()}** in liquidity provider fees!";
+                    $"**${totalVolume.ToReadableMetric()}** with " +
+                    $"**${pastVolume.NetworkFeesFormatted}** in network fees " +
+                    $"and **${totalFees.ToReadableMetric()}** in liquidity provider fees.";
 
+                if (!string.IsNullOrWhiteSpace(burn))
+                    text += $" We also burned **{burn} FLIP**!";
+                
                 var message = _telegramClient
                     .SendTextMessageAsync(
                         new ChatId(_configuration.TelegramInfoChannelId.Value),
@@ -63,6 +70,24 @@ namespace ChainflipInsights.Consumers.FullTelegram
             catch (Exception e)
             {
                 _logger.LogError(e, "Full Telegram meh.");
+            }
+        }
+        
+        private string? GetBurn(string date)
+        {
+            try
+            {
+                using var dbContext = _dbContextFactory.CreateDbContext();
+                
+                var burnDate = DateTimeOffset.Parse(date);
+
+                var burn = dbContext.BurnInfo.SingleOrDefault(x => x.BurnDate.Date == burnDate.Date);
+
+                return (burn?.BurnAmount / 1000000000000000000)?.ToString("###,###,###,###,##0.00");
+            }
+            catch
+            {
+                return null;
             }
         }
     }
