@@ -144,7 +144,7 @@ namespace ChainflipInsights.Feeders.CfeVersion
                 var cfeVersions = cfeVersionInfo
                     .Data.Data.Data
                     .Select(x => new CfeVersionInfo(x.Data, lastBlockInfo.Data.Data.Data[0].Id))
-                    .OrderBy(x => x.Version)
+                    .OrderByDescending(x => x.Version)
                     .ToArray();
                 
                 _logger.LogInformation(
