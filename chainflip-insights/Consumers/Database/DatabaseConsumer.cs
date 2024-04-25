@@ -59,6 +59,9 @@ namespace ChainflipInsights.Consumers.Database
                     if (input.IncomingLiquidityInfo != null)
                         ProcessIncomingLiquidityInfo(input.IncomingLiquidityInfo);
                     
+                    if (input.OutgoingLiquidityInfo != null)
+                        ProcessOutgoingLiquidityInfo(input.OutgoingLiquidityInfo);
+                    
                     if (input.BurnInfo != null)
                         ProcessBurnInfo(input.BurnInfo);
                     

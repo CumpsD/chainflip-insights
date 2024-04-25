@@ -19,6 +19,7 @@ namespace ChainflipInsights
     {
         public SwapInfo? SwapInfo { get; }
         public IncomingLiquidityInfo? IncomingLiquidityInfo { get; }
+        public OutgoingLiquidityInfo? OutgoingLiquidityInfo { get; }
         public EpochInfo? EpochInfo { get; }
         public FundingInfo? FundingInfo { get; }
         public RedemptionInfo? RedemptionInfo { get; }
@@ -36,6 +37,9 @@ namespace ChainflipInsights
 
         public BroadcastInfo(IncomingLiquidityInfo incomingLiquidityInfo) 
             => IncomingLiquidityInfo = incomingLiquidityInfo ?? throw new ArgumentNullException(nameof(incomingLiquidityInfo));
+
+        public BroadcastInfo(OutgoingLiquidityInfo outgoingLiquidityInfo) 
+            => OutgoingLiquidityInfo = outgoingLiquidityInfo ?? throw new ArgumentNullException(nameof(outgoingLiquidityInfo));
 
         public BroadcastInfo(EpochInfo epochInfo)
             => EpochInfo = epochInfo ?? throw new ArgumentNullException(nameof(epochInfo));

@@ -50,6 +50,7 @@ namespace ChainflipInsights
             Pipeline<BurnInfo> burnPipeline,
             Pipeline<SwapInfo> swapPipeline,
             Pipeline<IncomingLiquidityInfo> incomingLiquidityPipeline,
+            Pipeline<OutgoingLiquidityInfo> outgoingLiquidityPipeline,
             Pipeline<EpochInfo> epochPipeline,
             Pipeline<FundingInfo> fundingPipeline,
             Pipeline<RedemptionInfo> redemptionPipeline,
@@ -79,6 +80,7 @@ namespace ChainflipInsights
                 burnPipeline,
                 swapPipeline,
                 incomingLiquidityPipeline,
+                outgoingLiquidityPipeline,
                 epochPipeline,
                 fundingPipeline,
                 redemptionPipeline,
@@ -95,6 +97,7 @@ namespace ChainflipInsights
             Pipeline<BurnInfo> burnPipeline, 
             Pipeline<SwapInfo> swapPipeline, 
             Pipeline<IncomingLiquidityInfo> incomingLiquidityPipeline, 
+            Pipeline<OutgoingLiquidityInfo> outgoingLiquidityPipeline, 
             Pipeline<EpochInfo> epochPipeline, 
             Pipeline<FundingInfo> fundingPipeline, 
             Pipeline<RedemptionInfo> redemptionPipeline, 
@@ -134,6 +137,13 @@ namespace ChainflipInsights
             SetupFeederPipeline(
                 "Incoming Liquidity",
                 incomingLiquidityPipeline,
+                linkOptions,
+                broadcast,
+                x => new BroadcastInfo(x));
+            
+            SetupFeederPipeline(
+                "Outgoing Liquidity",
+                outgoingLiquidityPipeline,
                 linkOptions,
                 broadcast,
                 x => new BroadcastInfo(x));

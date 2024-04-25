@@ -17,46 +17,40 @@ namespace ChainflipInsights.Feeders.Liquidity
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
 
-    public class IncomingLiquidityFeeder : IFeeder
+    public class OutgoingLiquidityFeeder : IFeeder
     {
-        private const string IncomingLiquidityQuery = 
+        private const string OutgoingLiquidityQuery = 
             """
             {
-                allLiquidityDeposits(orderBy: ID_ASC, first: 500, filter: {
+                allLiquidityWithdrawals(orderBy: ID_DESC, first: 500, filter: {
                     id: { greaterThan: LAST_ID }
                  }) {
                     edges {
                         node {
                             id
-                            depositAmount
-                            depositValueUsd
+                            amount
+                            valueUsd
+                            chain
+                            asset
                             block: blockByBlockId {
                                 timestamp
-                            }
-                            channel: liquidityDepositChannelByLiquidityDepositChannelId {
-                                issuedBlockId
-                                chain
-                                asset
-                                channelId
-                                depositAddress
-                                isExpired
-                            }
+                            }        
                         }
                     }
                 }
             }
             """;
         
-        private readonly ILogger<IncomingLiquidityFeeder> _logger;
-        private readonly Pipeline<IncomingLiquidityInfo> _pipeline;
+        private readonly ILogger<OutgoingLiquidityFeeder> _logger;
+        private readonly Pipeline<OutgoingLiquidityInfo> _pipeline;
         private readonly BotConfiguration _configuration;
         private readonly IHttpClientFactory _httpClientFactory;
 
-        public IncomingLiquidityFeeder(
-            ILogger<IncomingLiquidityFeeder> logger,
+        public OutgoingLiquidityFeeder(
+            ILogger<OutgoingLiquidityFeeder> logger,
             IOptions<BotConfiguration> options,
             IHttpClientFactory httpClientFactory,
-            Pipeline<IncomingLiquidityInfo> pipeline)
+            Pipeline<OutgoingLiquidityInfo> pipeline)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _configuration = options.Value ?? throw new ArgumentNullException(nameof(options));
@@ -72,111 +66,111 @@ namespace ChainflipInsights.Feeders.Liquidity
                 {
                     _logger.LogInformation(
                         "Liquidity not enabled. Skipping {TaskName}",
-                        nameof(IncomingLiquidityFeeder));
+                        nameof(OutgoingLiquidityFeeder));
 
                     return;
                 }
 
                 _logger.LogInformation(
                     "Starting {TaskName}",
-                    nameof(IncomingLiquidityFeeder));
+                    nameof(OutgoingLiquidityFeeder));
 
                 // Give the consumers some time to connect
                 await Task.Delay(_configuration.FeedingDelay.Value, _pipeline.CancellationToken);
 
                 // Start a loop fetching Liquidity Info
-                await ProvideIncomingLiquidityInfo(_pipeline.CancellationToken);
+                await ProvideOutgoingLiquidityInfo(_pipeline.CancellationToken);
 
                 _logger.LogInformation(
                     "Stopping {TaskName}",
-                    nameof(IncomingLiquidityFeeder));
+                    nameof(OutgoingLiquidityFeeder));
             }
             catch (Exception e)
             {
                 _logger.LogError(
                     e,
                     "Something went wrong in {TaskName}",
-                    nameof(IncomingLiquidityFeeder));
+                    nameof(OutgoingLiquidityFeeder));
             }
         }
 
-        private async Task ProvideIncomingLiquidityInfo(CancellationToken cancellationToken)
+        private async Task ProvideOutgoingLiquidityInfo(CancellationToken cancellationToken)
         {
             if (cancellationToken.IsCancellationRequested)
                 return;
             
-            var lastId = await GetLastIncomingLiquidityId(cancellationToken);
+            var lastId = await GetLastOutgoingLiquidityId(cancellationToken);
 
             while (true)
             {
                 if (cancellationToken.IsCancellationRequested)
                     return;
                 
-                var incomingLiquidityInfo = await GetIncomingLiquidity(lastId, cancellationToken);
+                var outgoingLiquidityInfo = await GetOutgoingLiquidity(lastId, cancellationToken);
                 
                 if (cancellationToken.IsCancellationRequested)
                     return;
 
-                if (incomingLiquidityInfo == null)
+                if (outgoingLiquidityInfo == null)
                 {
-                    await Task.Delay(_configuration.IncomingLiquidityQueryDelay.Value.RandomizeTime(), cancellationToken);
+                    await Task.Delay(_configuration.OutgoingLiquidityQueryDelay.Value.RandomizeTime(), cancellationToken);
                     continue;                    
                 }
                 
-                var incomingLiquidity = incomingLiquidityInfo
+                var outgoingLiquidity = outgoingLiquidityInfo
                     .Data.Data.Data
                     .Select(x => x.Data)
                     .OrderBy(x => x.Id)
                     .ToList();
                 
-                if (incomingLiquidity.Count <= 0)
+                if (outgoingLiquidity.Count <= 0)
                 {
                     _logger.LogInformation(
-                        "No new incoming liquidity to announce. Last incoming liquidity is still {IncomingLiquidityId}",
+                        "No new outgoing liquidity to announce. Last outgoing liquidity is still {OutgoingLiquidityId}",
                         lastId);
                 }
                 
-                // Incoming liquidity is in increasing order
-                foreach (var liquidity in incomingLiquidity.TakeWhile(_ => !cancellationToken.IsCancellationRequested))
+                // Outgoing liquidity is in increasing order
+                foreach (var liquidity in outgoingLiquidity.TakeWhile(_ => !cancellationToken.IsCancellationRequested))
                 {
-                    var liquidityInfo = new IncomingLiquidityInfo(liquidity);
+                    var liquidityInfo = new OutgoingLiquidityInfo(liquidity);
                     
                     _logger.LogInformation(
-                        "Broadcasting Incoming Liquidity: {IngressAmount} {IngressTicker} (${IngressUsdAmount}) -> {ExplorerUrl}",
-                        liquidityInfo.DepositAmountFormatted,
+                        "Broadcasting Outgoing Liquidity: {EgressAmount} {EgressTicker} (${EgressUsdAmount}) -> {ExplorerUrl}",
+                        liquidityInfo.WithdrawalAmountFormatted,
                         liquidityInfo.SourceAsset,
-                        liquidityInfo.DepositValueUsdFormatted,
-                        $"{_configuration.ExplorerLiquidityChannelUrl}{liquidityInfo.BlockId}-{liquidityInfo.Network}-{liquidityInfo.ChannelId}");
+                        liquidityInfo.WithdrawalValueUsdFormatted,
+                        $"{_configuration.ExplorerBlocksUrl}{liquidityInfo.BlockId}");
                     
                     await _pipeline.Source.SendAsync(
                         liquidityInfo, 
                         cancellationToken);
                    
                     lastId = liquidityInfo.Id;
-                    await StoreLastIncomingLiquidityId(lastId);
+                    await StoreLastOutgoingLiquidityId(lastId);
                 }
                 
-                await Task.Delay(_configuration.IncomingLiquidityQueryDelay.Value.RandomizeTime(), cancellationToken);
+                await Task.Delay(_configuration.OutgoingLiquidityQueryDelay.Value.RandomizeTime(), cancellationToken);
             }
         }
         
-        private async Task<double> GetLastIncomingLiquidityId(CancellationToken cancellationToken)
+        private async Task<double> GetLastOutgoingLiquidityId(CancellationToken cancellationToken)
         {
-            if (File.Exists(_configuration.LastIncomingLiquidityIdLocation))
-                return double.Parse(await File.ReadAllTextAsync(_configuration.LastIncomingLiquidityIdLocation, cancellationToken));
+            if (File.Exists(_configuration.LastOutgoingLiquidityIdLocation))
+                return double.Parse(await File.ReadAllTextAsync(_configuration.LastOutgoingLiquidityIdLocation, cancellationToken));
             
-            await using var file = File.CreateText(_configuration.LastIncomingLiquidityIdLocation);
+            await using var file = File.CreateText(_configuration.LastOutgoingLiquidityIdLocation);
             await file.WriteAsync("0");
             return 0;
         }
         
-        private async Task StoreLastIncomingLiquidityId(double incomingLiquidityId)
+        private async Task StoreLastOutgoingLiquidityId(double outgoingLiquidityId)
         {
-            await using var file = File.CreateText(_configuration.LastIncomingLiquidityIdLocation);
-            await file.WriteAsync(incomingLiquidityId.ToString(CultureInfo.InvariantCulture));
+            await using var file = File.CreateText(_configuration.LastOutgoingLiquidityIdLocation);
+            await file.WriteAsync(outgoingLiquidityId.ToString(CultureInfo.InvariantCulture));
         }
         
-        private async Task<IncomingLiquidityResponse?> GetIncomingLiquidity(
+        private async Task<OutgoingLiquidityResponse?> GetOutgoingLiquidity(
             double fromId,
             CancellationToken cancellationToken)
         {
@@ -184,7 +178,7 @@ namespace ChainflipInsights.Feeders.Liquidity
             {
                 using var client = _httpClientFactory.CreateClient("Graph");
 
-                var query = IncomingLiquidityQuery.Replace("LAST_ID", fromId.ToString(CultureInfo.InvariantCulture));
+                var query = OutgoingLiquidityQuery.Replace("LAST_ID", fromId.ToString(CultureInfo.InvariantCulture));
                 var graphQuery = $"{{ \"query\": \"{query.ReplaceLineEndings("\\n")}\" }}";
 
                 var response = await client.PostAsync(
@@ -198,11 +192,11 @@ namespace ChainflipInsights.Feeders.Liquidity
                 {
                     return await response
                         .Content
-                        .ReadFromJsonAsync<IncomingLiquidityResponse>(cancellationToken: cancellationToken);
+                        .ReadFromJsonAsync<OutgoingLiquidityResponse>(cancellationToken: cancellationToken);
                 }
 
                 _logger.LogError(
-                    "GetIncomingLiquidity returned {StatusCode}: {Error}\nRequest: {Request}",
+                    "GetOutgoingLiquidity returned {StatusCode}: {Error}\nRequest: {Request}",
                     response.StatusCode,
                     await response.Content.ReadAsStringAsync(cancellationToken),
                     graphQuery);
@@ -211,7 +205,7 @@ namespace ChainflipInsights.Feeders.Liquidity
             {
                 _logger.LogError(
                     e,
-                    "Fetching incoming liquidity failed.");
+                    "Fetching outgoing liquidity failed.");
             }
 
             return null;

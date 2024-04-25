@@ -343,6 +343,13 @@ namespace ChainflipInsights.Configuration
         {
             get; init;
         }
+        
+        [Required]
+        [NotNull]
+        public int? OutgoingLiquidityQueryDelay
+        {
+            get; init;
+        }
 
         [Required]
         [NotNull]
@@ -438,6 +445,13 @@ namespace ChainflipInsights.Configuration
         [Required]
         [NotNull]
         public string? LastIncomingLiquidityIdLocation
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public string? LastOutgoingLiquidityIdLocation
         {
             get; init;
         }

@@ -81,6 +81,7 @@
             {
                 container.GetRequiredService<Pipeline<SwapInfo>>(),
                 container.GetRequiredService<Pipeline<IncomingLiquidityInfo>>(),
+                container.GetRequiredService<Pipeline<OutgoingLiquidityInfo>>(),
                 container.GetRequiredService<Pipeline<EpochInfo>>(),
                 container.GetRequiredService<Pipeline<FundingInfo>>(),
                 container.GetRequiredService<Pipeline<RedemptionInfo>>(),
@@ -98,6 +99,7 @@
             {
                 container.GetRequiredService<SwapFeeder>(),
                 container.GetRequiredService<IncomingLiquidityFeeder>(),
+                container.GetRequiredService<OutgoingLiquidityFeeder>(),
                 container.GetRequiredService<EpochFeeder>(),
                 container.GetRequiredService<FundingFeeder>(),
                 container.GetRequiredService<RedemptionFeeder>(),
@@ -334,6 +336,7 @@
             
             RegisterFeeder<SwapFeeder, SwapInfo>(builder, ct);
             RegisterFeeder<IncomingLiquidityFeeder, IncomingLiquidityInfo>(builder, ct);
+            RegisterFeeder<OutgoingLiquidityFeeder, OutgoingLiquidityInfo>(builder, ct);
             RegisterFeeder<EpochFeeder, EpochInfo>(builder, ct);
             RegisterFeeder<FundingFeeder, FundingInfo>(builder, ct);
             RegisterFeeder<RedemptionFeeder, RedemptionInfo>(builder, ct);
