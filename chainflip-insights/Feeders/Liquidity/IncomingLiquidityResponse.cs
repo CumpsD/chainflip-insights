@@ -1,5 +1,6 @@
 namespace ChainflipInsights.Feeders.Liquidity
 {
+    using System;
     using System.Text.Json.Serialization;
 
     public class IncomingLiquidityResponse
@@ -51,10 +52,19 @@ namespace ChainflipInsights.Feeders.Liquidity
         [JsonPropertyName("depositValueUsd")] 
         public double DepositValueUsd { get; set; }
         
+        [JsonPropertyName("block")] 
+        public IncomingLiquidityResponseBlock Block { get; set; }
+        
         [JsonPropertyName("channel")] 
         public IncomingLiquidityResponseChannel Channel { get; set; }
     }
 
+    public class IncomingLiquidityResponseBlock
+    {
+        [JsonPropertyName("timestamp")] 
+        public DateTimeOffset Timestamp { get; set; }
+    }
+    
     public class IncomingLiquidityResponseChannel
     {
         //     "channel": {

@@ -31,6 +31,9 @@ namespace ChainflipInsights.Feeders.Liquidity
         
         public string ChannelId { get; }
         
+        public DateTimeOffset Timestamp { get; }
+        
+        
         public IncomingLiquidityInfo(IncomingLiquidityResponseNode liquidity)
         {
             Id = liquidity.Id;
@@ -41,6 +44,8 @@ namespace ChainflipInsights.Feeders.Liquidity
             BlockId = liquidity.Channel.IssuedBlockId;
             Network = liquidity.Channel.Chain;
             ChannelId = liquidity.Channel.ChannelId;
+
+            Timestamp = liquidity.Block.Timestamp;
 
             SourceAssetInfo = Constants.SupportedAssets[SourceAsset.ToLowerInvariant()];
         }

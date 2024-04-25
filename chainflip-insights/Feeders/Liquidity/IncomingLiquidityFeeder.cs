@@ -30,6 +30,9 @@ namespace ChainflipInsights.Feeders.Liquidity
                             id
                             depositAmount
                             depositValueUsd
+                            block: blockByBlockId {
+                                timestamp
+                            }
                             channel: liquidityDepositChannelByLiquidityDepositChannelId {
                                 issuedBlockId
                                 chain

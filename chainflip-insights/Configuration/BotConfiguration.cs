@@ -602,6 +602,13 @@ namespace ChainflipInsights.Configuration
         {
             get; init;
         }
+        
+        [Required]
+        [NotNull]
+        public double? DatabaseLiquidityAmountThreshold
+        {
+            get; init;
+        }
 
         [Required]
         [NotNull]

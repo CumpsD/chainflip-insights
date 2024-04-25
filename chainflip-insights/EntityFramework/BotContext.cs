@@ -6,6 +6,7 @@ namespace ChainflipInsights.EntityFramework
     {
         // ReSharper disable AutoPropertyCanBeMadeGetOnly.Global
         public virtual DbSet<BurnInfo> BurnInfo { get; set; } = null!;
+        public virtual DbSet<LiquidityInfo> LiquidityInfo { get; set; } = null!;
         // ReSharper restore AutoPropertyCanBeMadeGetOnly.Global
         
         public BotContext() { }
