@@ -62,13 +62,14 @@ namespace ChainflipInsights.Consumers.Database
                     if (input.OutgoingLiquidityInfo != null)
                         ProcessOutgoingLiquidityInfo(input.OutgoingLiquidityInfo);
                     
+                    if (input.FundingInfo != null)
+                        ProcessFundingInfo(input.FundingInfo);
+                    
+                    if (input.RedemptionInfo != null)
+                        ProcessRedemptionInfo(input.RedemptionInfo);
+                    
                     if (input.BurnInfo != null)
                         ProcessBurnInfo(input.BurnInfo);
-                    
-                    Task
-                        .Delay(1500, cancellationToken)
-                        .GetAwaiter()
-                        .GetResult();
                 },
                 new ExecutionDataflowBlockOptions
                 {

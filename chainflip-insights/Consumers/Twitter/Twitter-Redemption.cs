@@ -14,7 +14,7 @@ namespace ChainflipInsights.Consumers.Twitter
             if (redemption.AmountConverted < _configuration.TwitterRedemptionAmountThreshold)
             {
                 _logger.LogInformation(
-                    "Redemption did not meet threshold (${Threshold}) for Twitter: {Validator} added {Amount} $FLIP -> {ExplorerUrl}",
+                    "Redemption did not meet threshold (${Threshold}) for Twitter: {Validator} redeemed {Amount} $FLIP -> {ExplorerUrl}",
                     _configuration.TwitterRedemptionAmountThreshold,
                     redemption.Validator,
                     redemption.AmountFormatted,

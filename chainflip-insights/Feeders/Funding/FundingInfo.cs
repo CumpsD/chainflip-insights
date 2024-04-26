@@ -17,7 +17,7 @@ namespace ChainflipInsights.Feeders.Funding
                 .Round(Amount / Math.Pow(10, FlipDecimals), 3)
                 .ToString("###,###,###,###,##0.00");
         
-        public double Epoch { get; }
+        public ulong Epoch { get; }
         
         public string Validator { get; }
         

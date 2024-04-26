@@ -50,7 +50,7 @@ namespace ChainflipInsights.Feeders.Redemption
         public double Amount { get; set; }
         
         [JsonPropertyName("epochId")] 
-        public double Epoch { get; set; }
+        public ulong Epoch { get; set; }
         
         [JsonPropertyName("accountByAccountId")] 
         public RedemptionInfoAccount Account { get; set; }

@@ -12,7 +12,7 @@ namespace ChainflipInsights.Consumers.Mastodon
             if (redemption.AmountConverted < _configuration.MastodonRedemptionAmountThreshold)
             {
                 _logger.LogInformation(
-                    "Redemption did not meet threshold (${Threshold}) for Mastodon: {Validator} added {Amount} FLIP -> {ExplorerUrl}",
+                    "Redemption did not meet threshold (${Threshold}) for Mastodon: {Validator} redeemed {Amount} FLIP -> {ExplorerUrl}",
                     _configuration.MastodonRedemptionAmountThreshold,
                     redemption.Validator,
                     redemption.AmountFormatted,

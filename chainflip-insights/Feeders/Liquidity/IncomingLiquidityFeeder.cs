@@ -22,7 +22,7 @@ namespace ChainflipInsights.Feeders.Liquidity
         private const string IncomingLiquidityQuery = 
             """
             {
-                allLiquidityDeposits(orderBy: ID_ASC, first: 500, filter: {
+                allLiquidityDeposits(orderBy: ID_ASC, first: 100, filter: {
                     id: { greaterThan: LAST_ID }
                  }) {
                     edges {

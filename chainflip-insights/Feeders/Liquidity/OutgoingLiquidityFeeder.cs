@@ -22,7 +22,7 @@ namespace ChainflipInsights.Feeders.Liquidity
         private const string OutgoingLiquidityQuery = 
             """
             {
-                allLiquidityWithdrawals(orderBy: ID_DESC, first: 500, filter: {
+                allLiquidityWithdrawals(orderBy: ID_DESC, first: 100, filter: {
                     id: { greaterThan: LAST_ID }
                  }) {
                     edges {

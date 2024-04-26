@@ -17,7 +17,7 @@ namespace ChainflipInsights.Consumers.Telegram
             if (redemption.AmountConverted < _configuration.TelegramRedemptionAmountThreshold)
             {
                 _logger.LogInformation(
-                    "Redemption did not meet threshold (${Threshold}) for Telegram: {Validator} added {Amount} FLIP -> {ExplorerUrl}",
+                    "Redemption did not meet threshold (${Threshold}) for Telegram: {Validator} redeemed {Amount} FLIP -> {ExplorerUrl}",
                     _configuration.TelegramRedemptionAmountThreshold,
                     redemption.Validator,
                     redemption.AmountFormatted,

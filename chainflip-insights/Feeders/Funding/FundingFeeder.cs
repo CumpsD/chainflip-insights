@@ -22,7 +22,7 @@ namespace ChainflipInsights.Feeders.Funding
         private const string FundingQuery = 
             """
             {
-                allAccountFundingEvents(orderBy: ID_ASC, first: 50, filter: {
+                allAccountFundingEvents(orderBy: ID_ASC, first: 100, filter: {
                     and: {
                         id: { greaterThan: LAST_ID }
                         type: { equalTo: FUNDED }

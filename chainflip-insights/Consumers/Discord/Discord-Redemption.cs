@@ -12,7 +12,7 @@ namespace ChainflipInsights.Consumers.Discord
             if (redemption.AmountConverted < _configuration.DiscordRedemptionAmountThreshold)
             {
                 _logger.LogInformation(
-                    "Redemption did not meet threshold (${Threshold}) for Discord: {Validator} added {Amount} FLIP -> {ExplorerUrl}",
+                    "Redemption did not meet threshold (${Threshold}) for Discord: {Validator} redeemed {Amount} FLIP -> {ExplorerUrl}",
                     _configuration.DiscordRedemptionAmountThreshold,
                     redemption.Validator,
                     redemption.AmountFormatted,
