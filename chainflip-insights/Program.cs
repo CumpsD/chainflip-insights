@@ -47,6 +47,7 @@
     using Telegram.Bot;
     using Tweetinvi;
     using BurnInfo = ChainflipInsights.Feeders.Burn.BurnInfo;
+    using EpochInfo = ChainflipInsights.Feeders.Epoch.EpochInfo;
     using FundingInfo = ChainflipInsights.Feeders.Funding.FundingInfo;
 
     public class Program
