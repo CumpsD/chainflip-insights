@@ -39,7 +39,7 @@ namespace ChainflipInsights.Feeders.Liquidity
             SourceAsset = liquidity.Asset.ToUpperInvariant();
             Network = liquidity.Chain;
             Timestamp = liquidity.Block.Timestamp;
-            BlockId = liquidity.Block.BlockId;
+            BlockId = liquidity.Block.BlockId.ToString();
             SourceAssetInfo = Constants.SupportedAssets[SourceAsset.ToLowerInvariant()];
         }
     }

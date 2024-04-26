@@ -65,6 +65,6 @@ namespace ChainflipInsights.Feeders.Liquidity
         public DateTimeOffset Timestamp { get; set; }
         
         [JsonPropertyName("id")] 
-        public string BlockId { get; set; }
+        public ulong BlockId { get; set; }
     }
 }

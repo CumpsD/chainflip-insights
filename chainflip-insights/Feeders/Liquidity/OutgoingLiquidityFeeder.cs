@@ -33,6 +33,7 @@ namespace ChainflipInsights.Feeders.Liquidity
                             chain
                             asset
                             block: blockByBlockId {
+                                id
                                 timestamp
                             }        
                         }

@@ -146,7 +146,7 @@ namespace ChainflipInsights.Feeders.Burn
         }
 
         private async Task<BurnInfo?> GetSubstrateInfo(
-            uint lastBurn, 
+            ulong lastBurn, 
             CancellationToken cancellationToken)
         {
             BurnInfo? substrateInfo = null;
@@ -188,7 +188,7 @@ namespace ChainflipInsights.Feeders.Burn
 
         private async Task<BurnInfo> FetchSubstrateInfo(
             SubstrateClientExt client,
-            uint lastBurn,
+            ulong lastBurn,
             CancellationToken cancellationToken)
         {
             // var swappingEnabled = await client.AccountRolesStorage.SwappingEnabled(null, cancellationToken);
@@ -284,24 +284,24 @@ namespace ChainflipInsights.Feeders.Burn
                 burnSkipped.Value);
         }
         
-        private async Task<uint> GetLastBurn(CancellationToken cancellationToken)
+        private async Task<ulong> GetLastBurn(CancellationToken cancellationToken)
         {
             if (File.Exists(_configuration.LastBurnLocation))
-                return Convert.ToUInt32(await File.ReadAllTextAsync(_configuration.LastBurnLocation, cancellationToken));
+                return Convert.ToUInt64(await File.ReadAllTextAsync(_configuration.LastBurnLocation, cancellationToken));
             
             await using var file = File.CreateText(_configuration.LastBurnLocation);
             await file.WriteAsync("1");
             return 1;
         }
         
-        private async Task StoreLastBurn(uint lastBurn)
+        private async Task StoreLastBurn(ulong lastBurn)
         {
             await using var file = File.CreateText(_configuration.LastBurnLocation);
             await file.WriteAsync(lastBurn.ToString());
         }
         
         private async Task<BlockHashResponse?> GetBlockHash(
-            uint blockNumber,
+            ulong blockNumber,
             CancellationToken cancellationToken)
         {
             using var client = _httpClientFactory.CreateClient("Rpc");

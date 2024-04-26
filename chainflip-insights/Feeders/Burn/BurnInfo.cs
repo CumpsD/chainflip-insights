@@ -7,7 +7,7 @@ namespace ChainflipInsights.Feeders.Burn
     {
         private readonly PriceProvider _priceProvider;
         
-        public uint LastSupplyUpdateBlock { get; }
+        public ulong LastSupplyUpdateBlock { get; }
         
         public string LastSupplyUpdateBlockHash { get; }
         
@@ -79,14 +79,14 @@ namespace ChainflipInsights.Feeders.Burn
         
         public bool BurnSkipped { get; }
 
-        public BurnInfo(uint lastSupplyUpdateBlock)
+        public BurnInfo(ulong lastSupplyUpdateBlock)
         {
             LastSupplyUpdateBlock = lastSupplyUpdateBlock;
         }
 
         public BurnInfo(
             PriceProvider priceProvider,
-            uint lastSupplyUpdateBlock,
+            ulong lastSupplyUpdateBlock,
             string lastSupplyUpdateBlockHash,
             double flipToBurn,
             double? flipBurned, 

@@ -11,7 +11,7 @@ namespace ChainflipInsights.EntityFramework
             
         public DateTimeOffset BurnDate { get; set; }
 
-        public uint BurnBlock { get; set; }
+        public ulong BurnBlock { get; set; }
 
         public string BurnHash { get; set; }
 
