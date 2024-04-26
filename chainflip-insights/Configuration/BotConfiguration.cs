@@ -724,6 +724,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public bool? DatabaseEpochEnabled
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
         public bool? MastodonCexMovementEnabled
         {
             get; init;

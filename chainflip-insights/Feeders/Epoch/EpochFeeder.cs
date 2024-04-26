@@ -22,7 +22,7 @@ namespace ChainflipInsights.Feeders.Epoch
         private const string EpochQuery = 
             """
             {
-                allEpoches(orderBy: ID_DESC, first: 50, filter: {
+                allEpoches(orderBy: ID_DESC, first: 100, filter: {
                     id: { greaterThanOrEqualTo: LAST_ID }
                 }) {
                     edges {
@@ -180,8 +180,8 @@ namespace ChainflipInsights.Feeders.Epoch
                 return double.Parse(await File.ReadAllTextAsync(_configuration.LastEpochIdLocation, cancellationToken));
             
             await using var file = File.CreateText(_configuration.LastEpochIdLocation);
-            await file.WriteAsync("108");
-            return 108;
+            await file.WriteAsync("0");
+            return 0;
         }
         
         private async Task StoreLastEpochId(double epochId)

@@ -55,6 +55,9 @@ namespace ChainflipInsights.Consumers.Database
                 {
                     if (!_configuration.EnableDatabase.Value)
                         return;
+                    
+                    if (input.EpochInfo != null)
+                        ProcessEpochInfo(input.EpochInfo);
 
                     if (input.IncomingLiquidityInfo != null)
                         ProcessIncomingLiquidityInfo(input.IncomingLiquidityInfo);
