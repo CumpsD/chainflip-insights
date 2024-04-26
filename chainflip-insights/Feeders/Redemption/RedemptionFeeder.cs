@@ -176,8 +176,8 @@ namespace ChainflipInsights.Feeders.Redemption
                 return double.Parse(await File.ReadAllTextAsync(_configuration.LastRedemptionIdLocation, cancellationToken));
             
             await using var file = File.CreateText(_configuration.LastRedemptionIdLocation);
-            await file.WriteAsync("3197");
-            return 3197;
+            await file.WriteAsync("0");
+            return 0;
         }
         
         private async Task StoreLastRedemptionId(double redemptionId)

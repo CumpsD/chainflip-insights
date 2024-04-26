@@ -654,6 +654,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public double? DatabaseFundingAmountThreshold
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
         public double? MastodonRedemptionAmountThreshold
         {
             get; init;
@@ -676,6 +683,13 @@ namespace ChainflipInsights.Configuration
         [Required]
         [NotNull]
         public double? DiscordRedemptionAmountThreshold
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public double? DatabaseRedemptionAmountThreshold
         {
             get; init;
         }

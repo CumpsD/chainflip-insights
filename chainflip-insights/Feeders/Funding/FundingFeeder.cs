@@ -176,8 +176,8 @@ namespace ChainflipInsights.Feeders.Funding
                 return double.Parse(await File.ReadAllTextAsync(_configuration.LastFundingIdLocation, cancellationToken));
             
             await using var file = File.CreateText(_configuration.LastFundingIdLocation);
-            await file.WriteAsync("3431");
-            return 3431;
+            await file.WriteAsync("0");
+            return 0;
         }
         
         private async Task StoreLastFundingId(double fundingId)
