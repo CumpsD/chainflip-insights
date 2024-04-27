@@ -82,6 +82,7 @@ namespace ChainflipInsights.Feeders.StakedFlip
                 await Task.Delay(_configuration.FeedingDelay.Value, _pipeline.CancellationToken);
 
                 // Start a loop fetching StakedFlip Info
+                // await BackfillStakedFlipInfo(_pipeline.CancellationToken);
                 await ProvideStakedFlipInfo(_pipeline.CancellationToken);
 
                 _logger.LogInformation(
@@ -173,6 +174,48 @@ namespace ChainflipInsights.Feeders.StakedFlip
             }
         }
         
+        private async Task BackfillStakedFlipInfo(CancellationToken cancellationToken)
+        {
+            var lastStakedFlip = new DateTime(2023, 11, 23);
+            var finalDate = DateTime.Now.Date;
+            
+            while (lastStakedFlip < finalDate)
+            {
+                if (cancellationToken.IsCancellationRequested)
+                    return;
+      
+                var stakedFlipInfo = await GetStakedFlip(
+                    lastStakedFlip,
+                    lastStakedFlip.AddDays(1),
+                    cancellationToken);
+                
+                var unstakedFlipInfo = await GetUnstakedFlip(
+                    lastStakedFlip,
+                    lastStakedFlip.AddDays(1),
+                    cancellationToken);
+                
+                var stakedFlip = new StakedFlipInfo(
+                    lastStakedFlip, 
+                    stakedFlipInfo.Data.Data,
+                    unstakedFlipInfo.Data.Data);
+
+                _logger.LogInformation(
+                    "Broadcasting Staked Flip for {Date}, {MovementIn} FLIP staked, {MovementOut} FLIP unstaked, {Movement} FLIP {NetMovement}.",
+                    stakedFlip.Date.ToString("yyyy-MM-dd"),
+                    stakedFlip.StakedFormatted,
+                    stakedFlip.UnstakedFormatted,
+                    stakedFlip.TotalMovementFormatted,
+                    stakedFlip.NetMovement);
+                
+                await _pipeline.Source.SendAsync(
+                    stakedFlip, 
+                    cancellationToken);
+
+                lastStakedFlip = lastStakedFlip.AddDays(1);
+                await Task.Delay(1000, cancellationToken);
+            }
+        }
+              
         private async Task<string> GetLastStakedFlip(CancellationToken cancellationToken)
         {
             if (File.Exists(_configuration.LastStakedFlipLocation))

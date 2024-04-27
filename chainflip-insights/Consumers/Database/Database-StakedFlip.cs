@@ -7,7 +7,6 @@ namespace ChainflipInsights.Consumers.Database
     using System.Linq;
     using System.Net.Http.Json;
     using ChainflipInsights.EntityFramework;
-    using ChainflipInsights.Feeders;
     using ChainflipInsights.Feeders.StakedFlip;
     using CsvHelper;
     using Microsoft.Extensions.Logging;
@@ -65,7 +64,8 @@ namespace ChainflipInsights.Consumers.Database
                     GenerateStakedFlipCsv(dbContext);
                 }
                 
-                UploadStakedFlipCsv(File.ReadAllText(_configuration.StakedFlipCsvLocation));
+                if (stakedFlip.Date > new DateTime(2024, 4, 25))
+                    UploadStakedFlipCsv(File.ReadAllText(_configuration.StakedFlipCsvLocation));
             }
             catch (Exception e)
             {
@@ -81,18 +81,13 @@ namespace ChainflipInsights.Consumers.Database
                 .ToList();
             
             var funding = stakedFlip
-                .Select(x =>
+                .Select(x => new
                 {
-                    var asset = Constants.SupportedAssets[Constants.FLIP];
-                    
-                    return new
-                    {
-                        StakedDate = x.Date.Date.ToString("yyyy-MM-dd"),
-                        TotalMovement = (x.TotalMovement / Math.Pow(10, asset.Decimals)).ToString(asset.FormatString),
-                        Staked = (x.Staked / Math.Pow(10, asset.Decimals)).ToString(asset.FormatString),
-                        Unstaked = (x.Unstaked / Math.Pow(10, asset.Decimals)).ToString(asset.FormatString),
-                        NetMovement = x.NetMovement
-                    };
+                    StakedDate = x.Date.Date.ToString("yyyy-MM-dd"),
+                    TotalMovement = x.TotalMovement,
+                    Staked = x.Staked,
+                    Unstaked = x.Unstaked,
+                    NetMovement = x.NetMovement
                 })
                 .ToList();
      
