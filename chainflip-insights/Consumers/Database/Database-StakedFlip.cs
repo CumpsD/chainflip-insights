@@ -64,8 +64,7 @@ namespace ChainflipInsights.Consumers.Database
                     GenerateStakedFlipCsv(dbContext);
                 }
                 
-                if (stakedFlip.Date > new DateTime(2024, 4, 25))
-                    UploadStakedFlipCsv(File.ReadAllText(_configuration.StakedFlipCsvLocation));
+                UploadStakedFlipCsv(File.ReadAllText(_configuration.StakedFlipCsvLocation));
             }
             catch (Exception e)
             {

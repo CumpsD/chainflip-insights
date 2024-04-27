@@ -82,8 +82,8 @@ namespace ChainflipInsights.Feeders.StakedFlip
                 await Task.Delay(_configuration.FeedingDelay.Value, _pipeline.CancellationToken);
 
                 // Start a loop fetching StakedFlip Info
-                // await BackfillStakedFlipInfo(_pipeline.CancellationToken);
-                await ProvideStakedFlipInfo(_pipeline.CancellationToken);
+                await BackfillStakedFlipInfo(_pipeline.CancellationToken);
+                //await ProvideStakedFlipInfo(_pipeline.CancellationToken);
 
                 _logger.LogInformation(
                     "Stopping {TaskName}",
@@ -176,9 +176,9 @@ namespace ChainflipInsights.Feeders.StakedFlip
         
         private async Task BackfillStakedFlipInfo(CancellationToken cancellationToken)
         {
-            var lastStakedFlip = new DateTime(2023, 11, 23);
-            var finalDate = DateTime.Now.Date;
-            
+            var lastStakedFlip = new DateTime(2023, 11, 23, 0, 0, 0, DateTimeKind.Utc);
+            var finalDate = new DateTime(2024, 04, 27, 0, 0, 0, DateTimeKind.Utc);
+
             while (lastStakedFlip < finalDate)
             {
                 if (cancellationToken.IsCancellationRequested)
