@@ -71,6 +71,9 @@ namespace ChainflipInsights.Consumers.Database
                     if (input.RedemptionInfo != null)
                         ProcessRedemptionInfo(input.RedemptionInfo);
                     
+                    if (input.StakedFlipInfo != null)
+                        ProcessStakedFlipInfo(input.StakedFlipInfo);
+                    
                     if (input.BurnInfo != null)
                         ProcessBurnInfo(input.BurnInfo);
                 },

@@ -472,6 +472,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public string? StakedFlipCsvLocation
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
         public string? LastSwapIdLocation
         {
             get; init;
@@ -900,6 +907,13 @@ namespace ChainflipInsights.Configuration
         [Required]
         [NotNull]
         public bool? DiscordStakedFlipEnabled
+        {
+            get; init;
+        }
+               
+        [Required]
+        [NotNull]
+        public bool? DatabaseStakedFlipEnabled
         {
             get; init;
         }
