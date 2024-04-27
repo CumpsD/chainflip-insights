@@ -67,10 +67,10 @@ namespace ChainflipInsights.Consumers.Database
                         burn.LastSupplyUpdateBlockHash,
                         $"{_configuration.ExplorerBlocksUrl}{burn.LastSupplyUpdateBlock}");
 
-                    GenerateCsv(dbContext);
+                    GenerateBurnCsv(dbContext);
                 }
 
-                UploadCsv(File.ReadAllText(_configuration.BurnCsvLocation));
+                UploadBurnCsv(File.ReadAllText(_configuration.BurnCsvLocation));
             }
             catch (Exception e)
             {
@@ -78,7 +78,7 @@ namespace ChainflipInsights.Consumers.Database
             }
         }
 
-        private void GenerateCsv(BotContext dbContext)
+        private void GenerateBurnCsv(BotContext dbContext)
         {
             var burnInfo = dbContext
                 .BurnInfo
@@ -114,7 +114,7 @@ namespace ChainflipInsights.Consumers.Database
                 _configuration.BurnCsvLocation);
         }
 
-        private void UploadCsv(string csv)
+        private void UploadBurnCsv(string csv)
         {
             try
             {
@@ -154,7 +154,7 @@ namespace ChainflipInsights.Consumers.Database
             {
                 _logger.LogError(
                     e,
-                    "Uploading CSV to Dune failed.");
+                    "Uploading Burn CSV to Dune failed.");
             }
         }
     }
