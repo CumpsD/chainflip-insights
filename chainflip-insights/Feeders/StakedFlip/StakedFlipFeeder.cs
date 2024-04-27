@@ -82,8 +82,8 @@ namespace ChainflipInsights.Feeders.StakedFlip
                 await Task.Delay(_configuration.FeedingDelay.Value, _pipeline.CancellationToken);
 
                 // Start a loop fetching StakedFlip Info
-                await BackfillStakedFlipInfo(_pipeline.CancellationToken);
-                //await ProvideStakedFlipInfo(_pipeline.CancellationToken);
+                //await BackfillStakedFlipInfo(_pipeline.CancellationToken);
+                await ProvideStakedFlipInfo(_pipeline.CancellationToken);
 
                 _logger.LogInformation(
                     "Stopping {TaskName}",
