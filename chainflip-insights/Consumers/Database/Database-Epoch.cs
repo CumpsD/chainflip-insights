@@ -36,7 +36,7 @@ namespace ChainflipInsights.Consumers.Database
                             MinimumBond = epoch.MinimumBond,
                             MaxBid = epoch.MaxBid,
                             TotalBond = epoch.TotalBond,
-                            TotalRewards = epoch.TotalRewards,
+                            TotalRewards = epoch.PreviousEpoch!.TotalRewards,
                             ExplorerUrl = $"{_configuration.ExplorerAuthorityUrl}{epoch.Id}"
                         });
 
