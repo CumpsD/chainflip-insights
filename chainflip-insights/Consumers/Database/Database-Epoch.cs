@@ -7,6 +7,7 @@ namespace ChainflipInsights.Consumers.Database
     using System.Linq;
     using System.Net.Http.Json;
     using ChainflipInsights.EntityFramework;
+    using ChainflipInsights.Feeders;
     using CsvHelper;
     using Microsoft.Extensions.Logging;
     using EpochInfo = ChainflipInsights.Feeders.Epoch.EpochInfo;
@@ -73,14 +74,20 @@ namespace ChainflipInsights.Consumers.Database
                 .ToList();
             
             var epochs = epochInfo
-                .Select(x => new
+                .Select(x =>
                 {
-                    Epoch = x.EpochId,
-                    EpochDate = x.EpochStart.Date.ToString("yyyy-MM-dd"),
-                    MinimumBond = (x.MinimumBond / 1000000000000000000).ToString("###,###,###,###,##0.000000000000000000"),
-                    TotalBond = (x.TotalBond / 1000000000000000000).ToString("###,###,###,###,##0.000000000000000000"),
-                    MaxBid = (x.MaxBid / 1000000000000000000).ToString("###,###,###,###,##0.000000000000000000"),
-                    TotalRewards = (x.TotalRewards / 1000000000000000000).ToString("###,###,###,###,##0.000000000000000000")
+                    var asset = Constants.SupportedAssets[Constants.FLIP];
+                    var decimals = Math.Pow(10, asset.Decimals);
+                    
+                    return new
+                    {
+                        Epoch = x.EpochId,
+                        EpochDate = x.EpochStart.Date.ToString("yyyy-MM-dd"),
+                        MinimumBond = (x.MinimumBond / decimals).ToString(asset.FormatString), 
+                        TotalBond = (x.TotalBond / decimals).ToString(asset.FormatString), 
+                        MaxBid = (x.MaxBid / decimals).ToString(asset.FormatString), 
+                        TotalRewards = (x.TotalRewards / decimals).ToString(asset.FormatString), 
+                    };
                 })
                 .ToList();
      

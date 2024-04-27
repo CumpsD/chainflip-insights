@@ -7,6 +7,7 @@ namespace ChainflipInsights.Consumers.Database
     using System.Linq;
     using System.Net.Http.Json;
     using ChainflipInsights.EntityFramework;
+    using ChainflipInsights.Feeders;
     using ChainflipInsights.Infrastructure;
     using CsvHelper;
     using Microsoft.Extensions.Logging;
@@ -91,10 +92,15 @@ namespace ChainflipInsights.Consumers.Database
             var missing = startDate.Range(endDate).Except(burnDates);
 
             var burns = burnInfo
-                .Select(x => new
+                .Select(x =>
                 {
-                    BurnDate = x.BurnDate.Date.ToString("yyyy-MM-dd"),
-                    BurnAmount = (x.BurnAmount / 1000000000000000000).ToString("###,###,###,###,##0.000000000000000000")
+                    var asset = Constants.SupportedAssets[Constants.FLIP];
+                    
+                    return new
+                    {
+                        BurnDate = x.BurnDate.Date.ToString("yyyy-MM-dd"),
+                        BurnAmount = (x.BurnAmount / Math.Pow(10, asset.Decimals)).ToString(asset.FormatString),
+                    };
                 })
                 .ToList();
 

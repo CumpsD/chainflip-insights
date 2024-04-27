@@ -444,6 +444,34 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public string? FundingCsvLocation
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public string? IncomingLiquidityCsvLocation
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public string? OutgoingLiquidityCsvLocation
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public string? RedemptionCsvLocation
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
         public string? LastSwapIdLocation
         {
             get; init;
