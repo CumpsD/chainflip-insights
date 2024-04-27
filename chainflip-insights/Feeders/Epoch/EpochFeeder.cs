@@ -22,7 +22,7 @@ namespace ChainflipInsights.Feeders.Epoch
         private const string EpochQuery = 
             """
             {
-                allEpoches(orderBy: ID_DESC, first: 100, filter: {
+                allEpoches(orderBy: ID_DESC, first: 10, filter: {
                     id: { greaterThanOrEqualTo: LAST_ID }
                 }) {
                     edges {
