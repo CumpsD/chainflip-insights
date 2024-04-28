@@ -3,6 +3,7 @@ namespace ChainflipInsights.Consumers.FullTelegram
     using System;
     using System.Threading;
     using ChainflipInsights.Feeders.Swap;
+    using ChainflipInsights.Infrastructure;
     using global::Telegram.Bot;
     using global::Telegram.Bot.Types;
     using global::Telegram.Bot.Types.Enums;
@@ -46,6 +47,7 @@ namespace ChainflipInsights.Consumers.FullTelegram
                     $"{swap.Emoji} Swapped " +
                     $"**{swap.DepositAmountFormatted} {swap.SourceAsset}** (*${swap.DepositValueUsdFormatted}*) → " +
                     $"**{swap.EgressAmountFormatted} {swap.DestinationAsset}** (*${swap.EgressValueUsdFormatted}*) " +
+                    $"Δ **{swap.DeltaUsdFormatted.FormatDelta()}** " +
                     $"{(brokerExists ? $"@ **{broker}** " : string.Empty)}" +
                     $"// **[view swap on explorer]({_configuration.ExplorerSwapsUrl}{swap.Id})**";
 
