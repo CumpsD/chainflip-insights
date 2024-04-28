@@ -40,6 +40,10 @@ namespace ChainflipInsights.Feeders.Swap
 
         public string EgressValueUsdFormatted => EgressValueUsd.ToString(Constants.DollarString);
 
+        public double DeltaUsd => EgressValueUsd - DepositValueUsd;
+
+        public string DeltaUsdFormatted => DeltaUsd.ToString(Constants.DollarString);
+
         public string DestinationAsset { get; }
         
         public AssetInfo DestinationAssetInfo { get; }
