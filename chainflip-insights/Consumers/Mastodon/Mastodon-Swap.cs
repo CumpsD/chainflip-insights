@@ -41,7 +41,7 @@ namespace ChainflipInsights.Consumers.Mastodon
                     $"{swap.Emoji} Swapped {_configuration.ExplorerSwapsUrl}{swap.Id}\n" +
                     $"📥 {swap.DepositAmountFormatted} #{swap.SourceAsset} (${swap.DepositValueUsdFormatted})\n" +
                     $"📤 {swap.EgressAmountFormatted} #{swap.DestinationAsset} (${swap.EgressValueUsdFormatted})\n" +
-                    $"🔺 {swap.DeltaUsdFormatted.FormatDelta()}\n" +
+                    $"🔺 {swap.DeltaUsdFormatted.FormatDelta()} ({swap.DeltaUsdPercentageFormatted})\n" +
                     $"{(brokerExists ? $"🏦 via {broker}\n" : string.Empty)}" +
                     $"#chainflip #flip";
 

@@ -44,6 +44,11 @@ namespace ChainflipInsights.Feeders.Swap
 
         public string DeltaUsdFormatted => DeltaUsd.ToString(Constants.DollarString);
 
+        public double DeltaUsdPercentage => 100 / DepositValueUsd * DeltaUsd;
+        
+        public string DeltaUsdPercentageFormatted 
+            => $"{Math.Round(DeltaUsdPercentage, 2).ToString(Constants.DollarString)}%";
+        
         public string DestinationAsset { get; }
         
         public AssetInfo DestinationAssetInfo { get; }

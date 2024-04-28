@@ -45,7 +45,7 @@ namespace ChainflipInsights.Consumers.Discord
                     $"{swap.Emoji} Swapped " +
                     $"**{swap.DepositAmountFormatted} {swap.SourceAsset}** (*${swap.DepositValueUsdFormatted}*) → " +
                     $"**{swap.EgressAmountFormatted} {swap.DestinationAsset}** (*${swap.EgressValueUsdFormatted}*) " +
-                    $"Δ **{swap.DeltaUsdFormatted.FormatDelta()}** " +
+                    $"Δ **{swap.DeltaUsdFormatted.FormatDelta()}** (*{swap.DeltaUsdPercentageFormatted}*) " +
                     $"{(brokerExists ? $"@ **{broker}** " : string.Empty)}" +
                     $"// **[view swap on explorer]({_configuration.ExplorerSwapsUrl}{swap.Id})**";
 
