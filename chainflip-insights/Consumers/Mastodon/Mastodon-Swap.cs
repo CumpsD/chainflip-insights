@@ -2,6 +2,7 @@ namespace ChainflipInsights.Consumers.Mastodon
 {
     using System;
     using ChainflipInsights.Feeders.Swap;
+    using ChainflipInsights.Infrastructure;
     using Mastonet;
     using Microsoft.Extensions.Logging;
 
@@ -38,9 +39,10 @@ namespace ChainflipInsights.Consumers.Mastodon
 
                 var text =
                     $"{swap.Emoji} Swapped {_configuration.ExplorerSwapsUrl}{swap.Id}\n" +
-                    $"➡️ {swap.DepositAmountFormatted} #{swap.SourceAsset} (${swap.DepositValueUsdFormatted})\n" +
-                    $"⬅️ {swap.EgressAmountFormatted} #{swap.DestinationAsset} (${swap.EgressValueUsdFormatted})\n" +
-                    $"{(brokerExists ? $"☑️ via {broker}\n" : string.Empty)}" +
+                    $"📥 {swap.DepositAmountFormatted} #{swap.SourceAsset} (${swap.DepositValueUsdFormatted})\n" +
+                    $"📤 {swap.EgressAmountFormatted} #{swap.DestinationAsset} (${swap.EgressValueUsdFormatted})\n" +
+                    $"🔺 {swap.DeltaUsdFormatted.FormatDelta()}\n" +
+                    $"{(brokerExists ? $"🏦 via {broker}\n" : string.Empty)}" +
                     $"#chainflip #flip";
 
                 var status = _mastodonClient

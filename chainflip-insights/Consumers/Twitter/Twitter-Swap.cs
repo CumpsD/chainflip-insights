@@ -5,6 +5,7 @@ namespace ChainflipInsights.Consumers.Twitter
     using System.Net.Http.Json;
     using System.Net.Mime;
     using ChainflipInsights.Feeders.Swap;
+    using ChainflipInsights.Infrastructure;
     using Microsoft.Extensions.Logging;
 
     public partial class TwitterConsumer
@@ -46,9 +47,10 @@ namespace ChainflipInsights.Consumers.Twitter
 
                 var text =
                     $"{swap.Emoji} Swapped {_configuration.ExplorerSwapsUrl}{swap.Id}\n" +
-                    $"➡️ {swap.DepositAmountFormatted} ${swap.SourceAsset} (${swap.DepositValueUsdFormatted})\n" +
-                    $"⬅️ {swap.EgressAmountFormatted} ${swap.DestinationAsset} (${swap.EgressValueUsdFormatted})\n" +
-                    $"{(brokerExists ? $"☑️ via {brokerName}\n" : string.Empty)}" +
+                    $"📥 {swap.DepositAmountFormatted} ${swap.SourceAsset} (${swap.DepositValueUsdFormatted})\n" +
+                    $"📤 {swap.EgressAmountFormatted} ${swap.DestinationAsset} (${swap.EgressValueUsdFormatted})\n" +
+                    $"🔺 {swap.DeltaUsdFormatted.FormatDelta()}\n" +
+                    $"{(brokerExists ? $"🏦 via {brokerName}\n" : string.Empty)}" +
                     $"#chainflip #flip";
 
                 _twitterClient.Execute
