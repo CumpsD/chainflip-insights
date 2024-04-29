@@ -97,8 +97,9 @@ namespace ChainflipInsights.Consumers.Database
             var swaps = swapInfo
                 .Select(x =>
                 {
-                    var sourceAsset = Constants.SupportedAssets[x.SourceAsset];
-                    var destinationAsset = Constants.SupportedAssets[x.DestinationAsset];
+                    // TODO: This will need to take chain into account
+                    var sourceAsset = Constants.SupportedAssets[x.SourceAsset.ToLower()];
+                    var destinationAsset = Constants.SupportedAssets[x.DestinationAsset.ToLower()];
                     
                     return new
                     {

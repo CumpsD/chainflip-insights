@@ -35,10 +35,12 @@ namespace ChainflipInsights.Feeders.Swap
                             depositAmount
                             depositValueUsd
                             sourceAsset
+                            sourceChain
             
                             egressAmount
                             egressValueUsd
                             destinationAsset
+                            destinationChain
                             destinationAddress
             
                             intermediateAmount
