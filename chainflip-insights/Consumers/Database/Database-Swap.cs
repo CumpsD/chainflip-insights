@@ -78,8 +78,7 @@ namespace ChainflipInsights.Consumers.Database
                     GenerateSwapCsv(dbContext);
                 }
                 
-                if (swap.Id > 8218)
-                    UploadSwapCsv(File.ReadAllText(_configuration.SwapCsvLocation));
+                UploadSwapCsv(File.ReadAllText(_configuration.SwapCsvLocation));
             }
             catch (Exception e)
             {
