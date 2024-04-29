@@ -49,6 +49,7 @@
     using BurnInfo = ChainflipInsights.Feeders.Burn.BurnInfo;
     using EpochInfo = ChainflipInsights.Feeders.Epoch.EpochInfo;
     using FundingInfo = ChainflipInsights.Feeders.Funding.FundingInfo;
+    using SwapInfo = ChainflipInsights.Feeders.Swap.SwapInfo;
 
     public class Program
     {

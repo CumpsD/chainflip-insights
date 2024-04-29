@@ -40,6 +40,10 @@ namespace ChainflipInsights.Feeders.Swap
 
         public string EgressValueUsdFormatted => EgressValueUsd.ToString(Constants.DollarString);
 
+        public string DestinationAsset { get; }
+        
+        public AssetInfo DestinationAssetInfo { get; }
+        
         public double DeltaUsd => EgressValueUsd - DepositValueUsd;
 
         public string DeltaUsdFormatted => DeltaUsd.ToString(Constants.DollarString);
@@ -49,11 +53,7 @@ namespace ChainflipInsights.Feeders.Swap
         public string DeltaUsdPercentageFormatted 
             => $"{Math.Round(DeltaUsdPercentage, 2).ToString(Constants.DollarString)}%";
         
-        public string DestinationAsset { get; }
-        
-        public AssetInfo DestinationAssetInfo { get; }
-        
-        public string SwapScheduledBlockTimestamp { get; }
+        public DateTimeOffset SwapScheduledBlockTimestamp { get; }
         
         public string? Broker { get; }
 
@@ -79,7 +79,7 @@ namespace ChainflipInsights.Feeders.Swap
             EgressValueUsd = swap.EgressValueUsd; // ?? 0;
             DestinationAsset = swap.DestinationAsset.ToUpperInvariant();
 
-            SwapScheduledBlockTimestamp = swap.SwapScheduledBlockTimestamp;
+            SwapScheduledBlockTimestamp = DateTimeOffset.Parse(swap.SwapScheduledBlockTimestamp);
 
             SourceAssetInfo = Constants.SupportedAssets[SourceAsset.ToLowerInvariant()];
             DestinationAssetInfo = Constants.SupportedAssets[DestinationAsset.ToLowerInvariant()];

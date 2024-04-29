@@ -10,6 +10,7 @@ namespace ChainflipInsights.EntityFramework
         public virtual DbSet<FundingInfo> FundingInfo { get; set; } = null!;
         public virtual DbSet<EpochInfo> EpochInfo { get; set; } = null!;
         public virtual DbSet<StakedInfo> StakedInfo { get; set; } = null!;
+        public virtual DbSet<SwapInfo> SwapInfo { get; set; } = null!;
         // ReSharper restore AutoPropertyCanBeMadeGetOnly.Global
         
         public BotContext() { }
