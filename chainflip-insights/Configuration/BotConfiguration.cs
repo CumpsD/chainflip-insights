@@ -437,6 +437,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public string? SwapCsvLocation
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
         public string? EpochCsvLocation
         {
             get; init;
@@ -627,6 +634,13 @@ namespace ChainflipInsights.Configuration
         [Required]
         [NotNull]
         public double? DiscordSwapAmountThreshold
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public double? DatabaseSwapAmountThreshold
         {
             get; init;
         }

@@ -27,7 +27,7 @@ namespace ChainflipInsights.EntityFramework
 
         public double DeltaUsdPercentage { get; set; }
         
-        public string? Broker { get; }
+        public string? Broker { get; set; }
 
         public string ExplorerUrl { get; set; }
     }

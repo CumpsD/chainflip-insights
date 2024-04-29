@@ -75,8 +75,18 @@ namespace ChainflipInsights.Feeders.Swap
             DepositValueUsd = swap.DepositValueUsd;
             SourceAsset = swap.SourceAsset.ToUpperInvariant();
             
-            EgressAmount = swap.EgressAmount; // ?? 0;
-            EgressValueUsd = swap.EgressValueUsd; // ?? 0;
+            // EgressAmount is null when the swap ate everything
+            // It is however also null when it is still in progress
+            // So we need to figure out why it is null and throw an error if it was not finished yet
+
+            if (!swap.EgressAmount.HasValue && swap.DepositValueUsd > 1)
+            {
+                // There is no egress, and they deposited more than a dollar, probably still in progress
+                throw new Exception("Swap not finished yet.");
+            }
+            
+            EgressAmount = swap.EgressAmount ?? 0;
+            EgressValueUsd = swap.EgressValueUsd ?? 0;
             DestinationAsset = swap.DestinationAsset.ToUpperInvariant();
 
             SwapScheduledBlockTimestamp = DateTimeOffset.Parse(swap.SwapScheduledBlockTimestamp);

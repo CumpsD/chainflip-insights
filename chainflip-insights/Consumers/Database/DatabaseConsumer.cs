@@ -56,6 +56,9 @@ namespace ChainflipInsights.Consumers.Database
                     if (!_configuration.EnableDatabase.Value)
                         return;
                     
+                    if (input.SwapInfo != null)
+                        ProcessSwap(input.SwapInfo);
+                    
                     if (input.EpochInfo != null)
                         ProcessEpochInfo(input.EpochInfo);
 
