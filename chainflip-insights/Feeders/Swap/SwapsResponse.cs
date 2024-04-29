@@ -49,6 +49,9 @@ namespace ChainflipInsights.Feeders.Swap
         [JsonPropertyName("nativeId")] 
         public double NativeId { get; set; }
         
+        [JsonPropertyName("type")] 
+        public string SwapType { get; set; }
+        
         [JsonPropertyName("swapScheduledBlockTimestamp")] 
         public string SwapScheduledBlockTimestamp { get; set; }
         

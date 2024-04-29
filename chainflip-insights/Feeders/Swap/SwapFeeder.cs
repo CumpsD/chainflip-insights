@@ -30,6 +30,7 @@ namespace ChainflipInsights.Feeders.Swap
                         node {
                             id
                             nativeId
+                            type
                             swapScheduledBlockTimestamp
             
                             depositAmount
@@ -145,6 +146,7 @@ namespace ChainflipInsights.Feeders.Swap
                     swaps = swapsInfo
                         .Data.Data.Data
                         .Select(x => x.Data)
+                        .Where(x => x.SwapType != "GAS")
                         .OrderBy(x => x.Id)
                         .ToList();
                 }
