@@ -204,8 +204,6 @@ namespace ChainflipInsights.Feeders.Swap
                             e,
                             "Error on broadcasting Swap {SwapId}",
                             swap.Id);
-
-                        throw;
                     }
                 }
                 

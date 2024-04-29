@@ -160,8 +160,6 @@ namespace ChainflipInsights.Feeders.BigStakedFlip
                             e,
                             "Error on broadcasting Big Staked Flip {BlockNumber}",
                             stake.BlockNumber);
-
-                        throw;
                     }
                 }
                 
