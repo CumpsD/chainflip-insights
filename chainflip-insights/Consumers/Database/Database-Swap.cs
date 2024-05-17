@@ -104,6 +104,7 @@ namespace ChainflipInsights.Consumers.Database
                     {
                         Id = x.SwapId,
                         SwapDate = x.SwapDate.Date.ToString("yyyy-MM-dd"),
+                        SwapHour = x.SwapDate.ToString("HH"),
                         DepositAmount = (x.DepositAmount / Math.Pow(10, sourceAsset.Decimals)).ToString(sourceAsset.FormatString),
                         DepositAmountUsd = x.DepositValueUsd.ToString(Constants.DollarString),
                         DepositAsset = x.SourceAsset,
