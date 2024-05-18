@@ -3,7 +3,7 @@
     <PropertyGroup>
         <LangVersion>latest</LangVersion>
         <TargetFramework>net8.0</TargetFramework>
-        <RuntimeFrameworkVersion>8.0.1</RuntimeFrameworkVersion>
+        <RuntimeFrameworkVersion>8.0.5</RuntimeFrameworkVersion>
         <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
 
         <AssemblyName>$(MSBuildProjectName)</AssemblyName>
@@ -54,7 +54,7 @@
       <PackageReference Include="Discord.Net" Version="3.15.0" />
       <PackageReference Include="Humanizer.Core" Version="2.14.1" />
       <PackageReference Include="Mastonet" Version="3.1.1" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.3">
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.5">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
@@ -80,7 +80,7 @@
       <PackageReference Include="System.Threading.Tasks.Dataflow" Version="8.0.0" />
       <PackageReference Include="Telegram.Bot" Version="19.0.0" />
       <PackageReference Include="TweetinviAPI" Version="5.0.4" />
-      <PackageReference Include="Substrate.ServiceLayer " Version="0.5.3" />
+      <PackageReference Include="Substrate.ServiceLayer " Version="0.6.3" />
       <PackageReference Include="Nethereum.Util" Version="4.20.0" />
     </ItemGroup>
 
