@@ -41,6 +41,10 @@
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
         <DocumentationFile>bin\Release\$(MSBuildProjectName).xml</DocumentationFile>
     </PropertyGroup>
+
+    <PropertyGroup>
+        <RestoreSources>$(RestoreSources);../assets;https://api.nuget.org/v3/index.json</RestoreSources>
+    </PropertyGroup>
     
     <ItemGroup>
         <Content Include="appsettings.json" CopyToOutputDirectory="Always" />
@@ -78,7 +82,7 @@
       <PackageReference Include="Serilog.Sinks.Console" Version="5.0.1" />
       <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
       <PackageReference Include="System.Threading.Tasks.Dataflow" Version="8.0.0" />
-      <PackageReference Include="Telegram.Bot" Version="19.0.0" />
+      <PackageReference Include="Telegram.Bot" Version="20.0.0-alpha.3" />
       <PackageReference Include="TweetinviAPI" Version="5.0.4" />
       <PackageReference Include="Substrate.ServiceLayer " Version="0.6.3" />
       <PackageReference Include="Nethereum.Util" Version="4.20.0" />

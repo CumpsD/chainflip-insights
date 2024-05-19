@@ -4,6 +4,7 @@ namespace ChainflipInsights.Consumers.FullTelegram
     using System.Threading;
     using ChainflipInsights.Feeders.Liquidity;
     using global::Telegram.Bot;
+    using global::Telegram.Bot.Requests;
     using global::Telegram.Bot.Types;
     using global::Telegram.Bot.Types.Enums;
     using Microsoft.Extensions.Logging;
@@ -42,13 +43,23 @@ namespace ChainflipInsights.Consumers.FullTelegram
                     $"// **[view incoming liquidity on explorer]({_configuration.ExplorerLiquidityChannelUrl}{liquidity.BlockId}-{liquidity.Network}-{liquidity.ChannelId})**";
 
                 var message = _telegramClient
-                    .SendTextMessageAsync(
-                        new ChatId(_configuration.TelegramInfoChannelId.Value),
-                        text,
-                        parseMode: ParseMode.Markdown,
-                        disableNotification: true,
-                        allowSendingWithoutReply: true,
-                        cancellationToken: cancellationToken)
+                    .SendMessageAsync(
+                        new SendMessageRequest
+                        {
+                            ChatId = new ChatId(_configuration.TelegramInfoChannelId.Value),
+                            Text = text,
+                            ParseMode = ParseMode.Markdown,
+                            DisableNotification = true,
+                            LinkPreviewOptions = new LinkPreviewOptions
+                            {
+                                IsDisabled = true
+                            },
+                            ReplyParameters = new ReplyParameters
+                            {
+                                AllowSendingWithoutReply = true,
+                            }
+                        },
+                        cancellationToken)
                     .GetAwaiter()
                     .GetResult();
 

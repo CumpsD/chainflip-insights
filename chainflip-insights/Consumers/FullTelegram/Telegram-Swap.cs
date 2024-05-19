@@ -5,6 +5,7 @@ namespace ChainflipInsights.Consumers.FullTelegram
     using ChainflipInsights.Feeders.Swap;
     using ChainflipInsights.Infrastructure;
     using global::Telegram.Bot;
+    using global::Telegram.Bot.Requests;
     using global::Telegram.Bot.Types;
     using global::Telegram.Bot.Types.Enums;
     using Microsoft.Extensions.Logging;
@@ -52,15 +53,57 @@ namespace ChainflipInsights.Consumers.FullTelegram
                     $"// **[view swap on explorer]({_configuration.ExplorerSwapsUrl}{swap.Id})**";
 
                 var message = _telegramClient
-                    .SendTextMessageAsync(
-                        new ChatId(_configuration.TelegramInfoChannelId.Value),
-                        text,
-                        parseMode: ParseMode.Markdown,
-                        disableNotification: true,
-                        allowSendingWithoutReply: true,
-                        cancellationToken: cancellationToken)
+                    .SendMessageAsync(
+                        new SendMessageRequest
+                        {
+                            ChatId = new ChatId(_configuration.TelegramInfoChannelId.Value),
+                            Text = text,
+                            ParseMode = ParseMode.Markdown,
+                            DisableNotification = true,
+                            LinkPreviewOptions = new LinkPreviewOptions
+                            {
+                                IsDisabled = true
+                            },
+                            ReplyParameters = new ReplyParameters
+                            {
+                                AllowSendingWithoutReply = true,
+                            }
+                        },
+                        cancellationToken)
                     .GetAwaiter()
                     .GetResult();
+
+                if (swap.SourceAsset.Equals("flip", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    _telegramClient
+                        .SetMessageReactionAsync(
+                            new SetMessageReactionRequest
+                            {
+                                ChatId = new ChatId(_configuration.TelegramInfoChannelId.Value),
+                                MessageId = message.MessageId,
+                                Reaction = new[] { _angryEmoji },
+                                IsBig = false
+                            },
+                            cancellationToken)
+                        .GetAwaiter()
+                        .GetResult();
+                }
+
+                if (swap.DestinationAsset.Equals("flip", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    _telegramClient
+                        .SetMessageReactionAsync(
+                            new SetMessageReactionRequest
+                            {
+                                ChatId = new ChatId(_configuration.TelegramInfoChannelId.Value),
+                                MessageId = message.MessageId,
+                                Reaction = new[] { _tadaEmoji },
+                                IsBig = false
+                            },
+                            cancellationToken)
+                        .GetAwaiter()
+                        .GetResult();
+                }
 
                 _logger.LogInformation(
                     "Announcing Swap {SwapId} on Full Telegram as Message {MessageId}",

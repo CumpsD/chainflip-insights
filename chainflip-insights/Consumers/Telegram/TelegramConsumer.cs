@@ -10,6 +10,7 @@ namespace ChainflipInsights.Consumers.Telegram
     using ChainflipInsights.EntityFramework;
     using ChainflipInsights.Infrastructure.Pipelines;
     using global::Telegram.Bot;
+    using global::Telegram.Bot.Types;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
@@ -21,6 +22,9 @@ namespace ChainflipInsights.Consumers.Telegram
         private readonly BotConfiguration _configuration;
         private readonly TelegramBotClient _telegramClient;
         private readonly Dictionary<string,string> _brokers;
+        
+        private readonly ReactionTypeEmoji _tadaEmoji = new() { Emoji = "🎉" };
+        private readonly ReactionTypeEmoji _angryEmoji = new() { Emoji = "🤬" };
 
         public TelegramConsumer(
             ILogger<TelegramConsumer> logger,

@@ -4,6 +4,7 @@ namespace ChainflipInsights.Consumers.Telegram
     using System.Threading;
     using ChainflipInsights.Feeders.Liquidity;
     using global::Telegram.Bot;
+    using global::Telegram.Bot.Requests;
     using global::Telegram.Bot.Types;
     using global::Telegram.Bot.Types.Enums;
     using Microsoft.Extensions.Logging;
@@ -44,13 +45,23 @@ namespace ChainflipInsights.Consumers.Telegram
                 foreach (var channelId in _configuration.TelegramSwapInfoChannelId)
                 {
                     var message = _telegramClient
-                        .SendTextMessageAsync(
-                            new ChatId(channelId),
-                            text,
-                            parseMode: ParseMode.Markdown,
-                            disableNotification: true,
-                            allowSendingWithoutReply: true,
-                            cancellationToken: cancellationToken)
+                        .SendMessageAsync(
+                            new SendMessageRequest
+                            {
+                                ChatId = new ChatId(channelId),
+                                Text = text,
+                                ParseMode = ParseMode.Markdown,
+                                DisableNotification = true,
+                                LinkPreviewOptions = new LinkPreviewOptions
+                                {
+                                    IsDisabled = true
+                                },
+                                ReplyParameters = new ReplyParameters
+                                {
+                                    AllowSendingWithoutReply = true,
+                                }
+                            },
+                            cancellationToken)
                         .GetAwaiter()
                         .GetResult();
 
