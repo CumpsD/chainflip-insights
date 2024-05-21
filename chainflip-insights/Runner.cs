@@ -9,6 +9,7 @@ namespace ChainflipInsights
     using ChainflipInsights.Consumers.Database;
     using ChainflipInsights.Consumers.Discord;
     using ChainflipInsights.Consumers.FullTelegram;
+    using ChainflipInsights.Consumers.LpTelegram;
     using ChainflipInsights.Consumers.Mastodon;
     using ChainflipInsights.Consumers.Telegram;
     using ChainflipInsights.Consumers.Twitter;
@@ -34,6 +35,7 @@ namespace ChainflipInsights
         private readonly DiscordConsumer _discordConsumer;
         private readonly TelegramConsumer _telegramConsumer;
         private readonly FullTelegramConsumer _fullTelegramConsumer;
+        private readonly LpTelegramConsumer _lpTelegramConsumer;
         private readonly TwitterConsumer _twitterConsumer;
         private readonly MastodonConsumer _mastodonConsumer;
         private readonly DatabaseConsumer _databaseConsumer;
@@ -41,6 +43,7 @@ namespace ChainflipInsights
         private ITargetBlock<BroadcastInfo> _discordPipelineTarget = null!;
         private ITargetBlock<BroadcastInfo> _telegramPipelineTarget = null!;
         private ITargetBlock<BroadcastInfo> _fullTelegramPipelineTarget = null!;
+        private ITargetBlock<BroadcastInfo> _lpTelegramPipelineTarget = null!;
         private ITargetBlock<BroadcastInfo> _twitterPipelineTarget = null!;
         private ITargetBlock<BroadcastInfo> _mastodonPipelineTarget = null!;
         private ITargetBlock<BroadcastInfo> _databasePipelineTarget = null!;
@@ -64,6 +67,7 @@ namespace ChainflipInsights
             DiscordConsumer discordConsumer,
             TelegramConsumer telegramConsumer,
             FullTelegramConsumer fullTelegramConsumer,
+            LpTelegramConsumer lpTelegramConsumer,
             TwitterConsumer twitterConsumer,
             MastodonConsumer mastodonConsumer,
             DatabaseConsumer databaseConsumer)
@@ -72,6 +76,7 @@ namespace ChainflipInsights
             _discordConsumer = discordConsumer ?? throw new ArgumentNullException(nameof(discordConsumer));
             _telegramConsumer = telegramConsumer ?? throw new ArgumentNullException(nameof(telegramConsumer));
             _fullTelegramConsumer = fullTelegramConsumer ?? throw new ArgumentNullException(nameof(fullTelegramConsumer));
+            _lpTelegramConsumer = lpTelegramConsumer ?? throw new ArgumentNullException(nameof(lpTelegramConsumer));
             _twitterConsumer = twitterConsumer ?? throw new ArgumentNullException(nameof(twitterConsumer));
             _mastodonConsumer = mastodonConsumer ?? throw new ArgumentNullException(nameof(mastodonConsumer));
             _databaseConsumer = databaseConsumer ?? throw new ArgumentNullException(nameof(databaseConsumer));
@@ -246,6 +251,13 @@ namespace ChainflipInsights
                 linkOptions, 
                 swapPipeline.CancellationToken);
             
+            _lpTelegramPipelineTarget = SetupConsumerPipeline(
+                "LP Telegram",
+                _lpTelegramConsumer,
+                broadcast,
+                linkOptions, 
+                swapPipeline.CancellationToken);
+            
             _twitterPipelineTarget = SetupConsumerPipeline(
                 "Twitter",
                 _twitterConsumer,
@@ -337,8 +349,10 @@ namespace ChainflipInsights
                     _discordPipelineTarget.Completion,
                     _telegramPipelineTarget.Completion,
                     _fullTelegramPipelineTarget.Completion,
+                    _lpTelegramPipelineTarget.Completion,
                     _twitterPipelineTarget.Completion,
-                    _mastodonPipelineTarget.Completion
+                    _mastodonPipelineTarget.Completion,
+                    _databasePipelineTarget.Completion,
                 ];
             }
             catch (AggregateException ex)

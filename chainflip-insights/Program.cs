@@ -16,6 +16,7 @@
     using ChainflipInsights.Consumers.Database;
     using ChainflipInsights.Consumers.Discord;
     using ChainflipInsights.Consumers.FullTelegram;
+    using ChainflipInsights.Consumers.LpTelegram;
     using ChainflipInsights.Consumers.Mastodon;
     using ChainflipInsights.Consumers.Telegram;
     using ChainflipInsights.Consumers.Twitter;
@@ -366,6 +367,10 @@
             
             builder
                 .RegisterType<FullTelegramConsumer>()
+                .SingleInstance();
+            
+            builder
+                .RegisterType<LpTelegramConsumer>()
                 .SingleInstance();
             
             builder
