@@ -49,7 +49,7 @@ namespace ChainflipInsights.Consumers.Twitter
                 if (!string.IsNullOrWhiteSpace(burn))
                     text += $" We also burned {burn} $FLIP!";
                 
-                text += "\n#chainflip #flip";
+                text += "\n#chainflip $flip";
                 
                 _twitterClient.Execute
                     .AdvanceRequestAsync(x =>

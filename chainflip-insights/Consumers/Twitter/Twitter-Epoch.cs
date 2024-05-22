@@ -34,7 +34,7 @@ namespace ChainflipInsights.Consumers.Twitter
                     $"➕ Maximum Bid is {epoch.MaxBidFormatted} $FLIP\n" +
                     $"🧮 Total bonded is {epoch.TotalBondFormatted} $FLIP\n" +
                     $"💰 Last Epoch distributed {epoch.PreviousEpoch.TotalRewardsFormatted} $FLIP in rewards\n" +
-                    $"#chainflip #flip";
+                    $"#chainflip $flip";
 
                 _twitterClient.Execute
                     .AdvanceRequestAsync(x =>

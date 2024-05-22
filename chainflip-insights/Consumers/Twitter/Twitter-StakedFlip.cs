@@ -39,7 +39,7 @@ namespace ChainflipInsights.Consumers.Twitter
                     $"⬆️ {stakedFlip.StakedFormatted} $FLIP got staked\n" +
                     $"⬇️ {stakedFlip.UnstakedFormatted} $FLIP got unstaked\n" +
                     $"{(stakedFlip.NetMovement == Feeders.StakedFlip.NetMovement.MoreUnstaked ? "🔴" : "🟢")} {stakedFlip.TotalMovementFormatted} $FLIP got {(stakedFlip.NetMovement == Feeders.StakedFlip.NetMovement.MoreUnstaked ? "unstaked" : "staked")}\n" +
-                    $"#chainflip #flip";
+                    $"#chainflip $flip";
 
                 _twitterClient.Execute
                     .AdvanceRequestAsync(x =>

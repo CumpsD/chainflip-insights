@@ -32,7 +32,7 @@ namespace ChainflipInsights.Consumers.Twitter
                     $"🔥 Big $stFLIP Alert! " +
                     $"{bigStakedFlipInfo.StakedFormatted} $FLIP just got staked! " +
                     $"// {_configuration.EtherScanUrl}{bigStakedFlipInfo.TransactionHash}\n" +
-                    $"#chainflip #flip";
+                    $"#chainflip $flip";
 
                 _twitterClient.Execute
                     .AdvanceRequestAsync(x =>

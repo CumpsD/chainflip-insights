@@ -31,7 +31,7 @@ namespace ChainflipInsights.Consumers.Twitter
                     $"🫡 Swap Limits have changed! " +
                     $"The new limits are:\n" +
                     $"{string.Join("\n", swapLimits.SwapLimits.Select(x => $"{x.SwapLimit} ${x.Asset.Ticker}"))}\n" +
-                    $"#chainflip #flip";
+                    $"#chainflip $flip";
 
                 _twitterClient.Execute
                     .AdvanceRequestAsync(x =>

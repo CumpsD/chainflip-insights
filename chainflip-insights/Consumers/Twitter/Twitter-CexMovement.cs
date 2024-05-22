@@ -39,7 +39,7 @@ namespace ChainflipInsights.Consumers.Twitter
                     $"⬆️ {cexMovement.MovementInFormatted} $FLIP moved towards CEX\n" +
                     $"⬇️ {cexMovement.MovementOutFormatted} $FLIP moved towards DEX\n" +
                     $"{(cexMovement.NetMovement == Feeders.CexMovement.NetMovement.MoreTowardsCex ? "🔴" : "🟢")} {(cexMovement.NetMovement == Feeders.CexMovement.NetMovement.MoreTowardsCex ? "CEX" : "DEX")} gained {cexMovement.TotalMovementFormatted} $FLIP\n" +
-                    $"#chainflip #flip";
+                    $"#chainflip $flip";
 
                 _twitterClient.Execute
                     .AdvanceRequestAsync(x =>

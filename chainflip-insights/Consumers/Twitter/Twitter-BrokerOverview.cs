@@ -55,7 +55,7 @@ namespace ChainflipInsights.Consumers.Twitter
                         $"{emojis[i]} {name} (${brokerInfo.VolumeFormatted} Volume, ${brokerInfo.FeesFormatted} Fees)");
                 }
 
-                text.AppendLine("#chainflip #flip");
+                text.AppendLine("#chainflip $flip");
 
                 _twitterClient.Execute
                     .AdvanceRequestAsync(x =>

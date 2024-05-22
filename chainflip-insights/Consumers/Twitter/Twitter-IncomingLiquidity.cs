@@ -36,7 +36,7 @@ namespace ChainflipInsights.Consumers.Twitter
                 var text =
                     $"💵 Liquidity Added! {_configuration.ExplorerLiquidityChannelUrl}{liquidity.BlockId}-{liquidity.Network}-{liquidity.ChannelId}\n" +
                     $"📈 An extra {liquidity.DepositAmountFormatted} #{liquidity.SourceAsset} (${liquidity.DepositValueUsdFormatted}) is available!\n" +
-                    $"#chainflip #flip";
+                    $"#chainflip $flip";
 
                 _twitterClient.Execute
                     .AdvanceRequestAsync(x =>

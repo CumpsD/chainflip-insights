@@ -34,7 +34,7 @@ namespace ChainflipInsights.Consumers.Twitter
 
                 var text =
                     $"💸 Validator {redemption.Validator} redeemed {redemption.AmountFormatted} $FLIP! {string.Format(_configuration.ValidatorUrl, redemption.ValidatorName)}\n" +
-                    $"#chainflip #flip";
+                    $"#chainflip $flip";
 
                 _twitterClient.Execute
                     .AdvanceRequestAsync(x =>
