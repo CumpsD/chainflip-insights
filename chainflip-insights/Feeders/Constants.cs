@@ -81,7 +81,7 @@ namespace ChainflipInsights.Feeders
                 ARBETH,
                 new AssetInfo(
                     ARBETH,
-                    "ETH",
+                    "arbETH",
                     "arbEthereum",
                     "Arbitrum",
                     18)
@@ -90,7 +90,7 @@ namespace ChainflipInsights.Feeders
                 ARBUSDC,
                 new AssetInfo(
                     ARBUSDC,
-                    "USDC",
+                    "arbUSDC",
                     "arbUSDC",
                     "Arbitrum",
                     6)

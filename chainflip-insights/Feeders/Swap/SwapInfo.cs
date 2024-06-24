@@ -73,7 +73,6 @@ namespace ChainflipInsights.Feeders.Swap
             Id = swap.NativeId;
             DepositAmount = swap.DepositAmount;
             DepositValueUsd = swap.DepositValueUsd;
-            SourceAsset = swap.SourceAsset.ToUpperInvariant();
             
             // EgressAmount is null when the swap ate everything
             // It is however also null when it is still in progress
@@ -87,12 +86,14 @@ namespace ChainflipInsights.Feeders.Swap
             
             EgressAmount = swap.EgressAmount ?? 0;
             EgressValueUsd = swap.EgressValueUsd ?? 0;
-            DestinationAsset = swap.DestinationAsset.ToUpperInvariant();
 
             SwapScheduledBlockTimestamp = DateTimeOffset.Parse(swap.SwapScheduledBlockTimestamp);
 
-            SourceAssetInfo = Constants.SupportedAssets[SourceAsset.ToLowerInvariant()];
-            DestinationAssetInfo = Constants.SupportedAssets[DestinationAsset.ToLowerInvariant()];
+            SourceAssetInfo = Constants.SupportedAssets[swap.SourceAsset.ToLowerInvariant()];
+            DestinationAssetInfo = Constants.SupportedAssets[swap.DestinationAsset.ToLowerInvariant()];
+
+            SourceAsset = SourceAssetInfo.Ticker;
+            DestinationAsset = DestinationAssetInfo.Ticker;
 
             Broker = swap
                 .SwapChannel?

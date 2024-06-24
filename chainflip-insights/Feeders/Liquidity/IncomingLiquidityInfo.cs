@@ -39,7 +39,6 @@ namespace ChainflipInsights.Feeders.Liquidity
             Id = liquidity.Id;
             DepositAmount = liquidity.DepositAmount;
             DepositValueUsd = liquidity.DepositValueUsd;
-            SourceAsset = liquidity.Channel.Asset.ToUpperInvariant();
 
             BlockId = liquidity.Channel.IssuedBlockId;
             Network = liquidity.Channel.Chain;
@@ -47,7 +46,8 @@ namespace ChainflipInsights.Feeders.Liquidity
 
             Timestamp = liquidity.Block.Timestamp;
 
-            SourceAssetInfo = Constants.SupportedAssets[SourceAsset.ToLowerInvariant()];
+            SourceAssetInfo = Constants.SupportedAssets[liquidity.Channel.Asset.ToLowerInvariant()];
+            SourceAsset = SourceAssetInfo.Ticker;
         }
     }
 }

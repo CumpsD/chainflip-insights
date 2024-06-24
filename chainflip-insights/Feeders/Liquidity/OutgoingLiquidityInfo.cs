@@ -36,11 +36,14 @@ namespace ChainflipInsights.Feeders.Liquidity
             Id = liquidity.Id;
             WithdrawalAmount = liquidity.WithdrawalAmount;
             WithdrawalValueUsd = liquidity.WithdrawalValueUsd;
-            SourceAsset = liquidity.Asset.ToUpperInvariant();
-            Network = liquidity.Chain;
-            Timestamp = liquidity.Block.Timestamp;
+            
             BlockId = liquidity.Block.BlockId.ToString();
-            SourceAssetInfo = Constants.SupportedAssets[SourceAsset.ToLowerInvariant()];
+            Network = liquidity.Chain;
+            
+            Timestamp = liquidity.Block.Timestamp;
+
+            SourceAssetInfo = Constants.SupportedAssets[liquidity.Asset.ToLowerInvariant()];
+            SourceAsset = SourceAssetInfo.Ticker;
         }
     }
 }
