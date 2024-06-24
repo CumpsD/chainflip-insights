@@ -18,7 +18,9 @@ namespace ChainflipInsights.Feeders
         public const string FLIP = "flip";
         public const string USDC = "usdc";
         public const string USDT = "usdt";
-        
+        public const string ARBETH = "arbeth";
+        public const string ARBUSDC = "arbusdc";
+
         public static readonly Dictionary<string, AssetInfo> SupportedAssets = new()
         {
             {
@@ -73,6 +75,24 @@ namespace ChainflipInsights.Feeders
                     "USDT",
                     "ethUSDT",
                     "Ethereum",
+                    6)
+            },
+            {
+                ARBETH,
+                new AssetInfo(
+                    ARBETH,
+                    "ETH",
+                    "arbEthereum",
+                    "Arbitrum",
+                    18)
+            },
+            {
+                ARBUSDC,
+                new AssetInfo(
+                    ARBUSDC,
+                    "USDC",
+                    "arbUSDC",
+                    "Arbitrum",
                     6)
             },
         };
