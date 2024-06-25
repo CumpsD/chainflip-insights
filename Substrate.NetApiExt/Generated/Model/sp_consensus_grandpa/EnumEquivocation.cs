@@ -33,7 +33,7 @@ namespace Substrate.NetApiExt.Generated.Model.sp_consensus_grandpa
     }
     
     /// <summary>
-    /// >> 100 - Variant[sp_consensus_grandpa.Equivocation]
+    /// >> 116 - Variant[sp_consensus_grandpa.Equivocation]
     /// </summary>
     public sealed class EnumEquivocation : BaseEnumExt<Equivocation, Substrate.NetApiExt.Generated.Model.finality_grandpa.EquivocationT1, Substrate.NetApiExt.Generated.Model.finality_grandpa.EquivocationT2>
     {

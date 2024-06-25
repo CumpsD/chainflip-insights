@@ -78,7 +78,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_governance.pallet
     }
     
     /// <summary>
-    /// >> 265 - Variant[pallet_cf_governance.pallet.Event]
+    /// >> 314 - Variant[pallet_cf_governance.pallet.Event]
     /// The `Event` enum of this pallet
     /// </summary>
     public sealed class EnumEvent : BaseEnumExt<Event, Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApiExt.Generated.Model.sp_runtime.EnumDispatchError, Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApiExt.Generated.Types.Base.Arr32U8, Substrate.NetApiExt.Generated.Types.Base.Arr32U8, BaseTuple<Substrate.NetApiExt.Generated.Types.Base.Arr32U8, Substrate.NetApiExt.Generated.Model.sp_runtime.EnumDispatchError>>

@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.dot
     
     
     /// <summary>
-    /// >> 281 - Composite[cf_chains.dot.PolkadotTransactionData]
+    /// >> 330 - Composite[cf_chains.dot.PolkadotTransactionData]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class PolkadotTransactionData : BaseType
@@ -52,7 +52,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.dot
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

@@ -41,12 +41,6 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.pallet
         process_deposits = 2,
         
         /// <summary>
-        /// >> set_minimum_deposit
-        /// See [`Pallet::set_minimum_deposit`].
-        /// </summary>
-        set_minimum_deposit = 3,
-        
-        /// <summary>
         /// >> vault_transfer_failed
         /// See [`Pallet::vault_transfer_failed`].
         /// </summary>
@@ -57,13 +51,37 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.pallet
         /// See [`Pallet::ccm_broadcast_failed`].
         /// </summary>
         ccm_broadcast_failed = 5,
+        
+        /// <summary>
+        /// >> update_pallet_config
+        /// See [`Pallet::update_pallet_config`].
+        /// </summary>
+        update_pallet_config = 6,
+        
+        /// <summary>
+        /// >> add_boost_funds
+        /// See [`Pallet::add_boost_funds`].
+        /// </summary>
+        add_boost_funds = 7,
+        
+        /// <summary>
+        /// >> stop_boosting
+        /// See [`Pallet::stop_boosting`].
+        /// </summary>
+        stop_boosting = 8,
+        
+        /// <summary>
+        /// >> create_boost_pools
+        /// See [`Pallet::create_boost_pools`].
+        /// </summary>
+        create_boost_pools = 9,
     }
     
     /// <summary>
-    /// >> 243 - Variant[pallet_cf_ingress_egress.pallet.Call]
+    /// >> 299 - Variant[pallet_cf_ingress_egress.pallet.Call]
     /// Contains a variant per dispatchable extrinsic that this pallet has.
     /// </summary>
-    public sealed class EnumCall : BaseEnumExt<Call, Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.cf_chains.btc.EnumScriptPubkey>, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.btc.EnumAsset, Substrate.NetApi.Model.Types.Primitive.Bool>, BaseTuple<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.pallet.DepositWitnessT3>, Substrate.NetApi.Model.Types.Primitive.U64>, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.btc.EnumAsset, Substrate.NetApi.Model.Types.Primitive.U64>, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.btc.EnumAsset, Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApiExt.Generated.Model.cf_chains.btc.EnumScriptPubkey>, Substrate.NetApi.Model.Types.Primitive.U32>
+    public sealed class EnumCall : BaseEnumExt<Call, Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.primitive_types.H160>, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.arb.EnumAsset, Substrate.NetApi.Model.Types.Primitive.Bool>, BaseTuple<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.pallet.DepositWitnessT4>, Substrate.NetApi.Model.Types.Primitive.U64>, BaseVoid, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.arb.EnumAsset, Substrate.NetApi.Model.Types.Primitive.U128, Substrate.NetApiExt.Generated.Model.primitive_types.H160>, Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApiExt.Generated.Model.bounded_collections.bounded_vec.BoundedVecT12, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.arb.EnumAsset, Substrate.NetApi.Model.Types.Primitive.U128, Substrate.NetApi.Model.Types.Primitive.U16>, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.arb.EnumAsset, Substrate.NetApi.Model.Types.Primitive.U16>, Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.BoostPoolIdT4>>
     {
     }
 }

@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.dot
     
     
     /// <summary>
-    /// >> 127 - Composite[cf_chains.dot.PolkadotTrackedData]
+    /// >> 145 - Composite[cf_chains.dot.PolkadotTrackedData]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class PolkadotTrackedData : BaseType
@@ -59,7 +59,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.dot
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

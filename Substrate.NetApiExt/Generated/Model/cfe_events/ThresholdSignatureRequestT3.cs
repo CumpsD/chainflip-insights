@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.cfe_events
     
     
     /// <summary>
-    /// >> 536 - Composite[cfe_events.ThresholdSignatureRequestT3]
+    /// >> 647 - Composite[cfe_events.ThresholdSignatureRequestT3]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class ThresholdSignatureRequestT3 : BaseType
@@ -80,7 +80,7 @@ namespace Substrate.NetApiExt.Generated.Model.cfe_events
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

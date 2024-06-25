@@ -43,7 +43,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.dot.api
     }
     
     /// <summary>
-    /// >> 186 - Variant[cf_chains.dot.api.PolkadotApi]
+    /// >> 203 - Variant[cf_chains.dot.api.PolkadotApi]
     /// </summary>
     public sealed class EnumPolkadotApi : BaseEnumExt<PolkadotApi, Substrate.NetApiExt.Generated.Model.cf_chains.dot.PolkadotExtrinsicBuilder, Substrate.NetApiExt.Generated.Model.cf_chains.dot.PolkadotExtrinsicBuilder, Substrate.NetApiExt.Generated.Model.cf_chains.dot.PolkadotExtrinsicBuilder, Substrate.NetApiExt.Generated.Model.cf_chains.dot.PolkadotExtrinsicBuilder>
     {

@@ -27,13 +27,19 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_chain_tracking.pallet
         /// See [`Pallet::update_chain_state`].
         /// </summary>
         update_chain_state = 0,
+        
+        /// <summary>
+        /// >> update_fee_multiplier
+        /// See [`Pallet::update_fee_multiplier`].
+        /// </summary>
+        update_fee_multiplier = 1,
     }
     
     /// <summary>
-    /// >> 129 - Variant[pallet_cf_chain_tracking.pallet.Call]
+    /// >> 291 - Variant[pallet_cf_chain_tracking.pallet.Call]
     /// Contains a variant per dispatchable extrinsic that this pallet has.
     /// </summary>
-    public sealed class EnumCall : BaseEnumExt<Call, Substrate.NetApiExt.Generated.Model.cf_chains.ChainStateT3>
+    public sealed class EnumCall : BaseEnumExt<Call, Substrate.NetApiExt.Generated.Model.cf_chains.ChainStateT4, Substrate.NetApiExt.Generated.Model.sp_arithmetic.fixed_point.FixedU128>
     {
     }
 }

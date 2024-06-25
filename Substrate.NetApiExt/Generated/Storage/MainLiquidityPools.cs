@@ -38,12 +38,12 @@ namespace Substrate.NetApiExt.Generated.Storage
             this._client = client;
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("LiquidityPools", "Pools"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
                             Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApiExt.Generated.Model.pallet_cf_pools.AssetPair), typeof(Substrate.NetApiExt.Generated.Model.pallet_cf_pools.pallet.Pool)));
-            _client.StorageKeyDict.Add(new System.Tuple<string, string>("LiquidityPools", "FlipToBurn"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U128)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("LiquidityPools", "FlipBuyInterval"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U32)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("LiquidityPools", "CollectedNetworkFee"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U128)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("LiquidityPools", "ScheduledLimitOrderUpdates"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
                             Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApi.Model.Types.Primitive.U32), typeof(Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.pallet_cf_pools.pallet.LimitOrderUpdate>)));
-            _client.StorageKeyDict.Add(new System.Tuple<string, string>("LiquidityPools", "MaximumRelativeSlippage"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U32)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("LiquidityPools", "MaximumPriceImpact"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
+                            Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApiExt.Generated.Model.pallet_cf_pools.AssetPair), typeof(Substrate.NetApi.Model.Types.Primitive.U32)));
         }
         
         /// <summary>
@@ -74,35 +74,6 @@ namespace Substrate.NetApiExt.Generated.Storage
         {
             string parameters = LiquidityPoolsStorage.PoolsParams(key);
             var result = await _client.GetStorageAsync<Substrate.NetApiExt.Generated.Model.pallet_cf_pools.pallet.Pool>(parameters, blockhash, token);
-            return result;
-        }
-        
-        /// <summary>
-        /// >> FlipToBurnParams
-        ///  FLIP ready to be burned.
-        /// </summary>
-        public static string FlipToBurnParams()
-        {
-            return RequestGenerator.GetStorage("LiquidityPools", "FlipToBurn", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
-        }
-        
-        /// <summary>
-        /// >> FlipToBurnDefault
-        /// Default value as hex string
-        /// </summary>
-        public static string FlipToBurnDefault()
-        {
-            return "0x00000000000000000000000000000000";
-        }
-        
-        /// <summary>
-        /// >> FlipToBurn
-        ///  FLIP ready to be burned.
-        /// </summary>
-        public async Task<Substrate.NetApi.Model.Types.Primitive.U128> FlipToBurn(string blockhash, CancellationToken token)
-        {
-            string parameters = LiquidityPoolsStorage.FlipToBurnParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U128>(parameters, blockhash, token);
             return result;
         }
         
@@ -196,30 +167,34 @@ namespace Substrate.NetApiExt.Generated.Storage
         }
         
         /// <summary>
-        /// >> MaximumRelativeSlippageParams
-        ///  Maximum relative slippage for a single swap, measured in number of ticks.
+        /// >> MaximumPriceImpactParams
+        ///  Maximum price impact for a single swap, measured in number of ticks. Configurable
+        ///  for each pool.
         /// </summary>
-        public static string MaximumRelativeSlippageParams()
+        public static string MaximumPriceImpactParams(Substrate.NetApiExt.Generated.Model.pallet_cf_pools.AssetPair key)
         {
-            return RequestGenerator.GetStorage("LiquidityPools", "MaximumRelativeSlippage", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
+            return RequestGenerator.GetStorage("LiquidityPools", "MaximumPriceImpact", Substrate.NetApi.Model.Meta.Storage.Type.Map, new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
+                        Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, new Substrate.NetApi.Model.Types.IType[] {
+                        key});
         }
         
         /// <summary>
-        /// >> MaximumRelativeSlippageDefault
+        /// >> MaximumPriceImpactDefault
         /// Default value as hex string
         /// </summary>
-        public static string MaximumRelativeSlippageDefault()
+        public static string MaximumPriceImpactDefault()
         {
             return "0x00";
         }
         
         /// <summary>
-        /// >> MaximumRelativeSlippage
-        ///  Maximum relative slippage for a single swap, measured in number of ticks.
+        /// >> MaximumPriceImpact
+        ///  Maximum price impact for a single swap, measured in number of ticks. Configurable
+        ///  for each pool.
         /// </summary>
-        public async Task<Substrate.NetApi.Model.Types.Primitive.U32> MaximumRelativeSlippage(string blockhash, CancellationToken token)
+        public async Task<Substrate.NetApi.Model.Types.Primitive.U32> MaximumPriceImpact(Substrate.NetApiExt.Generated.Model.pallet_cf_pools.AssetPair key, string blockhash, CancellationToken token)
         {
-            string parameters = LiquidityPoolsStorage.MaximumRelativeSlippageParams();
+            string parameters = LiquidityPoolsStorage.MaximumPriceImpactParams(key);
             var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U32>(parameters, blockhash, token);
             return result;
         }
@@ -290,7 +265,7 @@ namespace Substrate.NetApiExt.Generated.Storage
         /// >> update_limit_order
         /// Contains a variant per dispatchable extrinsic that this pallet has.
         /// </summary>
-        public static Method UpdateLimitOrder(Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset base_asset, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset quote_asset, Substrate.NetApiExt.Generated.Model.cf_amm.common.EnumOrder side, Substrate.NetApi.Model.Types.Primitive.U64 id, Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Model.Types.Primitive.I32> option_tick, Substrate.NetApiExt.Generated.Model.pallet_cf_pools.pallet.EnumIncreaseOrDecrease amount_change)
+        public static Method UpdateLimitOrder(Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset base_asset, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset quote_asset, Substrate.NetApiExt.Generated.Model.cf_amm.common.EnumSide side, Substrate.NetApi.Model.Types.Primitive.U64 id, Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Model.Types.Primitive.I32> option_tick, Substrate.NetApiExt.Generated.Model.pallet_cf_pools.pallet.EnumIncreaseOrDecrease amount_change)
         {
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
             byteArray.AddRange(base_asset.Encode());
@@ -306,7 +281,7 @@ namespace Substrate.NetApiExt.Generated.Storage
         /// >> set_limit_order
         /// Contains a variant per dispatchable extrinsic that this pallet has.
         /// </summary>
-        public static Method SetLimitOrder(Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset base_asset, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset quote_asset, Substrate.NetApiExt.Generated.Model.cf_amm.common.EnumOrder side, Substrate.NetApi.Model.Types.Primitive.U64 id, Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Model.Types.Primitive.I32> option_tick, Substrate.NetApi.Model.Types.Primitive.U128 sell_amount)
+        public static Method SetLimitOrder(Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset base_asset, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset quote_asset, Substrate.NetApiExt.Generated.Model.cf_amm.common.EnumSide side, Substrate.NetApi.Model.Types.Primitive.U64 id, Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Model.Types.Primitive.I32> option_tick, Substrate.NetApi.Model.Types.Primitive.U128 sell_amount)
         {
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
             byteArray.AddRange(base_asset.Encode());
@@ -344,14 +319,14 @@ namespace Substrate.NetApiExt.Generated.Storage
         }
         
         /// <summary>
-        /// >> set_maximum_relative_slippage
+        /// >> set_maximum_price_impact
         /// Contains a variant per dispatchable extrinsic that this pallet has.
         /// </summary>
-        public static Method SetMaximumRelativeSlippage(Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Model.Types.Primitive.U32> ticks)
+        public static Method SetMaximumPriceImpact(Substrate.NetApiExt.Generated.Model.bounded_collections.bounded_vec.BoundedVecT11 limits)
         {
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
-            byteArray.AddRange(ticks.Encode());
-            return new Method(35, "LiquidityPools", 9, "set_maximum_relative_slippage", byteArray.ToArray());
+            byteArray.AddRange(limits.Encode());
+            return new Method(35, "LiquidityPools", 9, "set_maximum_price_impact", byteArray.ToArray());
         }
     }
     

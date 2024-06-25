@@ -55,10 +55,15 @@ namespace Substrate.NetApiExt.Generated.Model.state_chain_runtime.chainflip.offe
         /// >> ParticipateKeyHandoverFailed
         /// </summary>
         ParticipateKeyHandoverFailed = 6,
+        
+        /// <summary>
+        /// >> FailedToWitnessInTime
+        /// </summary>
+        FailedToWitnessInTime = 7,
     }
     
     /// <summary>
-    /// >> 118 - Variant[state_chain_runtime.chainflip.offences.Offence]
+    /// >> 135 - Variant[state_chain_runtime.chainflip.offences.Offence]
     /// </summary>
     public sealed class EnumOffence : BaseEnum<Offence>
     {

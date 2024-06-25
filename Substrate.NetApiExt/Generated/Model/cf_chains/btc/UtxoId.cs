@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.btc
     
     
     /// <summary>
-    /// >> 211 - Composite[cf_chains.btc.UtxoId]
+    /// >> 60 - Composite[cf_chains.btc.UtxoId]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class UtxoId : BaseType
@@ -27,7 +27,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.btc
         /// <summary>
         /// >> tx_id
         /// </summary>
-        public Substrate.NetApiExt.Generated.Types.Base.Arr32U8 TxId { get; set; }
+        public Substrate.NetApiExt.Generated.Model.primitive_types.H256 TxId { get; set; }
         /// <summary>
         /// >> vout
         /// </summary>
@@ -52,14 +52,14 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.btc
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
-            TxId = new Substrate.NetApiExt.Generated.Types.Base.Arr32U8();
+            TxId = new Substrate.NetApiExt.Generated.Model.primitive_types.H256();
             TxId.Decode(byteArray, ref p);
             Vout = new Substrate.NetApi.Model.Types.Primitive.U32();
             Vout.Decode(byteArray, ref p);
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.pallet
     
     
     /// <summary>
-    /// >> 447 - Composite[pallet_cf_ingress_egress.pallet.DepositChannelDetailsT1]
+    /// >> 511 - Composite[pallet_cf_ingress_egress.pallet.DepositChannelDetailsT1]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class DepositChannelDetailsT1 : BaseType
@@ -40,6 +40,14 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.pallet
         /// >> action
         /// </summary>
         public Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.pallet.EnumChannelAction Action { get; set; }
+        /// <summary>
+        /// >> boost_fee
+        /// </summary>
+        public Substrate.NetApi.Model.Types.Primitive.U16 BoostFee { get; set; }
+        /// <summary>
+        /// >> boost_status
+        /// </summary>
+        public Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.EnumBoostStatus BoostStatus { get; set; }
         
         /// <inheritdoc/>
         public override string TypeName()
@@ -55,6 +63,8 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.pallet
             result.AddRange(OpenedAt.Encode());
             result.AddRange(ExpiresAt.Encode());
             result.AddRange(Action.Encode());
+            result.AddRange(BoostFee.Encode());
+            result.AddRange(BoostStatus.Encode());
             return result.ToArray();
         }
         
@@ -70,10 +80,14 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.pallet
             ExpiresAt.Decode(byteArray, ref p);
             Action = new Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.pallet.EnumChannelAction();
             Action.Decode(byteArray, ref p);
+            BoostFee = new Substrate.NetApi.Model.Types.Primitive.U16();
+            BoostFee.Decode(byteArray, ref p);
+            BoostStatus = new Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.EnumBoostStatus();
+            BoostStatus.Decode(byteArray, ref p);
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.frame_system.extensions.check_non_
     
     
     /// <summary>
-    /// >> 548 - Composite[frame_system.extensions.check_non_zero_sender.CheckNonZeroSender]
+    /// >> 688 - Composite[frame_system.extensions.check_non_zero_sender.CheckNonZeroSender]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class CheckNonZeroSender : BaseType
@@ -44,7 +44,7 @@ namespace Substrate.NetApiExt.Generated.Model.frame_system.extensions.check_non_
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

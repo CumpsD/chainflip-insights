@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.frame_system.extensions.check_tx_v
     
     
     /// <summary>
-    /// >> 550 - Composite[frame_system.extensions.check_tx_version.CheckTxVersion]
+    /// >> 690 - Composite[frame_system.extensions.check_tx_version.CheckTxVersion]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class CheckTxVersion : BaseType
@@ -44,7 +44,7 @@ namespace Substrate.NetApiExt.Generated.Model.frame_system.extensions.check_tx_v
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

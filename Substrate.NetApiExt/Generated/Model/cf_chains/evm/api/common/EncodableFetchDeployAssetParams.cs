@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.evm.api.common
     
     
     /// <summary>
-    /// >> 172 - Composite[cf_chains.evm.api.common.EncodableFetchDeployAssetParams]
+    /// >> 189 - Composite[cf_chains.evm.api.common.EncodableFetchDeployAssetParams]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class EncodableFetchDeployAssetParams : BaseType
@@ -59,7 +59,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.evm.api.common
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

@@ -15,11 +15,11 @@ using System.Collections.Generic;
 
 namespace Substrate.NetApiExt.Generated.Model.cf_chains.btc
 {
-    using bounded_collections.bounded_vec;
+    using Substrate.NetApiExt.Generated.Model.bounded_collections.bounded_vec;
 
 
     /// <summary>
-    /// >> 216 - Composite[cf_chains.btc.BitcoinScript]
+    /// >> 65 - Composite[cf_chains.btc.BitcoinScript]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class BitcoinScript : BaseType
@@ -53,9 +53,9 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.btc
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new BoundedVecT1();
-            
+
             // Bytes = new byte[bytesLength];
-            // System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            // global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

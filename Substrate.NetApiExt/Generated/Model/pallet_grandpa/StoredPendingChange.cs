@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_grandpa
     
     
     /// <summary>
-    /// >> 355 - Composite[pallet_grandpa.StoredPendingChange]
+    /// >> 420 - Composite[pallet_grandpa.StoredPendingChange]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class StoredPendingChange : BaseType
@@ -73,7 +73,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_grandpa
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

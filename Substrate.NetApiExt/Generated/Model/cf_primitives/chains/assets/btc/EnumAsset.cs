@@ -28,7 +28,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.btc
     }
     
     /// <summary>
-    /// >> 245 - Variant[cf_primitives.chains.assets.btc.Asset]
+    /// >> 270 - Variant[cf_primitives.chains.assets.btc.Asset]
     /// </summary>
     public sealed class EnumAsset : BaseEnum<Asset>
     {

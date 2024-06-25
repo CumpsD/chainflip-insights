@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_governance.pallet
     
     
     /// <summary>
-    /// >> 358 - Composite[pallet_cf_governance.pallet.Proposal]
+    /// >> 423 - Composite[pallet_cf_governance.pallet.Proposal]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class Proposal : BaseType
@@ -66,7 +66,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_governance.pallet
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

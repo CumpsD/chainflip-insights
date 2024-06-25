@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.state_chain_runtime.safe_mode
     
     
     /// <summary>
-    /// >> 50 - Composite[state_chain_runtime.safe_mode.WitnesserCallPermission]
+    /// >> 52 - Composite[state_chain_runtime.safe_mode.WitnesserCallPermission]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class WitnesserCallPermission : BaseType
@@ -84,6 +84,22 @@ namespace Substrate.NetApiExt.Generated.Model.state_chain_runtime.safe_mode
         /// >> bitcoin_vault
         /// </summary>
         public Substrate.NetApi.Model.Types.Primitive.Bool BitcoinVault { get; set; }
+        /// <summary>
+        /// >> arbitrum_broadcast
+        /// </summary>
+        public Substrate.NetApi.Model.Types.Primitive.Bool ArbitrumBroadcast { get; set; }
+        /// <summary>
+        /// >> arbitrum_chain_tracking
+        /// </summary>
+        public Substrate.NetApi.Model.Types.Primitive.Bool ArbitrumChainTracking { get; set; }
+        /// <summary>
+        /// >> arbitrum_ingress_egress
+        /// </summary>
+        public Substrate.NetApi.Model.Types.Primitive.Bool ArbitrumIngressEgress { get; set; }
+        /// <summary>
+        /// >> arbitrum_vault
+        /// </summary>
+        public Substrate.NetApi.Model.Types.Primitive.Bool ArbitrumVault { get; set; }
         
         /// <inheritdoc/>
         public override string TypeName()
@@ -110,6 +126,10 @@ namespace Substrate.NetApiExt.Generated.Model.state_chain_runtime.safe_mode
             result.AddRange(BitcoinChainTracking.Encode());
             result.AddRange(BitcoinIngressEgress.Encode());
             result.AddRange(BitcoinVault.Encode());
+            result.AddRange(ArbitrumBroadcast.Encode());
+            result.AddRange(ArbitrumChainTracking.Encode());
+            result.AddRange(ArbitrumIngressEgress.Encode());
+            result.AddRange(ArbitrumVault.Encode());
             return result.ToArray();
         }
         
@@ -147,10 +167,18 @@ namespace Substrate.NetApiExt.Generated.Model.state_chain_runtime.safe_mode
             BitcoinIngressEgress.Decode(byteArray, ref p);
             BitcoinVault = new Substrate.NetApi.Model.Types.Primitive.Bool();
             BitcoinVault.Decode(byteArray, ref p);
+            ArbitrumBroadcast = new Substrate.NetApi.Model.Types.Primitive.Bool();
+            ArbitrumBroadcast.Decode(byteArray, ref p);
+            ArbitrumChainTracking = new Substrate.NetApi.Model.Types.Primitive.Bool();
+            ArbitrumChainTracking.Decode(byteArray, ref p);
+            ArbitrumIngressEgress = new Substrate.NetApi.Model.Types.Primitive.Bool();
+            ArbitrumIngressEgress.Decode(byteArray, ref p);
+            ArbitrumVault = new Substrate.NetApi.Model.Types.Primitive.Bool();
+            ArbitrumVault.Decode(byteArray, ref p);
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

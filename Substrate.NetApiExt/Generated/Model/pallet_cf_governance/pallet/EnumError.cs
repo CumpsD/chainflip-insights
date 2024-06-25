@@ -72,7 +72,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_governance.pallet
     }
     
     /// <summary>
-    /// >> 363 - Variant[pallet_cf_governance.pallet.Error]
+    /// >> 428 - Variant[pallet_cf_governance.pallet.Error]
     /// The `Error` enum of this pallet.
     /// </summary>
     public sealed class EnumError : BaseEnum<Error>

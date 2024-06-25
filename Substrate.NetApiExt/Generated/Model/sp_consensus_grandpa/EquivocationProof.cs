@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.sp_consensus_grandpa
     
     
     /// <summary>
-    /// >> 99 - Composite[sp_consensus_grandpa.EquivocationProof]
+    /// >> 115 - Composite[sp_consensus_grandpa.EquivocationProof]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class EquivocationProof : BaseType
@@ -59,7 +59,7 @@ namespace Substrate.NetApiExt.Generated.Model.sp_consensus_grandpa
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

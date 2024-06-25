@@ -51,37 +51,18 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_lp.pallet
         /// >> LiquidityDepositCredited
         /// </summary>
         LiquidityDepositCredited = 5,
+        
+        /// <summary>
+        /// >> AssetTransferred
+        /// </summary>
+        AssetTransferred = 6,
     }
-
+    
     /// <summary>
-    /// >> 290 - Variant[pallet_cf_lp.pallet.Event]
+    /// >> 339 - Variant[pallet_cf_lp.pallet.Event]
     /// The `Event` enum of this pallet
     /// </summary>
-    public sealed class EnumEvent : BaseEnumExt<Event,
-        BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32,
-            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset,
-            Substrate.NetApi.Model.Types.Primitive.U128>,
-        BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32,
-            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset,
-            Substrate.NetApi.Model.Types.Primitive.U128>,
-        BaseTuple<Substrate.NetApi.Model.Types.Primitive.U64,
-            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset,
-            Substrate.NetApiExt.Generated.Model.cf_chains.address.EnumEncodedAddress,
-            Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Model.Types.Primitive.U64>,
-        BaseTuple<
-            Substrate.NetApi.Model.Types.Base.BaseTuple<
-                Substrate.NetApiExt.Generated.Model.cf_primitives.chains.EnumForeignChain,
-                Substrate.NetApi.Model.Types.Primitive.U64>,
-            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset,
-            Substrate.NetApi.Model.Types.Primitive.U128,
-            Substrate.NetApiExt.Generated.Model.cf_chains.address.EnumEncodedAddress,
-            Substrate.NetApi.Model.Types.Primitive.U128>,
-        BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32,
-            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.EnumForeignChain,
-            Substrate.NetApiExt.Generated.Model.cf_chains.address.EnumForeignChainAddress>, BaseTuple<
-            Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32,
-            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset,
-            Substrate.NetApi.Model.Types.Primitive.U128>>
+    public sealed class EnumEvent : BaseEnumExt<Event, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApi.Model.Types.Primitive.U128>, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApi.Model.Types.Primitive.U128>, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApiExt.Generated.Model.cf_chains.address.EnumEncodedAddress, Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApi.Model.Types.Primitive.U16, Substrate.NetApi.Model.Types.Primitive.U128>, BaseTuple<Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.EnumForeignChain, Substrate.NetApi.Model.Types.Primitive.U64>, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApi.Model.Types.Primitive.U128, Substrate.NetApiExt.Generated.Model.cf_chains.address.EnumEncodedAddress, Substrate.NetApi.Model.Types.Primitive.U128>, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.EnumForeignChain, Substrate.NetApiExt.Generated.Model.cf_chains.address.EnumForeignChainAddress>, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApi.Model.Types.Primitive.U128>, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApi.Model.Types.Primitive.U128>>
     {
     }
 }

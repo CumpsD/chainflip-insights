@@ -63,7 +63,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.eth.api
     }
     
     /// <summary>
-    /// >> 152 - Variant[cf_chains.eth.api.EthereumApi]
+    /// >> 169 - Variant[cf_chains.eth.api.EthereumApi]
     /// </summary>
     public sealed class EnumEthereumApi : BaseEnumExt<EthereumApi, Substrate.NetApiExt.Generated.Model.cf_chains.evm.api.EvmTransactionBuilderT1, Substrate.NetApiExt.Generated.Model.cf_chains.evm.api.EvmTransactionBuilderT2, Substrate.NetApiExt.Generated.Model.cf_chains.evm.api.EvmTransactionBuilderT3, Substrate.NetApiExt.Generated.Model.cf_chains.evm.api.EvmTransactionBuilderT4, Substrate.NetApiExt.Generated.Model.cf_chains.evm.api.EvmTransactionBuilderT5, Substrate.NetApiExt.Generated.Model.cf_chains.evm.api.EvmTransactionBuilderT6, Substrate.NetApiExt.Generated.Model.cf_chains.evm.api.EvmTransactionBuilderT7, Substrate.NetApiExt.Generated.Model.cf_chains.evm.api.EvmTransactionBuilderT8>
     {

@@ -53,23 +53,35 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_validator.pallet
         cfe_version = 4,
         
         /// <summary>
-        /// >> set_vanity_name
-        /// See [`Pallet::set_vanity_name`].
-        /// </summary>
-        set_vanity_name = 5,
-        
-        /// <summary>
         /// >> register_as_validator
         /// See [`Pallet::register_as_validator`].
         /// </summary>
         register_as_validator = 6,
+        
+        /// <summary>
+        /// >> deregister_as_validator
+        /// See [`Pallet::deregister_as_validator`].
+        /// </summary>
+        deregister_as_validator = 7,
+        
+        /// <summary>
+        /// >> start_bidding
+        /// See [`Pallet::start_bidding`].
+        /// </summary>
+        start_bidding = 8,
+        
+        /// <summary>
+        /// >> stop_bidding
+        /// See [`Pallet::stop_bidding`].
+        /// </summary>
+        stop_bidding = 9,
     }
     
     /// <summary>
-    /// >> 84 - Variant[pallet_cf_validator.pallet.Call]
+    /// >> 100 - Variant[pallet_cf_validator.pallet.Call]
     /// Contains a variant per dispatchable extrinsic that this pallet has.
     /// </summary>
-    public sealed class EnumCall : BaseEnumExt<Call, Substrate.NetApiExt.Generated.Model.pallet_cf_validator.EnumPalletConfigUpdate, BaseVoid, BaseTuple<Substrate.NetApiExt.Generated.Model.state_chain_runtime.opaque.SessionKeys, Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Model.Types.Primitive.U8>>, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.ed25519.Public, Substrate.NetApi.Model.Types.Primitive.U16, Substrate.NetApi.Model.Types.Primitive.U128, Substrate.NetApiExt.Generated.Model.sp_core.ed25519.Signature>, Substrate.NetApiExt.Generated.Model.cf_primitives.SemVer, Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Model.Types.Primitive.U8>, BaseVoid>
+    public sealed class EnumCall : BaseEnumExt<Call, Substrate.NetApiExt.Generated.Model.pallet_cf_validator.EnumPalletConfigUpdate, BaseVoid, BaseTuple<Substrate.NetApiExt.Generated.Model.state_chain_runtime.opaque.SessionKeys, Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Model.Types.Primitive.U8>>, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.ed25519.Public, Substrate.NetApi.Model.Types.Primitive.U16, Substrate.NetApi.Model.Types.Primitive.U128, Substrate.NetApiExt.Generated.Model.sp_core.ed25519.Signature>, Substrate.NetApiExt.Generated.Model.cf_primitives.SemVer, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid>
     {
     }
 }

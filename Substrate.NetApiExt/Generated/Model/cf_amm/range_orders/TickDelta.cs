@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_amm.range_orders
     
     
     /// <summary>
-    /// >> 520 - Composite[cf_amm.range_orders.TickDelta]
+    /// >> 631 - Composite[cf_amm.range_orders.TickDelta]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class TickDelta : BaseType
@@ -35,7 +35,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_amm.range_orders
         /// <summary>
         /// >> fee_growth_outside
         /// </summary>
-        public Substrate.NetApiExt.Generated.Model.cf_amm.common.SideMapT3 FeeGrowthOutside { get; set; }
+        public Substrate.NetApiExt.Generated.Model.cf_amm.common.PoolPairsMapT6 FeeGrowthOutside { get; set; }
         
         /// <inheritdoc/>
         public override string TypeName()
@@ -61,12 +61,12 @@ namespace Substrate.NetApiExt.Generated.Model.cf_amm.range_orders
             LiquidityDelta.Decode(byteArray, ref p);
             LiquidityGross = new Substrate.NetApi.Model.Types.Primitive.U128();
             LiquidityGross.Decode(byteArray, ref p);
-            FeeGrowthOutside = new Substrate.NetApiExt.Generated.Model.cf_amm.common.SideMapT3();
+            FeeGrowthOutside = new Substrate.NetApiExt.Generated.Model.cf_amm.common.PoolPairsMapT6();
             FeeGrowthOutside.Decode(byteArray, ref p);
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

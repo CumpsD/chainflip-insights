@@ -42,7 +42,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_emissions.pallet
     }
     
     /// <summary>
-    /// >> 324 - Variant[pallet_cf_emissions.pallet.Error]
+    /// >> 389 - Variant[pallet_cf_emissions.pallet.Error]
     /// The `Error` enum of this pallet.
     /// </summary>
     public sealed class EnumError : BaseEnum<Error>

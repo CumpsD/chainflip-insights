@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.bounded_collections.bounded_vec
     
     
     /// <summary>
-    /// >> 228 - Composite[bounded_collections.bounded_vec.BoundedVecT3]
+    /// >> 230 - Composite[bounded_collections.bounded_vec.BoundedVecT3]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class BoundedVecT3 : BaseType
@@ -52,7 +52,7 @@ namespace Substrate.NetApiExt.Generated.Model.bounded_collections.bounded_vec
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.pallet
     
     
     /// <summary>
-    /// >> 247 - Composite[pallet_cf_ingress_egress.pallet.DepositWitnessT3]
+    /// >> 272 - Composite[pallet_cf_ingress_egress.pallet.DepositWitnessT3]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class DepositWitnessT3 : BaseType
@@ -73,7 +73,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.pallet
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

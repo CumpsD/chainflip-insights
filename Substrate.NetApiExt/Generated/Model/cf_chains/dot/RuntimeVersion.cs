@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.dot
     
     
     /// <summary>
-    /// >> 128 - Composite[cf_chains.dot.RuntimeVersion]
+    /// >> 146 - Composite[cf_chains.dot.RuntimeVersion]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class RuntimeVersion : BaseType
@@ -59,7 +59,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.dot
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

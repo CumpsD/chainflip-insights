@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.dot
     
     
     /// <summary>
-    /// >> 200 - Composite[cf_chains.dot.PolkadotReplayProtection]
+    /// >> 217 - Composite[cf_chains.dot.PolkadotReplayProtection]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class PolkadotReplayProtection : BaseType
@@ -66,7 +66,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.dot
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

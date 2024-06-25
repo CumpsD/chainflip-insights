@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.btc.deposit_address
     
     
     /// <summary>
-    /// >> 212 - Composite[cf_chains.btc.deposit_address.DepositAddress]
+    /// >> 61 - Composite[cf_chains.btc.deposit_address.DepositAddress]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class DepositAddress : BaseType
@@ -59,7 +59,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.btc.deposit_address
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

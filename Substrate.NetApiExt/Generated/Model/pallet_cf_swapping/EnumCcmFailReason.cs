@@ -33,7 +33,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_swapping
     }
     
     /// <summary>
-    /// >> 289 - Variant[pallet_cf_swapping.CcmFailReason]
+    /// >> 338 - Variant[pallet_cf_swapping.CcmFailReason]
     /// </summary>
     public sealed class EnumCcmFailReason : BaseEnum<CcmFailReason>
     {

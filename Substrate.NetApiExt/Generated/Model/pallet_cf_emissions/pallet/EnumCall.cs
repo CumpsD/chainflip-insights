@@ -42,7 +42,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_emissions.pallet
     }
     
     /// <summary>
-    /// >> 77 - Variant[pallet_cf_emissions.pallet.Call]
+    /// >> 93 - Variant[pallet_cf_emissions.pallet.Call]
     /// Contains a variant per dispatchable extrinsic that this pallet has.
     /// </summary>
     public sealed class EnumCall : BaseEnumExt<Call, Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Primitive.U32>

@@ -35,98 +35,74 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_funding.pallet
         PendingRedemption = 1,
         
         /// <summary>
-        /// >> AlreadyNotBidding
-        /// Can't stop bidding an account if it's already not bidding.
-        /// </summary>
-        AlreadyNotBidding = 2,
-        
-        /// <summary>
-        /// >> AlreadyBidding
-        /// Can only start bidding if not already bidding.
-        /// </summary>
-        AlreadyBidding = 3,
-        
-        /// <summary>
-        /// >> AuctionPhase
-        /// We are in the auction phase
-        /// </summary>
-        AuctionPhase = 4,
-        
-        /// <summary>
         /// >> BelowMinimumFunding
         /// When requesting a redemption, you must not have an amount below the minimum.
         /// </summary>
-        BelowMinimumFunding = 5,
+        BelowMinimumFunding = 2,
         
         /// <summary>
         /// >> InsufficientUnrestrictedFunds
         /// There are not enough unrestricted funds to process the redemption.
         /// </summary>
-        InsufficientUnrestrictedFunds = 6,
+        InsufficientUnrestrictedFunds = 3,
         
         /// <summary>
         /// >> InvalidMinimumFundingUpdate
         /// Minimum funding amount must be greater than the redemption tax.
         /// </summary>
-        InvalidMinimumFundingUpdate = 7,
+        InvalidMinimumFundingUpdate = 4,
         
         /// <summary>
         /// >> InvalidRedemptionTaxUpdate
         /// Redemption tax must be less than the minimum funding amount.
         /// </summary>
-        InvalidRedemptionTaxUpdate = 8,
+        InvalidRedemptionTaxUpdate = 5,
         
         /// <summary>
         /// >> InsufficientBalance
         /// The account has insufficient funds to pay for the redemption.
         /// </summary>
-        InsufficientBalance = 9,
+        InsufficientBalance = 6,
         
         /// <summary>
         /// >> AccountAlreadyBound
         /// The account is already bound to an address.
         /// </summary>
-        AccountAlreadyBound = 10,
+        AccountAlreadyBound = 7,
         
         /// <summary>
         /// >> AccountBindingRestrictionViolated
         /// The account is bound to a withdrawal address.
         /// </summary>
-        AccountBindingRestrictionViolated = 11,
+        AccountBindingRestrictionViolated = 8,
         
         /// <summary>
         /// >> RedeemDisabled
         /// Redeem is disabled due to Safe Mode.
         /// </summary>
-        RedeemDisabled = 12,
-        
-        /// <summary>
-        /// >> StartBiddingDisabled
-        /// Start Bidding is disabled due to Safe Mode.
-        /// </summary>
-        StartBiddingDisabled = 13,
-        
-        /// <summary>
-        /// >> StopBiddingDisabled
-        /// Stop Bidding is disabled due to Safe Mode.
-        /// </summary>
-        StopBiddingDisabled = 14,
+        RedeemDisabled = 9,
         
         /// <summary>
         /// >> ExecutorBindingRestrictionViolated
         /// The executor for this account is bound to another address.
         /// </summary>
-        ExecutorBindingRestrictionViolated = 15,
+        ExecutorBindingRestrictionViolated = 10,
         
         /// <summary>
         /// >> ExecutorAddressAlreadyBound
         /// The account is already bound to an executor address.
         /// </summary>
-        ExecutorAddressAlreadyBound = 16,
+        ExecutorAddressAlreadyBound = 11,
+        
+        /// <summary>
+        /// >> AccountMustBeUnregistered
+        /// The account cannot be reaped before it is unregstered.
+        /// </summary>
+        AccountMustBeUnregistered = 12,
     }
     
     /// <summary>
-    /// >> 329 - Variant[pallet_cf_funding.pallet.Error]
+    /// >> 394 - Variant[pallet_cf_funding.pallet.Error]
     /// The `Error` enum of this pallet.
     /// </summary>
     public sealed class EnumError : BaseEnum<Error>

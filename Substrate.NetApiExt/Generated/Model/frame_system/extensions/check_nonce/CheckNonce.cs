@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.frame_system.extensions.check_nonc
     
     
     /// <summary>
-    /// >> 554 - Composite[frame_system.extensions.check_nonce.CheckNonce]
+    /// >> 694 - Composite[frame_system.extensions.check_nonce.CheckNonce]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class CheckNonce : BaseType
@@ -52,7 +52,7 @@ namespace Substrate.NetApiExt.Generated.Model.frame_system.extensions.check_nonc
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

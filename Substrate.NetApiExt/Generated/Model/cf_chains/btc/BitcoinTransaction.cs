@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.btc
     
     
     /// <summary>
-    /// >> 208 - Composite[cf_chains.btc.BitcoinTransaction]
+    /// >> 226 - Composite[cf_chains.btc.BitcoinTransaction]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class BitcoinTransaction : BaseType
@@ -80,7 +80,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.btc
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

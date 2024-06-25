@@ -42,7 +42,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_grandpa.pallet
     }
     
     /// <summary>
-    /// >> 98 - Variant[pallet_grandpa.pallet.Call]
+    /// >> 114 - Variant[pallet_grandpa.pallet.Call]
     /// Contains a variant per dispatchable extrinsic that this pallet has.
     /// </summary>
     public sealed class EnumCall : BaseEnumExt<Call, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_consensus_grandpa.EquivocationProof, Substrate.NetApiExt.Generated.Model.sp_session.MembershipProof>, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_consensus_grandpa.EquivocationProof, Substrate.NetApiExt.Generated.Model.sp_session.MembershipProof>, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Primitive.U32>>

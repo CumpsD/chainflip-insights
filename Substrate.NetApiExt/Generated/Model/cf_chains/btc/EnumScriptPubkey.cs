@@ -53,9 +53,9 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.btc
     }
     
     /// <summary>
-    /// >> 220 - Variant[cf_chains.btc.ScriptPubkey]
+    /// >> 229 - Variant[cf_chains.btc.ScriptPubkey]
     /// </summary>
-    public sealed class EnumScriptPubkey : BaseEnumExt<ScriptPubkey, Substrate.NetApiExt.Generated.Types.Base.Arr20U8, Substrate.NetApiExt.Generated.Types.Base.Arr20U8, Substrate.NetApiExt.Generated.Types.Base.Arr20U8, Substrate.NetApiExt.Generated.Types.Base.Arr32U8, Substrate.NetApiExt.Generated.Types.Base.Arr32U8, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U8, Substrate.NetApiExt.Generated.Model.bounded_collections.bounded_vec.BoundedVecT2>>
+    public sealed class EnumScriptPubkey : BaseEnumExt<ScriptPubkey, Substrate.NetApiExt.Generated.Types.Base.Arr20U8, Substrate.NetApiExt.Generated.Types.Base.Arr20U8, Substrate.NetApiExt.Generated.Types.Base.Arr20U8, Substrate.NetApiExt.Generated.Types.Base.Arr32U8, Substrate.NetApiExt.Generated.Types.Base.Arr32U8, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U8, Substrate.NetApiExt.Generated.Model.bounded_collections.bounded_vec.BoundedVecT3>>
     {
     }
 }

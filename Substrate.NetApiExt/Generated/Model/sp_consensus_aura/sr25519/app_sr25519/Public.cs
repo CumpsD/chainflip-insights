@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.sp_consensus_aura.sr25519.app_sr25
     
     
     /// <summary>
-    /// >> 90 - Composite[sp_consensus_aura.sr25519.app_sr25519.Public]
+    /// >> 106 - Composite[sp_consensus_aura.sr25519.app_sr25519.Public]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class Public : BaseType
@@ -52,7 +52,7 @@ namespace Substrate.NetApiExt.Generated.Model.sp_consensus_aura.sr25519.app_sr25
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

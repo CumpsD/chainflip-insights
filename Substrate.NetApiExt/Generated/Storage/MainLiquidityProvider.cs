@@ -39,6 +39,9 @@ namespace Substrate.NetApiExt.Generated.Storage
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("LiquidityProvider", "FreeBalances"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
                             Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat,
                             Substrate.NetApi.Model.Meta.Storage.Hasher.Identity}, typeof(Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset>), typeof(Substrate.NetApi.Model.Types.Primitive.U128)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("LiquidityProvider", "HistoricalEarnedFees"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
+                            Substrate.NetApi.Model.Meta.Storage.Hasher.Identity,
+                            Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset>), typeof(Substrate.NetApi.Model.Types.Primitive.U128)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("LiquidityProvider", "LiquidityRefundAddress"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
                             Substrate.NetApi.Model.Meta.Storage.Hasher.Identity,
                             Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.EnumForeignChain>), typeof(Substrate.NetApiExt.Generated.Model.cf_chains.address.EnumForeignChainAddress)));
@@ -71,6 +74,37 @@ namespace Substrate.NetApiExt.Generated.Storage
         public async Task<Substrate.NetApi.Model.Types.Primitive.U128> FreeBalances(Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset> key, string blockhash, CancellationToken token)
         {
             string parameters = LiquidityProviderStorage.FreeBalancesParams(key);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U128>(parameters, blockhash, token);
+            return result;
+        }
+        
+        /// <summary>
+        /// >> HistoricalEarnedFeesParams
+        ///  Historical earned fees for an account.
+        /// </summary>
+        public static string HistoricalEarnedFeesParams(Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset> key)
+        {
+            return RequestGenerator.GetStorage("LiquidityProvider", "HistoricalEarnedFees", Substrate.NetApi.Model.Meta.Storage.Type.Map, new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
+                        Substrate.NetApi.Model.Meta.Storage.Hasher.Identity,
+                        Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, key.Value);
+        }
+        
+        /// <summary>
+        /// >> HistoricalEarnedFeesDefault
+        /// Default value as hex string
+        /// </summary>
+        public static string HistoricalEarnedFeesDefault()
+        {
+            return "0x00000000000000000000000000000000";
+        }
+        
+        /// <summary>
+        /// >> HistoricalEarnedFees
+        ///  Historical earned fees for an account.
+        /// </summary>
+        public async Task<Substrate.NetApi.Model.Types.Primitive.U128> HistoricalEarnedFees(Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset> key, string blockhash, CancellationToken token)
+        {
+            string parameters = LiquidityProviderStorage.HistoricalEarnedFeesParams(key);
             var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U128>(parameters, blockhash, token);
             return result;
         }
@@ -117,10 +151,11 @@ namespace Substrate.NetApiExt.Generated.Storage
         /// >> request_liquidity_deposit_address
         /// Contains a variant per dispatchable extrinsic that this pallet has.
         /// </summary>
-        public static Method RequestLiquidityDepositAddress(Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset asset)
+        public static Method RequestLiquidityDepositAddress(Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset asset, Substrate.NetApi.Model.Types.Primitive.U16 boost_fee)
         {
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
             byteArray.AddRange(asset.Encode());
+            byteArray.AddRange(boost_fee.Encode());
             return new Method(31, "LiquidityProvider", 0, "request_liquidity_deposit_address", byteArray.ToArray());
         }
         
@@ -156,6 +191,29 @@ namespace Substrate.NetApiExt.Generated.Storage
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
             byteArray.AddRange(address.Encode());
             return new Method(31, "LiquidityProvider", 4, "register_liquidity_refund_address", byteArray.ToArray());
+        }
+        
+        /// <summary>
+        /// >> deregister_lp_account
+        /// Contains a variant per dispatchable extrinsic that this pallet has.
+        /// </summary>
+        public static Method DeregisterLpAccount()
+        {
+            System.Collections.Generic.List<byte> byteArray = new List<byte>();
+            return new Method(31, "LiquidityProvider", 5, "deregister_lp_account", byteArray.ToArray());
+        }
+        
+        /// <summary>
+        /// >> transfer_asset
+        /// Contains a variant per dispatchable extrinsic that this pallet has.
+        /// </summary>
+        public static Method TransferAsset(Substrate.NetApi.Model.Types.Primitive.U128 amount, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset asset, Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32 destination)
+        {
+            System.Collections.Generic.List<byte> byteArray = new List<byte>();
+            byteArray.AddRange(amount.Encode());
+            byteArray.AddRange(asset.Encode());
+            byteArray.AddRange(destination.Encode());
+            return new Method(31, "LiquidityProvider", 6, "transfer_asset", byteArray.ToArray());
         }
     }
     
@@ -220,5 +278,29 @@ namespace Substrate.NetApiExt.Generated.Storage
         /// Withdrawals are disabled due to Safe Mode.
         /// </summary>
         WithdrawalsDisabled,
+        
+        /// <summary>
+        /// >> OpenOrdersRemaining
+        /// The account still has open orders remaining.
+        /// </summary>
+        OpenOrdersRemaining,
+        
+        /// <summary>
+        /// >> FundsRemaining
+        /// The account still has funds remaining in the free balances.
+        /// </summary>
+        FundsRemaining,
+        
+        /// <summary>
+        /// >> DestinationAccountNotLiquidityProvider
+        /// The destination account is not a liquidity provider.
+        /// </summary>
+        DestinationAccountNotLiquidityProvider,
+        
+        /// <summary>
+        /// >> CannotTransferToOriginAccount
+        /// The account cannot transfer to itself.
+        /// </summary>
+        CannotTransferToOriginAccount,
     }
 }

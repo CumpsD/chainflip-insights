@@ -33,9 +33,9 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_pools.pallet
     }
     
     /// <summary>
-    /// >> 252 - Variant[pallet_cf_pools.pallet.RangeOrderSize]
+    /// >> 282 - Variant[pallet_cf_pools.pallet.RangeOrderSize]
     /// </summary>
-    public sealed class EnumRangeOrderSize : BaseEnumExt<RangeOrderSize, BaseTuple<Substrate.NetApiExt.Generated.Model.pallet_cf_pools.AssetsMapT1, Substrate.NetApiExt.Generated.Model.pallet_cf_pools.AssetsMapT1>, Substrate.NetApi.Model.Types.Primitive.U128>
+    public sealed class EnumRangeOrderSize : BaseEnumExt<RangeOrderSize, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_amm.common.PoolPairsMapT1, Substrate.NetApiExt.Generated.Model.cf_amm.common.PoolPairsMapT1>, Substrate.NetApi.Model.Types.Primitive.U128>
     {
     }
 }

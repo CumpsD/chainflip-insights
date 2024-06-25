@@ -33,7 +33,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.eth.api.register_redempt
     }
     
     /// <summary>
-    /// >> 162 - Variant[cf_chains.eth.api.register_redemption.RedemptionExecutor]
+    /// >> 179 - Variant[cf_chains.eth.api.register_redemption.RedemptionExecutor]
     /// </summary>
     public sealed class EnumRedemptionExecutor : BaseEnumExt<RedemptionExecutor, BaseVoid, Substrate.NetApiExt.Generated.Model.primitive_types.H160>
     {

@@ -27,35 +27,19 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_chain_tracking.pallet
         /// The tracked state of this chain has been updated.
         /// </summary>
         ChainStateUpdated = 0,
+        
+        /// <summary>
+        /// >> FeeMultiplierUpdated
+        /// The fee multiplier for this chain has been updated.
+        /// </summary>
+        FeeMultiplierUpdated = 1,
     }
     
     /// <summary>
-    /// >> 268 - Variant[pallet_cf_chain_tracking.pallet.Event]
+    /// >> 362 - Variant[pallet_cf_chain_tracking.pallet.Event]
     /// The `Event` enum of this pallet
     /// </summary>
-    public sealed class EnumEventEth : BaseEnumExt<
-        Event, 
-        Substrate.NetApiExt.Generated.Model.cf_chains.ChainStateT1>
-    {
-    }
-    
-    /// <summary>
-    /// >> 269 - Variant[pallet_cf_chain_tracking.pallet.Event]
-    /// The `Event` enum of this pallet
-    /// </summary>
-    public sealed class EnumEventDot : BaseEnumExt<
-        Event, 
-        Substrate.NetApiExt.Generated.Model.cf_chains.ChainStateT2>
-    {
-    }
-    
-    /// <summary>
-    /// >> 270 - Variant[pallet_cf_chain_tracking.pallet.Event]
-    /// The `Event` enum of this pallet
-    /// </summary>
-    public sealed class EnumEventBtc : BaseEnumExt<
-        Event, 
-        Substrate.NetApiExt.Generated.Model.cf_chains.ChainStateT3>
+    public sealed class EnumEvent : BaseEnumExt<Event, Substrate.NetApiExt.Generated.Model.cf_chains.ChainStateT4, Substrate.NetApiExt.Generated.Model.sp_arithmetic.fixed_point.FixedU128>
     {
     }
 }

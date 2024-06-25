@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress
     
     
     /// <summary>
-    /// >> 458 - Composite[pallet_cf_ingress_egress.FailedForeignChainCall]
+    /// >> 541 - Composite[pallet_cf_ingress_egress.FailedForeignChainCall]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class FailedForeignChainCall : BaseType
@@ -59,7 +59,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

@@ -43,6 +43,7 @@ namespace Substrate.NetApiExt.Generated.Storage
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Grandpa", "CurrentSetId"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U64)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Grandpa", "SetIdSession"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
                             Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApi.Model.Types.Primitive.U64), typeof(Substrate.NetApi.Model.Types.Primitive.U32)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("Grandpa", "Authorities"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApiExt.Generated.Model.bounded_collections.weak_bounded_vec.WeakBoundedVec)));
         }
         
         /// <summary>
@@ -238,6 +239,35 @@ namespace Substrate.NetApiExt.Generated.Storage
         {
             string parameters = GrandpaStorage.SetIdSessionParams(key);
             var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U32>(parameters, blockhash, token);
+            return result;
+        }
+        
+        /// <summary>
+        /// >> AuthoritiesParams
+        ///  The current list of authorities.
+        /// </summary>
+        public static string AuthoritiesParams()
+        {
+            return RequestGenerator.GetStorage("Grandpa", "Authorities", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
+        }
+        
+        /// <summary>
+        /// >> AuthoritiesDefault
+        /// Default value as hex string
+        /// </summary>
+        public static string AuthoritiesDefault()
+        {
+            return "0x00";
+        }
+        
+        /// <summary>
+        /// >> Authorities
+        ///  The current list of authorities.
+        /// </summary>
+        public async Task<Substrate.NetApiExt.Generated.Model.bounded_collections.weak_bounded_vec.WeakBoundedVec> Authorities(string blockhash, CancellationToken token)
+        {
+            string parameters = GrandpaStorage.AuthoritiesParams();
+            var result = await _client.GetStorageAsync<Substrate.NetApiExt.Generated.Model.bounded_collections.weak_bounded_vec.WeakBoundedVec>(parameters, blockhash, token);
             return result;
         }
     }

@@ -33,7 +33,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_primitives
     }
     
     /// <summary>
-    /// >> 287 - Variant[cf_primitives.SwapLeg]
+    /// >> 336 - Variant[cf_primitives.SwapLeg]
     /// </summary>
     public sealed class EnumSwapLeg : BaseEnum<SwapLeg>
     {

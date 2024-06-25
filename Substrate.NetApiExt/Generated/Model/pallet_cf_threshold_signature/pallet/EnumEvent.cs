@@ -65,124 +65,123 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_threshold_signature.pall
         /// The threshold signature response timeout has been updated
         /// </summary>
         ThresholdSignatureResponseTimeoutUpdated = 7,
+        
+        /// <summary>
+        /// >> KeygenRequest
+        /// Request a key generation
+        /// </summary>
+        KeygenRequest = 8,
+        
+        /// <summary>
+        /// >> KeyHandoverRequest
+        /// Request a key handover
+        /// </summary>
+        KeyHandoverRequest = 9,
+        
+        /// <summary>
+        /// >> KeygenSuccessReported
+        /// A keygen participant has reported that keygen was successful \[validator_id\]
+        /// </summary>
+        KeygenSuccessReported = 10,
+        
+        /// <summary>
+        /// >> KeyHandoverSuccessReported
+        /// A key handover participant has reported that keygen was successful \[validator_id\]
+        /// </summary>
+        KeyHandoverSuccessReported = 11,
+        
+        /// <summary>
+        /// >> KeygenFailureReported
+        /// A keygen participant has reported that keygen has failed \[validator_id\]
+        /// </summary>
+        KeygenFailureReported = 12,
+        
+        /// <summary>
+        /// >> KeyHandoverFailureReported
+        /// A key handover participant has reported that keygen has failed \[validator_id\]
+        /// </summary>
+        KeyHandoverFailureReported = 13,
+        
+        /// <summary>
+        /// >> KeygenSuccess
+        /// Keygen was successful \[ceremony_id\]
+        /// </summary>
+        KeygenSuccess = 14,
+        
+        /// <summary>
+        /// >> KeyHandoverSuccess
+        /// The key handover was successful
+        /// </summary>
+        KeyHandoverSuccess = 15,
+        
+        /// <summary>
+        /// >> NoKeyHandover
+        /// </summary>
+        NoKeyHandover = 16,
+        
+        /// <summary>
+        /// >> KeygenVerificationSuccess
+        /// The new key was successfully used to sign.
+        /// </summary>
+        KeygenVerificationSuccess = 17,
+        
+        /// <summary>
+        /// >> KeyHandoverVerificationSuccess
+        /// </summary>
+        KeyHandoverVerificationSuccess = 18,
+        
+        /// <summary>
+        /// >> KeygenVerificationFailure
+        /// Verification of the new key has failed.
+        /// </summary>
+        KeygenVerificationFailure = 19,
+        
+        /// <summary>
+        /// >> KeyHandoverVerificationFailure
+        /// </summary>
+        KeyHandoverVerificationFailure = 20,
+        
+        /// <summary>
+        /// >> KeygenFailure
+        /// Keygen has failed \[ceremony_id\]
+        /// </summary>
+        KeygenFailure = 21,
+        
+        /// <summary>
+        /// >> KeygenResponseTimeout
+        /// Keygen response timeout has occurred \[ceremony_id\]
+        /// </summary>
+        KeygenResponseTimeout = 22,
+        
+        /// <summary>
+        /// >> KeyHandoverResponseTimeout
+        /// </summary>
+        KeyHandoverResponseTimeout = 23,
+        
+        /// <summary>
+        /// >> KeygenResponseTimeoutUpdated
+        /// Keygen response timeout was updated \[new_timeout\]
+        /// </summary>
+        KeygenResponseTimeoutUpdated = 24,
+        
+        /// <summary>
+        /// >> KeyHandoverFailure
+        /// Key handover has failed
+        /// </summary>
+        KeyHandoverFailure = 25,
+        
+        /// <summary>
+        /// >> KeyRotationCompleted
+        /// The vault on chains associated with this key have all rotated
+        /// </summary>
+        KeyRotationCompleted = 26,
     }
     
     /// <summary>
-    /// >> 274 - Variant[pallet_cf_threshold_signature.pallet.Event]
+    /// >> 326 - Variant[pallet_cf_threshold_signature.pallet.Event]
     /// The `Event` enum of this pallet
     /// </summary>
-    public sealed class EnumEventEth : BaseEnumExt<
-        Event, 
-        BaseTuple<
-            Substrate.NetApi.Model.Types.Primitive.U32, 
-            Substrate.NetApi.Model.Types.Primitive.U64, 
-            Substrate.NetApi.Model.Types.Primitive.U32, 
-            Substrate.NetApiExt.Generated.Model.cf_chains.evm.AggKey, 
-            Substrate.NetApiExt.Generated.Types.Base.BTreeSetT1, 
-            Substrate.NetApiExt.Generated.Model.primitive_types.H256>, 
-        BaseTuple<
-            Substrate.NetApi.Model.Types.Primitive.U32, 
-            Substrate.NetApi.Model.Types.Primitive.U64, 
-            Substrate.NetApi.Model.Types.Base.BaseVec<
-                Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>>, 
-        BaseTuple<
-            Substrate.NetApi.Model.Types.Primitive.U32, 
-            Substrate.NetApi.Model.Types.Primitive.U64>, 
-        BaseTuple<
-            Substrate.NetApi.Model.Types.Primitive.U32,
-            Substrate.NetApi.Model.Types.Primitive.U64, 
-            Substrate.NetApiExt.Generated.Types.Base.EnumDispatchResult>, 
-        BaseTuple<
-            Substrate.NetApi.Model.Types.Primitive.U32, 
-            Substrate.NetApi.Model.Types.Primitive.U64>, 
-        BaseTuple<
-            Substrate.NetApi.Model.Types.Primitive.U32,
-            Substrate.NetApi.Model.Types.Primitive.U64, 
-            Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>, 
-        BaseTuple<
-            Substrate.NetApi.Model.Types.Primitive.U32, 
-            Substrate.NetApi.Model.Types.Primitive.U32>, 
-        Substrate.NetApi.Model.Types.Primitive.U32>
-    {
-    }
-    
-    /// <summary>
-    /// >> 276 - Variant[pallet_cf_threshold_signature.pallet.Event]
-    /// The `Event` enum of this pallet
-    /// </summary>
-    public sealed class EnumEventDot : BaseEnumExt<
-        Event, 
-        BaseTuple<
-            Substrate.NetApi.Model.Types.Primitive.U32, 
-            Substrate.NetApi.Model.Types.Primitive.U64, 
-            Substrate.NetApi.Model.Types.Primitive.U32, 
-            Substrate.NetApiExt.Generated.Model.cf_chains.dot.PolkadotAccountId, 
-            Substrate.NetApiExt.Generated.Types.Base.BTreeSetT1, 
-            Substrate.NetApiExt.Generated.Model.cf_chains.dot.EncodedPolkadotPayload>, 
-        BaseTuple<
-            Substrate.NetApi.Model.Types.Primitive.U32, 
-            Substrate.NetApi.Model.Types.Primitive.U64, 
-            Substrate.NetApi.Model.Types.Base.BaseVec<
-                Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>>, 
-        BaseTuple<
-            Substrate.NetApi.Model.Types.Primitive.U32, 
-            Substrate.NetApi.Model.Types.Primitive.U64>, 
-        BaseTuple<
-            Substrate.NetApi.Model.Types.Primitive.U32,
-            Substrate.NetApi.Model.Types.Primitive.U64, 
-            Substrate.NetApiExt.Generated.Types.Base.EnumDispatchResult>, 
-        BaseTuple<
-            Substrate.NetApi.Model.Types.Primitive.U32, 
-            Substrate.NetApi.Model.Types.Primitive.U64>, 
-        BaseTuple<
-            Substrate.NetApi.Model.Types.Primitive.U32,
-            Substrate.NetApi.Model.Types.Primitive.U64, 
-            Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>, 
-        BaseTuple<
-            Substrate.NetApi.Model.Types.Primitive.U32, 
-            Substrate.NetApi.Model.Types.Primitive.U32>, 
-        Substrate.NetApi.Model.Types.Primitive.U32>
-    {
-    }
-    
-    /// <summary>
-    /// >> 277 - Variant[pallet_cf_threshold_signature.pallet.Event]
-    /// The `Event` enum of this pallet
-    /// </summary>
-    public sealed class EnumEventBtc : BaseEnumExt<
-        Event, 
-        BaseTuple<
-            Substrate.NetApi.Model.Types.Primitive.U32, 
-            Substrate.NetApi.Model.Types.Primitive.U64, 
-            Substrate.NetApi.Model.Types.Primitive.U32, 
-            Substrate.NetApiExt.Generated.Model.cf_chains.btc.AggKey, 
-            Substrate.NetApiExt.Generated.Types.Base.BTreeSetT1, 
-            Substrate.NetApi.Model.Types.Base.BaseVec<
-                Substrate.NetApi.Model.Types.Base.BaseTuple<
-                    Substrate.NetApiExt.Generated.Model.cf_chains.btc.EnumPreviousOrCurrent>>>, 
-        BaseTuple<
-            Substrate.NetApi.Model.Types.Primitive.U32, 
-            Substrate.NetApi.Model.Types.Primitive.U64, 
-            Substrate.NetApi.Model.Types.Base.BaseVec<
-                Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>>, 
-        BaseTuple<
-            Substrate.NetApi.Model.Types.Primitive.U32, 
-            Substrate.NetApi.Model.Types.Primitive.U64>, 
-        BaseTuple<
-            Substrate.NetApi.Model.Types.Primitive.U32,
-            Substrate.NetApi.Model.Types.Primitive.U64, 
-            Substrate.NetApiExt.Generated.Types.Base.EnumDispatchResult>, 
-        BaseTuple<
-            Substrate.NetApi.Model.Types.Primitive.U32, 
-            Substrate.NetApi.Model.Types.Primitive.U64>, 
-        BaseTuple<
-            Substrate.NetApi.Model.Types.Primitive.U32,
-            Substrate.NetApi.Model.Types.Primitive.U64, 
-            Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>, 
-        BaseTuple<
-            Substrate.NetApi.Model.Types.Primitive.U32, 
-            Substrate.NetApi.Model.Types.Primitive.U32>, 
-        Substrate.NetApi.Model.Types.Primitive.U32>
+    public sealed class EnumEvent : BaseEnumExt<Event, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApiExt.Generated.Model.cf_chains.btc.AggKey, Substrate.NetApiExt.Generated.Types.Base.BTreeSetT1, Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApiExt.Generated.Model.cf_chains.btc.EnumPreviousOrCurrent, Substrate.NetApiExt.Generated.Types.Base.Arr32U8>>>, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>>, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Primitive.U64>, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApiExt.Generated.Types.Base.EnumResult>, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Primitive.U64>, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Primitive.U32>, Substrate.NetApi.Model.Types.Primitive.U32, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApiExt.Generated.Types.Base.BTreeSetT1, Substrate.NetApi.Model.Types.Primitive.U32>, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApiExt.Generated.Model.cf_chains.btc.AggKey, Substrate.NetApiExt.Generated.Types.Base.BTreeSetT1, Substrate.NetApiExt.Generated.Types.Base.BTreeSetT1, Substrate.NetApiExt.Generated.Model.cf_chains.btc.AggKey, Substrate.NetApi.Model.Types.Primitive.U32>, Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApi.Model.Types.Primitive.U64, BaseVoid, Substrate.NetApiExt.Generated.Model.cf_chains.btc.AggKey, Substrate.NetApiExt.Generated.Model.cf_chains.btc.AggKey, Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Primitive.U64, BaseVoid>
     {
     }
 }

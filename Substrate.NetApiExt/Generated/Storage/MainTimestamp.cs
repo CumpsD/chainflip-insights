@@ -42,7 +42,7 @@ namespace Substrate.NetApiExt.Generated.Storage
         
         /// <summary>
         /// >> NowParams
-        ///  Current time for the current block.
+        ///  The current time for the current block.
         /// </summary>
         public static string NowParams()
         {
@@ -60,7 +60,7 @@ namespace Substrate.NetApiExt.Generated.Storage
         
         /// <summary>
         /// >> Now
-        ///  Current time for the current block.
+        ///  The current time for the current block.
         /// </summary>
         public async Task<Substrate.NetApi.Model.Types.Primitive.U64> Now(string blockhash, CancellationToken token)
         {
@@ -71,7 +71,10 @@ namespace Substrate.NetApiExt.Generated.Storage
         
         /// <summary>
         /// >> DidUpdateParams
-        ///  Did the timestamp get updated in this block?
+        ///  Whether the timestamp has been updated in this block.
+        /// 
+        ///  This value is updated to `true` upon successful submission of a timestamp by a node.
+        ///  It is then checked at the end of each block execution in the `on_finalize` hook.
         /// </summary>
         public static string DidUpdateParams()
         {
@@ -89,7 +92,10 @@ namespace Substrate.NetApiExt.Generated.Storage
         
         /// <summary>
         /// >> DidUpdate
-        ///  Did the timestamp get updated in this block?
+        ///  Whether the timestamp has been updated in this block.
+        /// 
+        ///  This value is updated to `true` upon successful submission of a timestamp by a node.
+        ///  It is then checked at the end of each block execution in the `on_finalize` hook.
         /// </summary>
         public async Task<Substrate.NetApi.Model.Types.Primitive.Bool> DidUpdate(string blockhash, CancellationToken token)
         {
@@ -125,10 +131,12 @@ namespace Substrate.NetApiExt.Generated.Storage
         
         /// <summary>
         /// >> MinimumPeriod
-        ///  The minimum period between blocks. Beware that this is different to the *expected*
-        ///  period that the block production apparatus provides. Your chosen consensus system will
-        ///  generally work with this to determine a sensible block time. e.g. For Aura, it will be
-        ///  double this period on default settings.
+        ///  The minimum period between blocks.
+        /// 
+        ///  Be aware that this is different to the *expected* period that the block production
+        ///  apparatus provides. Your chosen consensus system will generally work with this to
+        ///  determine a sensible block time. For example, in the Aura pallet it will be double this
+        ///  period on default settings.
         /// </summary>
         public Substrate.NetApi.Model.Types.Primitive.U64 MinimumPeriod()
         {

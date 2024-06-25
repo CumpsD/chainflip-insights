@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.evm.api.set_gov_key_with
     
     
     /// <summary>
-    /// >> 166 - Composite[cf_chains.evm.api.set_gov_key_with_agg_key.SetGovKeyWithAggKey]
+    /// >> 183 - Composite[cf_chains.evm.api.set_gov_key_with_agg_key.SetGovKeyWithAggKey]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class SetGovKeyWithAggKey : BaseType
@@ -52,7 +52,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.evm.api.set_gov_key_with
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

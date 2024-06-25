@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_pools.pallet
     
     
     /// <summary>
-    /// >> 530 - Composite[pallet_cf_pools.pallet.LimitOrderUpdate]
+    /// >> 641 - Composite[pallet_cf_pools.pallet.LimitOrderUpdate]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class LimitOrderUpdate : BaseType
@@ -66,7 +66,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_pools.pallet
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

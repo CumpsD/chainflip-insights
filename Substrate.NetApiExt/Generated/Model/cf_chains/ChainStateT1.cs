@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains
     
     
     /// <summary>
-    /// >> 121 - Composite[cf_chains.ChainStateT1]
+    /// >> 138 - Composite[cf_chains.ChainStateT1]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class ChainStateT1 : BaseType
@@ -59,7 +59,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains
     
     
     /// <summary>
-    /// >> 230 - Composite[cf_chains.CcmDepositMetadata]
+    /// >> 239 - Composite[cf_chains.CcmDepositMetadata]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class CcmDepositMetadata : BaseType
@@ -66,7 +66,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

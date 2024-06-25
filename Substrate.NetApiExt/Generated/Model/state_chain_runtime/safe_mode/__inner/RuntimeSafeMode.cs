@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.state_chain_runtime.safe_mode.@__i
     
     
     /// <summary>
-    /// >> 34 - Composite[state_chain_runtime.safe_mode.__inner.RuntimeSafeMode]
+    /// >> 36 - Composite[state_chain_runtime.safe_mode.__inner.RuntimeSafeMode]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class RuntimeSafeMode : BaseType
@@ -53,17 +53,17 @@ namespace Substrate.NetApiExt.Generated.Model.state_chain_runtime.safe_mode.@__i
         /// </summary>
         public Substrate.NetApiExt.Generated.Model.pallet_cf_reputation.PalletSafeMode Reputation { get; set; }
         /// <summary>
-        /// >> vault_ethereum
+        /// >> threshold_signature_evm
         /// </summary>
-        public Substrate.NetApiExt.Generated.Model.pallet_cf_vaults.PalletSafeModeT1 VaultEthereum { get; set; }
+        public Substrate.NetApiExt.Generated.Model.pallet_cf_threshold_signature.PalletSafeModeT1 ThresholdSignatureEvm { get; set; }
         /// <summary>
-        /// >> vault_bitcoin
+        /// >> threshold_signature_bitcoin
         /// </summary>
-        public Substrate.NetApiExt.Generated.Model.pallet_cf_vaults.PalletSafeModeT2 VaultBitcoin { get; set; }
+        public Substrate.NetApiExt.Generated.Model.pallet_cf_threshold_signature.PalletSafeModeT2 ThresholdSignatureBitcoin { get; set; }
         /// <summary>
-        /// >> vault_polkadot
+        /// >> threshold_signature_polkadot
         /// </summary>
-        public Substrate.NetApiExt.Generated.Model.pallet_cf_vaults.PalletSafeModeT3 VaultPolkadot { get; set; }
+        public Substrate.NetApiExt.Generated.Model.pallet_cf_threshold_signature.PalletSafeModeT3 ThresholdSignaturePolkadot { get; set; }
         /// <summary>
         /// >> broadcast_ethereum
         /// </summary>
@@ -77,9 +77,29 @@ namespace Substrate.NetApiExt.Generated.Model.state_chain_runtime.safe_mode.@__i
         /// </summary>
         public Substrate.NetApiExt.Generated.Model.pallet_cf_broadcast.PalletSafeModeT3 BroadcastPolkadot { get; set; }
         /// <summary>
+        /// >> broadcast_arbitrum
+        /// </summary>
+        public Substrate.NetApiExt.Generated.Model.pallet_cf_broadcast.PalletSafeModeT4 BroadcastArbitrum { get; set; }
+        /// <summary>
         /// >> witnesser
         /// </summary>
         public Substrate.NetApiExt.Generated.Model.pallet_cf_witnesser.EnumPalletSafeMode Witnesser { get; set; }
+        /// <summary>
+        /// >> ingress_egress_ethereum
+        /// </summary>
+        public Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.PalletSafeModeT1 IngressEgressEthereum { get; set; }
+        /// <summary>
+        /// >> ingress_egress_bitcoin
+        /// </summary>
+        public Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.PalletSafeModeT2 IngressEgressBitcoin { get; set; }
+        /// <summary>
+        /// >> ingress_egress_polkadot
+        /// </summary>
+        public Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.PalletSafeModeT3 IngressEgressPolkadot { get; set; }
+        /// <summary>
+        /// >> ingress_egress_arbitrum
+        /// </summary>
+        public Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.PalletSafeModeT4 IngressEgressArbitrum { get; set; }
         
         /// <inheritdoc/>
         public override string TypeName()
@@ -98,13 +118,18 @@ namespace Substrate.NetApiExt.Generated.Model.state_chain_runtime.safe_mode.@__i
             result.AddRange(Validator.Encode());
             result.AddRange(Pools.Encode());
             result.AddRange(Reputation.Encode());
-            result.AddRange(VaultEthereum.Encode());
-            result.AddRange(VaultBitcoin.Encode());
-            result.AddRange(VaultPolkadot.Encode());
+            result.AddRange(ThresholdSignatureEvm.Encode());
+            result.AddRange(ThresholdSignatureBitcoin.Encode());
+            result.AddRange(ThresholdSignaturePolkadot.Encode());
             result.AddRange(BroadcastEthereum.Encode());
             result.AddRange(BroadcastBitcoin.Encode());
             result.AddRange(BroadcastPolkadot.Encode());
+            result.AddRange(BroadcastArbitrum.Encode());
             result.AddRange(Witnesser.Encode());
+            result.AddRange(IngressEgressEthereum.Encode());
+            result.AddRange(IngressEgressBitcoin.Encode());
+            result.AddRange(IngressEgressPolkadot.Encode());
+            result.AddRange(IngressEgressArbitrum.Encode());
             return result.ToArray();
         }
         
@@ -126,24 +151,34 @@ namespace Substrate.NetApiExt.Generated.Model.state_chain_runtime.safe_mode.@__i
             Pools.Decode(byteArray, ref p);
             Reputation = new Substrate.NetApiExt.Generated.Model.pallet_cf_reputation.PalletSafeMode();
             Reputation.Decode(byteArray, ref p);
-            VaultEthereum = new Substrate.NetApiExt.Generated.Model.pallet_cf_vaults.PalletSafeModeT1();
-            VaultEthereum.Decode(byteArray, ref p);
-            VaultBitcoin = new Substrate.NetApiExt.Generated.Model.pallet_cf_vaults.PalletSafeModeT2();
-            VaultBitcoin.Decode(byteArray, ref p);
-            VaultPolkadot = new Substrate.NetApiExt.Generated.Model.pallet_cf_vaults.PalletSafeModeT3();
-            VaultPolkadot.Decode(byteArray, ref p);
+            ThresholdSignatureEvm = new Substrate.NetApiExt.Generated.Model.pallet_cf_threshold_signature.PalletSafeModeT1();
+            ThresholdSignatureEvm.Decode(byteArray, ref p);
+            ThresholdSignatureBitcoin = new Substrate.NetApiExt.Generated.Model.pallet_cf_threshold_signature.PalletSafeModeT2();
+            ThresholdSignatureBitcoin.Decode(byteArray, ref p);
+            ThresholdSignaturePolkadot = new Substrate.NetApiExt.Generated.Model.pallet_cf_threshold_signature.PalletSafeModeT3();
+            ThresholdSignaturePolkadot.Decode(byteArray, ref p);
             BroadcastEthereum = new Substrate.NetApiExt.Generated.Model.pallet_cf_broadcast.PalletSafeModeT1();
             BroadcastEthereum.Decode(byteArray, ref p);
             BroadcastBitcoin = new Substrate.NetApiExt.Generated.Model.pallet_cf_broadcast.PalletSafeModeT2();
             BroadcastBitcoin.Decode(byteArray, ref p);
             BroadcastPolkadot = new Substrate.NetApiExt.Generated.Model.pallet_cf_broadcast.PalletSafeModeT3();
             BroadcastPolkadot.Decode(byteArray, ref p);
+            BroadcastArbitrum = new Substrate.NetApiExt.Generated.Model.pallet_cf_broadcast.PalletSafeModeT4();
+            BroadcastArbitrum.Decode(byteArray, ref p);
             Witnesser = new Substrate.NetApiExt.Generated.Model.pallet_cf_witnesser.EnumPalletSafeMode();
             Witnesser.Decode(byteArray, ref p);
+            IngressEgressEthereum = new Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.PalletSafeModeT1();
+            IngressEgressEthereum.Decode(byteArray, ref p);
+            IngressEgressBitcoin = new Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.PalletSafeModeT2();
+            IngressEgressBitcoin.Decode(byteArray, ref p);
+            IngressEgressPolkadot = new Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.PalletSafeModeT3();
+            IngressEgressPolkadot.Decode(byteArray, ref p);
+            IngressEgressArbitrum = new Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.PalletSafeModeT4();
+            IngressEgressArbitrum.Decode(byteArray, ref p);
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

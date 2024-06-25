@@ -23,7 +23,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.dot
     }
     
     /// <summary>
-    /// >> 189 - Variant[cf_chains.dot.SystemCall]
+    /// >> 206 - Variant[cf_chains.dot.SystemCall]
     /// </summary>
     public sealed class EnumSystemCall : BaseEnum<SystemCall>
     {

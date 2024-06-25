@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.frame_system.limits
     
     
     /// <summary>
-    /// >> 309 - Composite[frame_system.limits.WeightsPerClass]
+    /// >> 374 - Composite[frame_system.limits.WeightsPerClass]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class WeightsPerClass : BaseType
@@ -73,7 +73,7 @@ namespace Substrate.NetApiExt.Generated.Model.frame_system.limits
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

@@ -13,6 +13,8 @@ using System.Collections.Generic;
 
 namespace Substrate.NetApiExt.Generated.Types.Base
 {
+    
+    
     /// <summary>
     /// >> Result
     /// </summary>
@@ -31,72 +33,9 @@ namespace Substrate.NetApiExt.Generated.Types.Base
     }
     
     /// <summary>
-    /// >> 275 - Variant[Result]
+    /// >> 482 - Variant[Result]
     /// </summary>
-    public sealed class EnumDispatchResult : BaseEnumExt<
-        Result, 
-        Substrate.NetApi.Model.Types.Base.BaseTuple, 
-        Substrate.NetApiExt.Generated.Model.sp_runtime.EnumDispatchError>
+    public sealed class EnumResult : BaseEnumExt<Result, Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Types.Base.Arr64U8>, Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>>
     {
     }
-    
-    /// <summary>
-    /// >> 424 - Variant[Result]
-    /// </summary>
-    public sealed class EnumResult2 : BaseEnumExt<
-        Result, 
-        Substrate.NetApi.Model.Types.Base.BaseVec<
-            Substrate.NetApiExt.Generated.Types.Base.Arr64U8>, 
-        Substrate.NetApi.Model.Types.Base.BaseVec<
-            Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>>
-    {
-    }
-    // {
-    // id: 424
-    // type: {
-    //   path: [
-    //     Result
-    //   ]
-    //   params: [
-    //     {
-    //       name: T
-    //       type: 149 (BaseVec<Arr64U8>)
-    //     }
-    //     {
-    //       name: E
-    //       type: 111 (Vec<sp_core.crypto.AccountId32>)
-    //     }
-    //   ]
-    //   def: {
-    //     Variant: {
-    //       variants: [
-    //         {
-    //           name: Ok
-    //           fields: [
-    //             {
-    //               name: null
-    //               type: 149 (BaseVec<Arr64U8>)
-    //               typeName: null
-    //               docs: []
-    //             }
-    //           ]
-    //           index: 0
-    //           docs: []
-    //         }
-    //         {
-    //           name: Err
-    //           fields: [
-    //             {
-    //               name: null
-    //               type: 111 (Vec<sp_core.crypto.AccountId32>)
-    //               typeName: null
-    //               docs: []
-    //             }
-    //           ]
-    //           index: 1
-    //           docs: []
-    //         }
-    //       ]
-    //     }
-    //   }
 }

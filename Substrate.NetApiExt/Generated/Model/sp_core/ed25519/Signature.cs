@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.sp_core.ed25519
     
     
     /// <summary>
-    /// >> 95 - Composite[sp_core.ed25519.Signature]
+    /// >> 111 - Composite[sp_core.ed25519.Signature]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class Signature : BaseType
@@ -52,7 +52,7 @@ namespace Substrate.NetApiExt.Generated.Model.sp_core.ed25519
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

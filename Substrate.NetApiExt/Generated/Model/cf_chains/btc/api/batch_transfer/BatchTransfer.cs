@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.btc.api.batch_transfer
     
     
     /// <summary>
-    /// >> 207 - Composite[cf_chains.btc.api.batch_transfer.BatchTransfer]
+    /// >> 225 - Composite[cf_chains.btc.api.batch_transfer.BatchTransfer]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class BatchTransfer : BaseType
@@ -59,7 +59,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.btc.api.batch_transfer
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

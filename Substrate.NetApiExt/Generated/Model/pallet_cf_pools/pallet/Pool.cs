@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_pools.pallet
     
     
     /// <summary>
-    /// >> 488 - Composite[pallet_cf_pools.pallet.Pool]
+    /// >> 599 - Composite[pallet_cf_pools.pallet.Pool]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class Pool : BaseType
@@ -27,11 +27,11 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_pools.pallet
         /// <summary>
         /// >> range_orders_cache
         /// </summary>
-        public Substrate.NetApiExt.Generated.Types.Base.BTreeMapT8 RangeOrdersCache { get; set; }
+        public Substrate.NetApiExt.Generated.Types.Base.BTreeMapT20 RangeOrdersCache { get; set; }
         /// <summary>
         /// >> limit_orders_cache
         /// </summary>
-        public Substrate.NetApiExt.Generated.Model.pallet_cf_pools.AssetsMapT3 LimitOrdersCache { get; set; }
+        public Substrate.NetApiExt.Generated.Model.cf_amm.common.PoolPairsMapT3 LimitOrdersCache { get; set; }
         /// <summary>
         /// >> pool_state
         /// </summary>
@@ -57,16 +57,16 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_pools.pallet
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
-            RangeOrdersCache = new Substrate.NetApiExt.Generated.Types.Base.BTreeMapT8();
+            RangeOrdersCache = new Substrate.NetApiExt.Generated.Types.Base.BTreeMapT20();
             RangeOrdersCache.Decode(byteArray, ref p);
-            LimitOrdersCache = new Substrate.NetApiExt.Generated.Model.pallet_cf_pools.AssetsMapT3();
+            LimitOrdersCache = new Substrate.NetApiExt.Generated.Model.cf_amm.common.PoolPairsMapT3();
             LimitOrdersCache.Decode(byteArray, ref p);
             PoolState = new Substrate.NetApiExt.Generated.Model.cf_amm.PoolState();
             PoolState.Decode(byteArray, ref p);
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

@@ -72,10 +72,10 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_governance.pallet
     }
     
     /// <summary>
-    /// >> 109 - Variant[pallet_cf_governance.pallet.Call]
+    /// >> 125 - Variant[pallet_cf_governance.pallet.Call]
     /// Contains a variant per dispatchable extrinsic that this pallet has.
     /// </summary>
-    public sealed class EnumCall : BaseEnumExt<Call, BaseTuple<Substrate.NetApiExt.Generated.Model.state_chain_runtime.EnumRuntimeCall, Substrate.NetApiExt.Generated.Model.pallet_cf_governance.pallet.EnumExecutionMode>, Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>, BaseTuple<Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.SemVer, Substrate.NetApiExt.Generated.Model.sp_arithmetic.per_things.Percent>>, Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Model.Types.Primitive.U8>>, Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApiExt.Generated.Model.state_chain_runtime.EnumRuntimeCall, Substrate.NetApiExt.Generated.Types.Base.Arr32U8, Substrate.NetApiExt.Generated.Model.state_chain_runtime.EnumRuntimeCall, Substrate.NetApi.Model.Types.Primitive.U32>
+    public sealed class EnumCall : BaseEnumExt<Call, BaseTuple<Substrate.NetApiExt.Generated.Model.state_chain_runtime.EnumRuntimeCall, Substrate.NetApiExt.Generated.Model.pallet_cf_governance.pallet.EnumExecutionMode>, Substrate.NetApiExt.Generated.Types.Base.BTreeSetT1, BaseTuple<Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.SemVer, Substrate.NetApiExt.Generated.Model.sp_arithmetic.per_things.Percent>>, Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Model.Types.Primitive.U8>>, Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApiExt.Generated.Model.state_chain_runtime.EnumRuntimeCall, Substrate.NetApiExt.Generated.Types.Base.Arr32U8, Substrate.NetApiExt.Generated.Model.state_chain_runtime.EnumRuntimeCall, Substrate.NetApi.Model.Types.Primitive.U32>
     {
     }
 }

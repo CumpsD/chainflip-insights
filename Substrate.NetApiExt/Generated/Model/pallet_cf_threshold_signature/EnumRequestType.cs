@@ -33,7 +33,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_threshold_signature
     }
     
     /// <summary>
-    /// >> 422 - Variant[pallet_cf_threshold_signature.RequestType]
+    /// >> 480 - Variant[pallet_cf_threshold_signature.RequestType]
     /// </summary>
     public sealed class EnumRequestType : BaseEnumExt<RequestType, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_chains.btc.AggKey, Substrate.NetApi.Model.Types.Primitive.U32>, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_chains.btc.AggKey, Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApiExt.Generated.Types.Base.BTreeSetT1>>
     {

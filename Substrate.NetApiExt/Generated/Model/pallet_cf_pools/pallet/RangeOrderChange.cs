@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_pools.pallet
     
     
     /// <summary>
-    /// >> 300 - Composite[pallet_cf_pools.pallet.RangeOrderChange]
+    /// >> 358 - Composite[pallet_cf_pools.pallet.RangeOrderChange]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class RangeOrderChange : BaseType
@@ -31,7 +31,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_pools.pallet
         /// <summary>
         /// >> amounts
         /// </summary>
-        public Substrate.NetApiExt.Generated.Model.pallet_cf_pools.AssetsMapT1 Amounts { get; set; }
+        public Substrate.NetApiExt.Generated.Model.cf_amm.common.PoolPairsMapT1 Amounts { get; set; }
         
         /// <inheritdoc/>
         public override string TypeName()
@@ -54,12 +54,12 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_pools.pallet
             var start = p;
             Liquidity = new Substrate.NetApi.Model.Types.Primitive.U128();
             Liquidity.Decode(byteArray, ref p);
-            Amounts = new Substrate.NetApiExt.Generated.Model.pallet_cf_pools.AssetsMapT1();
+            Amounts = new Substrate.NetApiExt.Generated.Model.cf_amm.common.PoolPairsMapT1();
             Amounts.Decode(byteArray, ref p);
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

@@ -50,6 +50,21 @@ namespace Substrate.NetApiExt.Generated.Storage
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("BitcoinThresholdSigner", "RequestRetryQueue"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
                             Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApi.Model.Types.Primitive.U32), typeof(Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Model.Types.Primitive.U32>)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("BitcoinThresholdSigner", "ThresholdSignatureResponseTimeout"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U32)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("BitcoinThresholdSigner", "CurrentKeyEpoch"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U32)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("BitcoinThresholdSigner", "Keys"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
+                            Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApi.Model.Types.Primitive.U32), typeof(Substrate.NetApiExt.Generated.Model.cf_chains.btc.AggKey)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("BitcoinThresholdSigner", "PendingKeyRotation"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApiExt.Generated.Model.pallet_cf_threshold_signature.EnumKeyRotationStatus)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("BitcoinThresholdSigner", "KeygenSuccessVoters"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
+                            Substrate.NetApi.Model.Meta.Storage.Hasher.Identity}, typeof(Substrate.NetApiExt.Generated.Model.cf_chains.btc.AggKey), typeof(Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("BitcoinThresholdSigner", "KeygenFailureVoters"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("BitcoinThresholdSigner", "KeyHandoverSuccessVoters"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
+                            Substrate.NetApi.Model.Meta.Storage.Hasher.Identity}, typeof(Substrate.NetApiExt.Generated.Model.cf_chains.btc.AggKey), typeof(Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("BitcoinThresholdSigner", "KeyHandoverFailureVoters"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("BitcoinThresholdSigner", "KeygenResolutionPendingSince"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U32)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("BitcoinThresholdSigner", "KeyHandoverResolutionPendingSince"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U32)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("BitcoinThresholdSigner", "KeygenResponseTimeout"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U32)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("BitcoinThresholdSigner", "KeygenSlashAmount"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U128)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("BitcoinThresholdSigner", "CeremonyIdCounter"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U64)));
         }
         
         /// <summary>
@@ -280,7 +295,7 @@ namespace Substrate.NetApiExt.Generated.Storage
         /// </summary>
         public static string ThresholdSignatureResponseTimeoutDefault()
         {
-            return "0x00000000";
+            return "0x0A000000";
         }
         
         /// <summary>
@@ -291,6 +306,360 @@ namespace Substrate.NetApiExt.Generated.Storage
         {
             string parameters = BitcoinThresholdSignerStorage.ThresholdSignatureResponseTimeoutParams();
             var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U32>(parameters, blockhash, token);
+            return result;
+        }
+        
+        /// <summary>
+        /// >> CurrentKeyEpochParams
+        ///  The epoch whose authorities control the current key.
+        /// </summary>
+        public static string CurrentKeyEpochParams()
+        {
+            return RequestGenerator.GetStorage("BitcoinThresholdSigner", "CurrentKeyEpoch", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
+        }
+        
+        /// <summary>
+        /// >> CurrentKeyEpochDefault
+        /// Default value as hex string
+        /// </summary>
+        public static string CurrentKeyEpochDefault()
+        {
+            return "0x00";
+        }
+        
+        /// <summary>
+        /// >> CurrentKeyEpoch
+        ///  The epoch whose authorities control the current key.
+        /// </summary>
+        public async Task<Substrate.NetApi.Model.Types.Primitive.U32> CurrentKeyEpoch(string blockhash, CancellationToken token)
+        {
+            string parameters = BitcoinThresholdSignerStorage.CurrentKeyEpochParams();
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U32>(parameters, blockhash, token);
+            return result;
+        }
+        
+        /// <summary>
+        /// >> KeysParams
+        ///  The map of all keys by epoch.
+        /// </summary>
+        public static string KeysParams(Substrate.NetApi.Model.Types.Primitive.U32 key)
+        {
+            return RequestGenerator.GetStorage("BitcoinThresholdSigner", "Keys", Substrate.NetApi.Model.Meta.Storage.Type.Map, new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
+                        Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, new Substrate.NetApi.Model.Types.IType[] {
+                        key});
+        }
+        
+        /// <summary>
+        /// >> KeysDefault
+        /// Default value as hex string
+        /// </summary>
+        public static string KeysDefault()
+        {
+            return "0x00";
+        }
+        
+        /// <summary>
+        /// >> Keys
+        ///  The map of all keys by epoch.
+        /// </summary>
+        public async Task<Substrate.NetApiExt.Generated.Model.cf_chains.btc.AggKey> Keys(Substrate.NetApi.Model.Types.Primitive.U32 key, string blockhash, CancellationToken token)
+        {
+            string parameters = BitcoinThresholdSignerStorage.KeysParams(key);
+            var result = await _client.GetStorageAsync<Substrate.NetApiExt.Generated.Model.cf_chains.btc.AggKey>(parameters, blockhash, token);
+            return result;
+        }
+        
+        /// <summary>
+        /// >> PendingKeyRotationParams
+        ///  Key rotation statuses for the current epoch rotation.
+        /// </summary>
+        public static string PendingKeyRotationParams()
+        {
+            return RequestGenerator.GetStorage("BitcoinThresholdSigner", "PendingKeyRotation", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
+        }
+        
+        /// <summary>
+        /// >> PendingKeyRotationDefault
+        /// Default value as hex string
+        /// </summary>
+        public static string PendingKeyRotationDefault()
+        {
+            return "0x00";
+        }
+        
+        /// <summary>
+        /// >> PendingKeyRotation
+        ///  Key rotation statuses for the current epoch rotation.
+        /// </summary>
+        public async Task<Substrate.NetApiExt.Generated.Model.pallet_cf_threshold_signature.EnumKeyRotationStatus> PendingKeyRotation(string blockhash, CancellationToken token)
+        {
+            string parameters = BitcoinThresholdSignerStorage.PendingKeyRotationParams();
+            var result = await _client.GetStorageAsync<Substrate.NetApiExt.Generated.Model.pallet_cf_threshold_signature.EnumKeyRotationStatus>(parameters, blockhash, token);
+            return result;
+        }
+        
+        /// <summary>
+        /// >> KeygenSuccessVotersParams
+        ///  The voters who voted for success for a particular agg key rotation
+        /// </summary>
+        public static string KeygenSuccessVotersParams(Substrate.NetApiExt.Generated.Model.cf_chains.btc.AggKey key)
+        {
+            return RequestGenerator.GetStorage("BitcoinThresholdSigner", "KeygenSuccessVoters", Substrate.NetApi.Model.Meta.Storage.Type.Map, new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
+                        Substrate.NetApi.Model.Meta.Storage.Hasher.Identity}, new Substrate.NetApi.Model.Types.IType[] {
+                        key});
+        }
+        
+        /// <summary>
+        /// >> KeygenSuccessVotersDefault
+        /// Default value as hex string
+        /// </summary>
+        public static string KeygenSuccessVotersDefault()
+        {
+            return "0x00";
+        }
+        
+        /// <summary>
+        /// >> KeygenSuccessVoters
+        ///  The voters who voted for success for a particular agg key rotation
+        /// </summary>
+        public async Task<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>> KeygenSuccessVoters(Substrate.NetApiExt.Generated.Model.cf_chains.btc.AggKey key, string blockhash, CancellationToken token)
+        {
+            string parameters = BitcoinThresholdSignerStorage.KeygenSuccessVotersParams(key);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>>(parameters, blockhash, token);
+            return result;
+        }
+        
+        /// <summary>
+        /// >> KeygenFailureVotersParams
+        ///  The voters who voted for failure for a particular agg key rotation
+        /// </summary>
+        public static string KeygenFailureVotersParams()
+        {
+            return RequestGenerator.GetStorage("BitcoinThresholdSigner", "KeygenFailureVoters", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
+        }
+        
+        /// <summary>
+        /// >> KeygenFailureVotersDefault
+        /// Default value as hex string
+        /// </summary>
+        public static string KeygenFailureVotersDefault()
+        {
+            return "0x00";
+        }
+        
+        /// <summary>
+        /// >> KeygenFailureVoters
+        ///  The voters who voted for failure for a particular agg key rotation
+        /// </summary>
+        public async Task<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>> KeygenFailureVoters(string blockhash, CancellationToken token)
+        {
+            string parameters = BitcoinThresholdSignerStorage.KeygenFailureVotersParams();
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>>(parameters, blockhash, token);
+            return result;
+        }
+        
+        /// <summary>
+        /// >> KeyHandoverSuccessVotersParams
+        ///  The voters who voted for success for a particular key handover ceremony
+        /// </summary>
+        public static string KeyHandoverSuccessVotersParams(Substrate.NetApiExt.Generated.Model.cf_chains.btc.AggKey key)
+        {
+            return RequestGenerator.GetStorage("BitcoinThresholdSigner", "KeyHandoverSuccessVoters", Substrate.NetApi.Model.Meta.Storage.Type.Map, new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
+                        Substrate.NetApi.Model.Meta.Storage.Hasher.Identity}, new Substrate.NetApi.Model.Types.IType[] {
+                        key});
+        }
+        
+        /// <summary>
+        /// >> KeyHandoverSuccessVotersDefault
+        /// Default value as hex string
+        /// </summary>
+        public static string KeyHandoverSuccessVotersDefault()
+        {
+            return "0x00";
+        }
+        
+        /// <summary>
+        /// >> KeyHandoverSuccessVoters
+        ///  The voters who voted for success for a particular key handover ceremony
+        /// </summary>
+        public async Task<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>> KeyHandoverSuccessVoters(Substrate.NetApiExt.Generated.Model.cf_chains.btc.AggKey key, string blockhash, CancellationToken token)
+        {
+            string parameters = BitcoinThresholdSignerStorage.KeyHandoverSuccessVotersParams(key);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>>(parameters, blockhash, token);
+            return result;
+        }
+        
+        /// <summary>
+        /// >> KeyHandoverFailureVotersParams
+        ///  The voters who voted for failure for a particular key handover ceremony
+        /// </summary>
+        public static string KeyHandoverFailureVotersParams()
+        {
+            return RequestGenerator.GetStorage("BitcoinThresholdSigner", "KeyHandoverFailureVoters", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
+        }
+        
+        /// <summary>
+        /// >> KeyHandoverFailureVotersDefault
+        /// Default value as hex string
+        /// </summary>
+        public static string KeyHandoverFailureVotersDefault()
+        {
+            return "0x00";
+        }
+        
+        /// <summary>
+        /// >> KeyHandoverFailureVoters
+        ///  The voters who voted for failure for a particular key handover ceremony
+        /// </summary>
+        public async Task<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>> KeyHandoverFailureVoters(string blockhash, CancellationToken token)
+        {
+            string parameters = BitcoinThresholdSignerStorage.KeyHandoverFailureVotersParams();
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>>(parameters, blockhash, token);
+            return result;
+        }
+        
+        /// <summary>
+        /// >> KeygenResolutionPendingSinceParams
+        ///  The block since which we have been waiting for keygen to be resolved.
+        /// </summary>
+        public static string KeygenResolutionPendingSinceParams()
+        {
+            return RequestGenerator.GetStorage("BitcoinThresholdSigner", "KeygenResolutionPendingSince", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
+        }
+        
+        /// <summary>
+        /// >> KeygenResolutionPendingSinceDefault
+        /// Default value as hex string
+        /// </summary>
+        public static string KeygenResolutionPendingSinceDefault()
+        {
+            return "0x00000000";
+        }
+        
+        /// <summary>
+        /// >> KeygenResolutionPendingSince
+        ///  The block since which we have been waiting for keygen to be resolved.
+        /// </summary>
+        public async Task<Substrate.NetApi.Model.Types.Primitive.U32> KeygenResolutionPendingSince(string blockhash, CancellationToken token)
+        {
+            string parameters = BitcoinThresholdSignerStorage.KeygenResolutionPendingSinceParams();
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U32>(parameters, blockhash, token);
+            return result;
+        }
+        
+        /// <summary>
+        /// >> KeyHandoverResolutionPendingSinceParams
+        ///  The block since which we have been waiting for key handover to be resolved.
+        /// </summary>
+        public static string KeyHandoverResolutionPendingSinceParams()
+        {
+            return RequestGenerator.GetStorage("BitcoinThresholdSigner", "KeyHandoverResolutionPendingSince", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
+        }
+        
+        /// <summary>
+        /// >> KeyHandoverResolutionPendingSinceDefault
+        /// Default value as hex string
+        /// </summary>
+        public static string KeyHandoverResolutionPendingSinceDefault()
+        {
+            return "0x00000000";
+        }
+        
+        /// <summary>
+        /// >> KeyHandoverResolutionPendingSince
+        ///  The block since which we have been waiting for key handover to be resolved.
+        /// </summary>
+        public async Task<Substrate.NetApi.Model.Types.Primitive.U32> KeyHandoverResolutionPendingSince(string blockhash, CancellationToken token)
+        {
+            string parameters = BitcoinThresholdSignerStorage.KeyHandoverResolutionPendingSinceParams();
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U32>(parameters, blockhash, token);
+            return result;
+        }
+        
+        /// <summary>
+        /// >> KeygenResponseTimeoutParams
+        /// </summary>
+        public static string KeygenResponseTimeoutParams()
+        {
+            return RequestGenerator.GetStorage("BitcoinThresholdSigner", "KeygenResponseTimeout", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
+        }
+        
+        /// <summary>
+        /// >> KeygenResponseTimeoutDefault
+        /// Default value as hex string
+        /// </summary>
+        public static string KeygenResponseTimeoutDefault()
+        {
+            return "0x5A000000";
+        }
+        
+        /// <summary>
+        /// >> KeygenResponseTimeout
+        /// </summary>
+        public async Task<Substrate.NetApi.Model.Types.Primitive.U32> KeygenResponseTimeout(string blockhash, CancellationToken token)
+        {
+            string parameters = BitcoinThresholdSignerStorage.KeygenResponseTimeoutParams();
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U32>(parameters, blockhash, token);
+            return result;
+        }
+        
+        /// <summary>
+        /// >> KeygenSlashAmountParams
+        ///  The amount of FLIP that is slashed for an agreed reported party expressed in Flipperinos
+        ///  (2/3 must agree the node was an offender) on keygen failure.
+        /// </summary>
+        public static string KeygenSlashAmountParams()
+        {
+            return RequestGenerator.GetStorage("BitcoinThresholdSigner", "KeygenSlashAmount", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
+        }
+        
+        /// <summary>
+        /// >> KeygenSlashAmountDefault
+        /// Default value as hex string
+        /// </summary>
+        public static string KeygenSlashAmountDefault()
+        {
+            return "0x00000000000000000000000000000000";
+        }
+        
+        /// <summary>
+        /// >> KeygenSlashAmount
+        ///  The amount of FLIP that is slashed for an agreed reported party expressed in Flipperinos
+        ///  (2/3 must agree the node was an offender) on keygen failure.
+        /// </summary>
+        public async Task<Substrate.NetApi.Model.Types.Primitive.U128> KeygenSlashAmount(string blockhash, CancellationToken token)
+        {
+            string parameters = BitcoinThresholdSignerStorage.KeygenSlashAmountParams();
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U128>(parameters, blockhash, token);
+            return result;
+        }
+        
+        /// <summary>
+        /// >> CeremonyIdCounterParams
+        ///  Counter for generating unique ceremony ids.
+        /// </summary>
+        public static string CeremonyIdCounterParams()
+        {
+            return RequestGenerator.GetStorage("BitcoinThresholdSigner", "CeremonyIdCounter", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
+        }
+        
+        /// <summary>
+        /// >> CeremonyIdCounterDefault
+        /// Default value as hex string
+        /// </summary>
+        public static string CeremonyIdCounterDefault()
+        {
+            return "0x0000000000000000";
+        }
+        
+        /// <summary>
+        /// >> CeremonyIdCounter
+        ///  Counter for generating unique ceremony ids.
+        /// </summary>
+        public async Task<Substrate.NetApi.Model.Types.Primitive.U64> CeremonyIdCounter(string blockhash, CancellationToken token)
+        {
+            string parameters = BitcoinThresholdSignerStorage.CeremonyIdCounterParams();
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U64>(parameters, blockhash, token);
             return result;
         }
     }
@@ -335,6 +704,78 @@ namespace Substrate.NetApiExt.Generated.Storage
             byteArray.AddRange(new_timeout.Encode());
             return new Method(26, "BitcoinThresholdSigner", 2, "set_threshold_signature_timeout", byteArray.ToArray());
         }
+        
+        /// <summary>
+        /// >> report_keygen_outcome
+        /// Contains a variant per dispatchable extrinsic that this pallet has.
+        /// </summary>
+        public static Method ReportKeygenOutcome(Substrate.NetApi.Model.Types.Primitive.U64 ceremony_id, Substrate.NetApiExt.Generated.Types.Base.EnumResult reported_outcome)
+        {
+            System.Collections.Generic.List<byte> byteArray = new List<byte>();
+            byteArray.AddRange(ceremony_id.Encode());
+            byteArray.AddRange(reported_outcome.Encode());
+            return new Method(26, "BitcoinThresholdSigner", 3, "report_keygen_outcome", byteArray.ToArray());
+        }
+        
+        /// <summary>
+        /// >> report_key_handover_outcome
+        /// Contains a variant per dispatchable extrinsic that this pallet has.
+        /// </summary>
+        public static Method ReportKeyHandoverOutcome(Substrate.NetApi.Model.Types.Primitive.U64 ceremony_id, Substrate.NetApiExt.Generated.Types.Base.EnumResult reported_outcome)
+        {
+            System.Collections.Generic.List<byte> byteArray = new List<byte>();
+            byteArray.AddRange(ceremony_id.Encode());
+            byteArray.AddRange(reported_outcome.Encode());
+            return new Method(26, "BitcoinThresholdSigner", 4, "report_key_handover_outcome", byteArray.ToArray());
+        }
+        
+        /// <summary>
+        /// >> on_keygen_verification_result
+        /// Contains a variant per dispatchable extrinsic that this pallet has.
+        /// </summary>
+        public static Method OnKeygenVerificationResult(Substrate.NetApi.Model.Types.Primitive.U64 keygen_ceremony_id, Substrate.NetApi.Model.Types.Primitive.U32 threshold_request_id, Substrate.NetApiExt.Generated.Model.cf_chains.btc.AggKey new_public_key)
+        {
+            System.Collections.Generic.List<byte> byteArray = new List<byte>();
+            byteArray.AddRange(keygen_ceremony_id.Encode());
+            byteArray.AddRange(threshold_request_id.Encode());
+            byteArray.AddRange(new_public_key.Encode());
+            return new Method(26, "BitcoinThresholdSigner", 5, "on_keygen_verification_result", byteArray.ToArray());
+        }
+        
+        /// <summary>
+        /// >> on_handover_verification_result
+        /// Contains a variant per dispatchable extrinsic that this pallet has.
+        /// </summary>
+        public static Method OnHandoverVerificationResult(Substrate.NetApi.Model.Types.Primitive.U64 handover_ceremony_id, Substrate.NetApi.Model.Types.Primitive.U32 threshold_request_id, Substrate.NetApiExt.Generated.Model.cf_chains.btc.AggKey new_public_key)
+        {
+            System.Collections.Generic.List<byte> byteArray = new List<byte>();
+            byteArray.AddRange(handover_ceremony_id.Encode());
+            byteArray.AddRange(threshold_request_id.Encode());
+            byteArray.AddRange(new_public_key.Encode());
+            return new Method(26, "BitcoinThresholdSigner", 6, "on_handover_verification_result", byteArray.ToArray());
+        }
+        
+        /// <summary>
+        /// >> set_keygen_response_timeout
+        /// Contains a variant per dispatchable extrinsic that this pallet has.
+        /// </summary>
+        public static Method SetKeygenResponseTimeout(Substrate.NetApi.Model.Types.Primitive.U32 new_timeout)
+        {
+            System.Collections.Generic.List<byte> byteArray = new List<byte>();
+            byteArray.AddRange(new_timeout.Encode());
+            return new Method(26, "BitcoinThresholdSigner", 7, "set_keygen_response_timeout", byteArray.ToArray());
+        }
+        
+        /// <summary>
+        /// >> set_keygen_slash_amount
+        /// Contains a variant per dispatchable extrinsic that this pallet has.
+        /// </summary>
+        public static Method SetKeygenSlashAmount(Substrate.NetApi.Model.Types.Primitive.U128 amount_to_slash)
+        {
+            System.Collections.Generic.List<byte> byteArray = new List<byte>();
+            byteArray.AddRange(amount_to_slash.Encode());
+            return new Method(26, "BitcoinThresholdSigner", 8, "set_keygen_slash_amount", byteArray.ToArray());
+        }
     }
     
     /// <summary>
@@ -363,10 +804,16 @@ namespace Substrate.NetApiExt.Generated.Storage
     {
         
         /// <summary>
-        /// >> InvalidCeremonyId
+        /// >> InvalidThresholdSignatureCeremonyId
         /// The provided ceremony id is invalid.
         /// </summary>
-        InvalidCeremonyId,
+        InvalidThresholdSignatureCeremonyId,
+        
+        /// <summary>
+        /// >> InvalidKeygenCeremonyId
+        /// An invalid keygen ceremony id
+        /// </summary>
+        InvalidKeygenCeremonyId,
         
         /// <summary>
         /// >> InvalidThresholdSignature
@@ -375,16 +822,41 @@ namespace Substrate.NetApiExt.Generated.Storage
         InvalidThresholdSignature,
         
         /// <summary>
-        /// >> InvalidRespondent
+        /// >> InvalidThresholdSignatureRespondent
         /// The reporting party is not one of the signatories for this ceremony, or has already
         /// responded.
         /// </summary>
-        InvalidRespondent,
+        InvalidThresholdSignatureRespondent,
+        
+        /// <summary>
+        /// >> InvalidKeygenRespondent
+        /// An authority sent a response for a ceremony in which they weren't involved, or to which
+        /// they have already submitted a response.
+        /// </summary>
+        InvalidKeygenRespondent,
         
         /// <summary>
         /// >> InvalidRequestId
         /// The request Id is stale or not yet valid.
         /// </summary>
         InvalidRequestId,
+        
+        /// <summary>
+        /// >> ThresholdSignatureUnavailable
+        /// There is no threshold signature available
+        /// </summary>
+        ThresholdSignatureUnavailable,
+        
+        /// <summary>
+        /// >> NoActiveRotation
+        /// There is currently no rotation in progress for this key.
+        /// </summary>
+        NoActiveRotation,
+        
+        /// <summary>
+        /// >> InvalidRotationStatus
+        /// The requested call is invalid based on the current rotation state.
+        /// </summary>
+        InvalidRotationStatus,
     }
 }

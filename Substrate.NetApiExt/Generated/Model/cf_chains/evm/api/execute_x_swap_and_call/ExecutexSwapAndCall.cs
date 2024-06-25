@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.evm.api.execute_x_swap_a
     
     
     /// <summary>
-    /// >> 178 - Composite[cf_chains.evm.api.execute_x_swap_and_call.ExecutexSwapAndCall]
+    /// >> 195 - Composite[cf_chains.evm.api.execute_x_swap_and_call.ExecutexSwapAndCall]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class ExecutexSwapAndCall : BaseType
@@ -80,7 +80,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.evm.api.execute_x_swap_a
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

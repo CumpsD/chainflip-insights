@@ -31,12 +31,10 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_session.pallet
     }
     
     /// <summary>
-    /// >> 261 - Variant[pallet_session.pallet.Event]
+    /// >> 310 - Variant[pallet_session.pallet.Event]
     /// The `Event` enum of this pallet
     /// </summary>
-    public sealed class EnumEvent : BaseEnumExt<
-        Event, 
-        Substrate.NetApi.Model.Types.Primitive.U32>
+    public sealed class EnumEvent : BaseEnumExt<Event, Substrate.NetApi.Model.Types.Primitive.U32>
     {
     }
 }

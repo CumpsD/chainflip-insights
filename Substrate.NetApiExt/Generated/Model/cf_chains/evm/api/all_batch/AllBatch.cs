@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.evm.api.all_batch
     
     
     /// <summary>
-    /// >> 170 - Composite[cf_chains.evm.api.all_batch.AllBatch]
+    /// >> 187 - Composite[cf_chains.evm.api.all_batch.AllBatch]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class AllBatch : BaseType
@@ -66,7 +66,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.evm.api.all_batch
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

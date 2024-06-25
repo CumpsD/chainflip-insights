@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.frame_system
     
     
     /// <summary>
-    /// >> 305 - Composite[frame_system.LastRuntimeUpgradeInfo]
+    /// >> 369 - Composite[frame_system.LastRuntimeUpgradeInfo]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class LastRuntimeUpgradeInfo : BaseType
@@ -59,7 +59,7 @@ namespace Substrate.NetApiExt.Generated.Model.frame_system
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

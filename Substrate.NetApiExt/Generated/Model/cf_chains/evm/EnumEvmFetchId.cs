@@ -38,7 +38,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.evm
     }
     
     /// <summary>
-    /// >> 454 - Variant[cf_chains.evm.EvmFetchId]
+    /// >> 537 - Variant[cf_chains.evm.EvmFetchId]
     /// </summary>
     public sealed class EnumEvmFetchId : BaseEnumExt<EvmFetchId, Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApiExt.Generated.Model.primitive_types.H160, BaseVoid>
     {

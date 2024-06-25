@@ -35,14 +35,14 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_account_roles.pallet
         AccountRoleAlreadyRegistered = 1,
         
         /// <summary>
-        /// >> SwappingDisabled
-        /// Initially when swapping features are deployed to the chain, they will be disabled.
+        /// >> InvalidCharactersInName
+        /// Invalid characters in the name.
         /// </summary>
-        SwappingDisabled = 2,
+        InvalidCharactersInName = 2,
     }
     
     /// <summary>
-    /// >> 330 - Variant[pallet_cf_account_roles.pallet.Error]
+    /// >> 398 - Variant[pallet_cf_account_roles.pallet.Error]
     /// The `Error` enum of this pallet.
     /// </summary>
     public sealed class EnumError : BaseEnum<Error>

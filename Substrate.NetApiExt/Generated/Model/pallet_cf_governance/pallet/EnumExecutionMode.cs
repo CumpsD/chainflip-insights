@@ -33,7 +33,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_governance.pallet
     }
     
     /// <summary>
-    /// >> 110 - Variant[pallet_cf_governance.pallet.ExecutionMode]
+    /// >> 126 - Variant[pallet_cf_governance.pallet.ExecutionMode]
     /// </summary>
     public sealed class EnumExecutionMode : BaseEnum<ExecutionMode>
     {

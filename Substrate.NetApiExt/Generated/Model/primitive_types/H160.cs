@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.primitive_types
     
     
     /// <summary>
-    /// >> 30 - Composite[primitive_types.H160]
+    /// >> 31 - Composite[primitive_types.H160]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class H160 : BaseType
@@ -52,7 +52,7 @@ namespace Substrate.NetApiExt.Generated.Model.primitive_types
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

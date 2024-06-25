@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.sp_consensus_grandpa.app
     
     
     /// <summary>
-    /// >> 92 - Composite[sp_consensus_grandpa.app.Public]
+    /// >> 108 - Composite[sp_consensus_grandpa.app.Public]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class Public : BaseType
@@ -52,7 +52,7 @@ namespace Substrate.NetApiExt.Generated.Model.sp_consensus_grandpa.app
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

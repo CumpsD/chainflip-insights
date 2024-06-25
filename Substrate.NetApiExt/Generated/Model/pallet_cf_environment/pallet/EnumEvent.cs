@@ -35,46 +35,59 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_environment.pallet
         UpdatedEthAsset = 1,
         
         /// <summary>
+        /// >> AddedNewArbAsset
+        /// A new supported ARB asset was added
+        /// </summary>
+        AddedNewArbAsset = 2,
+        
+        /// <summary>
+        /// >> UpdatedArbAsset
+        /// The address of an supported ARB asset was updated
+        /// </summary>
+        UpdatedArbAsset = 3,
+        
+        /// <summary>
         /// >> PolkadotVaultAccountSet
         /// Polkadot Vault Account is successfully set
         /// </summary>
-        PolkadotVaultAccountSet = 2,
+        PolkadotVaultAccountSet = 4,
         
         /// <summary>
         /// >> BitcoinBlockNumberSetForVault
         /// The starting block number for the new Bitcoin vault was set
         /// </summary>
-        BitcoinBlockNumberSetForVault = 3,
+        BitcoinBlockNumberSetForVault = 5,
         
         /// <summary>
         /// >> RuntimeSafeModeUpdated
         /// The Safe Mode settings for the chain has been updated
         /// </summary>
-        RuntimeSafeModeUpdated = 4,
+        RuntimeSafeModeUpdated = 6,
         
         /// <summary>
         /// >> UtxoConsolidationParametersUpdated
-        /// UTXO consolidation parameters has been updated
+        /// Utxo consolidation parameters has been updated
         /// </summary>
-        UtxoConsolidationParametersUpdated = 5,
+        UtxoConsolidationParametersUpdated = 7,
+        
+        /// <summary>
+        /// >> ArbitrumInitialized
+        /// Arbitrum Initialized: contract addresses have been set, first key activated
+        /// </summary>
+        ArbitrumInitialized = 8,
+        
+        /// <summary>
+        /// >> StaleUtxosDiscarded
+        /// Some unspendable Utxos are discarded from storage.
+        /// </summary>
+        StaleUtxosDiscarded = 9,
     }
     
     /// <summary>
-    /// >> 28 - Variant[pallet_cf_environment.pallet.Event]
+    /// >> 29 - Variant[pallet_cf_environment.pallet.Event]
     /// The `Event` enum of this pallet
     /// </summary>
-    public sealed class EnumEvent : BaseEnumExt<
-        Event, 
-        BaseTuple<
-            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.eth.EnumAsset, 
-            Substrate.NetApiExt.Generated.Model.primitive_types.H160>, 
-        BaseTuple<
-            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.eth.EnumAsset, 
-            Substrate.NetApiExt.Generated.Model.primitive_types.H160>, 
-        Substrate.NetApiExt.Generated.Model.cf_chains.dot.PolkadotAccountId, 
-        Substrate.NetApi.Model.Types.Primitive.U64, 
-        Substrate.NetApiExt.Generated.Model.pallet_cf_environment.EnumSafeModeUpdate, 
-        Substrate.NetApiExt.Generated.Model.cf_chains.btc.ConsolidationParameters>
+    public sealed class EnumEvent : BaseEnumExt<Event, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.eth.EnumAsset, Substrate.NetApiExt.Generated.Model.primitive_types.H160>, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.eth.EnumAsset, Substrate.NetApiExt.Generated.Model.primitive_types.H160>, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.arb.EnumAsset, Substrate.NetApiExt.Generated.Model.primitive_types.H160>, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.arb.EnumAsset, Substrate.NetApiExt.Generated.Model.primitive_types.H160>, Substrate.NetApiExt.Generated.Model.cf_chains.dot.PolkadotAccountId, Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApiExt.Generated.Model.pallet_cf_environment.EnumSafeModeUpdate, Substrate.NetApiExt.Generated.Model.cf_chains.btc.utxo_selection.ConsolidationParameters, BaseVoid, Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.cf_chains.btc.Utxo>>
     {
     }
 }

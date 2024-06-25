@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.evm
     
     
     /// <summary>
-    /// >> 144 - Composite[cf_chains.evm.SchnorrVerificationComponents]
+    /// >> 158 - Composite[cf_chains.evm.SchnorrVerificationComponents]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class SchnorrVerificationComponents : BaseType
@@ -59,7 +59,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.evm
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

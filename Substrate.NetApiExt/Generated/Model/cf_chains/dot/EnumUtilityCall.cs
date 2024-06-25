@@ -43,7 +43,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.dot
     }
     
     /// <summary>
-    /// >> 194 - Variant[cf_chains.dot.UtilityCall]
+    /// >> 211 - Variant[cf_chains.dot.UtilityCall]
     /// </summary>
     public sealed class EnumUtilityCall : BaseEnumExt<UtilityCall, Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.cf_chains.dot.EnumPolkadotRuntimeCall>, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U16, Substrate.NetApiExt.Generated.Model.cf_chains.dot.EnumPolkadotRuntimeCall>, Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.cf_chains.dot.EnumPolkadotRuntimeCall>, BaseVoid, Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.cf_chains.dot.EnumPolkadotRuntimeCall>>
     {

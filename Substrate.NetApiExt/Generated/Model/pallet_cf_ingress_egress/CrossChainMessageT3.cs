@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress
     
     
     /// <summary>
-    /// >> 481 - Composite[pallet_cf_ingress_egress.CrossChainMessageT3]
+    /// >> 593 - Composite[pallet_cf_ingress_egress.CrossChainMessageT3]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class CrossChainMessageT3 : BaseType
@@ -43,7 +43,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress
         /// <summary>
         /// >> message
         /// </summary>
-        public Substrate.NetApiExt.Generated.Model.bounded_collections.bounded_vec.BoundedVecT3 Message { get; set; }
+        public Substrate.NetApiExt.Generated.Model.bounded_collections.bounded_vec.BoundedVecT4 Message { get; set; }
         /// <summary>
         /// >> source_chain
         /// </summary>
@@ -55,7 +55,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress
         /// <summary>
         /// >> cf_parameters
         /// </summary>
-        public Substrate.NetApiExt.Generated.Model.bounded_collections.bounded_vec.BoundedVecT4 CfParameters { get; set; }
+        public Substrate.NetApiExt.Generated.Model.bounded_collections.bounded_vec.BoundedVecT5 CfParameters { get; set; }
         /// <summary>
         /// >> gas_budget
         /// </summary>
@@ -95,20 +95,20 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress
             Amount.Decode(byteArray, ref p);
             DestinationAddress = new Substrate.NetApiExt.Generated.Model.cf_chains.btc.EnumScriptPubkey();
             DestinationAddress.Decode(byteArray, ref p);
-            Message = new Substrate.NetApiExt.Generated.Model.bounded_collections.bounded_vec.BoundedVecT3();
+            Message = new Substrate.NetApiExt.Generated.Model.bounded_collections.bounded_vec.BoundedVecT4();
             Message.Decode(byteArray, ref p);
             SourceChain = new Substrate.NetApiExt.Generated.Model.cf_primitives.chains.EnumForeignChain();
             SourceChain.Decode(byteArray, ref p);
             SourceAddress = new Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApiExt.Generated.Model.cf_chains.address.EnumForeignChainAddress>();
             SourceAddress.Decode(byteArray, ref p);
-            CfParameters = new Substrate.NetApiExt.Generated.Model.bounded_collections.bounded_vec.BoundedVecT4();
+            CfParameters = new Substrate.NetApiExt.Generated.Model.bounded_collections.bounded_vec.BoundedVecT5();
             CfParameters.Decode(byteArray, ref p);
             GasBudget = new Substrate.NetApi.Model.Types.Primitive.U64();
             GasBudget.Decode(byteArray, ref p);
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

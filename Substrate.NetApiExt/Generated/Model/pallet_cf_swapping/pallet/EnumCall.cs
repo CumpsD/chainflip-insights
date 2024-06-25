@@ -53,17 +53,29 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_swapping.pallet
         register_as_broker = 4,
         
         /// <summary>
-        /// >> set_maximum_swap_amount
-        /// See [`Pallet::set_maximum_swap_amount`].
+        /// >> update_pallet_config
+        /// See [`Pallet::update_pallet_config`].
         /// </summary>
-        set_maximum_swap_amount = 7,
+        update_pallet_config = 8,
+        
+        /// <summary>
+        /// >> deregister_as_broker
+        /// See [`Pallet::deregister_as_broker`].
+        /// </summary>
+        deregister_as_broker = 9,
+        
+        /// <summary>
+        /// >> request_swap_deposit_address_with_affiliates
+        /// See [`Pallet::request_swap_deposit_address_with_affiliates`].
+        /// </summary>
+        request_swap_deposit_address_with_affiliates = 10,
     }
     
     /// <summary>
-    /// >> 223 - Variant[pallet_cf_swapping.pallet.Call]
+    /// >> 232 - Variant[pallet_cf_swapping.pallet.Call]
     /// Contains a variant per dispatchable extrinsic that this pallet has.
     /// </summary>
-    public sealed class EnumCall : BaseEnumExt<Call, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApiExt.Generated.Model.cf_chains.address.EnumEncodedAddress, Substrate.NetApi.Model.Types.Primitive.U16, Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApiExt.Generated.Model.cf_chains.CcmChannelMetadata>>, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApiExt.Generated.Model.cf_chains.address.EnumEncodedAddress>, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApi.Model.Types.Primitive.U128, Substrate.NetApiExt.Generated.Model.cf_chains.address.EnumEncodedAddress, Substrate.NetApiExt.Generated.Types.Base.Arr32U8>, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApi.Model.Types.Primitive.U128, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApiExt.Generated.Model.cf_chains.address.EnumEncodedAddress, Substrate.NetApiExt.Generated.Model.cf_chains.CcmDepositMetadata, Substrate.NetApiExt.Generated.Types.Base.Arr32U8>, BaseVoid, BaseVoid, BaseVoid, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Model.Types.Primitive.U128>>>
+    public sealed class EnumCall : BaseEnumExt<Call, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApiExt.Generated.Model.cf_chains.address.EnumEncodedAddress, Substrate.NetApi.Model.Types.Primitive.U16, Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApiExt.Generated.Model.cf_chains.CcmChannelMetadata>, Substrate.NetApi.Model.Types.Primitive.U16>, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApiExt.Generated.Model.cf_chains.address.EnumEncodedAddress>, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApi.Model.Types.Primitive.U128, Substrate.NetApiExt.Generated.Model.cf_chains.address.EnumEncodedAddress, Substrate.NetApiExt.Generated.Types.Base.Arr32U8>, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApi.Model.Types.Primitive.U128, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApiExt.Generated.Model.cf_chains.address.EnumEncodedAddress, Substrate.NetApiExt.Generated.Model.cf_chains.CcmDepositMetadata, Substrate.NetApiExt.Generated.Types.Base.Arr32U8>, BaseVoid, BaseVoid, BaseVoid, BaseVoid, Substrate.NetApiExt.Generated.Model.bounded_collections.bounded_vec.BoundedVecT6, BaseVoid, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApiExt.Generated.Model.cf_chains.address.EnumEncodedAddress, Substrate.NetApi.Model.Types.Primitive.U16, Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApiExt.Generated.Model.cf_chains.CcmChannelMetadata>, Substrate.NetApi.Model.Types.Primitive.U16, Substrate.NetApiExt.Generated.Model.bounded_collections.bounded_vec.BoundedVecT7>>
     {
     }
 }

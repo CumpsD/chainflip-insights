@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_broadcast
     
     
     /// <summary>
-    /// >> 48 - Composite[pallet_cf_broadcast.PalletSafeModeT3]
+    /// >> 49 - Composite[pallet_cf_broadcast.PalletSafeModeT3]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class PalletSafeModeT3 : BaseType
@@ -52,7 +52,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_broadcast
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

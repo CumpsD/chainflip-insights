@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains
     
     
     /// <summary>
-    /// >> 227 - Composite[cf_chains.CcmChannelMetadata]
+    /// >> 236 - Composite[cf_chains.CcmChannelMetadata]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class CcmChannelMetadata : BaseType
@@ -27,7 +27,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains
         /// <summary>
         /// >> message
         /// </summary>
-        public Substrate.NetApiExt.Generated.Model.bounded_collections.bounded_vec.BoundedVecT3 Message { get; set; }
+        public Substrate.NetApiExt.Generated.Model.bounded_collections.bounded_vec.BoundedVecT4 Message { get; set; }
         /// <summary>
         /// >> gas_budget
         /// </summary>
@@ -35,7 +35,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains
         /// <summary>
         /// >> cf_parameters
         /// </summary>
-        public Substrate.NetApiExt.Generated.Model.bounded_collections.bounded_vec.BoundedVecT4 CfParameters { get; set; }
+        public Substrate.NetApiExt.Generated.Model.bounded_collections.bounded_vec.BoundedVecT5 CfParameters { get; set; }
         
         /// <inheritdoc/>
         public override string TypeName()
@@ -57,16 +57,16 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
-            Message = new Substrate.NetApiExt.Generated.Model.bounded_collections.bounded_vec.BoundedVecT3();
+            Message = new Substrate.NetApiExt.Generated.Model.bounded_collections.bounded_vec.BoundedVecT4();
             Message.Decode(byteArray, ref p);
             GasBudget = new Substrate.NetApi.Model.Types.Primitive.U128();
             GasBudget.Decode(byteArray, ref p);
-            CfParameters = new Substrate.NetApiExt.Generated.Model.bounded_collections.bounded_vec.BoundedVecT4();
+            CfParameters = new Substrate.NetApiExt.Generated.Model.bounded_collections.bounded_vec.BoundedVecT5();
             CfParameters.Decode(byteArray, ref p);
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

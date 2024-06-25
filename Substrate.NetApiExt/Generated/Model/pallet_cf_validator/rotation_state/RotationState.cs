@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_validator.rotation_state
     
     
     /// <summary>
-    /// >> 260 - Composite[pallet_cf_validator.rotation_state.RotationState]
+    /// >> 309 - Composite[pallet_cf_validator.rotation_state.RotationState]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class RotationState : BaseType
@@ -80,7 +80,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_validator.rotation_state
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

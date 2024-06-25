@@ -35,12 +35,17 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.address
         /// >> Btc
         /// </summary>
         Btc = 2,
+        
+        /// <summary>
+        /// >> Arb
+        /// </summary>
+        Arb = 3,
     }
     
     /// <summary>
-    /// >> 225 - Variant[cf_chains.address.EncodedAddress]
+    /// >> 234 - Variant[cf_chains.address.EncodedAddress]
     /// </summary>
-    public sealed class EnumEncodedAddress : BaseEnumExt<EncodedAddress, Substrate.NetApiExt.Generated.Types.Base.Arr20U8, Substrate.NetApiExt.Generated.Types.Base.Arr32U8, Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Model.Types.Primitive.U8>>
+    public sealed class EnumEncodedAddress : BaseEnumExt<EncodedAddress, Substrate.NetApiExt.Generated.Types.Base.Arr20U8, Substrate.NetApiExt.Generated.Types.Base.Arr32U8, Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Model.Types.Primitive.U8>, Substrate.NetApiExt.Generated.Types.Base.Arr20U8>
     {
     }
 }

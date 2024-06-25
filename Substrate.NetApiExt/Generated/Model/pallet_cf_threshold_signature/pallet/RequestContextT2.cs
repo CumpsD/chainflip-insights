@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_threshold_signature.pall
     
     
     /// <summary>
-    /// >> 413 - Composite[pallet_cf_threshold_signature.pallet.RequestContextT2]
+    /// >> 465 - Composite[pallet_cf_threshold_signature.pallet.RequestContextT2]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class RequestContextT2 : BaseType
@@ -66,7 +66,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_threshold_signature.pall
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

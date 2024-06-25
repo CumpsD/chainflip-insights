@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_swapping
     
     
     /// <summary>
-    /// >> 440 - Composite[pallet_cf_swapping.Swap]
+    /// >> 504 - Composite[pallet_cf_swapping.Swap]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class Swap : BaseType
@@ -43,7 +43,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_swapping
         /// <summary>
         /// >> swap_type
         /// </summary>
-        public Substrate.NetApiExt.Generated.Model.pallet_cf_swapping.EnumSwapType SwapType { get; set; }
+        public Substrate.NetApiExt.Generated.Model.cf_traits.liquidity.EnumSwapType SwapType { get; set; }
         /// <summary>
         /// >> stable_amount
         /// </summary>
@@ -90,7 +90,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_swapping
             To.Decode(byteArray, ref p);
             Amount = new Substrate.NetApi.Model.Types.Primitive.U128();
             Amount.Decode(byteArray, ref p);
-            SwapType = new Substrate.NetApiExt.Generated.Model.pallet_cf_swapping.EnumSwapType();
+            SwapType = new Substrate.NetApiExt.Generated.Model.cf_traits.liquidity.EnumSwapType();
             SwapType.Decode(byteArray, ref p);
             StableAmount = new Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Model.Types.Primitive.U128>();
             StableAmount.Decode(byteArray, ref p);
@@ -101,7 +101,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_swapping
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

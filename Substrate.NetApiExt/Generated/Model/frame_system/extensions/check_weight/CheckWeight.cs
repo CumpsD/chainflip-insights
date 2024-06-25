@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.frame_system.extensions.check_weig
     
     
     /// <summary>
-    /// >> 555 - Composite[frame_system.extensions.check_weight.CheckWeight]
+    /// >> 695 - Composite[frame_system.extensions.check_weight.CheckWeight]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class CheckWeight : BaseType
@@ -44,7 +44,7 @@ namespace Substrate.NetApiExt.Generated.Model.frame_system.extensions.check_weig
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

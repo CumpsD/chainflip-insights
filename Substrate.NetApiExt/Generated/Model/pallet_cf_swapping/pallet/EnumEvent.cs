@@ -89,85 +89,12 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_swapping.pallet
         /// </summary>
         SwapEgressIgnored = 11,
     }
-
+    
     /// <summary>
-    /// >> 284 - Variant[pallet_cf_swapping.pallet.Event]
+    /// >> 333 - Variant[pallet_cf_swapping.pallet.Event]
     /// The `Event` enum of this pallet
     /// </summary>
-    public sealed class EnumEvent : BaseEnumExt<
-        Event,
-        BaseTuple<
-            Substrate.NetApiExt.Generated.Model.cf_chains.address.EnumEncodedAddress,
-            Substrate.NetApiExt.Generated.Model.cf_chains.address.EnumEncodedAddress,
-            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset,
-            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset,
-            Substrate.NetApi.Model.Types.Primitive.U64,
-            Substrate.NetApi.Model.Types.Primitive.U16,
-            Substrate.NetApi.Model.Types.Base.BaseOpt<
-                Substrate.NetApiExt.Generated.Model.cf_chains.CcmChannelMetadata>,
-            Substrate.NetApi.Model.Types.Primitive.U64>,
-        BaseTuple<
-            Substrate.NetApi.Model.Types.Primitive.U64,
-            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset,
-            Substrate.NetApi.Model.Types.Primitive.U128,
-            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset,
-            Substrate.NetApiExt.Generated.Model.cf_chains.address.EnumEncodedAddress,
-            Substrate.NetApiExt.Generated.Model.cf_chains.EnumSwapOrigin,
-            Substrate.NetApiExt.Generated.Model.pallet_cf_swapping.EnumSwapType,
-            Substrate.NetApi.Model.Types.Base.BaseOpt<
-                Substrate.NetApi.Model.Types.Primitive.U128>>,
-        BaseTuple<
-            Substrate.NetApi.Model.Types.Primitive.U64,
-            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset,
-            Substrate.NetApi.Model.Types.Primitive.U128,
-            Substrate.NetApi.Model.Types.Primitive.U128,
-            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset,
-            Substrate.NetApi.Model.Types.Primitive.U128,
-            Substrate.NetApi.Model.Types.Primitive.U128,
-            Substrate.NetApi.Model.Types.Base.BaseOpt<
-                Substrate.NetApi.Model.Types.Primitive.U128>>,
-        BaseTuple<
-            Substrate.NetApi.Model.Types.Primitive.U64,
-            Substrate.NetApi.Model.Types.Base.BaseTuple<
-                Substrate.NetApiExt.Generated.Model.cf_primitives.chains.EnumForeignChain,
-                Substrate.NetApi.Model.Types.Primitive.U64>,
-            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset,
-            Substrate.NetApi.Model.Types.Primitive.U128,
-            Substrate.NetApi.Model.Types.Primitive.U128>,
-        BaseTuple<
-            Substrate.NetApi.Model.Types.Base.BaseTuple<
-                Substrate.NetApiExt.Generated.Model.cf_primitives.chains.EnumForeignChain,
-                Substrate.NetApi.Model.Types.Primitive.U64>,
-            Substrate.NetApi.Model.Types.Primitive.U128,
-            Substrate.NetApi.Model.Types.Primitive.U128,
-            Substrate.NetApiExt.Generated.Model.cf_chains.address.EnumEncodedAddress>,
-        BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset,
-            Substrate.NetApiExt.Generated.Model.cf_primitives.EnumSwapLeg,
-            Substrate.NetApi.Model.Types.Primitive.U128>,
-        BaseTuple<Substrate.NetApi.Model.Types.Primitive.U64,
-            Substrate.NetApi.Model.Types.Base.BaseTuple<
-                Substrate.NetApiExt.Generated.Model.cf_primitives.chains.EnumForeignChain,
-                Substrate.NetApi.Model.Types.Primitive.U64>>,
-        BaseTuple<Substrate.NetApi.Model.Types.Primitive.U64,
-            Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Model.Types.Primitive.U64>,
-            Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Model.Types.Primitive.U64>,
-            Substrate.NetApi.Model.Types.Primitive.U128,
-            Substrate.NetApiExt.Generated.Model.cf_chains.address.EnumEncodedAddress,
-            Substrate.NetApiExt.Generated.Model.cf_chains.CcmDepositMetadata>,
-        BaseTuple<Substrate.NetApiExt.Generated.Model.pallet_cf_swapping.EnumCcmFailReason,
-            Substrate.NetApiExt.Generated.Model.cf_chains.address.EnumEncodedAddress,
-            Substrate.NetApiExt.Generated.Model.cf_chains.CcmDepositMetadata>,
-        BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset,
-            Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Model.Types.Primitive.U128>>,
-        BaseTuple<Substrate.NetApi.Model.Types.Primitive.U64,
-            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset,
-            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset,
-            Substrate.NetApi.Model.Types.Primitive.U128,
-            Substrate.NetApi.Model.Types.Primitive.U128>,
-        BaseTuple<Substrate.NetApi.Model.Types.Primitive.U64,
-            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset,
-            Substrate.NetApi.Model.Types.Primitive.U128,
-            Substrate.NetApiExt.Generated.Model.sp_runtime.EnumDispatchError>>
+    public sealed class EnumEvent : BaseEnumExt<Event, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_chains.address.EnumEncodedAddress, Substrate.NetApiExt.Generated.Model.cf_chains.address.EnumEncodedAddress, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApi.Model.Types.Primitive.U16, Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApiExt.Generated.Model.cf_chains.CcmChannelMetadata>, Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApi.Model.Types.Primitive.U16, Substrate.NetApi.Model.Types.Primitive.U128, Substrate.NetApiExt.Generated.Model.bounded_collections.bounded_vec.BoundedVecT7>, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApi.Model.Types.Primitive.U128, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApiExt.Generated.Model.cf_chains.address.EnumEncodedAddress, Substrate.NetApiExt.Generated.Model.cf_chains.EnumSwapOrigin, Substrate.NetApiExt.Generated.Model.cf_traits.liquidity.EnumSwapType, Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Model.Types.Primitive.U128>, Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Model.Types.Primitive.U128>, Substrate.NetApi.Model.Types.Primitive.U32>, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApi.Model.Types.Primitive.U128, Substrate.NetApi.Model.Types.Primitive.U128, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApi.Model.Types.Primitive.U128, Substrate.NetApi.Model.Types.Primitive.U128, Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Model.Types.Primitive.U128>, Substrate.NetApiExt.Generated.Model.cf_traits.liquidity.EnumSwapType>, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.EnumForeignChain, Substrate.NetApi.Model.Types.Primitive.U64>, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApi.Model.Types.Primitive.U128, Substrate.NetApi.Model.Types.Primitive.U128>, BaseTuple<Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.EnumForeignChain, Substrate.NetApi.Model.Types.Primitive.U64>, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApi.Model.Types.Primitive.U128, Substrate.NetApi.Model.Types.Primitive.U128, Substrate.NetApiExt.Generated.Model.cf_chains.address.EnumEncodedAddress>, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApiExt.Generated.Model.cf_primitives.EnumSwapLeg, Substrate.NetApi.Model.Types.Primitive.U128>, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.EnumForeignChain, Substrate.NetApi.Model.Types.Primitive.U64>>, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Model.Types.Primitive.U64>, Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Model.Types.Primitive.U64>, Substrate.NetApi.Model.Types.Primitive.U128, Substrate.NetApiExt.Generated.Model.cf_chains.address.EnumEncodedAddress, Substrate.NetApiExt.Generated.Model.cf_chains.CcmDepositMetadata>, BaseTuple<Substrate.NetApiExt.Generated.Model.pallet_cf_swapping.EnumCcmFailReason, Substrate.NetApiExt.Generated.Model.cf_chains.address.EnumEncodedAddress, Substrate.NetApiExt.Generated.Model.cf_chains.CcmDepositMetadata, Substrate.NetApiExt.Generated.Model.cf_chains.EnumSwapOrigin>, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Model.Types.Primitive.U128>>, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApi.Model.Types.Primitive.U128, Substrate.NetApi.Model.Types.Primitive.U128>, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApi.Model.Types.Primitive.U128, Substrate.NetApiExt.Generated.Model.sp_runtime.EnumDispatchError>>
     {
     }
 }

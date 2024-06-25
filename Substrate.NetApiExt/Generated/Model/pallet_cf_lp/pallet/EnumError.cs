@@ -70,10 +70,34 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_lp.pallet
         /// Withdrawals are disabled due to Safe Mode.
         /// </summary>
         WithdrawalsDisabled = 7,
+        
+        /// <summary>
+        /// >> OpenOrdersRemaining
+        /// The account still has open orders remaining.
+        /// </summary>
+        OpenOrdersRemaining = 8,
+        
+        /// <summary>
+        /// >> FundsRemaining
+        /// The account still has funds remaining in the free balances.
+        /// </summary>
+        FundsRemaining = 9,
+        
+        /// <summary>
+        /// >> DestinationAccountNotLiquidityProvider
+        /// The destination account is not a liquidity provider.
+        /// </summary>
+        DestinationAccountNotLiquidityProvider = 10,
+        
+        /// <summary>
+        /// >> CannotTransferToOriginAccount
+        /// The account cannot transfer to itself.
+        /// </summary>
+        CannotTransferToOriginAccount = 11,
     }
     
     /// <summary>
-    /// >> 446 - Variant[pallet_cf_lp.pallet.Error]
+    /// >> 510 - Variant[pallet_cf_lp.pallet.Error]
     /// The `Error` enum of this pallet.
     /// </summary>
     public sealed class EnumError : BaseEnum<Error>

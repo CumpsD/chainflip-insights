@@ -57,24 +57,19 @@ namespace Substrate.NetApiExt.Generated.Model.frame_system.pallet
         /// On on-chain remark happened.
         /// </summary>
         Remarked = 5,
+        
+        /// <summary>
+        /// >> UpgradeAuthorized
+        /// An upgrade was authorized.
+        /// </summary>
+        UpgradeAuthorized = 6,
     }
     
     /// <summary>
     /// >> 19 - Variant[frame_system.pallet.Event]
     /// Event for the System pallet.
     /// </summary>
-    public sealed class EnumEvent : BaseEnumExt<
-        Event, 
-        Substrate.NetApiExt.Generated.Model.frame_support.dispatch.DispatchInfo, 
-        BaseTuple<
-            Substrate.NetApiExt.Generated.Model.sp_runtime.EnumDispatchError,
-            Substrate.NetApiExt.Generated.Model.frame_support.dispatch.DispatchInfo>,
-        BaseVoid,
-        Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, 
-        Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, 
-        BaseTuple<
-            Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32,
-            Substrate.NetApiExt.Generated.Model.primitive_types.H256>>
+    public sealed class EnumEvent : BaseEnumExt<Event, Substrate.NetApiExt.Generated.Model.frame_support.dispatch.DispatchInfo, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_runtime.EnumDispatchError, Substrate.NetApiExt.Generated.Model.frame_support.dispatch.DispatchInfo>, BaseVoid, Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Model.primitive_types.H256>, BaseTuple<Substrate.NetApiExt.Generated.Model.primitive_types.H256, Substrate.NetApi.Model.Types.Primitive.Bool>>
     {
     }
 }

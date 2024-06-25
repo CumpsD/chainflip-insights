@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_swapping
     
     
     /// <summary>
-    /// >> 38 - Composite[pallet_cf_swapping.PalletSafeMode]
+    /// >> 39 - Composite[pallet_cf_swapping.PalletSafeMode]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class PalletSafeMode : BaseType
@@ -32,10 +32,6 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_swapping
         /// >> withdrawals_enabled
         /// </summary>
         public Substrate.NetApi.Model.Types.Primitive.Bool WithdrawalsEnabled { get; set; }
-        /// <summary>
-        /// >> deposits_enabled
-        /// </summary>
-        public Substrate.NetApi.Model.Types.Primitive.Bool DepositsEnabled { get; set; }
         /// <summary>
         /// >> broker_registration_enabled
         /// </summary>
@@ -53,7 +49,6 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_swapping
             var result = new List<byte>();
             result.AddRange(SwapsEnabled.Encode());
             result.AddRange(WithdrawalsEnabled.Encode());
-            result.AddRange(DepositsEnabled.Encode());
             result.AddRange(BrokerRegistrationEnabled.Encode());
             return result.ToArray();
         }
@@ -66,14 +61,12 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_swapping
             SwapsEnabled.Decode(byteArray, ref p);
             WithdrawalsEnabled = new Substrate.NetApi.Model.Types.Primitive.Bool();
             WithdrawalsEnabled.Decode(byteArray, ref p);
-            DepositsEnabled = new Substrate.NetApi.Model.Types.Primitive.Bool();
-            DepositsEnabled.Decode(byteArray, ref p);
             BrokerRegistrationEnabled = new Substrate.NetApi.Model.Types.Primitive.Bool();
             BrokerRegistrationEnabled.Decode(byteArray, ref p);
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

@@ -22,9 +22,9 @@ namespace Substrate.NetApiExt.Generated.Model.cfe_events
     {
         
         /// <summary>
-        /// >> EthThresholdSignatureRequest
+        /// >> EvmThresholdSignatureRequest
         /// </summary>
-        EthThresholdSignatureRequest = 0,
+        EvmThresholdSignatureRequest = 0,
         
         /// <summary>
         /// >> DotThresholdSignatureRequest
@@ -37,9 +37,9 @@ namespace Substrate.NetApiExt.Generated.Model.cfe_events
         BtcThresholdSignatureRequest = 2,
         
         /// <summary>
-        /// >> EthKeygenRequest
+        /// >> EvmKeygenRequest
         /// </summary>
-        EthKeygenRequest = 3,
+        EvmKeygenRequest = 3,
         
         /// <summary>
         /// >> DotKeygenRequest
@@ -72,20 +72,25 @@ namespace Substrate.NetApiExt.Generated.Model.cfe_events
         BtcTxBroadcastRequest = 9,
         
         /// <summary>
+        /// >> ArbTxBroadcastRequest
+        /// </summary>
+        ArbTxBroadcastRequest = 10,
+        
+        /// <summary>
         /// >> PeerIdRegistered
         /// </summary>
-        PeerIdRegistered = 10,
+        PeerIdRegistered = 11,
         
         /// <summary>
         /// >> PeerIdDeregistered
         /// </summary>
-        PeerIdDeregistered = 11,
+        PeerIdDeregistered = 12,
     }
     
     /// <summary>
-    /// >> 533 - Variant[cfe_events.CfeEvent]
+    /// >> 644 - Variant[cfe_events.CfeEvent]
     /// </summary>
-    public sealed class EnumCfeEvent : BaseEnumExt<CfeEvent, Substrate.NetApiExt.Generated.Model.cfe_events.ThresholdSignatureRequestT1, Substrate.NetApiExt.Generated.Model.cfe_events.ThresholdSignatureRequestT2, Substrate.NetApiExt.Generated.Model.cfe_events.ThresholdSignatureRequestT3, Substrate.NetApiExt.Generated.Model.cfe_events.KeygenRequest, Substrate.NetApiExt.Generated.Model.cfe_events.KeygenRequest, Substrate.NetApiExt.Generated.Model.cfe_events.KeygenRequest, Substrate.NetApiExt.Generated.Model.cfe_events.KeyHandoverRequest, Substrate.NetApiExt.Generated.Model.cfe_events.TxBroadcastRequestT1, Substrate.NetApiExt.Generated.Model.cfe_events.TxBroadcastRequestT2, Substrate.NetApiExt.Generated.Model.cfe_events.TxBroadcastRequestT3, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Model.sp_core.ed25519.Public, Substrate.NetApi.Model.Types.Primitive.U16, Substrate.NetApi.Model.Types.Primitive.U128>, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Model.sp_core.ed25519.Public>>
+    public sealed class EnumCfeEvent : BaseEnumExt<CfeEvent, Substrate.NetApiExt.Generated.Model.cfe_events.ThresholdSignatureRequestT1, Substrate.NetApiExt.Generated.Model.cfe_events.ThresholdSignatureRequestT2, Substrate.NetApiExt.Generated.Model.cfe_events.ThresholdSignatureRequestT3, Substrate.NetApiExt.Generated.Model.cfe_events.KeygenRequest, Substrate.NetApiExt.Generated.Model.cfe_events.KeygenRequest, Substrate.NetApiExt.Generated.Model.cfe_events.KeygenRequest, Substrate.NetApiExt.Generated.Model.cfe_events.KeyHandoverRequest, Substrate.NetApiExt.Generated.Model.cfe_events.TxBroadcastRequestT1, Substrate.NetApiExt.Generated.Model.cfe_events.TxBroadcastRequestT2, Substrate.NetApiExt.Generated.Model.cfe_events.TxBroadcastRequestT3, Substrate.NetApiExt.Generated.Model.cfe_events.TxBroadcastRequestT4, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Model.sp_core.ed25519.Public, Substrate.NetApi.Model.Types.Primitive.U16, Substrate.NetApi.Model.Types.Primitive.U128>, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Model.sp_core.ed25519.Public>>
     {
     }
 }

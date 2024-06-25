@@ -66,24 +66,10 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_emissions.pallet
     }
     
     /// <summary>
-    /// >> 57 - Variant[pallet_cf_emissions.pallet.Event]
+    /// >> 72 - Variant[pallet_cf_emissions.pallet.Event]
     /// The `Event` enum of this pallet
     /// </summary>
-    public sealed class EnumEvent : BaseEnumExt<
-        Event, 
-        Substrate.NetApi.Model.Types.Primitive.U32, 
-        Substrate.NetApi.Model.Types.Primitive.U32, 
-        Substrate.NetApi.Model.Types.Primitive.U32, 
-        Substrate.NetApi.Model.Types.Primitive.U32, 
-        BaseTuple<
-            Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, 
-            Substrate.NetApi.Model.Types.Primitive.U128>, 
-        BaseTuple<
-            Substrate.NetApi.Model.Types.Primitive.U128, 
-            Substrate.NetApi.Model.Types.Base.BaseTuple<
-                Substrate.NetApiExt.Generated.Model.cf_primitives.chains.EnumForeignChain, 
-                Substrate.NetApi.Model.Types.Primitive.U64>>, 
-        Substrate.NetApiExt.Generated.Model.sp_runtime.EnumDispatchError>
+    public sealed class EnumEvent : BaseEnumExt<Event, Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Primitive.U32, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Model.Types.Primitive.U128>, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U128, Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.EnumForeignChain, Substrate.NetApi.Model.Types.Primitive.U64>>, Substrate.NetApiExt.Generated.Model.sp_runtime.EnumDispatchError>
     {
     }
 }

@@ -38,7 +38,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_witnesser
     }
     
     /// <summary>
-    /// >> 49 - Variant[pallet_cf_witnesser.PalletSafeMode]
+    /// >> 51 - Variant[pallet_cf_witnesser.PalletSafeMode]
     /// </summary>
     public sealed class EnumPalletSafeMode : BaseEnumExt<PalletSafeMode, BaseVoid, BaseVoid, Substrate.NetApiExt.Generated.Model.state_chain_runtime.safe_mode.WitnesserCallPermission>
     {

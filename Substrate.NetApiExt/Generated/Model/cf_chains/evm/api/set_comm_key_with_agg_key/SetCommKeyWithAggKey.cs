@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.evm.api.set_comm_key_wit
     
     
     /// <summary>
-    /// >> 168 - Composite[cf_chains.evm.api.set_comm_key_with_agg_key.SetCommKeyWithAggKey]
+    /// >> 185 - Composite[cf_chains.evm.api.set_comm_key_with_agg_key.SetCommKeyWithAggKey]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class SetCommKeyWithAggKey : BaseType
@@ -52,7 +52,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.evm.api.set_comm_key_wit
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

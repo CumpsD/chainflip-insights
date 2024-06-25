@@ -27,10 +27,16 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_chain_tracking.pallet
         /// The submitted data is too old.
         /// </summary>
         StaleDataSubmitted = 0,
+        
+        /// <summary>
+        /// >> InvalidBlockHeight
+        /// Block height must be a multiple of the witness period
+        /// </summary>
+        InvalidBlockHeight = 1,
     }
     
     /// <summary>
-    /// >> 375 - Variant[pallet_cf_chain_tracking.pallet.Error]
+    /// >> 654 - Variant[pallet_cf_chain_tracking.pallet.Error]
     /// The `Error` enum of this pallet.
     /// </summary>
     public sealed class EnumError : BaseEnum<Error>

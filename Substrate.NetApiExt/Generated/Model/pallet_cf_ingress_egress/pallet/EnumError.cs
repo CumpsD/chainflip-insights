@@ -63,10 +63,46 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.pallet
         /// The amount is below the minimum egress amount.
         /// </summary>
         BelowEgressDustLimit = 6,
+        
+        /// <summary>
+        /// >> AddBoostFundsDisabled
+        /// Adding boost funds is disabled due to safe mode.
+        /// </summary>
+        AddBoostFundsDisabled = 7,
+        
+        /// <summary>
+        /// >> StopBoostingDisabled
+        /// Retrieving boost funds disabled due to safe mode.
+        /// </summary>
+        StopBoostingDisabled = 8,
+        
+        /// <summary>
+        /// >> BoostPoolAlreadyExists
+        /// Cannot create a boost pool if it already exists.
+        /// </summary>
+        BoostPoolAlreadyExists = 9,
+        
+        /// <summary>
+        /// >> InvalidBoostPoolTier
+        /// Cannot create a boost pool of 0 bps
+        /// </summary>
+        InvalidBoostPoolTier = 10,
+        
+        /// <summary>
+        /// >> DepositChannelCreationDisabled
+        /// Disabled due to safe mode for the chain
+        /// </summary>
+        DepositChannelCreationDisabled = 11,
+        
+        /// <summary>
+        /// >> BoostPoolDoesNotExist
+        /// The specified boost pool does not exist.
+        /// </summary>
+        BoostPoolDoesNotExist = 12,
     }
     
     /// <summary>
-    /// >> 485 - Variant[pallet_cf_ingress_egress.pallet.Error]
+    /// >> 681 - Variant[pallet_cf_ingress_egress.pallet.Error]
     /// The `Error` enum of this pallet.
     /// </summary>
     public sealed class EnumError : BaseEnum<Error>

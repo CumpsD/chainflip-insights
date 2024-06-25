@@ -48,7 +48,14 @@ namespace Substrate.NetApiExt.Generated.Storage
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Environment", "PolkadotVaultAccountId"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApiExt.Generated.Model.cf_chains.dot.PolkadotAccountId)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Environment", "PolkadotProxyAccountNonce"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U32)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Environment", "BitcoinAvailableUtxos"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.cf_chains.btc.Utxo>)));
-            _client.StorageKeyDict.Add(new System.Tuple<string, string>("Environment", "ConsolidationParameters"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApiExt.Generated.Model.cf_chains.btc.ConsolidationParameters)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("Environment", "ConsolidationParameters"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApiExt.Generated.Model.cf_chains.btc.utxo_selection.ConsolidationParameters)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("Environment", "ArbitrumSupportedAssets"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
+                            Substrate.NetApi.Model.Meta.Storage.Hasher.BlakeTwo128Concat}, typeof(Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.arb.EnumAsset), typeof(Substrate.NetApiExt.Generated.Model.primitive_types.H160)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("Environment", "ArbitrumKeyManagerAddress"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApiExt.Generated.Model.primitive_types.H160)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("Environment", "ArbitrumVaultAddress"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApiExt.Generated.Model.primitive_types.H160)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("Environment", "ArbitrumAddressCheckerAddress"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApiExt.Generated.Model.primitive_types.H160)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("Environment", "ArbitrumChainId"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U64)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("Environment", "ArbitrumSignatureNonce"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U64)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Environment", "RuntimeSafeMode"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApiExt.Generated.Model.state_chain_runtime.safe_mode.@__inner.RuntimeSafeMode)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Environment", "CurrentReleaseVersion"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApiExt.Generated.Model.cf_primitives.SemVer)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Environment", "ChainflipNetworkEnvironment"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApiExt.Generated.Model.cf_primitives.EnumNetworkEnvironment)));
@@ -391,10 +398,184 @@ namespace Substrate.NetApiExt.Generated.Storage
         /// <summary>
         /// >> ConsolidationParameters
         /// </summary>
-        public async Task<Substrate.NetApiExt.Generated.Model.cf_chains.btc.ConsolidationParameters> ConsolidationParameters(string blockhash, CancellationToken token)
+        public async Task<Substrate.NetApiExt.Generated.Model.cf_chains.btc.utxo_selection.ConsolidationParameters> ConsolidationParameters(string blockhash, CancellationToken token)
         {
             string parameters = EnvironmentStorage.ConsolidationParametersParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApiExt.Generated.Model.cf_chains.btc.ConsolidationParameters>(parameters, blockhash, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApiExt.Generated.Model.cf_chains.btc.utxo_selection.ConsolidationParameters>(parameters, blockhash, token);
+            return result;
+        }
+        
+        /// <summary>
+        /// >> ArbitrumSupportedAssetsParams
+        ///  Map of supported assets for ARB
+        /// </summary>
+        public static string ArbitrumSupportedAssetsParams(Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.arb.EnumAsset key)
+        {
+            return RequestGenerator.GetStorage("Environment", "ArbitrumSupportedAssets", Substrate.NetApi.Model.Meta.Storage.Type.Map, new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
+                        Substrate.NetApi.Model.Meta.Storage.Hasher.BlakeTwo128Concat}, new Substrate.NetApi.Model.Types.IType[] {
+                        key});
+        }
+        
+        /// <summary>
+        /// >> ArbitrumSupportedAssetsDefault
+        /// Default value as hex string
+        /// </summary>
+        public static string ArbitrumSupportedAssetsDefault()
+        {
+            return "0x00";
+        }
+        
+        /// <summary>
+        /// >> ArbitrumSupportedAssets
+        ///  Map of supported assets for ARB
+        /// </summary>
+        public async Task<Substrate.NetApiExt.Generated.Model.primitive_types.H160> ArbitrumSupportedAssets(Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.arb.EnumAsset key, string blockhash, CancellationToken token)
+        {
+            string parameters = EnvironmentStorage.ArbitrumSupportedAssetsParams(key);
+            var result = await _client.GetStorageAsync<Substrate.NetApiExt.Generated.Model.primitive_types.H160>(parameters, blockhash, token);
+            return result;
+        }
+        
+        /// <summary>
+        /// >> ArbitrumKeyManagerAddressParams
+        ///  The address of the ARB key manager contract
+        /// </summary>
+        public static string ArbitrumKeyManagerAddressParams()
+        {
+            return RequestGenerator.GetStorage("Environment", "ArbitrumKeyManagerAddress", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
+        }
+        
+        /// <summary>
+        /// >> ArbitrumKeyManagerAddressDefault
+        /// Default value as hex string
+        /// </summary>
+        public static string ArbitrumKeyManagerAddressDefault()
+        {
+            return "0x0000000000000000000000000000000000000000";
+        }
+        
+        /// <summary>
+        /// >> ArbitrumKeyManagerAddress
+        ///  The address of the ARB key manager contract
+        /// </summary>
+        public async Task<Substrate.NetApiExt.Generated.Model.primitive_types.H160> ArbitrumKeyManagerAddress(string blockhash, CancellationToken token)
+        {
+            string parameters = EnvironmentStorage.ArbitrumKeyManagerAddressParams();
+            var result = await _client.GetStorageAsync<Substrate.NetApiExt.Generated.Model.primitive_types.H160>(parameters, blockhash, token);
+            return result;
+        }
+        
+        /// <summary>
+        /// >> ArbitrumVaultAddressParams
+        ///  The address of the ARB vault contract
+        /// </summary>
+        public static string ArbitrumVaultAddressParams()
+        {
+            return RequestGenerator.GetStorage("Environment", "ArbitrumVaultAddress", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
+        }
+        
+        /// <summary>
+        /// >> ArbitrumVaultAddressDefault
+        /// Default value as hex string
+        /// </summary>
+        public static string ArbitrumVaultAddressDefault()
+        {
+            return "0x0000000000000000000000000000000000000000";
+        }
+        
+        /// <summary>
+        /// >> ArbitrumVaultAddress
+        ///  The address of the ARB vault contract
+        /// </summary>
+        public async Task<Substrate.NetApiExt.Generated.Model.primitive_types.H160> ArbitrumVaultAddress(string blockhash, CancellationToken token)
+        {
+            string parameters = EnvironmentStorage.ArbitrumVaultAddressParams();
+            var result = await _client.GetStorageAsync<Substrate.NetApiExt.Generated.Model.primitive_types.H160>(parameters, blockhash, token);
+            return result;
+        }
+        
+        /// <summary>
+        /// >> ArbitrumAddressCheckerAddressParams
+        ///  The address of the Address Checker contract on Arbitrum.
+        /// </summary>
+        public static string ArbitrumAddressCheckerAddressParams()
+        {
+            return RequestGenerator.GetStorage("Environment", "ArbitrumAddressCheckerAddress", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
+        }
+        
+        /// <summary>
+        /// >> ArbitrumAddressCheckerAddressDefault
+        /// Default value as hex string
+        /// </summary>
+        public static string ArbitrumAddressCheckerAddressDefault()
+        {
+            return "0x0000000000000000000000000000000000000000";
+        }
+        
+        /// <summary>
+        /// >> ArbitrumAddressCheckerAddress
+        ///  The address of the Address Checker contract on Arbitrum.
+        /// </summary>
+        public async Task<Substrate.NetApiExt.Generated.Model.primitive_types.H160> ArbitrumAddressCheckerAddress(string blockhash, CancellationToken token)
+        {
+            string parameters = EnvironmentStorage.ArbitrumAddressCheckerAddressParams();
+            var result = await _client.GetStorageAsync<Substrate.NetApiExt.Generated.Model.primitive_types.H160>(parameters, blockhash, token);
+            return result;
+        }
+        
+        /// <summary>
+        /// >> ArbitrumChainIdParams
+        ///  The ARB chain id
+        /// </summary>
+        public static string ArbitrumChainIdParams()
+        {
+            return RequestGenerator.GetStorage("Environment", "ArbitrumChainId", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
+        }
+        
+        /// <summary>
+        /// >> ArbitrumChainIdDefault
+        /// Default value as hex string
+        /// </summary>
+        public static string ArbitrumChainIdDefault()
+        {
+            return "0x0000000000000000";
+        }
+        
+        /// <summary>
+        /// >> ArbitrumChainId
+        ///  The ARB chain id
+        /// </summary>
+        public async Task<Substrate.NetApi.Model.Types.Primitive.U64> ArbitrumChainId(string blockhash, CancellationToken token)
+        {
+            string parameters = EnvironmentStorage.ArbitrumChainIdParams();
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U64>(parameters, blockhash, token);
+            return result;
+        }
+        
+        /// <summary>
+        /// >> ArbitrumSignatureNonceParams
+        /// </summary>
+        public static string ArbitrumSignatureNonceParams()
+        {
+            return RequestGenerator.GetStorage("Environment", "ArbitrumSignatureNonce", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
+        }
+        
+        /// <summary>
+        /// >> ArbitrumSignatureNonceDefault
+        /// Default value as hex string
+        /// </summary>
+        public static string ArbitrumSignatureNonceDefault()
+        {
+            return "0x0000000000000000";
+        }
+        
+        /// <summary>
+        /// >> ArbitrumSignatureNonce
+        /// </summary>
+        public async Task<Substrate.NetApi.Model.Types.Primitive.U64> ArbitrumSignatureNonce(string blockhash, CancellationToken token)
+        {
+            string parameters = EnvironmentStorage.ArbitrumSignatureNonceParams();
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U64>(parameters, blockhash, token);
             return result;
         }
         
@@ -413,7 +594,7 @@ namespace Substrate.NetApiExt.Generated.Storage
         /// </summary>
         public static string RuntimeSafeModeDefault()
         {
-            return "0x010101010101010101010101010101010101010100";
+            return "0x01010101010101010101010101010101010101010001010101010101010101010101010101";
         }
         
         /// <summary>
@@ -533,11 +714,22 @@ namespace Substrate.NetApiExt.Generated.Storage
         /// >> update_consolidation_parameters
         /// Contains a variant per dispatchable extrinsic that this pallet has.
         /// </summary>
-        public static Method UpdateConsolidationParameters(Substrate.NetApiExt.Generated.Model.cf_chains.btc.ConsolidationParameters @params)
+        public static Method UpdateConsolidationParameters(Substrate.NetApiExt.Generated.Model.cf_chains.btc.utxo_selection.ConsolidationParameters @params)
         {
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
             byteArray.AddRange(@params.Encode());
             return new Method(2, "Environment", 4, "update_consolidation_parameters", byteArray.ToArray());
+        }
+        
+        /// <summary>
+        /// >> witness_initialize_arbitrum_vault
+        /// Contains a variant per dispatchable extrinsic that this pallet has.
+        /// </summary>
+        public static Method WitnessInitializeArbitrumVault(Substrate.NetApi.Model.Types.Primitive.U64 block_number)
+        {
+            System.Collections.Generic.List<byte> byteArray = new List<byte>();
+            byteArray.AddRange(block_number.Encode());
+            return new Method(2, "Environment", 5, "witness_initialize_arbitrum_vault", byteArray.ToArray());
         }
     }
     
@@ -555,7 +747,7 @@ namespace Substrate.NetApiExt.Generated.Storage
         public Substrate.NetApiExt.Generated.Model.cf_primitives.SemVer CurrentReleaseVersion()
         {
             var result = new Substrate.NetApiExt.Generated.Model.cf_primitives.SemVer();
-            result.Create("0x010201");
+            result.Create("0x010403");
             return result;
         }
     }

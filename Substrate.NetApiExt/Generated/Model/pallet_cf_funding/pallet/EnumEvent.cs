@@ -41,109 +41,65 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_funding.pallet
         RedemptionSettled = 2,
         
         /// <summary>
-        /// >> StoppedBidding
-        /// An account has stopped bidding and will no longer take part in auctions.
-        /// </summary>
-        StoppedBidding = 3,
-        
-        /// <summary>
-        /// >> StartedBidding
-        /// A previously non-bidding account has started bidding.
-        /// </summary>
-        StartedBidding = 4,
-        
-        /// <summary>
         /// >> RedemptionExpired
         /// A redemption has expired without being executed.
         /// </summary>
-        RedemptionExpired = 5,
+        RedemptionExpired = 3,
         
         /// <summary>
         /// >> AddedRestrictedAddress
         /// A new restricted address has been added
         /// </summary>
-        AddedRestrictedAddress = 6,
+        AddedRestrictedAddress = 4,
         
         /// <summary>
         /// >> RemovedRestrictedAddress
         /// A restricted address has been removed
         /// </summary>
-        RemovedRestrictedAddress = 7,
+        RemovedRestrictedAddress = 5,
         
         /// <summary>
         /// >> FailedFundingAttempt
         /// A funding attempt has failed.
         /// </summary>
-        FailedFundingAttempt = 8,
+        FailedFundingAttempt = 6,
         
         /// <summary>
         /// >> MinimumFundingUpdated
         /// The minimum funding amount has been updated.
         /// </summary>
-        MinimumFundingUpdated = 9,
+        MinimumFundingUpdated = 7,
         
         /// <summary>
         /// >> RedemptionTaxAmountUpdated
         /// The Withdrawal Tax has been updated.
         /// </summary>
-        RedemptionTaxAmountUpdated = 10,
+        RedemptionTaxAmountUpdated = 8,
         
         /// <summary>
         /// >> RedemptionAmountZero
         /// The redemption amount was zero, so no redemption was made. The tax was still levied.
         /// </summary>
-        RedemptionAmountZero = 11,
+        RedemptionAmountZero = 9,
         
         /// <summary>
         /// >> BoundRedeemAddress
         /// An account has been bound to an address.
         /// </summary>
-        BoundRedeemAddress = 12,
+        BoundRedeemAddress = 10,
         
         /// <summary>
         /// >> BoundExecutorAddress
         /// An account has been bound to an executor address.
         /// </summary>
-        BoundExecutorAddress = 13,
+        BoundExecutorAddress = 11,
     }
     
     /// <summary>
-    /// >> 60 - Variant[pallet_cf_funding.pallet.Event]
+    /// >> 75 - Variant[pallet_cf_funding.pallet.Event]
     /// The `Event` enum of this pallet
     /// </summary>
-    public sealed class EnumEvent : BaseEnumExt<
-        Event, 
-        BaseTuple<
-            Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32,
-            Substrate.NetApiExt.Generated.Types.Base.Arr32U8,
-            Substrate.NetApi.Model.Types.Primitive.U128, 
-            Substrate.NetApi.Model.Types.Primitive.U128>, 
-        BaseTuple<
-            Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, 
-            Substrate.NetApi.Model.Types.Primitive.U128, 
-            Substrate.NetApi.Model.Types.Primitive.U32, 
-            Substrate.NetApi.Model.Types.Primitive.U64>, 
-        BaseTuple<
-            Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, 
-            Substrate.NetApi.Model.Types.Primitive.U128>, 
-        Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, 
-        Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32,
-        Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32,
-        Substrate.NetApiExt.Generated.Model.primitive_types.H160, 
-        Substrate.NetApiExt.Generated.Model.primitive_types.H160, 
-        BaseTuple<
-            Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, 
-            Substrate.NetApiExt.Generated.Model.primitive_types.H160,
-            Substrate.NetApi.Model.Types.Primitive.U128>, 
-        Substrate.NetApi.Model.Types.Primitive.U128,
-        Substrate.NetApi.Model.Types.Primitive.U128, 
-        Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, 
-        BaseTuple<
-            Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, 
-            Substrate.NetApiExt.Generated.Model.primitive_types.H160>, 
-        BaseTuple<
-            Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, 
-            Substrate.NetApiExt.Generated.Model.primitive_types.H160>>
+    public sealed class EnumEvent : BaseEnumExt<Event, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Types.Base.Arr32U8, Substrate.NetApi.Model.Types.Primitive.U128, Substrate.NetApi.Model.Types.Primitive.U128>, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Model.Types.Primitive.U128, Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Primitive.U64>, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Model.Types.Primitive.U128>, Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Model.primitive_types.H160, Substrate.NetApiExt.Generated.Model.primitive_types.H160, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Model.primitive_types.H160, Substrate.NetApi.Model.Types.Primitive.U128>, Substrate.NetApi.Model.Types.Primitive.U128, Substrate.NetApi.Model.Types.Primitive.U128, Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Model.primitive_types.H160>, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Model.primitive_types.H160>>
     {
     }
 }

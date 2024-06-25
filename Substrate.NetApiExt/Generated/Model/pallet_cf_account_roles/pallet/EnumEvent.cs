@@ -26,17 +26,24 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_account_roles.pallet
         /// >> AccountRoleRegistered
         /// </summary>
         AccountRoleRegistered = 0,
+        
+        /// <summary>
+        /// >> AccountRoleDeregistered
+        /// </summary>
+        AccountRoleDeregistered = 1,
+        
+        /// <summary>
+        /// >> VanityNameSet
+        /// Vanity Name for a node has been set.
+        /// </summary>
+        VanityNameSet = 2,
     }
     
     /// <summary>
-    /// >> 61 - Variant[pallet_cf_account_roles.pallet.Event]
+    /// >> 76 - Variant[pallet_cf_account_roles.pallet.Event]
     /// The `Event` enum of this pallet
     /// </summary>
-    public sealed class EnumEvent : BaseEnumExt<
-        Event, 
-        BaseTuple<
-            Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, 
-            Substrate.NetApiExt.Generated.Model.cf_primitives.EnumAccountRole>>
+    public sealed class EnumEvent : BaseEnumExt<Event, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Model.cf_primitives.EnumAccountRole>, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Model.cf_primitives.EnumAccountRole>, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Model.bounded_collections.bounded_vec.BoundedVecT2>>
     {
     }
 }

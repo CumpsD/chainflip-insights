@@ -33,7 +33,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.dot
     }
     
     /// <summary>
-    /// >> 190 - Variant[cf_chains.dot.BalancesCall]
+    /// >> 207 - Variant[cf_chains.dot.BalancesCall]
     /// </summary>
     public sealed class EnumBalancesCall : BaseEnumExt<BalancesCall, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_runtime.multiaddress.EnumMultiAddress, Substrate.NetApi.Model.Types.Base.BaseCom<Substrate.NetApi.Model.Types.Primitive.U128>>, BaseVoid, BaseVoid, BaseVoid, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_runtime.multiaddress.EnumMultiAddress, Substrate.NetApi.Model.Types.Primitive.Bool>>
     {

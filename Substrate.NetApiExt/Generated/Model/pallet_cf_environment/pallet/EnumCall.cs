@@ -45,13 +45,19 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_environment.pallet
         /// See [`Pallet::update_consolidation_parameters`].
         /// </summary>
         update_consolidation_parameters = 4,
+        
+        /// <summary>
+        /// >> witness_initialize_arbitrum_vault
+        /// See [`Pallet::witness_initialize_arbitrum_vault`].
+        /// </summary>
+        witness_initialize_arbitrum_vault = 5,
     }
     
     /// <summary>
-    /// >> 72 - Variant[pallet_cf_environment.pallet.Call]
+    /// >> 88 - Variant[pallet_cf_environment.pallet.Call]
     /// Contains a variant per dispatchable extrinsic that this pallet has.
     /// </summary>
-    public sealed class EnumCall : BaseEnumExt<Call, BaseVoid, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_chains.dot.PolkadotAccountId, Substrate.NetApiExt.Generated.Model.cf_primitives.TxId>, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApiExt.Generated.Model.cf_chains.btc.AggKey>, Substrate.NetApiExt.Generated.Model.pallet_cf_environment.EnumSafeModeUpdate, Substrate.NetApiExt.Generated.Model.cf_chains.btc.ConsolidationParameters>
+    public sealed class EnumCall : BaseEnumExt<Call, BaseVoid, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_chains.dot.PolkadotAccountId, Substrate.NetApiExt.Generated.Model.cf_primitives.TxId>, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApiExt.Generated.Model.cf_chains.btc.AggKey>, Substrate.NetApiExt.Generated.Model.pallet_cf_environment.EnumSafeModeUpdate, Substrate.NetApiExt.Generated.Model.cf_chains.btc.utxo_selection.ConsolidationParameters, Substrate.NetApi.Model.Types.Primitive.U64>
     {
     }
 }

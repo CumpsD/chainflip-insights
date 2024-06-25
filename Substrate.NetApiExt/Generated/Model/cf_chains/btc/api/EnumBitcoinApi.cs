@@ -28,7 +28,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.btc.api
     }
     
     /// <summary>
-    /// >> 206 - Variant[cf_chains.btc.api.BitcoinApi]
+    /// >> 224 - Variant[cf_chains.btc.api.BitcoinApi]
     /// </summary>
     public sealed class EnumBitcoinApi : BaseEnumExt<BitcoinApi, Substrate.NetApiExt.Generated.Model.cf_chains.btc.api.batch_transfer.BatchTransfer>
     {

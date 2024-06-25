@@ -38,7 +38,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.evm
     }
     
     /// <summary>
-    /// >> 449 - Variant[cf_chains.evm.DeploymentStatus]
+    /// >> 513 - Variant[cf_chains.evm.DeploymentStatus]
     /// </summary>
     public sealed class EnumDeploymentStatus : BaseEnum<DeploymentStatus>
     {

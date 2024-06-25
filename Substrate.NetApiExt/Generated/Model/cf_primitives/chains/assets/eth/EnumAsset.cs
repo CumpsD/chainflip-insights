@@ -35,10 +35,15 @@ namespace Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.eth
         /// >> Usdc
         /// </summary>
         Usdc = 2,
+        
+        /// <summary>
+        /// >> Usdt
+        /// </summary>
+        Usdt = 3,
     }
     
     /// <summary>
-    /// >> 29 - Variant[cf_primitives.chains.assets.eth.Asset]
+    /// >> 30 - Variant[cf_primitives.chains.assets.eth.Asset]
     /// </summary>
     public sealed class EnumAsset : BaseEnum<Asset>
     {

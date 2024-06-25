@@ -48,7 +48,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_reputation.pallet
     }
     
     /// <summary>
-    /// >> 116 - Variant[pallet_cf_reputation.pallet.Call]
+    /// >> 133 - Variant[pallet_cf_reputation.pallet.Call]
     /// Contains a variant per dispatchable extrinsic that this pallet has.
     /// </summary>
     public sealed class EnumCall : BaseEnumExt<Call, BaseTuple<Substrate.NetApi.Model.Types.Primitive.I32, Substrate.NetApi.Model.Types.Primitive.U32>, Substrate.NetApi.Model.Types.Primitive.I32, BaseTuple<Substrate.NetApiExt.Generated.Model.state_chain_runtime.chainflip.offences.EnumOffence, Substrate.NetApiExt.Generated.Model.pallet_cf_reputation.Penalty>, BaseVoid>

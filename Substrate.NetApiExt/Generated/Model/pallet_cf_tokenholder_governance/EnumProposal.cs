@@ -33,7 +33,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_tokenholder_governance
     }
     
     /// <summary>
-    /// >> 115 - Variant[pallet_cf_tokenholder_governance.Proposal]
+    /// >> 132 - Variant[pallet_cf_tokenholder_governance.Proposal]
     /// </summary>
     public sealed class EnumProposal : BaseEnumExt<Proposal, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.EnumForeignChain, Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Model.Types.Primitive.U8>>, Substrate.NetApiExt.Generated.Model.primitive_types.H160>
     {

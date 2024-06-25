@@ -33,18 +33,31 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_witnesser.pallet
         /// A an external event has been pre-witnessed.
         /// </summary>
         Prewitnessed = 1,
+        
+        /// <summary>
+        /// >> PrewitnessExecutionFailed
+        /// A witness call has failed.
+        /// </summary>
+        PrewitnessExecutionFailed = 2,
+        
+        /// <summary>
+        /// >> ReportedWitnessingFailures
+        /// One or more node(s) has been reported for the offence of "FailedToWitnessInTime".
+        /// </summary>
+        ReportedWitnessingFailures = 3,
+        
+        /// <summary>
+        /// >> CallDispatched
+        /// A witnessed call has been dispatched.
+        /// </summary>
+        CallDispatched = 4,
     }
     
     /// <summary>
-    /// >> 64 - Variant[pallet_cf_witnesser.pallet.Event]
+    /// >> 80 - Variant[pallet_cf_witnesser.pallet.Event]
     /// The `Event` enum of this pallet
     /// </summary>
-    public sealed class EnumEvent : BaseEnumExt<
-        Event, 
-        BaseTuple<
-            Substrate.NetApiExt.Generated.Model.pallet_cf_witnesser.pallet.CallHash, 
-            Substrate.NetApiExt.Generated.Model.sp_runtime.EnumDispatchError>,
-        Substrate.NetApiExt.Generated.Model.state_chain_runtime.EnumRuntimeCall>
+    public sealed class EnumEvent : BaseEnumExt<Event, BaseTuple<Substrate.NetApiExt.Generated.Model.pallet_cf_witnesser.pallet.CallHash, Substrate.NetApiExt.Generated.Model.sp_runtime.EnumDispatchError>, Substrate.NetApiExt.Generated.Model.state_chain_runtime.EnumRuntimeCall, BaseTuple<Substrate.NetApiExt.Generated.Model.pallet_cf_witnesser.pallet.CallHash, Substrate.NetApiExt.Generated.Model.sp_runtime.EnumDispatchError>, BaseTuple<Substrate.NetApiExt.Generated.Model.pallet_cf_witnesser.pallet.CallHash, Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>>, Substrate.NetApiExt.Generated.Model.pallet_cf_witnesser.pallet.CallHash>
     {
     }
 }

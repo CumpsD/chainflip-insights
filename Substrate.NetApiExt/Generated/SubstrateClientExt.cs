@@ -150,9 +150,9 @@ namespace Substrate.NetApiExt.Generated
         public BitcoinVaultStorage BitcoinVaultStorage;
         
         /// <summary>
-        /// EthereumThresholdSignerStorage storage calls.
+        /// EvmThresholdSignerStorage storage calls.
         /// </summary>
-        public EthereumThresholdSignerStorage EthereumThresholdSignerStorage;
+        public EvmThresholdSignerStorage EvmThresholdSignerStorage;
         
         /// <summary>
         /// PolkadotThresholdSignerStorage storage calls.
@@ -214,6 +214,26 @@ namespace Substrate.NetApiExt.Generated
         /// </summary>
         public CfeInterfaceStorage CfeInterfaceStorage;
         
+        /// <summary>
+        /// ArbitrumChainTrackingStorage storage calls.
+        /// </summary>
+        public ArbitrumChainTrackingStorage ArbitrumChainTrackingStorage;
+        
+        /// <summary>
+        /// ArbitrumVaultStorage storage calls.
+        /// </summary>
+        public ArbitrumVaultStorage ArbitrumVaultStorage;
+        
+        /// <summary>
+        /// ArbitrumBroadcasterStorage storage calls.
+        /// </summary>
+        public ArbitrumBroadcasterStorage ArbitrumBroadcasterStorage;
+        
+        /// <summary>
+        /// ArbitrumIngressEgressStorage storage calls.
+        /// </summary>
+        public ArbitrumIngressEgressStorage ArbitrumIngressEgressStorage;
+        
         public SubstrateClientExt(System.Uri uri, Substrate.NetApi.Model.Extrinsics.ChargeType chargeType) : 
                 base(uri, chargeType)
         {
@@ -242,7 +262,7 @@ namespace Substrate.NetApiExt.Generated
             this.EthereumVaultStorage = new EthereumVaultStorage(this);
             this.PolkadotVaultStorage = new PolkadotVaultStorage(this);
             this.BitcoinVaultStorage = new BitcoinVaultStorage(this);
-            this.EthereumThresholdSignerStorage = new EthereumThresholdSignerStorage(this);
+            this.EvmThresholdSignerStorage = new EvmThresholdSignerStorage(this);
             this.PolkadotThresholdSignerStorage = new PolkadotThresholdSignerStorage(this);
             this.BitcoinThresholdSignerStorage = new BitcoinThresholdSignerStorage(this);
             this.EthereumBroadcasterStorage = new EthereumBroadcasterStorage(this);
@@ -255,6 +275,10 @@ namespace Substrate.NetApiExt.Generated
             this.BitcoinIngressEgressStorage = new BitcoinIngressEgressStorage(this);
             this.LiquidityPoolsStorage = new LiquidityPoolsStorage(this);
             this.CfeInterfaceStorage = new CfeInterfaceStorage(this);
+            this.ArbitrumChainTrackingStorage = new ArbitrumChainTrackingStorage(this);
+            this.ArbitrumVaultStorage = new ArbitrumVaultStorage(this);
+            this.ArbitrumBroadcasterStorage = new ArbitrumBroadcasterStorage(this);
+            this.ArbitrumIngressEgressStorage = new ArbitrumIngressEgressStorage(this);
         }
     }
 }

@@ -39,13 +39,19 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_witnesser.pallet
         /// See [`Pallet::prewitness`].
         /// </summary>
         prewitness = 2,
+        
+        /// <summary>
+        /// >> prewitness_and_execute
+        /// See [`Pallet::prewitness_and_execute`].
+        /// </summary>
+        prewitness_and_execute = 3,
     }
     
     /// <summary>
-    /// >> 83 - Variant[pallet_cf_witnesser.pallet.Call]
+    /// >> 99 - Variant[pallet_cf_witnesser.pallet.Call]
     /// Contains a variant per dispatchable extrinsic that this pallet has.
     /// </summary>
-    public sealed class EnumCall : BaseEnumExt<Call, BaseTuple<Substrate.NetApiExt.Generated.Model.state_chain_runtime.EnumRuntimeCall, Substrate.NetApi.Model.Types.Primitive.U32>, BaseTuple<Substrate.NetApiExt.Generated.Model.state_chain_runtime.EnumRuntimeCall, Substrate.NetApi.Model.Types.Primitive.U32>, Substrate.NetApiExt.Generated.Model.state_chain_runtime.EnumRuntimeCall>
+    public sealed class EnumCall : BaseEnumExt<Call, BaseTuple<Substrate.NetApiExt.Generated.Model.state_chain_runtime.EnumRuntimeCall, Substrate.NetApi.Model.Types.Primitive.U32>, BaseTuple<Substrate.NetApiExt.Generated.Model.state_chain_runtime.EnumRuntimeCall, Substrate.NetApi.Model.Types.Primitive.U32>, Substrate.NetApiExt.Generated.Model.state_chain_runtime.EnumRuntimeCall, Substrate.NetApiExt.Generated.Model.state_chain_runtime.EnumRuntimeCall>
     {
     }
 }

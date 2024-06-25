@@ -53,9 +53,9 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_validator
     }
     
     /// <summary>
-    /// >> 259 - Variant[pallet_cf_validator.RotationPhase]
+    /// >> 308 - Variant[pallet_cf_validator.RotationPhase]
     /// </summary>
-    public sealed class EnumRotationPhase : BaseEnumExt<RotationPhase, BaseVoid, Substrate.NetApiExt.Generated.Model.pallet_cf_validator.rotation_state.RotationState, Substrate.NetApiExt.Generated.Model.pallet_cf_validator.rotation_state.RotationState, Substrate.NetApiExt.Generated.Model.pallet_cf_validator.rotation_state.RotationState, Substrate.NetApiExt.Generated.Model.pallet_cf_validator.rotation_state.RotationState, Substrate.NetApiExt.Generated.Model.pallet_cf_validator.rotation_state.RotationState>
+    public sealed class EnumRotationPhase : BaseEnumExt<RotationPhase, BaseVoid, Substrate.NetApiExt.Generated.Model.pallet_cf_validator.rotation_state.RotationState, Substrate.NetApiExt.Generated.Model.pallet_cf_validator.rotation_state.RotationState, Substrate.NetApiExt.Generated.Model.pallet_cf_validator.rotation_state.RotationState, Substrate.NetApiExt.Generated.Model.pallet_cf_validator.rotation_state.RotationState, BaseTuple<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>, Substrate.NetApi.Model.Types.Primitive.U128>>
     {
     }
 }

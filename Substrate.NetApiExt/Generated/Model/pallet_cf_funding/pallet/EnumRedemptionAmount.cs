@@ -33,7 +33,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_funding.pallet
     }
     
     /// <summary>
-    /// >> 79 - Variant[pallet_cf_funding.pallet.RedemptionAmount]
+    /// >> 95 - Variant[pallet_cf_funding.pallet.RedemptionAmount]
     /// </summary>
     public sealed class EnumRedemptionAmount : BaseEnumExt<RedemptionAmount, BaseVoid, Substrate.NetApi.Model.Types.Primitive.U128>
     {

@@ -33,9 +33,9 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress
     }
     
     /// <summary>
-    /// >> 477 - Variant[pallet_cf_ingress_egress.FetchOrTransfer]
+    /// >> 676 - Variant[pallet_cf_ingress_egress.FetchOrTransfer]
     /// </summary>
-    public sealed class EnumFetchOrTransfer : BaseEnumExt<FetchOrTransfer, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.btc.EnumAsset, Substrate.NetApiExt.Generated.Model.cf_chains.btc.EnumScriptPubkey, Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApiExt.Generated.Model.cf_chains.btc.BitcoinFetchId>, Substrate.NetApi.Model.Types.Primitive.U64>, BaseTuple<Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.EnumForeignChain, Substrate.NetApi.Model.Types.Primitive.U64>, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.btc.EnumAsset, Substrate.NetApiExt.Generated.Model.cf_chains.btc.EnumScriptPubkey, Substrate.NetApi.Model.Types.Primitive.U64>>
+    public sealed class EnumFetchOrTransfer : BaseEnumExt<FetchOrTransfer, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.arb.EnumAsset, Substrate.NetApiExt.Generated.Model.primitive_types.H160, Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApiExt.Generated.Model.cf_chains.evm.EnumEvmFetchId>, Substrate.NetApi.Model.Types.Primitive.U128>, BaseTuple<Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.EnumForeignChain, Substrate.NetApi.Model.Types.Primitive.U64>, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.arb.EnumAsset, Substrate.NetApiExt.Generated.Model.primitive_types.H160, Substrate.NetApi.Model.Types.Primitive.U128>>
     {
     }
 }

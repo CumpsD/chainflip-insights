@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_validator.auction_resolv
     
     
     /// <summary>
-    /// >> 87 - Composite[pallet_cf_validator.auction_resolver.SetSizeParameters]
+    /// >> 103 - Composite[pallet_cf_validator.auction_resolver.SetSizeParameters]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class SetSizeParameters : BaseType
@@ -66,7 +66,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_validator.auction_resolv
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

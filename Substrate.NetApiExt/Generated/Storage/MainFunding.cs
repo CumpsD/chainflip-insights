@@ -36,8 +36,6 @@ namespace Substrate.NetApiExt.Generated.Storage
         public FundingStorage(SubstrateClientExt client)
         {
             this._client = client;
-            _client.StorageKeyDict.Add(new System.Tuple<string, string>("Funding", "ActiveBidder"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
-                            Substrate.NetApi.Model.Meta.Storage.Hasher.BlakeTwo128Concat}, typeof(Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32), typeof(Substrate.NetApi.Model.Types.Primitive.Bool)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Funding", "PendingRedemptions"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
                             Substrate.NetApi.Model.Meta.Storage.Hasher.BlakeTwo128Concat}, typeof(Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32), typeof(Substrate.NetApiExt.Generated.Model.pallet_cf_funding.PendingRedemptionInfo)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Funding", "MinimumFunding"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U128)));
@@ -47,41 +45,10 @@ namespace Substrate.NetApiExt.Generated.Storage
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Funding", "RestrictedAddresses"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
                             Substrate.NetApi.Model.Meta.Storage.Hasher.BlakeTwo128Concat}, typeof(Substrate.NetApiExt.Generated.Model.primitive_types.H160), typeof(Substrate.NetApi.Model.Types.Base.BaseTuple)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Funding", "RestrictedBalances"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
-                            Substrate.NetApi.Model.Meta.Storage.Hasher.BlakeTwo128Concat}, typeof(Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32), typeof(Substrate.NetApiExt.Generated.Types.Base.BTreeMapT1)));
+                            Substrate.NetApi.Model.Meta.Storage.Hasher.BlakeTwo128Concat}, typeof(Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32), typeof(Substrate.NetApiExt.Generated.Types.Base.BTreeMapT3)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Funding", "BoundRedeemAddress"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
                             Substrate.NetApi.Model.Meta.Storage.Hasher.BlakeTwo128Concat}, typeof(Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32), typeof(Substrate.NetApiExt.Generated.Model.primitive_types.H160)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Funding", "RedemptionTax"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U128)));
-        }
-        
-        /// <summary>
-        /// >> ActiveBidderParams
-        ///  Store the list of funded accounts and whether or not they are a active bidder.
-        /// </summary>
-        public static string ActiveBidderParams(Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32 key)
-        {
-            return RequestGenerator.GetStorage("Funding", "ActiveBidder", Substrate.NetApi.Model.Meta.Storage.Type.Map, new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
-                        Substrate.NetApi.Model.Meta.Storage.Hasher.BlakeTwo128Concat}, new Substrate.NetApi.Model.Types.IType[] {
-                        key});
-        }
-        
-        /// <summary>
-        /// >> ActiveBidderDefault
-        /// Default value as hex string
-        /// </summary>
-        public static string ActiveBidderDefault()
-        {
-            return "0x00";
-        }
-        
-        /// <summary>
-        /// >> ActiveBidder
-        ///  Store the list of funded accounts and whether or not they are a active bidder.
-        /// </summary>
-        public async Task<Substrate.NetApi.Model.Types.Primitive.Bool> ActiveBidder(Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32 key, string blockhash, CancellationToken token)
-        {
-            string parameters = FundingStorage.ActiveBidderParams(key);
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.Bool>(parameters, blockhash, token);
-            return result;
         }
         
         /// <summary>
@@ -263,10 +230,10 @@ namespace Substrate.NetApiExt.Generated.Storage
         /// >> RestrictedBalances
         ///  Map that bookkeeps the restricted balances for each address
         /// </summary>
-        public async Task<Substrate.NetApiExt.Generated.Types.Base.BTreeMapT1> RestrictedBalances(Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32 key, string blockhash, CancellationToken token)
+        public async Task<Substrate.NetApiExt.Generated.Types.Base.BTreeMapT3> RestrictedBalances(Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32 key, string blockhash, CancellationToken token)
         {
             string parameters = FundingStorage.RestrictedBalancesParams(key);
-            var result = await _client.GetStorageAsync<Substrate.NetApiExt.Generated.Types.Base.BTreeMapT1>(parameters, blockhash, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApiExt.Generated.Types.Base.BTreeMapT3>(parameters, blockhash, token);
             return result;
         }
         
@@ -492,24 +459,6 @@ namespace Substrate.NetApiExt.Generated.Storage
         PendingRedemption,
         
         /// <summary>
-        /// >> AlreadyNotBidding
-        /// Can't stop bidding an account if it's already not bidding.
-        /// </summary>
-        AlreadyNotBidding,
-        
-        /// <summary>
-        /// >> AlreadyBidding
-        /// Can only start bidding if not already bidding.
-        /// </summary>
-        AlreadyBidding,
-        
-        /// <summary>
-        /// >> AuctionPhase
-        /// We are in the auction phase
-        /// </summary>
-        AuctionPhase,
-        
-        /// <summary>
         /// >> BelowMinimumFunding
         /// When requesting a redemption, you must not have an amount below the minimum.
         /// </summary>
@@ -558,18 +507,6 @@ namespace Substrate.NetApiExt.Generated.Storage
         RedeemDisabled,
         
         /// <summary>
-        /// >> StartBiddingDisabled
-        /// Start Bidding is disabled due to Safe Mode.
-        /// </summary>
-        StartBiddingDisabled,
-        
-        /// <summary>
-        /// >> StopBiddingDisabled
-        /// Stop Bidding is disabled due to Safe Mode.
-        /// </summary>
-        StopBiddingDisabled,
-        
-        /// <summary>
         /// >> ExecutorBindingRestrictionViolated
         /// The executor for this account is bound to another address.
         /// </summary>
@@ -580,5 +517,11 @@ namespace Substrate.NetApiExt.Generated.Storage
         /// The account is already bound to an executor address.
         /// </summary>
         ExecutorAddressAlreadyBound,
+        
+        /// <summary>
+        /// >> AccountMustBeUnregistered
+        /// The account cannot be reaped before it is unregstered.
+        /// </summary>
+        AccountMustBeUnregistered,
     }
 }

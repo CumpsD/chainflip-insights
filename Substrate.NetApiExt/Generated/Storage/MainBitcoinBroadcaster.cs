@@ -46,19 +46,19 @@ namespace Substrate.NetApiExt.Generated.Storage
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("BitcoinBroadcaster", "AwaitingBroadcast"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
                             Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApi.Model.Types.Primitive.U32), typeof(Substrate.NetApiExt.Generated.Model.pallet_cf_broadcast.pallet.BroadcastDataT3)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("BitcoinBroadcaster", "TransactionOutIdToBroadcastId"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
-                            Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApiExt.Generated.Types.Base.Arr32U8), typeof(Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Primitive.U64>)));
+                            Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApiExt.Generated.Model.primitive_types.H256), typeof(Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Primitive.U64>)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("BitcoinBroadcaster", "DelayedBroadcastRetryQueue"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
-                            Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApi.Model.Types.Primitive.U32), typeof(Substrate.NetApiExt.Generated.Types.Base.BTreeSetT2)));
-            _client.StorageKeyDict.Add(new System.Tuple<string, string>("BitcoinBroadcaster", "Timeouts"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
                             Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApi.Model.Types.Primitive.U32), typeof(Substrate.NetApiExt.Generated.Types.Base.BTreeSetT3)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("BitcoinBroadcaster", "Timeouts"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
+                            Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApi.Model.Types.Primitive.U32), typeof(Substrate.NetApiExt.Generated.Types.Base.BTreeSetT4)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("BitcoinBroadcaster", "ThresholdSignatureData"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
                             Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApi.Model.Types.Primitive.U32), typeof(Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApiExt.Generated.Model.cf_chains.btc.api.EnumBitcoinApi, Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Types.Base.Arr64U8>>)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("BitcoinBroadcaster", "TransactionMetadata"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
                             Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApi.Model.Types.Primitive.U32), typeof(Substrate.NetApi.Model.Types.Base.BaseTuple)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("BitcoinBroadcaster", "TransactionFeeDeficit"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
                             Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApiExt.Generated.Model.cf_chains.btc.EnumScriptPubkey), typeof(Substrate.NetApi.Model.Types.Primitive.U64)));
-            _client.StorageKeyDict.Add(new System.Tuple<string, string>("BitcoinBroadcaster", "BroadcastBarriers"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApiExt.Generated.Types.Base.BTreeSetT2)));
-            _client.StorageKeyDict.Add(new System.Tuple<string, string>("BitcoinBroadcaster", "PendingBroadcasts"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApiExt.Generated.Types.Base.BTreeSetT2)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("BitcoinBroadcaster", "BroadcastBarriers"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApiExt.Generated.Types.Base.BTreeSetT3)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("BitcoinBroadcaster", "PendingBroadcasts"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApiExt.Generated.Types.Base.BTreeSetT3)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("BitcoinBroadcaster", "AbortedBroadcasts"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Model.Types.Primitive.U32>)));
         }
         
@@ -221,7 +221,7 @@ namespace Substrate.NetApiExt.Generated.Storage
         ///  This storage item is used by the CFE to track which broadcasts/egresses it needs to
         ///  witness.
         /// </summary>
-        public static string TransactionOutIdToBroadcastIdParams(Substrate.NetApiExt.Generated.Types.Base.Arr32U8 key)
+        public static string TransactionOutIdToBroadcastIdParams(Substrate.NetApiExt.Generated.Model.primitive_types.H256 key)
         {
             return RequestGenerator.GetStorage("BitcoinBroadcaster", "TransactionOutIdToBroadcastId", Substrate.NetApi.Model.Meta.Storage.Type.Map, new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
                         Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, new Substrate.NetApi.Model.Types.IType[] {
@@ -243,7 +243,7 @@ namespace Substrate.NetApiExt.Generated.Storage
         ///  This storage item is used by the CFE to track which broadcasts/egresses it needs to
         ///  witness.
         /// </summary>
-        public async Task<Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Primitive.U64>> TransactionOutIdToBroadcastId(Substrate.NetApiExt.Generated.Types.Base.Arr32U8 key, string blockhash, CancellationToken token)
+        public async Task<Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Primitive.U64>> TransactionOutIdToBroadcastId(Substrate.NetApiExt.Generated.Model.primitive_types.H256 key, string blockhash, CancellationToken token)
         {
             string parameters = BitcoinBroadcasterStorage.TransactionOutIdToBroadcastIdParams(key);
             var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Primitive.U64>>(parameters, blockhash, token);
@@ -274,10 +274,10 @@ namespace Substrate.NetApiExt.Generated.Storage
         /// >> DelayedBroadcastRetryQueue
         ///  The list of failed broadcasts that will be retried in some future block.
         /// </summary>
-        public async Task<Substrate.NetApiExt.Generated.Types.Base.BTreeSetT2> DelayedBroadcastRetryQueue(Substrate.NetApi.Model.Types.Primitive.U32 key, string blockhash, CancellationToken token)
+        public async Task<Substrate.NetApiExt.Generated.Types.Base.BTreeSetT3> DelayedBroadcastRetryQueue(Substrate.NetApi.Model.Types.Primitive.U32 key, string blockhash, CancellationToken token)
         {
             string parameters = BitcoinBroadcasterStorage.DelayedBroadcastRetryQueueParams(key);
-            var result = await _client.GetStorageAsync<Substrate.NetApiExt.Generated.Types.Base.BTreeSetT2>(parameters, blockhash, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApiExt.Generated.Types.Base.BTreeSetT3>(parameters, blockhash, token);
             return result;
         }
         
@@ -307,10 +307,10 @@ namespace Substrate.NetApiExt.Generated.Storage
         ///  A mapping from block number to a list of broadcasts that expire at that
         ///  block number.
         /// </summary>
-        public async Task<Substrate.NetApiExt.Generated.Types.Base.BTreeSetT3> Timeouts(Substrate.NetApi.Model.Types.Primitive.U32 key, string blockhash, CancellationToken token)
+        public async Task<Substrate.NetApiExt.Generated.Types.Base.BTreeSetT4> Timeouts(Substrate.NetApi.Model.Types.Primitive.U32 key, string blockhash, CancellationToken token)
         {
             string parameters = BitcoinBroadcasterStorage.TimeoutsParams(key);
-            var result = await _client.GetStorageAsync<Substrate.NetApiExt.Generated.Types.Base.BTreeSetT3>(parameters, blockhash, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApiExt.Generated.Types.Base.BTreeSetT4>(parameters, blockhash, token);
             return result;
         }
         
@@ -429,10 +429,10 @@ namespace Substrate.NetApiExt.Generated.Storage
         /// >> BroadcastBarriers
         ///  Whether or not broadcasts are paused for broadcast ids greater than the given broadcast id.
         /// </summary>
-        public async Task<Substrate.NetApiExt.Generated.Types.Base.BTreeSetT2> BroadcastBarriers(string blockhash, CancellationToken token)
+        public async Task<Substrate.NetApiExt.Generated.Types.Base.BTreeSetT3> BroadcastBarriers(string blockhash, CancellationToken token)
         {
             string parameters = BitcoinBroadcasterStorage.BroadcastBarriersParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApiExt.Generated.Types.Base.BTreeSetT2>(parameters, blockhash, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApiExt.Generated.Types.Base.BTreeSetT3>(parameters, blockhash, token);
             return result;
         }
         
@@ -458,10 +458,10 @@ namespace Substrate.NetApiExt.Generated.Storage
         /// >> PendingBroadcasts
         ///  List of broadcasts that are initiated but not witnessed on the external chain.
         /// </summary>
-        public async Task<Substrate.NetApiExt.Generated.Types.Base.BTreeSetT2> PendingBroadcasts(string blockhash, CancellationToken token)
+        public async Task<Substrate.NetApiExt.Generated.Types.Base.BTreeSetT3> PendingBroadcasts(string blockhash, CancellationToken token)
         {
             string parameters = BitcoinBroadcasterStorage.PendingBroadcastsParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApiExt.Generated.Types.Base.BTreeSetT2>(parameters, blockhash, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApiExt.Generated.Types.Base.BTreeSetT3>(parameters, blockhash, token);
             return result;
         }
         
@@ -534,13 +534,14 @@ namespace Substrate.NetApiExt.Generated.Storage
         /// >> transaction_succeeded
         /// Contains a variant per dispatchable extrinsic that this pallet has.
         /// </summary>
-        public static Method TransactionSucceeded(Substrate.NetApiExt.Generated.Types.Base.Arr32U8 tx_out_id, Substrate.NetApiExt.Generated.Model.cf_chains.btc.EnumScriptPubkey signer_id, Substrate.NetApi.Model.Types.Primitive.U64 tx_fee, Substrate.NetApi.Model.Types.Base.BaseTuple tx_metadata)
+        public static Method TransactionSucceeded(Substrate.NetApiExt.Generated.Model.primitive_types.H256 tx_out_id, Substrate.NetApiExt.Generated.Model.cf_chains.btc.EnumScriptPubkey signer_id, Substrate.NetApi.Model.Types.Primitive.U64 tx_fee, Substrate.NetApi.Model.Types.Base.BaseTuple tx_metadata, Substrate.NetApiExt.Generated.Model.primitive_types.H256 transaction_ref)
         {
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
             byteArray.AddRange(tx_out_id.Encode());
             byteArray.AddRange(signer_id.Encode());
             byteArray.AddRange(tx_fee.Encode());
             byteArray.AddRange(tx_metadata.Encode());
+            byteArray.AddRange(transaction_ref.Encode());
             return new Method(29, "BitcoinBroadcaster", 2, "transaction_succeeded", byteArray.ToArray());
         }
         

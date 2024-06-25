@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_threshold_signature.pall
     
     
     /// <summary>
-    /// >> 406 - Composite[pallet_cf_threshold_signature.pallet.RequestInstructionT1]
+    /// >> 453 - Composite[pallet_cf_threshold_signature.pallet.RequestInstructionT1]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class RequestInstructionT1 : BaseType
@@ -59,7 +59,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_threshold_signature.pall
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

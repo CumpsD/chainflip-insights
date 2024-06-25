@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_amm.limit_orders
     
     
     /// <summary>
-    /// >> 507 - Composite[cf_amm.limit_orders.FixedPool]
+    /// >> 618 - Composite[cf_amm.limit_orders.FixedPool]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class FixedPool : BaseType
@@ -66,7 +66,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_amm.limit_orders
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.deposit_channel
     
     
     /// <summary>
-    /// >> 464 - Composite[cf_chains.deposit_channel.DepositChannelT2]
+    /// >> 549 - Composite[cf_chains.deposit_channel.DepositChannelT2]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class DepositChannelT2 : BaseType
@@ -73,7 +73,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.deposit_channel
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

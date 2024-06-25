@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_primitives.chains
     
     
     /// <summary>
-    /// >> 131 - Composite[cf_primitives.chains.Bitcoin]
+    /// >> 149 - Composite[cf_primitives.chains.Bitcoin]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class Bitcoin : BaseType
@@ -44,7 +44,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_primitives.chains
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

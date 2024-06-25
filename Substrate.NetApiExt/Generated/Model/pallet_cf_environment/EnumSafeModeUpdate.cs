@@ -38,7 +38,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_environment
     }
     
     /// <summary>
-    /// >> 33 - Variant[pallet_cf_environment.SafeModeUpdate]
+    /// >> 35 - Variant[pallet_cf_environment.SafeModeUpdate]
     /// </summary>
     public sealed class EnumSafeModeUpdate : BaseEnumExt<SafeModeUpdate, BaseVoid, BaseVoid, Substrate.NetApiExt.Generated.Model.state_chain_runtime.safe_mode.@__inner.RuntimeSafeMode>
     {

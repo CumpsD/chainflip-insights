@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_primitives
     
     
     /// <summary>
-    /// >> 88 - Composite[cf_primitives.SemVer]
+    /// >> 104 - Composite[cf_primitives.SemVer]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class SemVer : BaseType
@@ -66,7 +66,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_primitives
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

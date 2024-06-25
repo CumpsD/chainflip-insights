@@ -23,39 +23,20 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_vaults.pallet
     {
         
         /// <summary>
-        /// >> InvalidCeremonyId
-        /// An invalid ceremony id
-        /// </summary>
-        InvalidCeremonyId = 0,
-        
-        /// <summary>
         /// >> NoActiveRotation
         /// There is currently no vault rotation in progress for this chain.
         /// </summary>
-        NoActiveRotation = 1,
+        NoActiveRotation = 0,
         
         /// <summary>
         /// >> InvalidRotationStatus
         /// The requested call is invalid based on the current rotation state.
         /// </summary>
-        InvalidRotationStatus = 2,
-        
-        /// <summary>
-        /// >> InvalidRespondent
-        /// An authority sent a response for a ceremony in which they weren't involved, or to which
-        /// they have already submitted a response.
-        /// </summary>
-        InvalidRespondent = 3,
-        
-        /// <summary>
-        /// >> ThresholdSignatureUnavailable
-        /// There is no threshold signature available
-        /// </summary>
-        ThresholdSignatureUnavailable = 4,
+        InvalidRotationStatus = 1,
     }
     
     /// <summary>
-    /// >> 402 - Variant[pallet_cf_vaults.pallet.Error]
+    /// >> 656 - Variant[pallet_cf_vaults.pallet.Error]
     /// The `Error` enum of this pallet.
     /// </summary>
     public sealed class EnumError : BaseEnum<Error>

@@ -60,7 +60,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_tokenholder_governance.p
     }
     
     /// <summary>
-    /// >> 266 - Variant[pallet_cf_tokenholder_governance.pallet.Event]
+    /// >> 315 - Variant[pallet_cf_tokenholder_governance.pallet.Event]
     /// The `Event` enum of this pallet
     /// </summary>
     public sealed class EnumEvent : BaseEnumExt<Event, Substrate.NetApiExt.Generated.Model.pallet_cf_tokenholder_governance.EnumProposal, Substrate.NetApiExt.Generated.Model.pallet_cf_tokenholder_governance.EnumProposal, Substrate.NetApiExt.Generated.Model.pallet_cf_tokenholder_governance.EnumProposal, Substrate.NetApiExt.Generated.Model.pallet_cf_tokenholder_governance.EnumProposal, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.EnumForeignChain, Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Model.Types.Primitive.U8>>, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.EnumForeignChain, Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Model.Types.Primitive.U8>>>

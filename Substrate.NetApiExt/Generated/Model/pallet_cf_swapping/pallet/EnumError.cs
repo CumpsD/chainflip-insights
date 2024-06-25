@@ -65,26 +65,32 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_swapping.pallet
         WithdrawalsDisabled = 6,
         
         /// <summary>
-        /// >> DepositsDisabled
-        /// Swap deposits are disabled due to Safe Mode.
-        /// </summary>
-        DepositsDisabled = 7,
-        
-        /// <summary>
         /// >> BrokerRegistrationDisabled
         /// Broker registration is disabled due to Safe Mode.
         /// </summary>
-        BrokerRegistrationDisabled = 8,
+        BrokerRegistrationDisabled = 7,
         
         /// <summary>
         /// >> BrokerCommissionBpsTooHigh
         /// Broker commission bps is limited to 1000 points.
         /// </summary>
-        BrokerCommissionBpsTooHigh = 9,
+        BrokerCommissionBpsTooHigh = 8,
+        
+        /// <summary>
+        /// >> EarnedFeesNotWithdrawn
+        /// Brokers should withdraw their earned fees before deregistering.
+        /// </summary>
+        EarnedFeesNotWithdrawn = 9,
+        
+        /// <summary>
+        /// >> AffiliateAccountIsNotABroker
+        /// The provided list of broker contains an account which is not registered as Broker
+        /// </summary>
+        AffiliateAccountIsNotABroker = 10,
     }
     
     /// <summary>
-    /// >> 444 - Variant[pallet_cf_swapping.pallet.Error]
+    /// >> 508 - Variant[pallet_cf_swapping.pallet.Error]
     /// The `Error` enum of this pallet.
     /// </summary>
     public sealed class EnumError : BaseEnum<Error>

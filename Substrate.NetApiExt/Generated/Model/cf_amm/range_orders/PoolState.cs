@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_amm.range_orders
     
     
     /// <summary>
-    /// >> 518 - Composite[cf_amm.range_orders.PoolState]
+    /// >> 629 - Composite[cf_amm.range_orders.PoolState]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class PoolState : BaseType
@@ -43,27 +43,27 @@ namespace Substrate.NetApiExt.Generated.Model.cf_amm.range_orders
         /// <summary>
         /// >> global_fee_growth
         /// </summary>
-        public Substrate.NetApiExt.Generated.Model.cf_amm.common.SideMapT3 GlobalFeeGrowth { get; set; }
+        public Substrate.NetApiExt.Generated.Model.cf_amm.common.PoolPairsMapT6 GlobalFeeGrowth { get; set; }
         /// <summary>
         /// >> liquidity_map
         /// </summary>
-        public Substrate.NetApiExt.Generated.Types.Base.BTreeMapT14 LiquidityMap { get; set; }
+        public Substrate.NetApiExt.Generated.Types.Base.BTreeMapT26 LiquidityMap { get; set; }
         /// <summary>
         /// >> positions
         /// </summary>
-        public Substrate.NetApiExt.Generated.Types.Base.BTreeMapT15 Positions { get; set; }
+        public Substrate.NetApiExt.Generated.Types.Base.BTreeMapT27 Positions { get; set; }
         /// <summary>
         /// >> total_fees_earned
         /// </summary>
-        public Substrate.NetApiExt.Generated.Model.cf_amm.common.SideMapT3 TotalFeesEarned { get; set; }
+        public Substrate.NetApiExt.Generated.Model.cf_amm.common.PoolPairsMapT6 TotalFeesEarned { get; set; }
         /// <summary>
         /// >> total_swap_inputs
         /// </summary>
-        public Substrate.NetApiExt.Generated.Model.cf_amm.common.SideMapT3 TotalSwapInputs { get; set; }
+        public Substrate.NetApiExt.Generated.Model.cf_amm.common.PoolPairsMapT6 TotalSwapInputs { get; set; }
         /// <summary>
         /// >> total_swap_outputs
         /// </summary>
-        public Substrate.NetApiExt.Generated.Model.cf_amm.common.SideMapT3 TotalSwapOutputs { get; set; }
+        public Substrate.NetApiExt.Generated.Model.cf_amm.common.PoolPairsMapT6 TotalSwapOutputs { get; set; }
         
         /// <inheritdoc/>
         public override string TypeName()
@@ -100,22 +100,22 @@ namespace Substrate.NetApiExt.Generated.Model.cf_amm.range_orders
             CurrentTick.Decode(byteArray, ref p);
             CurrentLiquidity = new Substrate.NetApi.Model.Types.Primitive.U128();
             CurrentLiquidity.Decode(byteArray, ref p);
-            GlobalFeeGrowth = new Substrate.NetApiExt.Generated.Model.cf_amm.common.SideMapT3();
+            GlobalFeeGrowth = new Substrate.NetApiExt.Generated.Model.cf_amm.common.PoolPairsMapT6();
             GlobalFeeGrowth.Decode(byteArray, ref p);
-            LiquidityMap = new Substrate.NetApiExt.Generated.Types.Base.BTreeMapT14();
+            LiquidityMap = new Substrate.NetApiExt.Generated.Types.Base.BTreeMapT26();
             LiquidityMap.Decode(byteArray, ref p);
-            Positions = new Substrate.NetApiExt.Generated.Types.Base.BTreeMapT15();
+            Positions = new Substrate.NetApiExt.Generated.Types.Base.BTreeMapT27();
             Positions.Decode(byteArray, ref p);
-            TotalFeesEarned = new Substrate.NetApiExt.Generated.Model.cf_amm.common.SideMapT3();
+            TotalFeesEarned = new Substrate.NetApiExt.Generated.Model.cf_amm.common.PoolPairsMapT6();
             TotalFeesEarned.Decode(byteArray, ref p);
-            TotalSwapInputs = new Substrate.NetApiExt.Generated.Model.cf_amm.common.SideMapT3();
+            TotalSwapInputs = new Substrate.NetApiExt.Generated.Model.cf_amm.common.PoolPairsMapT6();
             TotalSwapInputs.Decode(byteArray, ref p);
-            TotalSwapOutputs = new Substrate.NetApiExt.Generated.Model.cf_amm.common.SideMapT3();
+            TotalSwapOutputs = new Substrate.NetApiExt.Generated.Model.cf_amm.common.PoolPairsMapT6();
             TotalSwapOutputs.Decode(byteArray, ref p);
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

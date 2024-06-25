@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.evm.api.transfer_fallbac
     
     
     /// <summary>
-    /// >> 180 - Composite[cf_chains.evm.api.transfer_fallback.TransferFallback]
+    /// >> 197 - Composite[cf_chains.evm.api.transfer_fallback.TransferFallback]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class TransferFallback : BaseType
@@ -52,7 +52,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.evm.api.transfer_fallbac
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

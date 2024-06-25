@@ -35,10 +35,15 @@ namespace Substrate.NetApiExt.Generated.Model.cf_primitives.chains
         /// >> Bitcoin
         /// </summary>
         Bitcoin = 3,
+        
+        /// <summary>
+        /// >> Arbitrum
+        /// </summary>
+        Arbitrum = 4,
     }
     
     /// <summary>
-    /// >> 59 - Variant[cf_primitives.chains.ForeignChain]
+    /// >> 74 - Variant[cf_primitives.chains.ForeignChain]
     /// </summary>
     public sealed class EnumForeignChain : BaseEnum<ForeignChain>
     {

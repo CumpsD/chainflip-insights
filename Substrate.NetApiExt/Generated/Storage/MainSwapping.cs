@@ -36,7 +36,9 @@ namespace Substrate.NetApiExt.Generated.Storage
         public SwappingStorage(SubstrateClientExt client)
         {
             this._client = client;
-            _client.StorageKeyDict.Add(new System.Tuple<string, string>("Swapping", "SwapQueue"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.pallet_cf_swapping.Swap>)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("Swapping", "SwapQueue"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
+                            Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApi.Model.Types.Primitive.U32), typeof(Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.pallet_cf_swapping.Swap>)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("Swapping", "FirstUnprocessedBlock"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U32)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Swapping", "SwapIdCounter"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U64)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Swapping", "EarnedBrokerFees"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
                             Substrate.NetApi.Model.Meta.Storage.Hasher.Identity,
@@ -50,15 +52,18 @@ namespace Substrate.NetApiExt.Generated.Storage
                             Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset), typeof(Substrate.NetApi.Model.Types.Primitive.U128)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Swapping", "MaximumSwapAmount"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
                             Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset), typeof(Substrate.NetApi.Model.Types.Primitive.U128)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("Swapping", "FlipToBurn"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U128)));
         }
         
         /// <summary>
         /// >> SwapQueueParams
         ///  Scheduled Swaps
         /// </summary>
-        public static string SwapQueueParams()
+        public static string SwapQueueParams(Substrate.NetApi.Model.Types.Primitive.U32 key)
         {
-            return RequestGenerator.GetStorage("Swapping", "SwapQueue", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
+            return RequestGenerator.GetStorage("Swapping", "SwapQueue", Substrate.NetApi.Model.Meta.Storage.Type.Map, new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
+                        Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, new Substrate.NetApi.Model.Types.IType[] {
+                        key});
         }
         
         /// <summary>
@@ -74,10 +79,39 @@ namespace Substrate.NetApiExt.Generated.Storage
         /// >> SwapQueue
         ///  Scheduled Swaps
         /// </summary>
-        public async Task<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.pallet_cf_swapping.Swap>> SwapQueue(string blockhash, CancellationToken token)
+        public async Task<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.pallet_cf_swapping.Swap>> SwapQueue(Substrate.NetApi.Model.Types.Primitive.U32 key, string blockhash, CancellationToken token)
         {
-            string parameters = SwappingStorage.SwapQueueParams();
+            string parameters = SwappingStorage.SwapQueueParams(key);
             var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.pallet_cf_swapping.Swap>>(parameters, blockhash, token);
+            return result;
+        }
+        
+        /// <summary>
+        /// >> FirstUnprocessedBlockParams
+        ///  The first block for which swaps haven't yet been processed
+        /// </summary>
+        public static string FirstUnprocessedBlockParams()
+        {
+            return RequestGenerator.GetStorage("Swapping", "FirstUnprocessedBlock", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
+        }
+        
+        /// <summary>
+        /// >> FirstUnprocessedBlockDefault
+        /// Default value as hex string
+        /// </summary>
+        public static string FirstUnprocessedBlockDefault()
+        {
+            return "0x00000000";
+        }
+        
+        /// <summary>
+        /// >> FirstUnprocessedBlock
+        ///  The first block for which swaps haven't yet been processed
+        /// </summary>
+        public async Task<Substrate.NetApi.Model.Types.Primitive.U32> FirstUnprocessedBlock(string blockhash, CancellationToken token)
+        {
+            string parameters = SwappingStorage.FirstUnprocessedBlockParams();
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U32>(parameters, blockhash, token);
             return result;
         }
         
@@ -293,6 +327,35 @@ namespace Substrate.NetApiExt.Generated.Storage
             var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U128>(parameters, blockhash, token);
             return result;
         }
+        
+        /// <summary>
+        /// >> FlipToBurnParams
+        ///  FLIP ready to be burned.
+        /// </summary>
+        public static string FlipToBurnParams()
+        {
+            return RequestGenerator.GetStorage("Swapping", "FlipToBurn", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
+        }
+        
+        /// <summary>
+        /// >> FlipToBurnDefault
+        /// Default value as hex string
+        /// </summary>
+        public static string FlipToBurnDefault()
+        {
+            return "0x00000000000000000000000000000000";
+        }
+        
+        /// <summary>
+        /// >> FlipToBurn
+        ///  FLIP ready to be burned.
+        /// </summary>
+        public async Task<Substrate.NetApi.Model.Types.Primitive.U128> FlipToBurn(string blockhash, CancellationToken token)
+        {
+            string parameters = SwappingStorage.FlipToBurnParams();
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U128>(parameters, blockhash, token);
+            return result;
+        }
     }
     
     /// <summary>
@@ -305,14 +368,15 @@ namespace Substrate.NetApiExt.Generated.Storage
         /// >> request_swap_deposit_address
         /// Contains a variant per dispatchable extrinsic that this pallet has.
         /// </summary>
-        public static Method RequestSwapDepositAddress(Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset source_asset, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset destination_asset, Substrate.NetApiExt.Generated.Model.cf_chains.address.EnumEncodedAddress destination_address, Substrate.NetApi.Model.Types.Primitive.U16 broker_commission_bps, Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApiExt.Generated.Model.cf_chains.CcmChannelMetadata> channel_metadata)
+        public static Method RequestSwapDepositAddress(Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset source_asset, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset destination_asset, Substrate.NetApiExt.Generated.Model.cf_chains.address.EnumEncodedAddress destination_address, Substrate.NetApi.Model.Types.Primitive.U16 broker_commission, Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApiExt.Generated.Model.cf_chains.CcmChannelMetadata> channel_metadata, Substrate.NetApi.Model.Types.Primitive.U16 boost_fee)
         {
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
             byteArray.AddRange(source_asset.Encode());
             byteArray.AddRange(destination_asset.Encode());
             byteArray.AddRange(destination_address.Encode());
-            byteArray.AddRange(broker_commission_bps.Encode());
+            byteArray.AddRange(broker_commission.Encode());
             byteArray.AddRange(channel_metadata.Encode());
+            byteArray.AddRange(boost_fee.Encode());
             return new Method(30, "Swapping", 0, "request_swap_deposit_address", byteArray.ToArray());
         }
         
@@ -370,15 +434,41 @@ namespace Substrate.NetApiExt.Generated.Storage
         }
         
         /// <summary>
-        /// >> set_maximum_swap_amount
+        /// >> update_pallet_config
         /// Contains a variant per dispatchable extrinsic that this pallet has.
         /// </summary>
-        public static Method SetMaximumSwapAmount(Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset asset, Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Model.Types.Primitive.U128> amount)
+        public static Method UpdatePalletConfig(Substrate.NetApiExt.Generated.Model.bounded_collections.bounded_vec.BoundedVecT6 updates)
         {
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
-            byteArray.AddRange(asset.Encode());
-            byteArray.AddRange(amount.Encode());
-            return new Method(30, "Swapping", 7, "set_maximum_swap_amount", byteArray.ToArray());
+            byteArray.AddRange(updates.Encode());
+            return new Method(30, "Swapping", 8, "update_pallet_config", byteArray.ToArray());
+        }
+        
+        /// <summary>
+        /// >> deregister_as_broker
+        /// Contains a variant per dispatchable extrinsic that this pallet has.
+        /// </summary>
+        public static Method DeregisterAsBroker()
+        {
+            System.Collections.Generic.List<byte> byteArray = new List<byte>();
+            return new Method(30, "Swapping", 9, "deregister_as_broker", byteArray.ToArray());
+        }
+        
+        /// <summary>
+        /// >> request_swap_deposit_address_with_affiliates
+        /// Contains a variant per dispatchable extrinsic that this pallet has.
+        /// </summary>
+        public static Method RequestSwapDepositAddressWithAffiliates(Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset source_asset, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset destination_asset, Substrate.NetApiExt.Generated.Model.cf_chains.address.EnumEncodedAddress destination_address, Substrate.NetApi.Model.Types.Primitive.U16 broker_commission, Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApiExt.Generated.Model.cf_chains.CcmChannelMetadata> channel_metadata, Substrate.NetApi.Model.Types.Primitive.U16 boost_fee, Substrate.NetApiExt.Generated.Model.bounded_collections.bounded_vec.BoundedVecT7 affiliate_fees)
+        {
+            System.Collections.Generic.List<byte> byteArray = new List<byte>();
+            byteArray.AddRange(source_asset.Encode());
+            byteArray.AddRange(destination_asset.Encode());
+            byteArray.AddRange(destination_address.Encode());
+            byteArray.AddRange(broker_commission.Encode());
+            byteArray.AddRange(channel_metadata.Encode());
+            byteArray.AddRange(boost_fee.Encode());
+            byteArray.AddRange(affiliate_fees.Encode());
+            return new Method(30, "Swapping", 10, "request_swap_deposit_address_with_affiliates", byteArray.ToArray());
         }
     }
     
@@ -438,12 +528,6 @@ namespace Substrate.NetApiExt.Generated.Storage
         WithdrawalsDisabled,
         
         /// <summary>
-        /// >> DepositsDisabled
-        /// Swap deposits are disabled due to Safe Mode.
-        /// </summary>
-        DepositsDisabled,
-        
-        /// <summary>
         /// >> BrokerRegistrationDisabled
         /// Broker registration is disabled due to Safe Mode.
         /// </summary>
@@ -454,5 +538,17 @@ namespace Substrate.NetApiExt.Generated.Storage
         /// Broker commission bps is limited to 1000 points.
         /// </summary>
         BrokerCommissionBpsTooHigh,
+        
+        /// <summary>
+        /// >> EarnedFeesNotWithdrawn
+        /// Brokers should withdraw their earned fees before deregistering.
+        /// </summary>
+        EarnedFeesNotWithdrawn,
+        
+        /// <summary>
+        /// >> AffiliateAccountIsNotABroker
+        /// The provided list of broker contains an account which is not registered as Broker
+        /// </summary>
+        AffiliateAccountIsNotABroker,
     }
 }

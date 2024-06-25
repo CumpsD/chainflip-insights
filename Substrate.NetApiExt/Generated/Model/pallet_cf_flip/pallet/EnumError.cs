@@ -42,7 +42,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_flip.pallet
     }
     
     /// <summary>
-    /// >> 323 - Variant[pallet_cf_flip.pallet.Error]
+    /// >> 388 - Variant[pallet_cf_flip.pallet.Error]
     /// The `Error` enum of this pallet.
     /// </summary>
     public sealed class EnumError : BaseEnum<Error>

@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_broadcast.pallet
     
     
     /// <summary>
-    /// >> 433 - Composite[pallet_cf_broadcast.pallet.BroadcastDataT2]
+    /// >> 497 - Composite[pallet_cf_broadcast.pallet.BroadcastDataT2]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class BroadcastDataT2 : BaseType
@@ -80,7 +80,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_broadcast.pallet
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

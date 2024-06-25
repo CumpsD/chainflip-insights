@@ -37,6 +37,11 @@ namespace Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any
         Usdc = 3,
         
         /// <summary>
+        /// >> Usdt
+        /// </summary>
+        Usdt = 8,
+        
+        /// <summary>
         /// >> Dot
         /// </summary>
         Dot = 4,
@@ -45,10 +50,20 @@ namespace Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any
         /// >> Btc
         /// </summary>
         Btc = 5,
+        
+        /// <summary>
+        /// >> ArbEth
+        /// </summary>
+        ArbEth = 6,
+        
+        /// <summary>
+        /// >> ArbUsdc
+        /// </summary>
+        ArbUsdc = 7,
     }
     
     /// <summary>
-    /// >> 224 - Variant[cf_primitives.chains.assets.any.Asset]
+    /// >> 233 - Variant[cf_primitives.chains.assets.any.Asset]
     /// </summary>
     public sealed class EnumAsset : BaseEnum<Asset>
     {

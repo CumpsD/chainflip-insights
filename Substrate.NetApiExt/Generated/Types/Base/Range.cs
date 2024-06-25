@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Types.Base
     
     
     /// <summary>
-    /// >> 250 - Composite[Range]
+    /// >> 280 - Composite[Range]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class Range : BaseType
@@ -59,7 +59,7 @@ namespace Substrate.NetApiExt.Generated.Types.Base
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

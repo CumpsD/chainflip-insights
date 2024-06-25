@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.state_chain_runtime.opaque
     
     
     /// <summary>
-    /// >> 89 - Composite[state_chain_runtime.opaque.SessionKeys]
+    /// >> 105 - Composite[state_chain_runtime.opaque.SessionKeys]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class SessionKeys : BaseType
@@ -59,7 +59,7 @@ namespace Substrate.NetApiExt.Generated.Model.state_chain_runtime.opaque
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

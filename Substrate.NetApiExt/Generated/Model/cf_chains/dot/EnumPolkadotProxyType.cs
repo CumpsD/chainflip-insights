@@ -58,7 +58,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.dot
     }
     
     /// <summary>
-    /// >> 198 - Variant[cf_chains.dot.PolkadotProxyType]
+    /// >> 215 - Variant[cf_chains.dot.PolkadotProxyType]
     /// </summary>
     public sealed class EnumPolkadotProxyType : BaseEnum<PolkadotProxyType>
     {

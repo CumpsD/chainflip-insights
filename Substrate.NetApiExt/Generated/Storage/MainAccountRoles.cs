@@ -36,36 +36,9 @@ namespace Substrate.NetApiExt.Generated.Storage
         public AccountRolesStorage(SubstrateClientExt client)
         {
             this._client = client;
-            _client.StorageKeyDict.Add(new System.Tuple<string, string>("AccountRoles", "SwappingEnabled"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.Bool)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("AccountRoles", "AccountRoles"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
                             Substrate.NetApi.Model.Meta.Storage.Hasher.Identity}, typeof(Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32), typeof(Substrate.NetApiExt.Generated.Model.cf_primitives.EnumAccountRole)));
-        }
-        
-        /// <summary>
-        /// >> SwappingEnabledParams
-        /// </summary>
-        public static string SwappingEnabledParams()
-        {
-            return RequestGenerator.GetStorage("AccountRoles", "SwappingEnabled", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
-        }
-        
-        /// <summary>
-        /// >> SwappingEnabledDefault
-        /// Default value as hex string
-        /// </summary>
-        public static string SwappingEnabledDefault()
-        {
-            return "0x00";
-        }
-        
-        /// <summary>
-        /// >> SwappingEnabled
-        /// </summary>
-        public async Task<Substrate.NetApi.Model.Types.Primitive.Bool> SwappingEnabled(string blockhash, CancellationToken token)
-        {
-            string parameters = AccountRolesStorage.SwappingEnabledParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.Bool>(parameters, blockhash, token);
-            return result;
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("AccountRoles", "VanityNames"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApiExt.Generated.Types.Base.BTreeMapT4)));
         }
         
         /// <summary>
@@ -96,6 +69,35 @@ namespace Substrate.NetApiExt.Generated.Storage
             var result = await _client.GetStorageAsync<Substrate.NetApiExt.Generated.Model.cf_primitives.EnumAccountRole>(parameters, blockhash, token);
             return result;
         }
+        
+        /// <summary>
+        /// >> VanityNamesParams
+        ///  Vanity names of the validators stored as a Map with the current validator IDs as key.
+        /// </summary>
+        public static string VanityNamesParams()
+        {
+            return RequestGenerator.GetStorage("AccountRoles", "VanityNames", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
+        }
+        
+        /// <summary>
+        /// >> VanityNamesDefault
+        /// Default value as hex string
+        /// </summary>
+        public static string VanityNamesDefault()
+        {
+            return "0x00";
+        }
+        
+        /// <summary>
+        /// >> VanityNames
+        ///  Vanity names of the validators stored as a Map with the current validator IDs as key.
+        /// </summary>
+        public async Task<Substrate.NetApiExt.Generated.Types.Base.BTreeMapT4> VanityNames(string blockhash, CancellationToken token)
+        {
+            string parameters = AccountRolesStorage.VanityNamesParams();
+            var result = await _client.GetStorageAsync<Substrate.NetApiExt.Generated.Types.Base.BTreeMapT4>(parameters, blockhash, token);
+            return result;
+        }
     }
     
     /// <summary>
@@ -105,25 +107,14 @@ namespace Substrate.NetApiExt.Generated.Storage
     {
         
         /// <summary>
-        /// >> enable_swapping
+        /// >> set_vanity_name
         /// Contains a variant per dispatchable extrinsic that this pallet has.
         /// </summary>
-        public static Method EnableSwapping()
+        public static Method SetVanityName(Substrate.NetApiExt.Generated.Model.bounded_collections.bounded_vec.BoundedVecT2 name)
         {
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
-            return new Method(6, "AccountRoles", 0, "enable_swapping", byteArray.ToArray());
-        }
-        
-        /// <summary>
-        /// >> gov_register_account_role
-        /// Contains a variant per dispatchable extrinsic that this pallet has.
-        /// </summary>
-        public static Method GovRegisterAccountRole(Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32 account, Substrate.NetApiExt.Generated.Model.cf_primitives.EnumAccountRole role)
-        {
-            System.Collections.Generic.List<byte> byteArray = new List<byte>();
-            byteArray.AddRange(account.Encode());
-            byteArray.AddRange(role.Encode());
-            return new Method(6, "AccountRoles", 1, "gov_register_account_role", byteArray.ToArray());
+            byteArray.AddRange(name.Encode());
+            return new Method(6, "AccountRoles", 0, "set_vanity_name", byteArray.ToArray());
         }
     }
     
@@ -153,9 +144,9 @@ namespace Substrate.NetApiExt.Generated.Storage
         AccountRoleAlreadyRegistered,
         
         /// <summary>
-        /// >> SwappingDisabled
-        /// Initially when swapping features are deployed to the chain, they will be disabled.
+        /// >> InvalidCharactersInName
+        /// Invalid characters in the name.
         /// </summary>
-        SwappingDisabled,
+        InvalidCharactersInName,
     }
 }

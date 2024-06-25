@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.sp_weights
     
     
     /// <summary>
-    /// >> 313 - Composite[sp_weights.RuntimeDbWeight]
+    /// >> 378 - Composite[sp_weights.RuntimeDbWeight]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class RuntimeDbWeight : BaseType
@@ -59,7 +59,7 @@ namespace Substrate.NetApiExt.Generated.Model.sp_weights
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

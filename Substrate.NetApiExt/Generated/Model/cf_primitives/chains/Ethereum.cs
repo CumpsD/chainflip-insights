@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_primitives.chains
     
     
     /// <summary>
-    /// >> 122 - Composite[cf_primitives.chains.Ethereum]
+    /// >> 139 - Composite[cf_primitives.chains.Ethereum]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class Ethereum : BaseType
@@ -44,7 +44,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_primitives.chains
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

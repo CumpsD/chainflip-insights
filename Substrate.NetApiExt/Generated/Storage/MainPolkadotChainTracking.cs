@@ -37,6 +37,7 @@ namespace Substrate.NetApiExt.Generated.Storage
         {
             this._client = client;
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("PolkadotChainTracking", "CurrentChainState"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApiExt.Generated.Model.cf_chains.ChainStateT2)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("PolkadotChainTracking", "FeeMultiplier"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApiExt.Generated.Model.sp_arithmetic.fixed_point.FixedU128)));
         }
         
         /// <summary>
@@ -73,6 +74,35 @@ namespace Substrate.NetApiExt.Generated.Storage
             var result = await _client.GetStorageAsync<Substrate.NetApiExt.Generated.Model.cf_chains.ChainStateT2>(parameters, blockhash, token);
             return result;
         }
+        
+        /// <summary>
+        /// >> FeeMultiplierParams
+        ///  The fee multiplier value used when estimating ingress/egree fees
+        /// </summary>
+        public static string FeeMultiplierParams()
+        {
+            return RequestGenerator.GetStorage("PolkadotChainTracking", "FeeMultiplier", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
+        }
+        
+        /// <summary>
+        /// >> FeeMultiplierDefault
+        /// Default value as hex string
+        /// </summary>
+        public static string FeeMultiplierDefault()
+        {
+            return "0x000064A7B3B6E00D0000000000000000";
+        }
+        
+        /// <summary>
+        /// >> FeeMultiplier
+        ///  The fee multiplier value used when estimating ingress/egree fees
+        /// </summary>
+        public async Task<Substrate.NetApiExt.Generated.Model.sp_arithmetic.fixed_point.FixedU128> FeeMultiplier(string blockhash, CancellationToken token)
+        {
+            string parameters = PolkadotChainTrackingStorage.FeeMultiplierParams();
+            var result = await _client.GetStorageAsync<Substrate.NetApiExt.Generated.Model.sp_arithmetic.fixed_point.FixedU128>(parameters, blockhash, token);
+            return result;
+        }
     }
     
     /// <summary>
@@ -90,6 +120,17 @@ namespace Substrate.NetApiExt.Generated.Storage
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
             byteArray.AddRange(new_chain_state.Encode());
             return new Method(19, "PolkadotChainTracking", 0, "update_chain_state", byteArray.ToArray());
+        }
+        
+        /// <summary>
+        /// >> update_fee_multiplier
+        /// Contains a variant per dispatchable extrinsic that this pallet has.
+        /// </summary>
+        public static Method UpdateFeeMultiplier(Substrate.NetApiExt.Generated.Model.sp_arithmetic.fixed_point.FixedU128 new_fee_multiplier)
+        {
+            System.Collections.Generic.List<byte> byteArray = new List<byte>();
+            byteArray.AddRange(new_fee_multiplier.Encode());
+            return new Method(19, "PolkadotChainTracking", 1, "update_fee_multiplier", byteArray.ToArray());
         }
     }
     
@@ -111,5 +152,11 @@ namespace Substrate.NetApiExt.Generated.Storage
         /// The submitted data is too old.
         /// </summary>
         StaleDataSubmitted,
+        
+        /// <summary>
+        /// >> InvalidBlockHeight
+        /// Block height must be a multiple of the witness period
+        /// </summary>
+        InvalidBlockHeight,
     }
 }

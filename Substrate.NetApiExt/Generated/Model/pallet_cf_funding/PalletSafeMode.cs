@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_funding
     
     
     /// <summary>
-    /// >> 37 - Composite[pallet_cf_funding.PalletSafeMode]
+    /// >> 38 - Composite[pallet_cf_funding.PalletSafeMode]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class PalletSafeMode : BaseType
@@ -28,14 +28,6 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_funding
         /// >> redeem_enabled
         /// </summary>
         public Substrate.NetApi.Model.Types.Primitive.Bool RedeemEnabled { get; set; }
-        /// <summary>
-        /// >> start_bidding_enabled
-        /// </summary>
-        public Substrate.NetApi.Model.Types.Primitive.Bool StartBiddingEnabled { get; set; }
-        /// <summary>
-        /// >> stop_bidding_enabled
-        /// </summary>
-        public Substrate.NetApi.Model.Types.Primitive.Bool StopBiddingEnabled { get; set; }
         
         /// <inheritdoc/>
         public override string TypeName()
@@ -48,8 +40,6 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_funding
         {
             var result = new List<byte>();
             result.AddRange(RedeemEnabled.Encode());
-            result.AddRange(StartBiddingEnabled.Encode());
-            result.AddRange(StopBiddingEnabled.Encode());
             return result.ToArray();
         }
         
@@ -59,14 +49,10 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_funding
             var start = p;
             RedeemEnabled = new Substrate.NetApi.Model.Types.Primitive.Bool();
             RedeemEnabled.Decode(byteArray, ref p);
-            StartBiddingEnabled = new Substrate.NetApi.Model.Types.Primitive.Bool();
-            StartBiddingEnabled.Decode(byteArray, ref p);
-            StopBiddingEnabled = new Substrate.NetApi.Model.Types.Primitive.Bool();
-            StopBiddingEnabled.Decode(byteArray, ref p);
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

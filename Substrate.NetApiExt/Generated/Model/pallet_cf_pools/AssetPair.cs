@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_pools
     
     
     /// <summary>
-    /// >> 486 - Composite[pallet_cf_pools.AssetPair]
+    /// >> 360 - Composite[pallet_cf_pools.AssetPair]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class AssetPair : BaseType
@@ -27,7 +27,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_pools
         /// <summary>
         /// >> assets
         /// </summary>
-        public Substrate.NetApiExt.Generated.Model.pallet_cf_pools.AssetsMapT2 Assets { get; set; }
+        public Substrate.NetApiExt.Generated.Model.cf_amm.common.PoolPairsMapT2 Assets { get; set; }
         
         /// <inheritdoc/>
         public override string TypeName()
@@ -47,12 +47,12 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_pools
         public override void Decode(byte[] byteArray, ref int p)
         {
             var start = p;
-            Assets = new Substrate.NetApiExt.Generated.Model.pallet_cf_pools.AssetsMapT2();
+            Assets = new Substrate.NetApiExt.Generated.Model.cf_amm.common.PoolPairsMapT2();
             Assets.Decode(byteArray, ref p);
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

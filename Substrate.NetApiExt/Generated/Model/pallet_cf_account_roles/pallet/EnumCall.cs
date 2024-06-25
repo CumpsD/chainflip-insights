@@ -23,23 +23,17 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_account_roles.pallet
     {
         
         /// <summary>
-        /// >> enable_swapping
-        /// See [`Pallet::enable_swapping`].
+        /// >> set_vanity_name
+        /// See [`Pallet::set_vanity_name`].
         /// </summary>
-        enable_swapping = 0,
-        
-        /// <summary>
-        /// >> gov_register_account_role
-        /// See [`Pallet::gov_register_account_role`].
-        /// </summary>
-        gov_register_account_role = 1,
+        set_vanity_name = 0,
     }
     
     /// <summary>
-    /// >> 82 - Variant[pallet_cf_account_roles.pallet.Call]
+    /// >> 98 - Variant[pallet_cf_account_roles.pallet.Call]
     /// Contains a variant per dispatchable extrinsic that this pallet has.
     /// </summary>
-    public sealed class EnumCall : BaseEnumExt<Call, BaseVoid, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Model.cf_primitives.EnumAccountRole>>
+    public sealed class EnumCall : BaseEnumExt<Call, Substrate.NetApiExt.Generated.Model.bounded_collections.bounded_vec.BoundedVecT2>
     {
     }
 }

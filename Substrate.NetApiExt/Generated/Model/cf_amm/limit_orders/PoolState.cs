@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_amm.limit_orders
     
     
     /// <summary>
-    /// >> 504 - Composite[cf_amm.limit_orders.PoolState]
+    /// >> 615 - Composite[cf_amm.limit_orders.PoolState]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class PoolState : BaseType
@@ -35,23 +35,23 @@ namespace Substrate.NetApiExt.Generated.Model.cf_amm.limit_orders
         /// <summary>
         /// >> fixed_pools
         /// </summary>
-        public Substrate.NetApiExt.Generated.Model.cf_amm.common.SideMapT1 FixedPools { get; set; }
+        public Substrate.NetApiExt.Generated.Model.cf_amm.common.PoolPairsMapT4 FixedPools { get; set; }
         /// <summary>
         /// >> positions
         /// </summary>
-        public Substrate.NetApiExt.Generated.Model.cf_amm.common.SideMapT2 Positions { get; set; }
+        public Substrate.NetApiExt.Generated.Model.cf_amm.common.PoolPairsMapT5 Positions { get; set; }
         /// <summary>
         /// >> total_fees_earned
         /// </summary>
-        public Substrate.NetApiExt.Generated.Model.cf_amm.common.SideMapT3 TotalFeesEarned { get; set; }
+        public Substrate.NetApiExt.Generated.Model.cf_amm.common.PoolPairsMapT6 TotalFeesEarned { get; set; }
         /// <summary>
         /// >> total_swap_inputs
         /// </summary>
-        public Substrate.NetApiExt.Generated.Model.cf_amm.common.SideMapT3 TotalSwapInputs { get; set; }
+        public Substrate.NetApiExt.Generated.Model.cf_amm.common.PoolPairsMapT6 TotalSwapInputs { get; set; }
         /// <summary>
         /// >> total_swap_outputs
         /// </summary>
-        public Substrate.NetApiExt.Generated.Model.cf_amm.common.SideMapT3 TotalSwapOutputs { get; set; }
+        public Substrate.NetApiExt.Generated.Model.cf_amm.common.PoolPairsMapT6 TotalSwapOutputs { get; set; }
         
         /// <inheritdoc/>
         public override string TypeName()
@@ -81,20 +81,20 @@ namespace Substrate.NetApiExt.Generated.Model.cf_amm.limit_orders
             FeeHundredthPips.Decode(byteArray, ref p);
             NextPoolInstance = new Substrate.NetApi.Model.Types.Primitive.U128();
             NextPoolInstance.Decode(byteArray, ref p);
-            FixedPools = new Substrate.NetApiExt.Generated.Model.cf_amm.common.SideMapT1();
+            FixedPools = new Substrate.NetApiExt.Generated.Model.cf_amm.common.PoolPairsMapT4();
             FixedPools.Decode(byteArray, ref p);
-            Positions = new Substrate.NetApiExt.Generated.Model.cf_amm.common.SideMapT2();
+            Positions = new Substrate.NetApiExt.Generated.Model.cf_amm.common.PoolPairsMapT5();
             Positions.Decode(byteArray, ref p);
-            TotalFeesEarned = new Substrate.NetApiExt.Generated.Model.cf_amm.common.SideMapT3();
+            TotalFeesEarned = new Substrate.NetApiExt.Generated.Model.cf_amm.common.PoolPairsMapT6();
             TotalFeesEarned.Decode(byteArray, ref p);
-            TotalSwapInputs = new Substrate.NetApiExt.Generated.Model.cf_amm.common.SideMapT3();
+            TotalSwapInputs = new Substrate.NetApiExt.Generated.Model.cf_amm.common.PoolPairsMapT6();
             TotalSwapInputs.Decode(byteArray, ref p);
-            TotalSwapOutputs = new Substrate.NetApiExt.Generated.Model.cf_amm.common.SideMapT3();
+            TotalSwapOutputs = new Substrate.NetApiExt.Generated.Model.cf_amm.common.PoolPairsMapT6();
             TotalSwapOutputs.Decode(byteArray, ref p);
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

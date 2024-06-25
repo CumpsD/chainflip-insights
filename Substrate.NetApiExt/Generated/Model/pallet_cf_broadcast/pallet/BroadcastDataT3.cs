@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_broadcast.pallet
     
     
     /// <summary>
-    /// >> 436 - Composite[pallet_cf_broadcast.pallet.BroadcastDataT3]
+    /// >> 500 - Composite[pallet_cf_broadcast.pallet.BroadcastDataT3]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class BroadcastDataT3 : BaseType
@@ -39,7 +39,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_broadcast.pallet
         /// <summary>
         /// >> transaction_out_id
         /// </summary>
-        public Substrate.NetApiExt.Generated.Types.Base.Arr32U8 TransactionOutId { get; set; }
+        public Substrate.NetApiExt.Generated.Model.primitive_types.H256 TransactionOutId { get; set; }
         /// <summary>
         /// >> nominee
         /// </summary>
@@ -73,14 +73,14 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_broadcast.pallet
             TransactionPayload.Decode(byteArray, ref p);
             ThresholdSignaturePayload = new Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApiExt.Generated.Model.cf_chains.btc.EnumPreviousOrCurrent, Substrate.NetApiExt.Generated.Types.Base.Arr32U8>>();
             ThresholdSignaturePayload.Decode(byteArray, ref p);
-            TransactionOutId = new Substrate.NetApiExt.Generated.Types.Base.Arr32U8();
+            TransactionOutId = new Substrate.NetApiExt.Generated.Model.primitive_types.H256();
             TransactionOutId.Decode(byteArray, ref p);
             Nominee = new Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>();
             Nominee.Decode(byteArray, ref p);
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

@@ -85,95 +85,10 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_broadcast.pallet
     }
     
     /// <summary>
-    /// >> 278 - Variant[pallet_cf_broadcast.pallet.Event]
+    /// >> 364 - Variant[pallet_cf_broadcast.pallet.Event]
     /// The `Event` enum of this pallet
     /// </summary>
-    public sealed class EnumEventEth : BaseEnumExt<
-        Event, 
-        BaseTuple<
-            Substrate.NetApi.Model.Types.Primitive.U32, 
-            Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, 
-            Substrate.NetApiExt.Generated.Model.cf_chains.evm.Transaction, 
-            Substrate.NetApiExt.Generated.Model.cf_chains.evm.SchnorrVerificationComponents>, 
-        BaseTuple<
-            Substrate.NetApi.Model.Types.Primitive.U32, 
-            Substrate.NetApi.Model.Types.Primitive.U32>,
-        Substrate.NetApi.Model.Types.Primitive.U32,
-        Substrate.NetApi.Model.Types.Primitive.U32, 
-        BaseTuple<
-            Substrate.NetApi.Model.Types.Primitive.U32, 
-            Substrate.NetApiExt.Generated.Model.cf_chains.evm.SchnorrVerificationComponents>, 
-        Substrate.NetApi.Model.Types.Primitive.U32,
-        BaseTuple<
-            Substrate.NetApi.Model.Types.Primitive.U32, 
-            Substrate.NetApiExt.Generated.Types.Base.EnumDispatchResult>, 
-        BaseTuple<
-            Substrate.NetApiExt.Generated.Model.primitive_types.H160, 
-            Substrate.NetApi.Model.Types.Primitive.U128>, 
-        Substrate.NetApiExt.Generated.Model.primitive_types.H160, 
-        Substrate.NetApi.Model.Types.Primitive.U32>
-    {
-    }
-    
-    /// <summary>
-    /// >> 280 - Variant[pallet_cf_broadcast.pallet.Event]
-    /// The `Event` enum of this pallet
-    /// </summary>
-    public sealed class EnumEventDot : BaseEnumExt<
-        Event, 
-        BaseTuple<
-            Substrate.NetApi.Model.Types.Primitive.U32, 
-            Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, 
-            Substrate.NetApiExt.Generated.Model.cf_chains.dot.PolkadotTransactionData, 
-            Substrate.NetApiExt.Generated.Model.cf_chains.dot.PolkadotSignature>, 
-        BaseTuple<
-            Substrate.NetApi.Model.Types.Primitive.U32, 
-            Substrate.NetApi.Model.Types.Primitive.U32>,
-        Substrate.NetApi.Model.Types.Primitive.U32,
-        Substrate.NetApi.Model.Types.Primitive.U32, 
-        BaseTuple<
-            Substrate.NetApi.Model.Types.Primitive.U32, 
-            Substrate.NetApiExt.Generated.Model.cf_chains.dot.PolkadotSignature>, 
-        Substrate.NetApi.Model.Types.Primitive.U32,
-        BaseTuple<
-            Substrate.NetApi.Model.Types.Primitive.U32, 
-            Substrate.NetApiExt.Generated.Types.Base.EnumDispatchResult>, 
-        BaseTuple<
-            Substrate.NetApiExt.Generated.Model.cf_chains.dot.PolkadotAccountId, 
-            Substrate.NetApi.Model.Types.Primitive.U128>, 
-        Substrate.NetApiExt.Generated.Model.cf_chains.dot.PolkadotAccountId, 
-        Substrate.NetApi.Model.Types.Primitive.U32>
-    {
-    }
-    
-    /// <summary>
-    /// >> 282 - Variant[pallet_cf_broadcast.pallet.Event]
-    /// The `Event` enum of this pallet
-    /// </summary>
-    public sealed class EnumEventBtc : BaseEnumExt<
-        Event, 
-        BaseTuple<
-            Substrate.NetApi.Model.Types.Primitive.U32, 
-            Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, 
-            Substrate.NetApiExt.Generated.Model.cf_chains.btc.BitcoinTransactionData, 
-            Substrate.NetApiExt.Generated.Types.Base.Arr32U8>, 
-        BaseTuple<
-            Substrate.NetApi.Model.Types.Primitive.U32, 
-            Substrate.NetApi.Model.Types.Primitive.U32>,
-        Substrate.NetApi.Model.Types.Primitive.U32,
-        Substrate.NetApi.Model.Types.Primitive.U32, 
-        BaseTuple<
-            Substrate.NetApi.Model.Types.Primitive.U32, 
-            Substrate.NetApiExt.Generated.Types.Base.Arr32U8>, 
-        Substrate.NetApi.Model.Types.Primitive.U32,
-        BaseTuple<
-            Substrate.NetApi.Model.Types.Primitive.U32, 
-            Substrate.NetApiExt.Generated.Types.Base.EnumDispatchResult>, 
-        BaseTuple<
-            Substrate.NetApiExt.Generated.Model.cf_chains.btc.EnumScriptPubkey, 
-            Substrate.NetApi.Model.Types.Primitive.U64>, 
-        Substrate.NetApiExt.Generated.Model.cf_chains.btc.EnumScriptPubkey, 
-        Substrate.NetApi.Model.Types.Primitive.U32>
+    public sealed class EnumEvent : BaseEnumExt<Event, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Model.cf_chains.evm.Transaction, Substrate.NetApiExt.Generated.Model.cf_chains.evm.SchnorrVerificationComponents>, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Primitive.U32>, Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Primitive.U32, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApiExt.Generated.Model.cf_chains.evm.SchnorrVerificationComponents, Substrate.NetApiExt.Generated.Model.primitive_types.H256>, Substrate.NetApi.Model.Types.Primitive.U32, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApiExt.Generated.Types.Base.EnumResult>, BaseTuple<Substrate.NetApiExt.Generated.Model.primitive_types.H160, Substrate.NetApi.Model.Types.Primitive.U128>, Substrate.NetApiExt.Generated.Model.primitive_types.H160, Substrate.NetApi.Model.Types.Primitive.U32>
     {
     }
 }

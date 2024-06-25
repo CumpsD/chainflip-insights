@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_primitives.chains
     
     
     /// <summary>
-    /// >> 126 - Composite[cf_primitives.chains.Polkadot]
+    /// >> 144 - Composite[cf_primitives.chains.Polkadot]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class Polkadot : BaseType
@@ -44,7 +44,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_primitives.chains
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

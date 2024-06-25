@@ -48,17 +48,17 @@ namespace Substrate.NetApiExt.Generated.Storage
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("EthereumBroadcaster", "TransactionOutIdToBroadcastId"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
                             Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApiExt.Generated.Model.cf_chains.evm.SchnorrVerificationComponents), typeof(Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Primitive.U64>)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("EthereumBroadcaster", "DelayedBroadcastRetryQueue"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
-                            Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApi.Model.Types.Primitive.U32), typeof(Substrate.NetApiExt.Generated.Types.Base.BTreeSetT2)));
-            _client.StorageKeyDict.Add(new System.Tuple<string, string>("EthereumBroadcaster", "Timeouts"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
                             Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApi.Model.Types.Primitive.U32), typeof(Substrate.NetApiExt.Generated.Types.Base.BTreeSetT3)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("EthereumBroadcaster", "Timeouts"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
+                            Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApi.Model.Types.Primitive.U32), typeof(Substrate.NetApiExt.Generated.Types.Base.BTreeSetT4)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("EthereumBroadcaster", "ThresholdSignatureData"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
                             Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApi.Model.Types.Primitive.U32), typeof(Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApiExt.Generated.Model.cf_chains.eth.api.EnumEthereumApi, Substrate.NetApiExt.Generated.Model.cf_chains.evm.SchnorrVerificationComponents>)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("EthereumBroadcaster", "TransactionMetadata"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
                             Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApi.Model.Types.Primitive.U32), typeof(Substrate.NetApiExt.Generated.Model.cf_chains.evm.EvmTransactionMetadata)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("EthereumBroadcaster", "TransactionFeeDeficit"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
                             Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApiExt.Generated.Model.primitive_types.H160), typeof(Substrate.NetApi.Model.Types.Primitive.U128)));
-            _client.StorageKeyDict.Add(new System.Tuple<string, string>("EthereumBroadcaster", "BroadcastBarriers"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApiExt.Generated.Types.Base.BTreeSetT2)));
-            _client.StorageKeyDict.Add(new System.Tuple<string, string>("EthereumBroadcaster", "PendingBroadcasts"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApiExt.Generated.Types.Base.BTreeSetT2)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("EthereumBroadcaster", "BroadcastBarriers"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApiExt.Generated.Types.Base.BTreeSetT3)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("EthereumBroadcaster", "PendingBroadcasts"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApiExt.Generated.Types.Base.BTreeSetT3)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("EthereumBroadcaster", "AbortedBroadcasts"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Model.Types.Primitive.U32>)));
         }
         
@@ -274,10 +274,10 @@ namespace Substrate.NetApiExt.Generated.Storage
         /// >> DelayedBroadcastRetryQueue
         ///  The list of failed broadcasts that will be retried in some future block.
         /// </summary>
-        public async Task<Substrate.NetApiExt.Generated.Types.Base.BTreeSetT2> DelayedBroadcastRetryQueue(Substrate.NetApi.Model.Types.Primitive.U32 key, string blockhash, CancellationToken token)
+        public async Task<Substrate.NetApiExt.Generated.Types.Base.BTreeSetT3> DelayedBroadcastRetryQueue(Substrate.NetApi.Model.Types.Primitive.U32 key, string blockhash, CancellationToken token)
         {
             string parameters = EthereumBroadcasterStorage.DelayedBroadcastRetryQueueParams(key);
-            var result = await _client.GetStorageAsync<Substrate.NetApiExt.Generated.Types.Base.BTreeSetT2>(parameters, blockhash, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApiExt.Generated.Types.Base.BTreeSetT3>(parameters, blockhash, token);
             return result;
         }
         
@@ -307,10 +307,10 @@ namespace Substrate.NetApiExt.Generated.Storage
         ///  A mapping from block number to a list of broadcasts that expire at that
         ///  block number.
         /// </summary>
-        public async Task<Substrate.NetApiExt.Generated.Types.Base.BTreeSetT3> Timeouts(Substrate.NetApi.Model.Types.Primitive.U32 key, string blockhash, CancellationToken token)
+        public async Task<Substrate.NetApiExt.Generated.Types.Base.BTreeSetT4> Timeouts(Substrate.NetApi.Model.Types.Primitive.U32 key, string blockhash, CancellationToken token)
         {
             string parameters = EthereumBroadcasterStorage.TimeoutsParams(key);
-            var result = await _client.GetStorageAsync<Substrate.NetApiExt.Generated.Types.Base.BTreeSetT3>(parameters, blockhash, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApiExt.Generated.Types.Base.BTreeSetT4>(parameters, blockhash, token);
             return result;
         }
         
@@ -429,10 +429,10 @@ namespace Substrate.NetApiExt.Generated.Storage
         /// >> BroadcastBarriers
         ///  Whether or not broadcasts are paused for broadcast ids greater than the given broadcast id.
         /// </summary>
-        public async Task<Substrate.NetApiExt.Generated.Types.Base.BTreeSetT2> BroadcastBarriers(string blockhash, CancellationToken token)
+        public async Task<Substrate.NetApiExt.Generated.Types.Base.BTreeSetT3> BroadcastBarriers(string blockhash, CancellationToken token)
         {
             string parameters = EthereumBroadcasterStorage.BroadcastBarriersParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApiExt.Generated.Types.Base.BTreeSetT2>(parameters, blockhash, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApiExt.Generated.Types.Base.BTreeSetT3>(parameters, blockhash, token);
             return result;
         }
         
@@ -458,10 +458,10 @@ namespace Substrate.NetApiExt.Generated.Storage
         /// >> PendingBroadcasts
         ///  List of broadcasts that are initiated but not witnessed on the external chain.
         /// </summary>
-        public async Task<Substrate.NetApiExt.Generated.Types.Base.BTreeSetT2> PendingBroadcasts(string blockhash, CancellationToken token)
+        public async Task<Substrate.NetApiExt.Generated.Types.Base.BTreeSetT3> PendingBroadcasts(string blockhash, CancellationToken token)
         {
             string parameters = EthereumBroadcasterStorage.PendingBroadcastsParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApiExt.Generated.Types.Base.BTreeSetT2>(parameters, blockhash, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApiExt.Generated.Types.Base.BTreeSetT3>(parameters, blockhash, token);
             return result;
         }
         
@@ -534,13 +534,14 @@ namespace Substrate.NetApiExt.Generated.Storage
         /// >> transaction_succeeded
         /// Contains a variant per dispatchable extrinsic that this pallet has.
         /// </summary>
-        public static Method TransactionSucceeded(Substrate.NetApiExt.Generated.Model.cf_chains.evm.SchnorrVerificationComponents tx_out_id, Substrate.NetApiExt.Generated.Model.primitive_types.H160 signer_id, Substrate.NetApiExt.Generated.Model.cf_chains.evm.TransactionFee tx_fee, Substrate.NetApiExt.Generated.Model.cf_chains.evm.EvmTransactionMetadata tx_metadata)
+        public static Method TransactionSucceeded(Substrate.NetApiExt.Generated.Model.cf_chains.evm.SchnorrVerificationComponents tx_out_id, Substrate.NetApiExt.Generated.Model.primitive_types.H160 signer_id, Substrate.NetApiExt.Generated.Model.cf_chains.evm.TransactionFee tx_fee, Substrate.NetApiExt.Generated.Model.cf_chains.evm.EvmTransactionMetadata tx_metadata, Substrate.NetApiExt.Generated.Model.primitive_types.H256 transaction_ref)
         {
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
             byteArray.AddRange(tx_out_id.Encode());
             byteArray.AddRange(signer_id.Encode());
             byteArray.AddRange(tx_fee.Encode());
             byteArray.AddRange(tx_metadata.Encode());
+            byteArray.AddRange(transaction_ref.Encode());
             return new Method(27, "EthereumBroadcaster", 2, "transaction_succeeded", byteArray.ToArray());
         }
         

@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_amm.range_orders
     
     
     /// <summary>
-    /// >> 526 - Composite[cf_amm.range_orders.Position]
+    /// >> 637 - Composite[cf_amm.range_orders.Position]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class Position : BaseType
@@ -31,11 +31,11 @@ namespace Substrate.NetApiExt.Generated.Model.cf_amm.range_orders
         /// <summary>
         /// >> last_fee_growth_inside
         /// </summary>
-        public Substrate.NetApiExt.Generated.Model.cf_amm.common.SideMapT3 LastFeeGrowthInside { get; set; }
+        public Substrate.NetApiExt.Generated.Model.cf_amm.common.PoolPairsMapT6 LastFeeGrowthInside { get; set; }
         /// <summary>
         /// >> accumulative_fees
         /// </summary>
-        public Substrate.NetApiExt.Generated.Model.cf_amm.common.SideMapT3 AccumulativeFees { get; set; }
+        public Substrate.NetApiExt.Generated.Model.cf_amm.common.PoolPairsMapT6 AccumulativeFees { get; set; }
         /// <summary>
         /// >> original_sqrt_price
         /// </summary>
@@ -64,16 +64,16 @@ namespace Substrate.NetApiExt.Generated.Model.cf_amm.range_orders
             var start = p;
             Liquidity = new Substrate.NetApi.Model.Types.Primitive.U128();
             Liquidity.Decode(byteArray, ref p);
-            LastFeeGrowthInside = new Substrate.NetApiExt.Generated.Model.cf_amm.common.SideMapT3();
+            LastFeeGrowthInside = new Substrate.NetApiExt.Generated.Model.cf_amm.common.PoolPairsMapT6();
             LastFeeGrowthInside.Decode(byteArray, ref p);
-            AccumulativeFees = new Substrate.NetApiExt.Generated.Model.cf_amm.common.SideMapT3();
+            AccumulativeFees = new Substrate.NetApiExt.Generated.Model.cf_amm.common.PoolPairsMapT6();
             AccumulativeFees.Decode(byteArray, ref p);
             OriginalSqrtPrice = new Substrate.NetApiExt.Generated.Model.primitive_types.U256();
             OriginalSqrtPrice.Decode(byteArray, ref p);
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

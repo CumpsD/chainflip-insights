@@ -33,7 +33,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress
     }
     
     /// <summary>
-    /// >> 294 - Variant[pallet_cf_ingress_egress.DepositIgnoredReason]
+    /// >> 343 - Variant[pallet_cf_ingress_egress.DepositIgnoredReason]
     /// </summary>
     public sealed class EnumDepositIgnoredReason : BaseEnum<DepositIgnoredReason>
     {

@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.evm
     
     
     /// <summary>
-    /// >> 182 - Composite[cf_chains.evm.EvmTransactionMetadata]
+    /// >> 199 - Composite[cf_chains.evm.EvmTransactionMetadata]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class EvmTransactionMetadata : BaseType
@@ -73,7 +73,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.evm
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

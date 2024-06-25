@@ -43,7 +43,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.dot
     }
     
     /// <summary>
-    /// >> 188 - Variant[cf_chains.dot.PolkadotRuntimeCall]
+    /// >> 205 - Variant[cf_chains.dot.PolkadotRuntimeCall]
     /// </summary>
     public sealed class EnumPolkadotRuntimeCall : BaseEnumExt<PolkadotRuntimeCall, Substrate.NetApiExt.Generated.Model.cf_chains.dot.EnumSystemCall, BaseVoid, BaseVoid, BaseVoid, BaseVoid, Substrate.NetApiExt.Generated.Model.cf_chains.dot.EnumBalancesCall, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, BaseVoid, Substrate.NetApiExt.Generated.Model.cf_chains.dot.EnumUtilityCall, BaseVoid, BaseVoid, Substrate.NetApiExt.Generated.Model.cf_chains.dot.EnumProxyCall>
     {

@@ -30,7 +30,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_reputation.pallet
     }
     
     /// <summary>
-    /// >> 372 - Variant[pallet_cf_reputation.pallet.Error]
+    /// >> 437 - Variant[pallet_cf_reputation.pallet.Error]
     /// The `Error` enum of this pallet.
     /// </summary>
     public sealed class EnumError : BaseEnum<Error>

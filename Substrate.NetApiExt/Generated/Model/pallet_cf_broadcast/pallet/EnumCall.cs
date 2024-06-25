@@ -54,10 +54,10 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_broadcast.pallet
     }
     
     /// <summary>
-    /// >> 202 - Variant[pallet_cf_broadcast.pallet.Call]
+    /// >> 297 - Variant[pallet_cf_broadcast.pallet.Call]
     /// Contains a variant per dispatchable extrinsic that this pallet has.
     /// </summary>
-    public sealed class EnumCall : BaseEnumExt<Call, Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Primitive.U32>, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApiExt.Generated.Model.cf_chains.btc.EnumPreviousOrCurrent, Substrate.NetApiExt.Generated.Types.Base.Arr32U8>>, Substrate.NetApiExt.Generated.Model.cf_chains.btc.api.EnumBitcoinApi, Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApi.Model.Types.Primitive.Bool>, BaseTuple<Substrate.NetApiExt.Generated.Types.Base.Arr32U8, Substrate.NetApiExt.Generated.Model.cf_chains.btc.EnumScriptPubkey, Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApi.Model.Types.Base.BaseTuple>, Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Primitive.U32>
+    public sealed class EnumCall : BaseEnumExt<Call, Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Primitive.U32>, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApiExt.Generated.Model.primitive_types.H256, Substrate.NetApiExt.Generated.Model.cf_chains.arb.api.EnumArbitrumApi, Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApi.Model.Types.Primitive.Bool>, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_chains.evm.SchnorrVerificationComponents, Substrate.NetApiExt.Generated.Model.primitive_types.H160, Substrate.NetApiExt.Generated.Model.cf_chains.evm.TransactionFee, Substrate.NetApiExt.Generated.Model.cf_chains.evm.EvmTransactionMetadata, Substrate.NetApiExt.Generated.Model.primitive_types.H256>, Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Primitive.U32>
     {
     }
 }

@@ -43,7 +43,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_primitives
     }
     
     /// <summary>
-    /// >> 62 - Variant[cf_primitives.AccountRole]
+    /// >> 77 - Variant[cf_primitives.AccountRole]
     /// </summary>
     public sealed class EnumAccountRole : BaseEnum<AccountRole>
     {

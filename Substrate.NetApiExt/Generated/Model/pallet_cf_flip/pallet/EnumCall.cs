@@ -30,7 +30,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_flip.pallet
     }
     
     /// <summary>
-    /// >> 76 - Variant[pallet_cf_flip.pallet.Call]
+    /// >> 92 - Variant[pallet_cf_flip.pallet.Call]
     /// Contains a variant per dispatchable extrinsic that this pallet has.
     /// </summary>
     public sealed class EnumCall : BaseEnumExt<Call, Substrate.NetApiExt.Generated.Model.sp_arithmetic.per_things.Permill>

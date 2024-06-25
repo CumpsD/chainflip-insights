@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.sp_session
     
     
     /// <summary>
-    /// >> 108 - Composite[sp_session.MembershipProof]
+    /// >> 124 - Composite[sp_session.MembershipProof]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class MembershipProof : BaseType
@@ -66,7 +66,7 @@ namespace Substrate.NetApiExt.Generated.Model.sp_session
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

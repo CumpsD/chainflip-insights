@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_amm.limit_orders
     
     
     /// <summary>
-    /// >> 514 - Composite[cf_amm.limit_orders.Position]
+    /// >> 625 - Composite[cf_amm.limit_orders.Position]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class Position : BaseType
@@ -80,7 +80,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_amm.limit_orders
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

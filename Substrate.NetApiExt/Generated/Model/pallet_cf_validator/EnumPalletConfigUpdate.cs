@@ -68,7 +68,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_validator
     }
     
     /// <summary>
-    /// >> 85 - Variant[pallet_cf_validator.PalletConfigUpdate]
+    /// >> 101 - Variant[pallet_cf_validator.PalletConfigUpdate]
     /// </summary>
     public sealed class EnumPalletConfigUpdate : BaseEnumExt<PalletConfigUpdate, Substrate.NetApiExt.Generated.Model.sp_arithmetic.per_things.Percent, Substrate.NetApiExt.Generated.Model.sp_arithmetic.per_things.Percent, Substrate.NetApiExt.Generated.Model.sp_arithmetic.per_things.Percent, Substrate.NetApiExt.Generated.Model.sp_arithmetic.per_things.Percent, Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApiExt.Generated.Model.pallet_cf_validator.auction_resolver.SetSizeParameters, Substrate.NetApiExt.Generated.Model.cf_primitives.SemVer, Substrate.NetApiExt.Generated.Model.sp_arithmetic.per_things.Percent>
     {

@@ -23,33 +23,64 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_threshold_signature.pall
     {
         
         /// <summary>
-        /// >> InvalidCeremonyId
+        /// >> InvalidThresholdSignatureCeremonyId
         /// The provided ceremony id is invalid.
         /// </summary>
-        InvalidCeremonyId = 0,
+        InvalidThresholdSignatureCeremonyId = 0,
+        
+        /// <summary>
+        /// >> InvalidKeygenCeremonyId
+        /// An invalid keygen ceremony id
+        /// </summary>
+        InvalidKeygenCeremonyId = 1,
         
         /// <summary>
         /// >> InvalidThresholdSignature
         /// The provided threshold signature is invalid.
         /// </summary>
-        InvalidThresholdSignature = 1,
+        InvalidThresholdSignature = 2,
         
         /// <summary>
-        /// >> InvalidRespondent
+        /// >> InvalidThresholdSignatureRespondent
         /// The reporting party is not one of the signatories for this ceremony, or has already
         /// responded.
         /// </summary>
-        InvalidRespondent = 2,
+        InvalidThresholdSignatureRespondent = 3,
+        
+        /// <summary>
+        /// >> InvalidKeygenRespondent
+        /// An authority sent a response for a ceremony in which they weren't involved, or to which
+        /// they have already submitted a response.
+        /// </summary>
+        InvalidKeygenRespondent = 4,
         
         /// <summary>
         /// >> InvalidRequestId
         /// The request Id is stale or not yet valid.
         /// </summary>
-        InvalidRequestId = 3,
+        InvalidRequestId = 5,
+        
+        /// <summary>
+        /// >> ThresholdSignatureUnavailable
+        /// There is no threshold signature available
+        /// </summary>
+        ThresholdSignatureUnavailable = 6,
+        
+        /// <summary>
+        /// >> NoActiveRotation
+        /// There is currently no rotation in progress for this key.
+        /// </summary>
+        NoActiveRotation = 7,
+        
+        /// <summary>
+        /// >> InvalidRotationStatus
+        /// The requested call is invalid based on the current rotation state.
+        /// </summary>
+        InvalidRotationStatus = 8,
     }
     
     /// <summary>
-    /// >> 425 - Variant[pallet_cf_threshold_signature.pallet.Error]
+    /// >> 489 - Variant[pallet_cf_threshold_signature.pallet.Error]
     /// The `Error` enum of this pallet.
     /// </summary>
     public sealed class EnumError : BaseEnum<Error>

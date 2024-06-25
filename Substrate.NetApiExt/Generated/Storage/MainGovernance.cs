@@ -337,10 +337,10 @@ namespace Substrate.NetApiExt.Generated.Storage
         /// >> new_membership_set
         /// Contains a variant per dispatchable extrinsic that this pallet has.
         /// </summary>
-        public static Method NewMembershipSet(Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32> accounts)
+        public static Method NewMembershipSet(Substrate.NetApiExt.Generated.Types.Base.BTreeSetT1 new_members)
         {
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
-            byteArray.AddRange(accounts.Encode());
+            byteArray.AddRange(new_members.Encode());
             return new Method(15, "Governance", 1, "new_membership_set", byteArray.ToArray());
         }
         

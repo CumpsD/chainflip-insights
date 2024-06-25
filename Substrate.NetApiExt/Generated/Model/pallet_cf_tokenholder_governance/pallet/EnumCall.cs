@@ -36,7 +36,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_tokenholder_governance.p
     }
     
     /// <summary>
-    /// >> 114 - Variant[pallet_cf_tokenholder_governance.pallet.Call]
+    /// >> 131 - Variant[pallet_cf_tokenholder_governance.pallet.Call]
     /// Contains a variant per dispatchable extrinsic that this pallet has.
     /// </summary>
     public sealed class EnumCall : BaseEnumExt<Call, Substrate.NetApiExt.Generated.Model.pallet_cf_tokenholder_governance.EnumProposal, Substrate.NetApiExt.Generated.Model.pallet_cf_tokenholder_governance.EnumProposal>

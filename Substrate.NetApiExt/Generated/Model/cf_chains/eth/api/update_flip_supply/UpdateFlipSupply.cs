@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.eth.api.update_flip_supp
     
     
     /// <summary>
-    /// >> 164 - Composite[cf_chains.eth.api.update_flip_supply.UpdateFlipSupply]
+    /// >> 181 - Composite[cf_chains.eth.api.update_flip_supply.UpdateFlipSupply]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class UpdateFlipSupply : BaseType
@@ -59,7 +59,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.eth.api.update_flip_supp
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

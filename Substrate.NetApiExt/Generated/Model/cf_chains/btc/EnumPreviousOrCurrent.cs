@@ -33,7 +33,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.btc
     }
     
     /// <summary>
-    /// >> 205 - Variant[cf_chains.btc.PreviousOrCurrent]
+    /// >> 223 - Variant[cf_chains.btc.PreviousOrCurrent]
     /// </summary>
     public sealed class EnumPreviousOrCurrent : BaseEnum<PreviousOrCurrent>
     {

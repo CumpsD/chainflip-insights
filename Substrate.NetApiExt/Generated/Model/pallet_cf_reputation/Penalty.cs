@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_reputation
     
     
     /// <summary>
-    /// >> 119 - Composite[pallet_cf_reputation.Penalty]
+    /// >> 136 - Composite[pallet_cf_reputation.Penalty]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class Penalty : BaseType
@@ -59,7 +59,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_reputation
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

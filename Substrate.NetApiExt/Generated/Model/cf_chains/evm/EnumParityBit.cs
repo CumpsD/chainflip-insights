@@ -33,7 +33,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.evm
     }
     
     /// <summary>
-    /// >> 137 - Variant[cf_chains.evm.ParityBit]
+    /// >> 154 - Variant[cf_chains.evm.ParityBit]
     /// </summary>
     public sealed class EnumParityBit : BaseEnum<ParityBit>
     {

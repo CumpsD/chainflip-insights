@@ -122,9 +122,9 @@ namespace Substrate.NetApiExt.Generated.Model.state_chain_runtime
         BitcoinVault = 23,
         
         /// <summary>
-        /// >> EthereumThresholdSigner
+        /// >> EvmThresholdSigner
         /// </summary>
-        EthereumThresholdSigner = 24,
+        EvmThresholdSigner = 24,
         
         /// <summary>
         /// >> PolkadotThresholdSigner
@@ -180,49 +180,32 @@ namespace Substrate.NetApiExt.Generated.Model.state_chain_runtime
         /// >> LiquidityPools
         /// </summary>
         LiquidityPools = 35,
+        
+        /// <summary>
+        /// >> ArbitrumChainTracking
+        /// </summary>
+        ArbitrumChainTracking = 37,
+        
+        /// <summary>
+        /// >> ArbitrumVault
+        /// </summary>
+        ArbitrumVault = 38,
+        
+        /// <summary>
+        /// >> ArbitrumBroadcaster
+        /// </summary>
+        ArbitrumBroadcaster = 39,
+        
+        /// <summary>
+        /// >> ArbitrumIngressEgress
+        /// </summary>
+        ArbitrumIngressEgress = 40,
     }
     
     /// <summary>
     /// >> 18 - Variant[state_chain_runtime.RuntimeEvent]
     /// </summary>
-    public sealed class EnumRuntimeEvent : BaseEnumExt<
-        RuntimeEvent, 
-        Substrate.NetApiExt.Generated.Model.frame_system.pallet.EnumEvent,
-        BaseVoid, 
-        Substrate.NetApiExt.Generated.Model.pallet_cf_environment.pallet.EnumEvent, 
-        Substrate.NetApiExt.Generated.Model.pallet_cf_flip.pallet.EnumEvent, 
-        Substrate.NetApiExt.Generated.Model.pallet_cf_emissions.pallet.EnumEvent, 
-        Substrate.NetApiExt.Generated.Model.pallet_cf_funding.pallet.EnumEvent, 
-        Substrate.NetApiExt.Generated.Model.pallet_cf_account_roles.pallet.EnumEvent, 
-        Substrate.NetApiExt.Generated.Model.pallet_transaction_payment.pallet.EnumEvent,
-        Substrate.NetApiExt.Generated.Model.pallet_cf_witnesser.pallet.EnumEvent, 
-        Substrate.NetApiExt.Generated.Model.pallet_cf_validator.pallet.EnumEvent, 
-        Substrate.NetApiExt.Generated.Model.pallet_session.pallet.EnumEvent, 
-        BaseVoid, 
-        BaseVoid, 
-        BaseVoid,
-        Substrate.NetApiExt.Generated.Model.pallet_grandpa.pallet.EnumEvent,
-        Substrate.NetApiExt.Generated.Model.pallet_cf_governance.pallet.EnumEvent, 
-        Substrate.NetApiExt.Generated.Model.pallet_cf_tokenholder_governance.pallet.EnumEvent, 
-        Substrate.NetApiExt.Generated.Model.pallet_cf_reputation.pallet.EnumEvent,
-        Substrate.NetApiExt.Generated.Model.pallet_cf_chain_tracking.pallet.EnumEventEth,
-        Substrate.NetApiExt.Generated.Model.pallet_cf_chain_tracking.pallet.EnumEventDot,
-        Substrate.NetApiExt.Generated.Model.pallet_cf_chain_tracking.pallet.EnumEventBtc, 
-        Substrate.NetApiExt.Generated.Model.pallet_cf_vaults.pallet.EnumEventEth, 
-        Substrate.NetApiExt.Generated.Model.pallet_cf_vaults.pallet.EnumEventDot, 
-        Substrate.NetApiExt.Generated.Model.pallet_cf_vaults.pallet.EnumEventBtc, 
-        Substrate.NetApiExt.Generated.Model.pallet_cf_threshold_signature.pallet.EnumEventEth,
-        Substrate.NetApiExt.Generated.Model.pallet_cf_threshold_signature.pallet.EnumEventDot,
-        Substrate.NetApiExt.Generated.Model.pallet_cf_threshold_signature.pallet.EnumEventBtc, 
-        Substrate.NetApiExt.Generated.Model.pallet_cf_broadcast.pallet.EnumEventEth, 
-        Substrate.NetApiExt.Generated.Model.pallet_cf_broadcast.pallet.EnumEventDot, 
-        Substrate.NetApiExt.Generated.Model.pallet_cf_broadcast.pallet.EnumEventBtc, 
-        Substrate.NetApiExt.Generated.Model.pallet_cf_swapping.pallet.EnumEvent,
-        Substrate.NetApiExt.Generated.Model.pallet_cf_lp.pallet.EnumEvent, 
-        Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.pallet.EnumEventEth, 
-        Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.pallet.EnumEventDot, 
-        Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.pallet.EnumEventBtc,
-        Substrate.NetApiExt.Generated.Model.pallet_cf_pools.pallet.EnumEvent>
+    public sealed class EnumRuntimeEvent : BaseEnumExt<RuntimeEvent, Substrate.NetApiExt.Generated.Model.frame_system.pallet.EnumEvent, BaseVoid, Substrate.NetApiExt.Generated.Model.pallet_cf_environment.pallet.EnumEvent, Substrate.NetApiExt.Generated.Model.pallet_cf_flip.pallet.EnumEvent, Substrate.NetApiExt.Generated.Model.pallet_cf_emissions.pallet.EnumEvent, Substrate.NetApiExt.Generated.Model.pallet_cf_funding.pallet.EnumEvent, Substrate.NetApiExt.Generated.Model.pallet_cf_account_roles.pallet.EnumEvent, Substrate.NetApiExt.Generated.Model.pallet_transaction_payment.pallet.EnumEvent, Substrate.NetApiExt.Generated.Model.pallet_cf_witnesser.pallet.EnumEvent, Substrate.NetApiExt.Generated.Model.pallet_cf_validator.pallet.EnumEvent, Substrate.NetApiExt.Generated.Model.pallet_session.pallet.EnumEvent, BaseVoid, BaseVoid, BaseVoid, Substrate.NetApiExt.Generated.Model.pallet_grandpa.pallet.EnumEvent, Substrate.NetApiExt.Generated.Model.pallet_cf_governance.pallet.EnumEvent, Substrate.NetApiExt.Generated.Model.pallet_cf_tokenholder_governance.pallet.EnumEvent, Substrate.NetApiExt.Generated.Model.pallet_cf_reputation.pallet.EnumEvent, Substrate.NetApiExt.Generated.Model.pallet_cf_chain_tracking.pallet.EnumEvent, Substrate.NetApiExt.Generated.Model.pallet_cf_chain_tracking.pallet.EnumEvent, Substrate.NetApiExt.Generated.Model.pallet_cf_chain_tracking.pallet.EnumEvent, Substrate.NetApiExt.Generated.Model.pallet_cf_vaults.pallet.EnumEvent, Substrate.NetApiExt.Generated.Model.pallet_cf_vaults.pallet.EnumEvent, Substrate.NetApiExt.Generated.Model.pallet_cf_vaults.pallet.EnumEvent, Substrate.NetApiExt.Generated.Model.pallet_cf_threshold_signature.pallet.EnumEvent, Substrate.NetApiExt.Generated.Model.pallet_cf_threshold_signature.pallet.EnumEvent, Substrate.NetApiExt.Generated.Model.pallet_cf_threshold_signature.pallet.EnumEvent, Substrate.NetApiExt.Generated.Model.pallet_cf_broadcast.pallet.EnumEvent, Substrate.NetApiExt.Generated.Model.pallet_cf_broadcast.pallet.EnumEvent, Substrate.NetApiExt.Generated.Model.pallet_cf_broadcast.pallet.EnumEvent, Substrate.NetApiExt.Generated.Model.pallet_cf_swapping.pallet.EnumEvent, Substrate.NetApiExt.Generated.Model.pallet_cf_lp.pallet.EnumEvent, Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.pallet.EnumEvent, Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.pallet.EnumEvent, Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.pallet.EnumEvent, Substrate.NetApiExt.Generated.Model.pallet_cf_pools.pallet.EnumEvent, BaseVoid, Substrate.NetApiExt.Generated.Model.pallet_cf_chain_tracking.pallet.EnumEvent, Substrate.NetApiExt.Generated.Model.pallet_cf_vaults.pallet.EnumEvent, Substrate.NetApiExt.Generated.Model.pallet_cf_broadcast.pallet.EnumEvent, Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.pallet.EnumEvent>
     {
     }
 }

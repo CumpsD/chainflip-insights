@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.btc
     
     
     /// <summary>
-    /// >> 132 - Composite[cf_chains.btc.BitcoinTrackedData]
+    /// >> 150 - Composite[cf_chains.btc.BitcoinTrackedData]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class BitcoinTrackedData : BaseType
@@ -52,7 +52,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.btc
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

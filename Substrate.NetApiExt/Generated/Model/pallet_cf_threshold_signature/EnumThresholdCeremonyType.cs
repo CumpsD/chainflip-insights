@@ -33,7 +33,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_threshold_signature
     }
     
     /// <summary>
-    /// >> 405 - Variant[pallet_cf_threshold_signature.ThresholdCeremonyType]
+    /// >> 452 - Variant[pallet_cf_threshold_signature.ThresholdCeremonyType]
     /// </summary>
     public sealed class EnumThresholdCeremonyType : BaseEnum<ThresholdCeremonyType>
     {

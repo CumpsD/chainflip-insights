@@ -36,374 +36,98 @@ namespace Substrate.NetApiExt.Generated.Storage
         public EthereumVaultStorage(SubstrateClientExt client)
         {
             this._client = client;
-            _client.StorageKeyDict.Add(new System.Tuple<string, string>("EthereumVault", "Vaults"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
-                            Substrate.NetApi.Model.Meta.Storage.Hasher.BlakeTwo128Concat}, typeof(Substrate.NetApi.Model.Types.Primitive.U32), typeof(Substrate.NetApiExt.Generated.Model.pallet_cf_vaults.VaultT1)));
-            _client.StorageKeyDict.Add(new System.Tuple<string, string>("EthereumVault", "CurrentVaultEpoch"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U32)));
-            _client.StorageKeyDict.Add(new System.Tuple<string, string>("EthereumVault", "PendingVaultRotation"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApiExt.Generated.Model.pallet_cf_vaults.EnumVaultRotationStatus)));
-            _client.StorageKeyDict.Add(new System.Tuple<string, string>("EthereumVault", "KeygenSuccessVoters"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
-                            Substrate.NetApi.Model.Meta.Storage.Hasher.Identity}, typeof(Substrate.NetApiExt.Generated.Model.cf_chains.evm.AggKey), typeof(Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>)));
-            _client.StorageKeyDict.Add(new System.Tuple<string, string>("EthereumVault", "KeygenFailureVoters"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>)));
-            _client.StorageKeyDict.Add(new System.Tuple<string, string>("EthereumVault", "KeyHandoverSuccessVoters"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
-                            Substrate.NetApi.Model.Meta.Storage.Hasher.Identity}, typeof(Substrate.NetApiExt.Generated.Model.cf_chains.evm.AggKey), typeof(Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>)));
-            _client.StorageKeyDict.Add(new System.Tuple<string, string>("EthereumVault", "KeyHandoverFailureVoters"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>)));
-            _client.StorageKeyDict.Add(new System.Tuple<string, string>("EthereumVault", "KeygenResolutionPendingSince"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U32)));
-            _client.StorageKeyDict.Add(new System.Tuple<string, string>("EthereumVault", "KeyHandoverResolutionPendingSince"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U32)));
-            _client.StorageKeyDict.Add(new System.Tuple<string, string>("EthereumVault", "KeygenResponseTimeout"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U32)));
-            _client.StorageKeyDict.Add(new System.Tuple<string, string>("EthereumVault", "KeygenSlashAmount"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U128)));
-            _client.StorageKeyDict.Add(new System.Tuple<string, string>("EthereumVault", "CeremonyIdCounter"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U64)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("EthereumVault", "VaultStartBlockNumbers"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
+                            Substrate.NetApi.Model.Meta.Storage.Hasher.BlakeTwo128Concat}, typeof(Substrate.NetApi.Model.Types.Primitive.U32), typeof(Substrate.NetApi.Model.Types.Primitive.U64)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("EthereumVault", "PendingVaultActivation"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApiExt.Generated.Model.pallet_cf_vaults.EnumVaultActivationStatus)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("EthereumVault", "ChainInitialized"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.Bool)));
         }
         
         /// <summary>
-        /// >> VaultsParams
-        ///  A map of vaults by epoch.
+        /// >> VaultStartBlockNumbersParams
+        ///  A map of starting block number of vaults by epoch.
         /// </summary>
-        public static string VaultsParams(Substrate.NetApi.Model.Types.Primitive.U32 key)
+        public static string VaultStartBlockNumbersParams(Substrate.NetApi.Model.Types.Primitive.U32 key)
         {
-            return RequestGenerator.GetStorage("EthereumVault", "Vaults", Substrate.NetApi.Model.Meta.Storage.Type.Map, new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
+            return RequestGenerator.GetStorage("EthereumVault", "VaultStartBlockNumbers", Substrate.NetApi.Model.Meta.Storage.Type.Map, new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
                         Substrate.NetApi.Model.Meta.Storage.Hasher.BlakeTwo128Concat}, new Substrate.NetApi.Model.Types.IType[] {
                         key});
         }
         
         /// <summary>
-        /// >> VaultsDefault
+        /// >> VaultStartBlockNumbersDefault
         /// Default value as hex string
         /// </summary>
-        public static string VaultsDefault()
+        public static string VaultStartBlockNumbersDefault()
         {
             return "0x00";
         }
         
         /// <summary>
-        /// >> Vaults
-        ///  A map of vaults by epoch.
+        /// >> VaultStartBlockNumbers
+        ///  A map of starting block number of vaults by epoch.
         /// </summary>
-        public async Task<Substrate.NetApiExt.Generated.Model.pallet_cf_vaults.VaultT1> Vaults(Substrate.NetApi.Model.Types.Primitive.U32 key, string blockhash, CancellationToken token)
+        public async Task<Substrate.NetApi.Model.Types.Primitive.U64> VaultStartBlockNumbers(Substrate.NetApi.Model.Types.Primitive.U32 key, string blockhash, CancellationToken token)
         {
-            string parameters = EthereumVaultStorage.VaultsParams(key);
-            var result = await _client.GetStorageAsync<Substrate.NetApiExt.Generated.Model.pallet_cf_vaults.VaultT1>(parameters, blockhash, token);
-            return result;
-        }
-        
-        /// <summary>
-        /// >> CurrentVaultEpochParams
-        ///  The epoch whose authorities control the current vault key.
-        /// </summary>
-        public static string CurrentVaultEpochParams()
-        {
-            return RequestGenerator.GetStorage("EthereumVault", "CurrentVaultEpoch", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
-        }
-        
-        /// <summary>
-        /// >> CurrentVaultEpochDefault
-        /// Default value as hex string
-        /// </summary>
-        public static string CurrentVaultEpochDefault()
-        {
-            return "0x00";
-        }
-        
-        /// <summary>
-        /// >> CurrentVaultEpoch
-        ///  The epoch whose authorities control the current vault key.
-        /// </summary>
-        public async Task<Substrate.NetApi.Model.Types.Primitive.U32> CurrentVaultEpoch(string blockhash, CancellationToken token)
-        {
-            string parameters = EthereumVaultStorage.CurrentVaultEpochParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U32>(parameters, blockhash, token);
-            return result;
-        }
-        
-        /// <summary>
-        /// >> PendingVaultRotationParams
-        ///  Vault rotation statuses for the current epoch rotation.
-        /// </summary>
-        public static string PendingVaultRotationParams()
-        {
-            return RequestGenerator.GetStorage("EthereumVault", "PendingVaultRotation", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
-        }
-        
-        /// <summary>
-        /// >> PendingVaultRotationDefault
-        /// Default value as hex string
-        /// </summary>
-        public static string PendingVaultRotationDefault()
-        {
-            return "0x00";
-        }
-        
-        /// <summary>
-        /// >> PendingVaultRotation
-        ///  Vault rotation statuses for the current epoch rotation.
-        /// </summary>
-        public async Task<Substrate.NetApiExt.Generated.Model.pallet_cf_vaults.EnumVaultRotationStatus> PendingVaultRotation(string blockhash, CancellationToken token)
-        {
-            string parameters = EthereumVaultStorage.PendingVaultRotationParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApiExt.Generated.Model.pallet_cf_vaults.EnumVaultRotationStatus>(parameters, blockhash, token);
-            return result;
-        }
-        
-        /// <summary>
-        /// >> KeygenSuccessVotersParams
-        ///  The voters who voted for success for a particular agg key rotation
-        /// </summary>
-        public static string KeygenSuccessVotersParams(Substrate.NetApiExt.Generated.Model.cf_chains.evm.AggKey key)
-        {
-            return RequestGenerator.GetStorage("EthereumVault", "KeygenSuccessVoters", Substrate.NetApi.Model.Meta.Storage.Type.Map, new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
-                        Substrate.NetApi.Model.Meta.Storage.Hasher.Identity}, new Substrate.NetApi.Model.Types.IType[] {
-                        key});
-        }
-        
-        /// <summary>
-        /// >> KeygenSuccessVotersDefault
-        /// Default value as hex string
-        /// </summary>
-        public static string KeygenSuccessVotersDefault()
-        {
-            return "0x00";
-        }
-        
-        /// <summary>
-        /// >> KeygenSuccessVoters
-        ///  The voters who voted for success for a particular agg key rotation
-        /// </summary>
-        public async Task<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>> KeygenSuccessVoters(Substrate.NetApiExt.Generated.Model.cf_chains.evm.AggKey key, string blockhash, CancellationToken token)
-        {
-            string parameters = EthereumVaultStorage.KeygenSuccessVotersParams(key);
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>>(parameters, blockhash, token);
-            return result;
-        }
-        
-        /// <summary>
-        /// >> KeygenFailureVotersParams
-        ///  The voters who voted for failure for a particular agg key rotation
-        /// </summary>
-        public static string KeygenFailureVotersParams()
-        {
-            return RequestGenerator.GetStorage("EthereumVault", "KeygenFailureVoters", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
-        }
-        
-        /// <summary>
-        /// >> KeygenFailureVotersDefault
-        /// Default value as hex string
-        /// </summary>
-        public static string KeygenFailureVotersDefault()
-        {
-            return "0x00";
-        }
-        
-        /// <summary>
-        /// >> KeygenFailureVoters
-        ///  The voters who voted for failure for a particular agg key rotation
-        /// </summary>
-        public async Task<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>> KeygenFailureVoters(string blockhash, CancellationToken token)
-        {
-            string parameters = EthereumVaultStorage.KeygenFailureVotersParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>>(parameters, blockhash, token);
-            return result;
-        }
-        
-        /// <summary>
-        /// >> KeyHandoverSuccessVotersParams
-        ///  The voters who voted for success for a particular key handover ceremony
-        /// </summary>
-        public static string KeyHandoverSuccessVotersParams(Substrate.NetApiExt.Generated.Model.cf_chains.evm.AggKey key)
-        {
-            return RequestGenerator.GetStorage("EthereumVault", "KeyHandoverSuccessVoters", Substrate.NetApi.Model.Meta.Storage.Type.Map, new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
-                        Substrate.NetApi.Model.Meta.Storage.Hasher.Identity}, new Substrate.NetApi.Model.Types.IType[] {
-                        key});
-        }
-        
-        /// <summary>
-        /// >> KeyHandoverSuccessVotersDefault
-        /// Default value as hex string
-        /// </summary>
-        public static string KeyHandoverSuccessVotersDefault()
-        {
-            return "0x00";
-        }
-        
-        /// <summary>
-        /// >> KeyHandoverSuccessVoters
-        ///  The voters who voted for success for a particular key handover ceremony
-        /// </summary>
-        public async Task<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>> KeyHandoverSuccessVoters(Substrate.NetApiExt.Generated.Model.cf_chains.evm.AggKey key, string blockhash, CancellationToken token)
-        {
-            string parameters = EthereumVaultStorage.KeyHandoverSuccessVotersParams(key);
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>>(parameters, blockhash, token);
-            return result;
-        }
-        
-        /// <summary>
-        /// >> KeyHandoverFailureVotersParams
-        ///  The voters who voted for failure for a particular key handover ceremony
-        /// </summary>
-        public static string KeyHandoverFailureVotersParams()
-        {
-            return RequestGenerator.GetStorage("EthereumVault", "KeyHandoverFailureVoters", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
-        }
-        
-        /// <summary>
-        /// >> KeyHandoverFailureVotersDefault
-        /// Default value as hex string
-        /// </summary>
-        public static string KeyHandoverFailureVotersDefault()
-        {
-            return "0x00";
-        }
-        
-        /// <summary>
-        /// >> KeyHandoverFailureVoters
-        ///  The voters who voted for failure for a particular key handover ceremony
-        /// </summary>
-        public async Task<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>> KeyHandoverFailureVoters(string blockhash, CancellationToken token)
-        {
-            string parameters = EthereumVaultStorage.KeyHandoverFailureVotersParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>>(parameters, blockhash, token);
-            return result;
-        }
-        
-        /// <summary>
-        /// >> KeygenResolutionPendingSinceParams
-        ///  The block since which we have been waiting for keygen to be resolved.
-        /// </summary>
-        public static string KeygenResolutionPendingSinceParams()
-        {
-            return RequestGenerator.GetStorage("EthereumVault", "KeygenResolutionPendingSince", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
-        }
-        
-        /// <summary>
-        /// >> KeygenResolutionPendingSinceDefault
-        /// Default value as hex string
-        /// </summary>
-        public static string KeygenResolutionPendingSinceDefault()
-        {
-            return "0x00000000";
-        }
-        
-        /// <summary>
-        /// >> KeygenResolutionPendingSince
-        ///  The block since which we have been waiting for keygen to be resolved.
-        /// </summary>
-        public async Task<Substrate.NetApi.Model.Types.Primitive.U32> KeygenResolutionPendingSince(string blockhash, CancellationToken token)
-        {
-            string parameters = EthereumVaultStorage.KeygenResolutionPendingSinceParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U32>(parameters, blockhash, token);
-            return result;
-        }
-        
-        /// <summary>
-        /// >> KeyHandoverResolutionPendingSinceParams
-        ///  The block since which we have been waiting for key handover to be resolved.
-        /// </summary>
-        public static string KeyHandoverResolutionPendingSinceParams()
-        {
-            return RequestGenerator.GetStorage("EthereumVault", "KeyHandoverResolutionPendingSince", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
-        }
-        
-        /// <summary>
-        /// >> KeyHandoverResolutionPendingSinceDefault
-        /// Default value as hex string
-        /// </summary>
-        public static string KeyHandoverResolutionPendingSinceDefault()
-        {
-            return "0x00000000";
-        }
-        
-        /// <summary>
-        /// >> KeyHandoverResolutionPendingSince
-        ///  The block since which we have been waiting for key handover to be resolved.
-        /// </summary>
-        public async Task<Substrate.NetApi.Model.Types.Primitive.U32> KeyHandoverResolutionPendingSince(string blockhash, CancellationToken token)
-        {
-            string parameters = EthereumVaultStorage.KeyHandoverResolutionPendingSinceParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U32>(parameters, blockhash, token);
-            return result;
-        }
-        
-        /// <summary>
-        /// >> KeygenResponseTimeoutParams
-        /// </summary>
-        public static string KeygenResponseTimeoutParams()
-        {
-            return RequestGenerator.GetStorage("EthereumVault", "KeygenResponseTimeout", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
-        }
-        
-        /// <summary>
-        /// >> KeygenResponseTimeoutDefault
-        /// Default value as hex string
-        /// </summary>
-        public static string KeygenResponseTimeoutDefault()
-        {
-            return "0x00000000";
-        }
-        
-        /// <summary>
-        /// >> KeygenResponseTimeout
-        /// </summary>
-        public async Task<Substrate.NetApi.Model.Types.Primitive.U32> KeygenResponseTimeout(string blockhash, CancellationToken token)
-        {
-            string parameters = EthereumVaultStorage.KeygenResponseTimeoutParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U32>(parameters, blockhash, token);
-            return result;
-        }
-        
-        /// <summary>
-        /// >> KeygenSlashAmountParams
-        ///  The amount of FLIP that is slashed for an agreed reported party expressed in Flipperinos
-        ///  (2/3 must agree the node was an offender) on keygen failure.
-        /// </summary>
-        public static string KeygenSlashAmountParams()
-        {
-            return RequestGenerator.GetStorage("EthereumVault", "KeygenSlashAmount", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
-        }
-        
-        /// <summary>
-        /// >> KeygenSlashAmountDefault
-        /// Default value as hex string
-        /// </summary>
-        public static string KeygenSlashAmountDefault()
-        {
-            return "0x00000000000000000000000000000000";
-        }
-        
-        /// <summary>
-        /// >> KeygenSlashAmount
-        ///  The amount of FLIP that is slashed for an agreed reported party expressed in Flipperinos
-        ///  (2/3 must agree the node was an offender) on keygen failure.
-        /// </summary>
-        public async Task<Substrate.NetApi.Model.Types.Primitive.U128> KeygenSlashAmount(string blockhash, CancellationToken token)
-        {
-            string parameters = EthereumVaultStorage.KeygenSlashAmountParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U128>(parameters, blockhash, token);
-            return result;
-        }
-        
-        /// <summary>
-        /// >> CeremonyIdCounterParams
-        ///  Counter for generating unique ceremony ids.
-        /// </summary>
-        public static string CeremonyIdCounterParams()
-        {
-            return RequestGenerator.GetStorage("EthereumVault", "CeremonyIdCounter", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
-        }
-        
-        /// <summary>
-        /// >> CeremonyIdCounterDefault
-        /// Default value as hex string
-        /// </summary>
-        public static string CeremonyIdCounterDefault()
-        {
-            return "0x0000000000000000";
-        }
-        
-        /// <summary>
-        /// >> CeremonyIdCounter
-        ///  Counter for generating unique ceremony ids.
-        /// </summary>
-        public async Task<Substrate.NetApi.Model.Types.Primitive.U64> CeremonyIdCounter(string blockhash, CancellationToken token)
-        {
-            string parameters = EthereumVaultStorage.CeremonyIdCounterParams();
+            string parameters = EthereumVaultStorage.VaultStartBlockNumbersParams(key);
             var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U64>(parameters, blockhash, token);
+            return result;
+        }
+        
+        /// <summary>
+        /// >> PendingVaultActivationParams
+        ///  Vault activation status for the current epoch rotation.
+        /// </summary>
+        public static string PendingVaultActivationParams()
+        {
+            return RequestGenerator.GetStorage("EthereumVault", "PendingVaultActivation", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
+        }
+        
+        /// <summary>
+        /// >> PendingVaultActivationDefault
+        /// Default value as hex string
+        /// </summary>
+        public static string PendingVaultActivationDefault()
+        {
+            return "0x00";
+        }
+        
+        /// <summary>
+        /// >> PendingVaultActivation
+        ///  Vault activation status for the current epoch rotation.
+        /// </summary>
+        public async Task<Substrate.NetApiExt.Generated.Model.pallet_cf_vaults.EnumVaultActivationStatus> PendingVaultActivation(string blockhash, CancellationToken token)
+        {
+            string parameters = EthereumVaultStorage.PendingVaultActivationParams();
+            var result = await _client.GetStorageAsync<Substrate.NetApiExt.Generated.Model.pallet_cf_vaults.EnumVaultActivationStatus>(parameters, blockhash, token);
+            return result;
+        }
+        
+        /// <summary>
+        /// >> ChainInitializedParams
+        ///  Whether this chain is initialized.
+        /// </summary>
+        public static string ChainInitializedParams()
+        {
+            return RequestGenerator.GetStorage("EthereumVault", "ChainInitialized", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
+        }
+        
+        /// <summary>
+        /// >> ChainInitializedDefault
+        /// Default value as hex string
+        /// </summary>
+        public static string ChainInitializedDefault()
+        {
+            return "0x00";
+        }
+        
+        /// <summary>
+        /// >> ChainInitialized
+        ///  Whether this chain is initialized.
+        /// </summary>
+        public async Task<Substrate.NetApi.Model.Types.Primitive.Bool> ChainInitialized(string blockhash, CancellationToken token)
+        {
+            string parameters = EthereumVaultStorage.ChainInitializedParams();
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.Bool>(parameters, blockhash, token);
             return result;
         }
     }
@@ -413,68 +137,6 @@ namespace Substrate.NetApiExt.Generated.Storage
     /// </summary>
     public sealed class EthereumVaultCalls
     {
-        
-        /// <summary>
-        /// >> report_keygen_outcome
-        /// Contains a variant per dispatchable extrinsic that this pallet has.
-        /// </summary>
-        public static Method ReportKeygenOutcome(Substrate.NetApi.Model.Types.Primitive.U64 ceremony_id, Substrate.NetApiExt.Generated.Types.Base.EnumDispatchResult reported_outcome)
-        {
-            System.Collections.Generic.List<byte> byteArray = new List<byte>();
-            byteArray.AddRange(ceremony_id.Encode());
-            byteArray.AddRange(reported_outcome.Encode());
-            return new Method(21, "EthereumVault", 0, "report_keygen_outcome", byteArray.ToArray());
-        }
-        
-        /// <summary>
-        /// >> report_key_handover_outcome
-        /// Contains a variant per dispatchable extrinsic that this pallet has.
-        /// </summary>
-        public static Method ReportKeyHandoverOutcome(Substrate.NetApi.Model.Types.Primitive.U64 ceremony_id, Substrate.NetApiExt.Generated.Types.Base.EnumDispatchResult reported_outcome)
-        {
-            System.Collections.Generic.List<byte> byteArray = new List<byte>();
-            byteArray.AddRange(ceremony_id.Encode());
-            byteArray.AddRange(reported_outcome.Encode());
-            return new Method(21, "EthereumVault", 1, "report_key_handover_outcome", byteArray.ToArray());
-        }
-        
-        /// <summary>
-        /// >> on_keygen_verification_result
-        /// Contains a variant per dispatchable extrinsic that this pallet has.
-        /// </summary>
-        public static Method OnKeygenVerificationResult(Substrate.NetApi.Model.Types.Primitive.U64 keygen_ceremony_id, Substrate.NetApi.Model.Types.Primitive.U32 threshold_request_id, Substrate.NetApiExt.Generated.Model.cf_chains.evm.AggKey new_public_key)
-        {
-            System.Collections.Generic.List<byte> byteArray = new List<byte>();
-            byteArray.AddRange(keygen_ceremony_id.Encode());
-            byteArray.AddRange(threshold_request_id.Encode());
-            byteArray.AddRange(new_public_key.Encode());
-            return new Method(21, "EthereumVault", 2, "on_keygen_verification_result", byteArray.ToArray());
-        }
-        
-        /// <summary>
-        /// >> on_handover_verification_result
-        /// Contains a variant per dispatchable extrinsic that this pallet has.
-        /// </summary>
-        public static Method OnHandoverVerificationResult(Substrate.NetApi.Model.Types.Primitive.U64 handover_ceremony_id, Substrate.NetApi.Model.Types.Primitive.U32 threshold_request_id, Substrate.NetApiExt.Generated.Model.cf_chains.evm.AggKey new_public_key)
-        {
-            System.Collections.Generic.List<byte> byteArray = new List<byte>();
-            byteArray.AddRange(handover_ceremony_id.Encode());
-            byteArray.AddRange(threshold_request_id.Encode());
-            byteArray.AddRange(new_public_key.Encode());
-            return new Method(21, "EthereumVault", 7, "on_handover_verification_result", byteArray.ToArray());
-        }
-        
-        /// <summary>
-        /// >> vault_key_rotated
-        /// Contains a variant per dispatchable extrinsic that this pallet has.
-        /// </summary>
-        public static Method VaultKeyRotated(Substrate.NetApi.Model.Types.Primitive.U64 block_number, Substrate.NetApiExt.Generated.Model.primitive_types.H256 tx_id)
-        {
-            System.Collections.Generic.List<byte> byteArray = new List<byte>();
-            byteArray.AddRange(block_number.Encode());
-            byteArray.AddRange(tx_id.Encode());
-            return new Method(21, "EthereumVault", 3, "vault_key_rotated", byteArray.ToArray());
-        }
         
         /// <summary>
         /// >> vault_key_rotated_externally
@@ -490,25 +152,13 @@ namespace Substrate.NetApiExt.Generated.Storage
         }
         
         /// <summary>
-        /// >> set_keygen_response_timeout
+        /// >> initialize_chain
         /// Contains a variant per dispatchable extrinsic that this pallet has.
         /// </summary>
-        public static Method SetKeygenResponseTimeout(Substrate.NetApi.Model.Types.Primitive.U32 new_timeout)
+        public static Method InitializeChain()
         {
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
-            byteArray.AddRange(new_timeout.Encode());
-            return new Method(21, "EthereumVault", 5, "set_keygen_response_timeout", byteArray.ToArray());
-        }
-        
-        /// <summary>
-        /// >> set_keygen_slash_amount
-        /// Contains a variant per dispatchable extrinsic that this pallet has.
-        /// </summary>
-        public static Method SetKeygenSlashAmount(Substrate.NetApi.Model.Types.Primitive.U128 amount_to_slash)
-        {
-            System.Collections.Generic.List<byte> byteArray = new List<byte>();
-            byteArray.AddRange(amount_to_slash.Encode());
-            return new Method(21, "EthereumVault", 6, "set_keygen_slash_amount", byteArray.ToArray());
+            return new Method(21, "EthereumVault", 5, "initialize_chain", byteArray.ToArray());
         }
     }
     
@@ -526,12 +176,6 @@ namespace Substrate.NetApiExt.Generated.Storage
     {
         
         /// <summary>
-        /// >> InvalidCeremonyId
-        /// An invalid ceremony id
-        /// </summary>
-        InvalidCeremonyId,
-        
-        /// <summary>
         /// >> NoActiveRotation
         /// There is currently no vault rotation in progress for this chain.
         /// </summary>
@@ -542,18 +186,5 @@ namespace Substrate.NetApiExt.Generated.Storage
         /// The requested call is invalid based on the current rotation state.
         /// </summary>
         InvalidRotationStatus,
-        
-        /// <summary>
-        /// >> InvalidRespondent
-        /// An authority sent a response for a ceremony in which they weren't involved, or to which
-        /// they have already submitted a response.
-        /// </summary>
-        InvalidRespondent,
-        
-        /// <summary>
-        /// >> ThresholdSignatureUnavailable
-        /// There is no threshold signature available
-        /// </summary>
-        ThresholdSignatureUnavailable,
     }
 }

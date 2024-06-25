@@ -90,7 +90,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_funding.pallet
     }
     
     /// <summary>
-    /// >> 78 - Variant[pallet_cf_funding.pallet.Call]
+    /// >> 94 - Variant[pallet_cf_funding.pallet.Call]
     /// Contains a variant per dispatchable extrinsic that this pallet has.
     /// </summary>
     public sealed class EnumCall : BaseEnumExt<Call, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Model.Types.Primitive.U128, Substrate.NetApiExt.Generated.Model.primitive_types.H160, Substrate.NetApiExt.Generated.Types.Base.Arr32U8>, BaseTuple<Substrate.NetApiExt.Generated.Model.pallet_cf_funding.pallet.EnumRedemptionAmount, Substrate.NetApiExt.Generated.Model.primitive_types.H160, Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApiExt.Generated.Model.primitive_types.H160>>, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Model.Types.Primitive.U128, Substrate.NetApiExt.Generated.Types.Base.Arr32U8>, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Model.Types.Primitive.U64>, BaseVoid, BaseVoid, Substrate.NetApi.Model.Types.Primitive.U128, BaseTuple<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.primitive_types.H160>, Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.primitive_types.H160>>, Substrate.NetApiExt.Generated.Model.primitive_types.H160, Substrate.NetApi.Model.Types.Primitive.U128, Substrate.NetApiExt.Generated.Model.primitive_types.H160>

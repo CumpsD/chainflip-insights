@@ -38,9 +38,9 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.pallet
     }
     
     /// <summary>
-    /// >> 450 - Variant[pallet_cf_ingress_egress.pallet.ChannelAction]
+    /// >> 514 - Variant[pallet_cf_ingress_egress.pallet.ChannelAction]
     /// </summary>
-    public sealed class EnumChannelAction : BaseEnumExt<ChannelAction, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApiExt.Generated.Model.cf_chains.address.EnumForeignChainAddress, Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Model.Types.Primitive.U16>, Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApiExt.Generated.Model.cf_chains.address.EnumForeignChainAddress, Substrate.NetApiExt.Generated.Model.cf_chains.CcmChannelMetadata>>
+    public sealed class EnumChannelAction : BaseEnumExt<ChannelAction, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApiExt.Generated.Model.cf_chains.address.EnumForeignChainAddress, Substrate.NetApiExt.Generated.Model.bounded_collections.bounded_vec.BoundedVecT14>, Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApiExt.Generated.Model.cf_chains.address.EnumForeignChainAddress, Substrate.NetApiExt.Generated.Model.cf_chains.CcmChannelMetadata>>
     {
     }
 }

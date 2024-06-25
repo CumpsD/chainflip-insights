@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.cfe_events
     
     
     /// <summary>
-    /// >> 539 - Composite[cfe_events.TxBroadcastRequestT1]
+    /// >> 650 - Composite[cfe_events.TxBroadcastRequestT1]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class TxBroadcastRequestT1 : BaseType
@@ -66,7 +66,7 @@ namespace Substrate.NetApiExt.Generated.Model.cfe_events
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

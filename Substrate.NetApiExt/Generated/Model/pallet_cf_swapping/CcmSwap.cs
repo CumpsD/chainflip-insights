@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_swapping
     
     
     /// <summary>
-    /// >> 442 - Composite[pallet_cf_swapping.CcmSwap]
+    /// >> 506 - Composite[pallet_cf_swapping.CcmSwap]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class CcmSwap : BaseType
@@ -94,7 +94,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_swapping
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

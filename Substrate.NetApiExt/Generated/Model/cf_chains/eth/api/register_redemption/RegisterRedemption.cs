@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.eth.api.register_redempt
     
     
     /// <summary>
-    /// >> 161 - Composite[cf_chains.eth.api.register_redemption.RegisterRedemption]
+    /// >> 178 - Composite[cf_chains.eth.api.register_redemption.RegisterRedemption]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class RegisterRedemption : BaseType
@@ -80,7 +80,7 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.eth.api.register_redempt
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

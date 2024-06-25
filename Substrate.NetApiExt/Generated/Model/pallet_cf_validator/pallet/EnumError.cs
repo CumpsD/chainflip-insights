@@ -53,56 +53,86 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_validator.pallet
         InvalidRedemptionPeriod = 4,
         
         /// <summary>
-        /// >> NameTooLong
-        /// Vanity name length exceeds the limit of 64 characters.
-        /// </summary>
-        NameTooLong = 5,
-        
-        /// <summary>
-        /// >> InvalidCharactersInName
-        /// Invalid characters in the name.
-        /// </summary>
-        InvalidCharactersInName = 6,
-        
-        /// <summary>
         /// >> InvalidAuthoritySetMinSize
         /// Invalid minimum authority set size.
         /// </summary>
-        InvalidAuthoritySetMinSize = 7,
+        InvalidAuthoritySetMinSize = 5,
         
         /// <summary>
         /// >> InvalidAuctionParameters
         /// Auction parameters are invalid.
         /// </summary>
-        InvalidAuctionParameters = 8,
+        InvalidAuctionParameters = 6,
         
         /// <summary>
         /// >> InconsistentRanges
         /// The dynamic set size ranges are inconsistent.
         /// </summary>
-        InconsistentRanges = 9,
+        InconsistentRanges = 7,
         
         /// <summary>
         /// >> NotEnoughBidders
         /// Not enough bidders were available to resolve the auction.
         /// </summary>
-        NotEnoughBidders = 10,
+        NotEnoughBidders = 8,
         
         /// <summary>
         /// >> NotEnoughFunds
         /// Not enough funds to register as a validator.
         /// </summary>
-        NotEnoughFunds = 11,
+        NotEnoughFunds = 9,
         
         /// <summary>
         /// >> RotationsDisabled
         /// Rotations are currently disabled through SafeMode.
         /// </summary>
-        RotationsDisabled = 12,
+        RotationsDisabled = 10,
+        
+        /// <summary>
+        /// >> StillKeyHolder
+        /// Validators cannot deregister until they are no longer key holders.
+        /// </summary>
+        StillKeyHolder = 11,
+        
+        /// <summary>
+        /// >> StillBidding
+        /// Validators cannot deregister until they stop bidding in the auction.
+        /// </summary>
+        StillBidding = 12,
+        
+        /// <summary>
+        /// >> StartBiddingDisabled
+        /// Start Bidding is disabled due to Safe Mode.
+        /// </summary>
+        StartBiddingDisabled = 13,
+        
+        /// <summary>
+        /// >> StopBiddingDisabled
+        /// Stop Bidding is disabled due to Safe Mode.
+        /// </summary>
+        StopBiddingDisabled = 14,
+        
+        /// <summary>
+        /// >> AlreadyNotBidding
+        /// Can't stop bidding an account if it's already not bidding.
+        /// </summary>
+        AlreadyNotBidding = 15,
+        
+        /// <summary>
+        /// >> AlreadyBidding
+        /// Can only start bidding if not already bidding.
+        /// </summary>
+        AlreadyBidding = 16,
+        
+        /// <summary>
+        /// >> AuctionPhase
+        /// We are in the auction phase
+        /// </summary>
+        AuctionPhase = 17,
     }
     
     /// <summary>
-    /// >> 345 - Variant[pallet_cf_validator.pallet.Error]
+    /// >> 410 - Variant[pallet_cf_validator.pallet.Error]
     /// The `Error` enum of this pallet.
     /// </summary>
     public sealed class EnumError : BaseEnum<Error>

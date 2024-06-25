@@ -40,12 +40,17 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.pallet
         /// >> NoAction
         /// </summary>
         NoAction = 3,
+        
+        /// <summary>
+        /// >> BoostersCredited
+        /// </summary>
+        BoostersCredited = 4,
     }
     
     /// <summary>
-    /// >> 292 - Variant[pallet_cf_ingress_egress.pallet.DepositAction]
+    /// >> 341 - Variant[pallet_cf_ingress_egress.pallet.DepositAction]
     /// </summary>
-    public sealed class EnumDepositAction : BaseEnumExt<DepositAction, Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, BaseTuple<Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Model.Types.Primitive.U64>, Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Model.Types.Primitive.U64>>, BaseVoid>
+    public sealed class EnumDepositAction : BaseEnumExt<DepositAction, Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, BaseTuple<Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Model.Types.Primitive.U64>, Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Model.Types.Primitive.U64>>, BaseVoid, Substrate.NetApi.Model.Types.Primitive.U64>
     {
     }
 }

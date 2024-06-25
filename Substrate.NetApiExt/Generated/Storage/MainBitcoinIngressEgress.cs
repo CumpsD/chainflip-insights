@@ -38,6 +38,9 @@ namespace Substrate.NetApiExt.Generated.Storage
             this._client = client;
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("BitcoinIngressEgress", "DepositChannelLookup"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
                             Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApiExt.Generated.Model.cf_chains.btc.EnumScriptPubkey), typeof(Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.pallet.DepositChannelDetailsT3)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("BitcoinIngressEgress", "BoostPools"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
+                            Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat,
+                            Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.btc.EnumAsset, Substrate.NetApi.Model.Types.Primitive.U16>), typeof(Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.boost_pool.BoostPoolT3)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("BitcoinIngressEgress", "ChannelIdCounter"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U64)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("BitcoinIngressEgress", "EgressIdCounter"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U64)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("BitcoinIngressEgress", "ScheduledEgressFetchOrTransfer"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.EnumFetchOrTransfer>)));
@@ -59,6 +62,11 @@ namespace Substrate.NetApiExt.Generated.Storage
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("BitcoinIngressEgress", "WitnessSafetyMargin"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U64)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("BitcoinIngressEgress", "WithheldTransactionFees"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
                             Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.btc.EnumAsset), typeof(Substrate.NetApi.Model.Types.Primitive.U64)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("BitcoinIngressEgress", "ChannelOpeningFee"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U128)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("BitcoinIngressEgress", "PrewitnessedDepositIdCounter"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U64)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("BitcoinIngressEgress", "PrewitnessedDeposits"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
+                            Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat,
+                            Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApi.Model.Types.Primitive.U64>), typeof(Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.PrewitnessedDepositT3)));
         }
         
         /// <summary>
@@ -89,6 +97,35 @@ namespace Substrate.NetApiExt.Generated.Storage
         {
             string parameters = BitcoinIngressEgressStorage.DepositChannelLookupParams(key);
             var result = await _client.GetStorageAsync<Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.pallet.DepositChannelDetailsT3>(parameters, blockhash, token);
+            return result;
+        }
+        
+        /// <summary>
+        /// >> BoostPoolsParams
+        /// </summary>
+        public static string BoostPoolsParams(Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.btc.EnumAsset, Substrate.NetApi.Model.Types.Primitive.U16> key)
+        {
+            return RequestGenerator.GetStorage("BitcoinIngressEgress", "BoostPools", Substrate.NetApi.Model.Meta.Storage.Type.Map, new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
+                        Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat,
+                        Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, key.Value);
+        }
+        
+        /// <summary>
+        /// >> BoostPoolsDefault
+        /// Default value as hex string
+        /// </summary>
+        public static string BoostPoolsDefault()
+        {
+            return "0x00";
+        }
+        
+        /// <summary>
+        /// >> BoostPools
+        /// </summary>
+        public async Task<Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.boost_pool.BoostPoolT3> BoostPools(Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.btc.EnumAsset, Substrate.NetApi.Model.Types.Primitive.U16> key, string blockhash, CancellationToken token)
+        {
+            string parameters = BitcoinIngressEgressStorage.BoostPoolsParams(key);
+            var result = await _client.GetStorageAsync<Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.boost_pool.BoostPoolT3>(parameters, blockhash, token);
             return result;
         }
         
@@ -519,6 +556,95 @@ namespace Substrate.NetApiExt.Generated.Storage
             var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U64>(parameters, blockhash, token);
             return result;
         }
+        
+        /// <summary>
+        /// >> ChannelOpeningFeeParams
+        ///  The fixed fee charged for opening a channel, in Flipperinos.
+        /// </summary>
+        public static string ChannelOpeningFeeParams()
+        {
+            return RequestGenerator.GetStorage("BitcoinIngressEgress", "ChannelOpeningFee", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
+        }
+        
+        /// <summary>
+        /// >> ChannelOpeningFeeDefault
+        /// Default value as hex string
+        /// </summary>
+        public static string ChannelOpeningFeeDefault()
+        {
+            return "0x00000000000000000000000000000000";
+        }
+        
+        /// <summary>
+        /// >> ChannelOpeningFee
+        ///  The fixed fee charged for opening a channel, in Flipperinos.
+        /// </summary>
+        public async Task<Substrate.NetApi.Model.Types.Primitive.U128> ChannelOpeningFee(string blockhash, CancellationToken token)
+        {
+            string parameters = BitcoinIngressEgressStorage.ChannelOpeningFeeParams();
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U128>(parameters, blockhash, token);
+            return result;
+        }
+        
+        /// <summary>
+        /// >> PrewitnessedDepositIdCounterParams
+        ///  Stores the latest prewitnessed deposit id used.
+        /// </summary>
+        public static string PrewitnessedDepositIdCounterParams()
+        {
+            return RequestGenerator.GetStorage("BitcoinIngressEgress", "PrewitnessedDepositIdCounter", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
+        }
+        
+        /// <summary>
+        /// >> PrewitnessedDepositIdCounterDefault
+        /// Default value as hex string
+        /// </summary>
+        public static string PrewitnessedDepositIdCounterDefault()
+        {
+            return "0x0000000000000000";
+        }
+        
+        /// <summary>
+        /// >> PrewitnessedDepositIdCounter
+        ///  Stores the latest prewitnessed deposit id used.
+        /// </summary>
+        public async Task<Substrate.NetApi.Model.Types.Primitive.U64> PrewitnessedDepositIdCounter(string blockhash, CancellationToken token)
+        {
+            string parameters = BitcoinIngressEgressStorage.PrewitnessedDepositIdCounterParams();
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Primitive.U64>(parameters, blockhash, token);
+            return result;
+        }
+        
+        /// <summary>
+        /// >> PrewitnessedDepositsParams
+        ///  Stores all deposits that have been prewitnessed but not yet finalised.
+        /// </summary>
+        public static string PrewitnessedDepositsParams(Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApi.Model.Types.Primitive.U64> key)
+        {
+            return RequestGenerator.GetStorage("BitcoinIngressEgress", "PrewitnessedDeposits", Substrate.NetApi.Model.Meta.Storage.Type.Map, new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
+                        Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat,
+                        Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, key.Value);
+        }
+        
+        /// <summary>
+        /// >> PrewitnessedDepositsDefault
+        /// Default value as hex string
+        /// </summary>
+        public static string PrewitnessedDepositsDefault()
+        {
+            return "0x00";
+        }
+        
+        /// <summary>
+        /// >> PrewitnessedDeposits
+        ///  Stores all deposits that have been prewitnessed but not yet finalised.
+        /// </summary>
+        public async Task<Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.PrewitnessedDepositT3> PrewitnessedDeposits(Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApi.Model.Types.Primitive.U64> key, string blockhash, CancellationToken token)
+        {
+            string parameters = BitcoinIngressEgressStorage.PrewitnessedDepositsParams(key);
+            var result = await _client.GetStorageAsync<Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.PrewitnessedDepositT3>(parameters, blockhash, token);
+            return result;
+        }
     }
     
     /// <summary>
@@ -563,18 +689,6 @@ namespace Substrate.NetApiExt.Generated.Storage
         }
         
         /// <summary>
-        /// >> set_minimum_deposit
-        /// Contains a variant per dispatchable extrinsic that this pallet has.
-        /// </summary>
-        public static Method SetMinimumDeposit(Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.btc.EnumAsset asset, Substrate.NetApi.Model.Types.Primitive.U64 minimum_deposit)
-        {
-            System.Collections.Generic.List<byte> byteArray = new List<byte>();
-            byteArray.AddRange(asset.Encode());
-            byteArray.AddRange(minimum_deposit.Encode());
-            return new Method(34, "BitcoinIngressEgress", 3, "set_minimum_deposit", byteArray.ToArray());
-        }
-        
-        /// <summary>
         /// >> vault_transfer_failed
         /// Contains a variant per dispatchable extrinsic that this pallet has.
         /// </summary>
@@ -596,6 +710,53 @@ namespace Substrate.NetApiExt.Generated.Storage
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
             byteArray.AddRange(broadcast_id.Encode());
             return new Method(34, "BitcoinIngressEgress", 5, "ccm_broadcast_failed", byteArray.ToArray());
+        }
+        
+        /// <summary>
+        /// >> update_pallet_config
+        /// Contains a variant per dispatchable extrinsic that this pallet has.
+        /// </summary>
+        public static Method UpdatePalletConfig(Substrate.NetApiExt.Generated.Model.bounded_collections.bounded_vec.BoundedVecT10 updates)
+        {
+            System.Collections.Generic.List<byte> byteArray = new List<byte>();
+            byteArray.AddRange(updates.Encode());
+            return new Method(34, "BitcoinIngressEgress", 6, "update_pallet_config", byteArray.ToArray());
+        }
+        
+        /// <summary>
+        /// >> add_boost_funds
+        /// Contains a variant per dispatchable extrinsic that this pallet has.
+        /// </summary>
+        public static Method AddBoostFunds(Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.btc.EnumAsset asset, Substrate.NetApi.Model.Types.Primitive.U64 amount, Substrate.NetApi.Model.Types.Primitive.U16 pool_tier)
+        {
+            System.Collections.Generic.List<byte> byteArray = new List<byte>();
+            byteArray.AddRange(asset.Encode());
+            byteArray.AddRange(amount.Encode());
+            byteArray.AddRange(pool_tier.Encode());
+            return new Method(34, "BitcoinIngressEgress", 7, "add_boost_funds", byteArray.ToArray());
+        }
+        
+        /// <summary>
+        /// >> stop_boosting
+        /// Contains a variant per dispatchable extrinsic that this pallet has.
+        /// </summary>
+        public static Method StopBoosting(Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.btc.EnumAsset asset, Substrate.NetApi.Model.Types.Primitive.U16 pool_tier)
+        {
+            System.Collections.Generic.List<byte> byteArray = new List<byte>();
+            byteArray.AddRange(asset.Encode());
+            byteArray.AddRange(pool_tier.Encode());
+            return new Method(34, "BitcoinIngressEgress", 8, "stop_boosting", byteArray.ToArray());
+        }
+        
+        /// <summary>
+        /// >> create_boost_pools
+        /// Contains a variant per dispatchable extrinsic that this pallet has.
+        /// </summary>
+        public static Method CreateBoostPools(Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.pallet_cf_ingress_egress.BoostPoolIdT3> new_pools)
+        {
+            System.Collections.Generic.List<byte> byteArray = new List<byte>();
+            byteArray.AddRange(new_pools.Encode());
+            return new Method(34, "BitcoinIngressEgress", 9, "create_boost_pools", byteArray.ToArray());
         }
     }
     
@@ -653,5 +814,41 @@ namespace Substrate.NetApiExt.Generated.Storage
         /// The amount is below the minimum egress amount.
         /// </summary>
         BelowEgressDustLimit,
+        
+        /// <summary>
+        /// >> AddBoostFundsDisabled
+        /// Adding boost funds is disabled due to safe mode.
+        /// </summary>
+        AddBoostFundsDisabled,
+        
+        /// <summary>
+        /// >> StopBoostingDisabled
+        /// Retrieving boost funds disabled due to safe mode.
+        /// </summary>
+        StopBoostingDisabled,
+        
+        /// <summary>
+        /// >> BoostPoolAlreadyExists
+        /// Cannot create a boost pool if it already exists.
+        /// </summary>
+        BoostPoolAlreadyExists,
+        
+        /// <summary>
+        /// >> InvalidBoostPoolTier
+        /// Cannot create a boost pool of 0 bps
+        /// </summary>
+        InvalidBoostPoolTier,
+        
+        /// <summary>
+        /// >> DepositChannelCreationDisabled
+        /// Disabled due to safe mode for the chain
+        /// </summary>
+        DepositChannelCreationDisabled,
+        
+        /// <summary>
+        /// >> BoostPoolDoesNotExist
+        /// The specified boost pool does not exist.
+        /// </summary>
+        BoostPoolDoesNotExist,
     }
 }

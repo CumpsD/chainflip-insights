@@ -80,63 +80,19 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_pools.pallet
         /// A limit order set or update was scheduled.
         /// </summary>
         LimitOrderSetOrUpdateScheduled = 9,
+        
+        /// <summary>
+        /// >> PriceImpactLimitSet
+        /// The Price Impact limit has been set for a pool.
+        /// </summary>
+        PriceImpactLimitSet = 10,
     }
     
     /// <summary>
-    /// >> 297 - Variant[pallet_cf_pools.pallet.Event]
+    /// >> 355 - Variant[pallet_cf_pools.pallet.Event]
     /// The `Event` enum of this pallet
     /// </summary>
-    public sealed class EnumEvent : BaseEnumExt<
-        Event, 
-        Substrate.NetApi.Model.Types.Primitive.U32,
-        BaseTuple<
-            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, 
-            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, 
-            Substrate.NetApi.Model.Types.Primitive.U32, 
-            Substrate.NetApiExt.Generated.Model.primitive_types.U256>, 
-        BaseTuple<
-            Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, 
-            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, 
-            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, 
-            Substrate.NetApi.Model.Types.Primitive.U64, 
-            Substrate.NetApiExt.Generated.Types.Base.Range, 
-            Substrate.NetApi.Model.Types.Base.BaseOpt<
-                Substrate.NetApiExt.Generated.Model.pallet_cf_pools.pallet.EnumIncreaseOrDecrease>, 
-            Substrate.NetApi.Model.Types.Primitive.U128, 
-            Substrate.NetApiExt.Generated.Model.pallet_cf_pools.AssetsMapT1>,
-        BaseTuple<
-            Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, 
-            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, 
-            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset,
-            Substrate.NetApiExt.Generated.Model.cf_amm.common.EnumOrder,
-            Substrate.NetApi.Model.Types.Primitive.U64, 
-            Substrate.NetApi.Model.Types.Primitive.I32, 
-            Substrate.NetApi.Model.Types.Base.BaseOpt<
-                Substrate.NetApiExt.Generated.Model.pallet_cf_pools.pallet.EnumIncreaseOrDecrease>, 
-            Substrate.NetApi.Model.Types.Primitive.U128,
-            Substrate.NetApi.Model.Types.Primitive.U128, 
-            Substrate.NetApi.Model.Types.Primitive.U128>, 
-        Substrate.NetApi.Model.Types.Primitive.U128, 
-        BaseTuple<
-            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, 
-            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, 
-            Substrate.NetApi.Model.Types.Primitive.U128, 
-            Substrate.NetApi.Model.Types.Primitive.U128>, 
-        BaseTuple<
-            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, 
-            Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset,
-            Substrate.NetApi.Model.Types.Primitive.U32>,
-        BaseTuple<
-            Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32,
-            Substrate.NetApi.Model.Types.Primitive.U64>, 
-        BaseTuple<
-            Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, 
-            Substrate.NetApi.Model.Types.Primitive.U64,
-            Substrate.NetApiExt.Generated.Model.sp_runtime.EnumDispatchError>, 
-        BaseTuple<
-            Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, 
-            Substrate.NetApi.Model.Types.Primitive.U64, 
-            Substrate.NetApi.Model.Types.Primitive.U32>>
+    public sealed class EnumEvent : BaseEnumExt<Event, Substrate.NetApi.Model.Types.Primitive.U32, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApiExt.Generated.Model.primitive_types.U256>, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApiExt.Generated.Types.Base.Range, Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApiExt.Generated.Model.pallet_cf_pools.pallet.EnumIncreaseOrDecrease>, Substrate.NetApi.Model.Types.Primitive.U128, Substrate.NetApiExt.Generated.Model.cf_amm.common.PoolPairsMapT1>, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApiExt.Generated.Model.cf_amm.common.EnumSide, Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApi.Model.Types.Primitive.I32, Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApiExt.Generated.Model.pallet_cf_pools.pallet.EnumIncreaseOrDecrease>, Substrate.NetApi.Model.Types.Primitive.U128, Substrate.NetApi.Model.Types.Primitive.U128, Substrate.NetApi.Model.Types.Primitive.U128>, Substrate.NetApi.Model.Types.Primitive.U128, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApi.Model.Types.Primitive.U128, Substrate.NetApi.Model.Types.Primitive.U128>, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApi.Model.Types.Primitive.U32>, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Model.Types.Primitive.U64>, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApiExt.Generated.Model.sp_runtime.EnumDispatchError>, BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32, Substrate.NetApi.Model.Types.Primitive.U64, Substrate.NetApi.Model.Types.Primitive.U32>, BaseTuple<Substrate.NetApiExt.Generated.Model.pallet_cf_pools.AssetPair, Substrate.NetApi.Model.Types.Base.BaseOpt<Substrate.NetApi.Model.Types.Primitive.U32>>>
     {
     }
 }

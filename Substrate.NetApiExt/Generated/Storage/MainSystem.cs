@@ -56,6 +56,7 @@ namespace Substrate.NetApiExt.Generated.Storage
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("System", "UpgradedToU32RefCount"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.Bool)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("System", "UpgradedToTripleRefCount"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.Bool)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("System", "ExecutionPhase"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApiExt.Generated.Model.frame_system.EnumPhase)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("System", "AuthorizedUpgrade"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApiExt.Generated.Model.frame_system.CodeUpgradeAuthorization)));
         }
         
         /// <summary>
@@ -561,6 +562,35 @@ namespace Substrate.NetApiExt.Generated.Storage
             var result = await _client.GetStorageAsync<Substrate.NetApiExt.Generated.Model.frame_system.EnumPhase>(parameters, blockhash, token);
             return result;
         }
+        
+        /// <summary>
+        /// >> AuthorizedUpgradeParams
+        ///  `Some` if a code upgrade has been authorized.
+        /// </summary>
+        public static string AuthorizedUpgradeParams()
+        {
+            return RequestGenerator.GetStorage("System", "AuthorizedUpgrade", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
+        }
+        
+        /// <summary>
+        /// >> AuthorizedUpgradeDefault
+        /// Default value as hex string
+        /// </summary>
+        public static string AuthorizedUpgradeDefault()
+        {
+            return "0x00";
+        }
+        
+        /// <summary>
+        /// >> AuthorizedUpgrade
+        ///  `Some` if a code upgrade has been authorized.
+        /// </summary>
+        public async Task<Substrate.NetApiExt.Generated.Model.frame_system.CodeUpgradeAuthorization> AuthorizedUpgrade(string blockhash, CancellationToken token)
+        {
+            string parameters = SystemStorage.AuthorizedUpgradeParams();
+            var result = await _client.GetStorageAsync<Substrate.NetApiExt.Generated.Model.frame_system.CodeUpgradeAuthorization>(parameters, blockhash, token);
+            return result;
+        }
     }
     
     /// <summary>
@@ -657,6 +687,39 @@ namespace Substrate.NetApiExt.Generated.Storage
             byteArray.AddRange(remark.Encode());
             return new Method(0, "System", 7, "remark_with_event", byteArray.ToArray());
         }
+        
+        /// <summary>
+        /// >> authorize_upgrade
+        /// Contains a variant per dispatchable extrinsic that this pallet has.
+        /// </summary>
+        public static Method AuthorizeUpgrade(Substrate.NetApiExt.Generated.Model.primitive_types.H256 code_hash)
+        {
+            System.Collections.Generic.List<byte> byteArray = new List<byte>();
+            byteArray.AddRange(code_hash.Encode());
+            return new Method(0, "System", 9, "authorize_upgrade", byteArray.ToArray());
+        }
+        
+        /// <summary>
+        /// >> authorize_upgrade_without_checks
+        /// Contains a variant per dispatchable extrinsic that this pallet has.
+        /// </summary>
+        public static Method AuthorizeUpgradeWithoutChecks(Substrate.NetApiExt.Generated.Model.primitive_types.H256 code_hash)
+        {
+            System.Collections.Generic.List<byte> byteArray = new List<byte>();
+            byteArray.AddRange(code_hash.Encode());
+            return new Method(0, "System", 10, "authorize_upgrade_without_checks", byteArray.ToArray());
+        }
+        
+        /// <summary>
+        /// >> apply_authorized_upgrade
+        /// Contains a variant per dispatchable extrinsic that this pallet has.
+        /// </summary>
+        public static Method ApplyAuthorizedUpgrade(Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Model.Types.Primitive.U8> code)
+        {
+            System.Collections.Generic.List<byte> byteArray = new List<byte>();
+            byteArray.AddRange(code.Encode());
+            return new Method(0, "System", 11, "apply_authorized_upgrade", byteArray.ToArray());
+        }
     }
     
     /// <summary>
@@ -672,10 +735,10 @@ namespace Substrate.NetApiExt.Generated.Storage
         public Substrate.NetApiExt.Generated.Model.frame_system.limits.BlockWeights BlockWeights()
         {
             var result = new Substrate.NetApiExt.Generated.Model.frame_system.limits.BlockWeights();
-            result.Create("0x025B1F5D000B00204AA9D10113FFFFFFFFFFFFFFFFC2A0A91D00010BD05F9FA62E0113666666666" +
-                    "66666A6010B0098F73E5D0113FFFFFFFFFFFFFFBF010000C2A0A91D00010BD0E7F110A3011366666" +
-                    "666666666E6010B00204AA9D10113FFFFFFFFFFFFFFFF01070088526A74130000000000000040C2A" +
-                    "0A91D00000000");
+            result.Create("0x025B1F5D000B00204AA9D10113FFFFFFFFFFFFFFFFC2A0A91D000107D0D74C3CBA1366666666666" +
+                    "6666601070010A5D4E813FFFFFFFFFFFFFF7F010000C2A0A91D00010BD0E7F110A30113666666666" +
+                    "66666E6010B00204AA9D10113FFFFFFFFFFFFFFFF01070010A5D4E8130000000000000080C2A0A91" +
+                    "D00000000");
             return result;
         }
         
@@ -686,7 +749,7 @@ namespace Substrate.NetApiExt.Generated.Storage
         public Substrate.NetApiExt.Generated.Model.frame_system.limits.BlockLength BlockLength()
         {
             var result = new Substrate.NetApiExt.Generated.Model.frame_system.limits.BlockLength();
-            result.Create("0x00003C000000500000005000");
+            result.Create("0x000028000000500000005000");
             return result;
         }
         
@@ -719,7 +782,7 @@ namespace Substrate.NetApiExt.Generated.Storage
         public Substrate.NetApiExt.Generated.Model.sp_version.RuntimeVersion Version()
         {
             var result = new Substrate.NetApiExt.Generated.Model.sp_version.RuntimeVersion();
-            result.Create(@"0x38636861696E666C69702D6E6F646538636861696E666C69702D6E6F646501000000790000000100000030B7FB30DB9D96703A01000000DF6ACB689907609B0400000037E397FC7C91F5E40200000040FE3AD401F8959A06000000D2BC9897EED08F1503000000F78B278BE53F454C02000000DD718D5CC53262D401000000AB3C0572291FEB8B01000000ED99C5ACB25EEDF503000000BC9D89904F5B923F0100000037C8BB1350A9A2A804000000F3FF14D5AB527059030000000C00000001");
+            result.Create(@"0x38636861696E666C69702D6E6F646538636861696E666C69702D6E6F6465010000008E0000000100000034B7FB30DB9D96703A01000000DF6ACB689907609B0400000037E397FC7C91F5E40200000040FE3AD401F8959A06000000D2BC9897EED08F1503000000F78B278BE53F454C02000000DD718D5CC53262D401000000AB3C0572291FEB8B01000000ED99C5ACB25EEDF503000000BC9D89904F5B923F0100000037C8BB1350A9A2A804000000F3FF14D5AB52705903000000FBC577B9D747EFD6010000000C00000001");
             return result;
         }
         
@@ -784,5 +847,17 @@ namespace Substrate.NetApiExt.Generated.Storage
         /// The origin filter prevent the call to be dispatched.
         /// </summary>
         CallFiltered,
+        
+        /// <summary>
+        /// >> NothingAuthorized
+        /// No upgrade authorized.
+        /// </summary>
+        NothingAuthorized,
+        
+        /// <summary>
+        /// >> Unauthorized
+        /// The submitted code is not authorized.
+        /// </summary>
+        Unauthorized,
     }
 }

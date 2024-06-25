@@ -47,11 +47,13 @@ namespace Substrate.NetApiExt.Generated.Storage
                             Substrate.NetApi.Model.Meta.Storage.Hasher.Identity}, typeof(Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApiExt.Generated.Model.pallet_cf_witnesser.pallet.CallHash>), typeof(Substrate.NetApi.Model.Types.Base.BaseTuple)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Witnesser", "EpochsToCull"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Model.Types.Primitive.U32>)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Witnesser", "WitnessedCallsScheduledForDispatch"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApiExt.Generated.Model.state_chain_runtime.EnumRuntimeCall, Substrate.NetApiExt.Generated.Model.pallet_cf_witnesser.pallet.CallHash>>)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("Witnesser", "WitnessDeadline"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
+                            Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApi.Model.Types.Primitive.U32), typeof(Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApiExt.Generated.Model.pallet_cf_witnesser.pallet.CallHash>>)));
         }
         
         /// <summary>
         /// >> VotesParams
-        ///  A lookup mapping (epoch, call_hash) to a bitmask representing the votes for each authority.
+        ///  A lookup mapping (epoch, call_hash) to a bit mask representing the votes for each authority.
         /// </summary>
         public static string VotesParams(Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApiExt.Generated.Model.pallet_cf_witnesser.pallet.CallHash> key)
         {
@@ -71,7 +73,7 @@ namespace Substrate.NetApiExt.Generated.Storage
         
         /// <summary>
         /// >> Votes
-        ///  A lookup mapping (epoch, call_hash) to a bitmask representing the votes for each authority.
+        ///  A lookup mapping (epoch, call_hash) to a bit mask representing the votes for each authority.
         /// </summary>
         public async Task<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Model.Types.Primitive.U8>> Votes(Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApiExt.Generated.Model.pallet_cf_witnesser.pallet.CallHash> key, string blockhash, CancellationToken token)
         {
@@ -201,6 +203,37 @@ namespace Substrate.NetApiExt.Generated.Storage
             var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApiExt.Generated.Model.state_chain_runtime.EnumRuntimeCall, Substrate.NetApiExt.Generated.Model.pallet_cf_witnesser.pallet.CallHash>>>(parameters, blockhash, token);
             return result;
         }
+        
+        /// <summary>
+        /// >> WitnessDeadlineParams
+        ///  Deadline for witnessing a call. Nodes that did not witness are punished.
+        /// </summary>
+        public static string WitnessDeadlineParams(Substrate.NetApi.Model.Types.Primitive.U32 key)
+        {
+            return RequestGenerator.GetStorage("Witnesser", "WitnessDeadline", Substrate.NetApi.Model.Meta.Storage.Type.Map, new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
+                        Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, new Substrate.NetApi.Model.Types.IType[] {
+                        key});
+        }
+        
+        /// <summary>
+        /// >> WitnessDeadlineDefault
+        /// Default value as hex string
+        /// </summary>
+        public static string WitnessDeadlineDefault()
+        {
+            return "0x00";
+        }
+        
+        /// <summary>
+        /// >> WitnessDeadline
+        ///  Deadline for witnessing a call. Nodes that did not witness are punished.
+        /// </summary>
+        public async Task<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApiExt.Generated.Model.pallet_cf_witnesser.pallet.CallHash>>> WitnessDeadline(Substrate.NetApi.Model.Types.Primitive.U32 key, string blockhash, CancellationToken token)
+        {
+            string parameters = WitnesserStorage.WitnessDeadlineParams(key);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApiExt.Generated.Model.pallet_cf_witnesser.pallet.CallHash>>>(parameters, blockhash, token);
+            return result;
+        }
     }
     
     /// <summary>
@@ -243,6 +276,17 @@ namespace Substrate.NetApiExt.Generated.Storage
             byteArray.AddRange(call.Encode());
             return new Method(8, "Witnesser", 2, "prewitness", byteArray.ToArray());
         }
+        
+        /// <summary>
+        /// >> prewitness_and_execute
+        /// Contains a variant per dispatchable extrinsic that this pallet has.
+        /// </summary>
+        public static Method PrewitnessAndExecute(Substrate.NetApiExt.Generated.Model.state_chain_runtime.EnumRuntimeCall call)
+        {
+            System.Collections.Generic.List<byte> byteArray = new List<byte>();
+            byteArray.AddRange(call.Encode());
+            return new Method(8, "Witnesser", 3, "prewitness_and_execute", byteArray.ToArray());
+        }
     }
     
     /// <summary>
@@ -250,6 +294,17 @@ namespace Substrate.NetApiExt.Generated.Storage
     /// </summary>
     public sealed class WitnesserConstants
     {
+        
+        /// <summary>
+        /// >> LateWitnessGracePeriod
+        ///  Grace period to witness a call after it has been dispatched.
+        /// </summary>
+        public Substrate.NetApi.Model.Types.Primitive.U32 LateWitnessGracePeriod()
+        {
+            var result = new Substrate.NetApi.Model.Types.Primitive.U32();
+            result.Create("0x0A000000");
+            return result;
+        }
     }
     
     /// <summary>

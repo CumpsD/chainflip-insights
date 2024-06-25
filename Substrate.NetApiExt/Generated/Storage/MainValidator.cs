@@ -44,8 +44,7 @@ namespace Substrate.NetApiExt.Generated.Storage
                             Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat,
                             Substrate.NetApi.Model.Meta.Storage.Hasher.BlakeTwo128Concat}, typeof(Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApi.Model.Types.Primitive.U32, Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>), typeof(Substrate.NetApi.Model.Types.Primitive.U32)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Validator", "CurrentRotationPhase"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApiExt.Generated.Model.pallet_cf_validator.EnumRotationPhase)));
-            _client.StorageKeyDict.Add(new System.Tuple<string, string>("Validator", "CurrentAuthorities"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApiExt.Generated.Types.Base.BTreeSetT1)));
-            _client.StorageKeyDict.Add(new System.Tuple<string, string>("Validator", "VanityNames"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApiExt.Generated.Types.Base.BTreeMapT2)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("Validator", "CurrentAuthorities"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Validator", "Bond"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U128)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Validator", "AccountPeerMapping"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
                             Substrate.NetApi.Model.Meta.Storage.Hasher.BlakeTwo128Concat}, typeof(Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32), typeof(Substrate.NetApi.Model.Types.Base.BaseTuple<Substrate.NetApiExt.Generated.Model.sp_core.ed25519.Public, Substrate.NetApi.Model.Types.Primitive.U16, Substrate.NetApi.Model.Types.Primitive.U128>)));
@@ -57,12 +56,12 @@ namespace Substrate.NetApiExt.Generated.Storage
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Validator", "EpochExpiries"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
                             Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApi.Model.Types.Primitive.U32), typeof(Substrate.NetApi.Model.Types.Primitive.U32)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Validator", "HistoricalAuthorities"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
-                            Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApi.Model.Types.Primitive.U32), typeof(Substrate.NetApiExt.Generated.Types.Base.BTreeSetT1)));
+                            Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApi.Model.Types.Primitive.U32), typeof(Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Validator", "HistoricalBonds"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
                             Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApi.Model.Types.Primitive.U32), typeof(Substrate.NetApi.Model.Types.Primitive.U128)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Validator", "HistoricalActiveEpochs"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(new Substrate.NetApi.Model.Meta.Storage.Hasher[] {
                             Substrate.NetApi.Model.Meta.Storage.Hasher.Twox64Concat}, typeof(Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32), typeof(Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Model.Types.Primitive.U32>)));
-            _client.StorageKeyDict.Add(new System.Tuple<string, string>("Validator", "Backups"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApiExt.Generated.Types.Base.BTreeMapT3)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("Validator", "Backups"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApiExt.Generated.Types.Base.BTreeMapT5)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Validator", "BackupRewardNodePercentage"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApiExt.Generated.Model.sp_arithmetic.per_things.Percent)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Validator", "AuthoritySetMinSize"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApi.Model.Types.Primitive.U32)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Validator", "AuctionParameters"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApiExt.Generated.Model.pallet_cf_validator.auction_resolver.SetSizeParameters)));
@@ -70,6 +69,7 @@ namespace Substrate.NetApiExt.Generated.Storage
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Validator", "AuctionBidCutoffPercentage"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApiExt.Generated.Model.sp_arithmetic.per_things.Percent)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Validator", "MinimumReportedCfeVersion"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApiExt.Generated.Model.cf_primitives.SemVer)));
             _client.StorageKeyDict.Add(new System.Tuple<string, string>("Validator", "MaxAuthoritySetContractionPercentage"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApiExt.Generated.Model.sp_arithmetic.per_things.Percent)));
+            _client.StorageKeyDict.Add(new System.Tuple<string, string>("Validator", "ActiveBidder"), new System.Tuple<Substrate.NetApi.Model.Meta.Storage.Hasher[], System.Type, System.Type>(null, null, typeof(Substrate.NetApiExt.Generated.Types.Base.BTreeSetT1)));
         }
         
         /// <summary>
@@ -270,39 +270,10 @@ namespace Substrate.NetApiExt.Generated.Storage
         /// >> CurrentAuthorities
         ///  A set of the current authorities.
         /// </summary>
-        public async Task<Substrate.NetApiExt.Generated.Types.Base.BTreeSetT1> CurrentAuthorities(string blockhash, CancellationToken token)
+        public async Task<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>> CurrentAuthorities(string blockhash, CancellationToken token)
         {
             string parameters = ValidatorStorage.CurrentAuthoritiesParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApiExt.Generated.Types.Base.BTreeSetT1>(parameters, blockhash, token);
-            return result;
-        }
-        
-        /// <summary>
-        /// >> VanityNamesParams
-        ///  Vanity names of the validators stored as a Map with the current validator IDs as key.
-        /// </summary>
-        public static string VanityNamesParams()
-        {
-            return RequestGenerator.GetStorage("Validator", "VanityNames", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
-        }
-        
-        /// <summary>
-        /// >> VanityNamesDefault
-        /// Default value as hex string
-        /// </summary>
-        public static string VanityNamesDefault()
-        {
-            return "0x00";
-        }
-        
-        /// <summary>
-        /// >> VanityNames
-        ///  Vanity names of the validators stored as a Map with the current validator IDs as key.
-        /// </summary>
-        public async Task<Substrate.NetApiExt.Generated.Types.Base.BTreeMapT2> VanityNames(string blockhash, CancellationToken token)
-        {
-            string parameters = ValidatorStorage.VanityNamesParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApiExt.Generated.Types.Base.BTreeMapT2>(parameters, blockhash, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>>(parameters, blockhash, token);
             return result;
         }
         
@@ -514,10 +485,10 @@ namespace Substrate.NetApiExt.Generated.Storage
         /// >> HistoricalAuthorities
         ///  A map between an epoch and the set of authorities (participating in this epoch).
         /// </summary>
-        public async Task<Substrate.NetApiExt.Generated.Types.Base.BTreeSetT1> HistoricalAuthorities(Substrate.NetApi.Model.Types.Primitive.U32 key, string blockhash, CancellationToken token)
+        public async Task<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>> HistoricalAuthorities(Substrate.NetApi.Model.Types.Primitive.U32 key, string blockhash, CancellationToken token)
         {
             string parameters = ValidatorStorage.HistoricalAuthoritiesParams(key);
-            var result = await _client.GetStorageAsync<Substrate.NetApiExt.Generated.Types.Base.BTreeSetT1>(parameters, blockhash, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>>(parameters, blockhash, token);
             return result;
         }
         
@@ -605,10 +576,10 @@ namespace Substrate.NetApiExt.Generated.Storage
         /// >> Backups
         ///  Backups, validator nodes who are not in the authority set.
         /// </summary>
-        public async Task<Substrate.NetApiExt.Generated.Types.Base.BTreeMapT3> Backups(string blockhash, CancellationToken token)
+        public async Task<Substrate.NetApiExt.Generated.Types.Base.BTreeMapT5> Backups(string blockhash, CancellationToken token)
         {
             string parameters = ValidatorStorage.BackupsParams();
-            var result = await _client.GetStorageAsync<Substrate.NetApiExt.Generated.Types.Base.BTreeMapT3>(parameters, blockhash, token);
+            var result = await _client.GetStorageAsync<Substrate.NetApiExt.Generated.Types.Base.BTreeMapT5>(parameters, blockhash, token);
             return result;
         }
         
@@ -824,6 +795,35 @@ namespace Substrate.NetApiExt.Generated.Storage
             var result = await _client.GetStorageAsync<Substrate.NetApiExt.Generated.Model.sp_arithmetic.per_things.Percent>(parameters, blockhash, token);
             return result;
         }
+        
+        /// <summary>
+        /// >> ActiveBidderParams
+        ///  Store the list of accounts that are active bidders.
+        /// </summary>
+        public static string ActiveBidderParams()
+        {
+            return RequestGenerator.GetStorage("Validator", "ActiveBidder", Substrate.NetApi.Model.Meta.Storage.Type.Plain);
+        }
+        
+        /// <summary>
+        /// >> ActiveBidderDefault
+        /// Default value as hex string
+        /// </summary>
+        public static string ActiveBidderDefault()
+        {
+            return "0x00";
+        }
+        
+        /// <summary>
+        /// >> ActiveBidder
+        ///  Store the list of accounts that are active bidders.
+        /// </summary>
+        public async Task<Substrate.NetApiExt.Generated.Types.Base.BTreeSetT1> ActiveBidder(string blockhash, CancellationToken token)
+        {
+            string parameters = ValidatorStorage.ActiveBidderParams();
+            var result = await _client.GetStorageAsync<Substrate.NetApiExt.Generated.Types.Base.BTreeSetT1>(parameters, blockhash, token);
+            return result;
+        }
     }
     
     /// <summary>
@@ -891,17 +891,6 @@ namespace Substrate.NetApiExt.Generated.Storage
         }
         
         /// <summary>
-        /// >> set_vanity_name
-        /// Contains a variant per dispatchable extrinsic that this pallet has.
-        /// </summary>
-        public static Method SetVanityName(Substrate.NetApi.Model.Types.Base.BaseVec<Substrate.NetApi.Model.Types.Primitive.U8> name)
-        {
-            System.Collections.Generic.List<byte> byteArray = new List<byte>();
-            byteArray.AddRange(name.Encode());
-            return new Method(9, "Validator", 5, "set_vanity_name", byteArray.ToArray());
-        }
-        
-        /// <summary>
         /// >> register_as_validator
         /// Contains a variant per dispatchable extrinsic that this pallet has.
         /// </summary>
@@ -909,6 +898,36 @@ namespace Substrate.NetApiExt.Generated.Storage
         {
             System.Collections.Generic.List<byte> byteArray = new List<byte>();
             return new Method(9, "Validator", 6, "register_as_validator", byteArray.ToArray());
+        }
+        
+        /// <summary>
+        /// >> deregister_as_validator
+        /// Contains a variant per dispatchable extrinsic that this pallet has.
+        /// </summary>
+        public static Method DeregisterAsValidator()
+        {
+            System.Collections.Generic.List<byte> byteArray = new List<byte>();
+            return new Method(9, "Validator", 7, "deregister_as_validator", byteArray.ToArray());
+        }
+        
+        /// <summary>
+        /// >> start_bidding
+        /// Contains a variant per dispatchable extrinsic that this pallet has.
+        /// </summary>
+        public static Method StartBidding()
+        {
+            System.Collections.Generic.List<byte> byteArray = new List<byte>();
+            return new Method(9, "Validator", 8, "start_bidding", byteArray.ToArray());
+        }
+        
+        /// <summary>
+        /// >> stop_bidding
+        /// Contains a variant per dispatchable extrinsic that this pallet has.
+        /// </summary>
+        public static Method StopBidding()
+        {
+            System.Collections.Generic.List<byte> byteArray = new List<byte>();
+            return new Method(9, "Validator", 9, "stop_bidding", byteArray.ToArray());
         }
     }
     
@@ -956,18 +975,6 @@ namespace Substrate.NetApiExt.Generated.Storage
         InvalidRedemptionPeriod,
         
         /// <summary>
-        /// >> NameTooLong
-        /// Vanity name length exceeds the limit of 64 characters.
-        /// </summary>
-        NameTooLong,
-        
-        /// <summary>
-        /// >> InvalidCharactersInName
-        /// Invalid characters in the name.
-        /// </summary>
-        InvalidCharactersInName,
-        
-        /// <summary>
         /// >> InvalidAuthoritySetMinSize
         /// Invalid minimum authority set size.
         /// </summary>
@@ -1002,5 +1009,47 @@ namespace Substrate.NetApiExt.Generated.Storage
         /// Rotations are currently disabled through SafeMode.
         /// </summary>
         RotationsDisabled,
+        
+        /// <summary>
+        /// >> StillKeyHolder
+        /// Validators cannot deregister until they are no longer key holders.
+        /// </summary>
+        StillKeyHolder,
+        
+        /// <summary>
+        /// >> StillBidding
+        /// Validators cannot deregister until they stop bidding in the auction.
+        /// </summary>
+        StillBidding,
+        
+        /// <summary>
+        /// >> StartBiddingDisabled
+        /// Start Bidding is disabled due to Safe Mode.
+        /// </summary>
+        StartBiddingDisabled,
+        
+        /// <summary>
+        /// >> StopBiddingDisabled
+        /// Stop Bidding is disabled due to Safe Mode.
+        /// </summary>
+        StopBiddingDisabled,
+        
+        /// <summary>
+        /// >> AlreadyNotBidding
+        /// Can't stop bidding an account if it's already not bidding.
+        /// </summary>
+        AlreadyNotBidding,
+        
+        /// <summary>
+        /// >> AlreadyBidding
+        /// Can only start bidding if not already bidding.
+        /// </summary>
+        AlreadyBidding,
+        
+        /// <summary>
+        /// >> AuctionPhase
+        /// We are in the auction phase
+        /// </summary>
+        AuctionPhase,
     }
 }

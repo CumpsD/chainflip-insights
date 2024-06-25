@@ -18,7 +18,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_pools
     
     
     /// <summary>
-    /// >> 41 - Composite[pallet_cf_pools.PalletSafeMode]
+    /// >> 42 - Composite[pallet_cf_pools.PalletSafeMode]
     /// </summary>
     [SubstrateNodeType(TypeDefEnum.Composite)]
     public sealed class PalletSafeMode : BaseType
@@ -59,7 +59,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_pools
             var bytesLength = p - start;
             TypeSize = bytesLength;
             Bytes = new byte[bytesLength];
-            System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
+            global::System.Array.Copy(byteArray, start, Bytes, 0, bytesLength);
         }
     }
 }

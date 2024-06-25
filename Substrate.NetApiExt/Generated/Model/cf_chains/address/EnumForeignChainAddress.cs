@@ -35,12 +35,17 @@ namespace Substrate.NetApiExt.Generated.Model.cf_chains.address
         /// >> Btc
         /// </summary>
         Btc = 2,
+        
+        /// <summary>
+        /// >> Arb
+        /// </summary>
+        Arb = 3,
     }
     
     /// <summary>
-    /// >> 232 - Variant[cf_chains.address.ForeignChainAddress]
+    /// >> 241 - Variant[cf_chains.address.ForeignChainAddress]
     /// </summary>
-    public sealed class EnumForeignChainAddress : BaseEnumExt<ForeignChainAddress, Substrate.NetApiExt.Generated.Model.primitive_types.H160, Substrate.NetApiExt.Generated.Model.cf_chains.dot.PolkadotAccountId, Substrate.NetApiExt.Generated.Model.cf_chains.btc.EnumScriptPubkey>
+    public sealed class EnumForeignChainAddress : BaseEnumExt<ForeignChainAddress, Substrate.NetApiExt.Generated.Model.primitive_types.H160, Substrate.NetApiExt.Generated.Model.cf_chains.dot.PolkadotAccountId, Substrate.NetApiExt.Generated.Model.cf_chains.btc.EnumScriptPubkey, Substrate.NetApiExt.Generated.Model.primitive_types.H160>
     {
     }
 }

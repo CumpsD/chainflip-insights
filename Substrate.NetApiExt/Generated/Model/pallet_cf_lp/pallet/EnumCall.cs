@@ -45,13 +45,25 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_lp.pallet
         /// See [`Pallet::register_liquidity_refund_address`].
         /// </summary>
         register_liquidity_refund_address = 4,
+        
+        /// <summary>
+        /// >> deregister_lp_account
+        /// See [`Pallet::deregister_lp_account`].
+        /// </summary>
+        deregister_lp_account = 5,
+        
+        /// <summary>
+        /// >> transfer_asset
+        /// See [`Pallet::transfer_asset`].
+        /// </summary>
+        transfer_asset = 6,
     }
     
     /// <summary>
-    /// >> 234 - Variant[pallet_cf_lp.pallet.Call]
+    /// >> 249 - Variant[pallet_cf_lp.pallet.Call]
     /// Contains a variant per dispatchable extrinsic that this pallet has.
     /// </summary>
-    public sealed class EnumCall : BaseEnumExt<Call, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U128, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApiExt.Generated.Model.cf_chains.address.EnumEncodedAddress>, BaseVoid, BaseVoid, Substrate.NetApiExt.Generated.Model.cf_chains.address.EnumEncodedAddress>
+    public sealed class EnumCall : BaseEnumExt<Call, BaseTuple<Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApi.Model.Types.Primitive.U16>, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U128, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApiExt.Generated.Model.cf_chains.address.EnumEncodedAddress>, BaseVoid, BaseVoid, Substrate.NetApiExt.Generated.Model.cf_chains.address.EnumEncodedAddress, BaseVoid, BaseTuple<Substrate.NetApi.Model.Types.Primitive.U128, Substrate.NetApiExt.Generated.Model.cf_primitives.chains.assets.any.EnumAsset, Substrate.NetApiExt.Generated.Model.sp_core.crypto.AccountId32>>
     {
     }
 }

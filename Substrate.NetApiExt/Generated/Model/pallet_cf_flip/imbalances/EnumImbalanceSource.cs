@@ -38,7 +38,7 @@ namespace Substrate.NetApiExt.Generated.Model.pallet_cf_flip.imbalances
     }
     
     /// <summary>
-    /// >> 53 - Variant[pallet_cf_flip.imbalances.ImbalanceSource]
+    /// >> 68 - Variant[pallet_cf_flip.imbalances.ImbalanceSource]
     /// </summary>
     public sealed class EnumImbalanceSource : BaseEnumExt<ImbalanceSource, BaseVoid, Substrate.NetApiExt.Generated.Model.pallet_cf_flip.imbalances.EnumInternalSource, BaseVoid>
     {
