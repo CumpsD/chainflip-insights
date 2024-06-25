@@ -16,10 +16,15 @@ namespace ChainflipInsights.Consumers.LpTelegram
             SwapInfo swap,
             CancellationToken cancellationToken)
         {
-            if ((!swap.DestinationAsset.Contains("usdt", StringComparison.InvariantCultureIgnoreCase) &&
-                !swap.SourceAsset.Contains("usdt", StringComparison.InvariantCultureIgnoreCase)) ||
-                (!swap.DestinationAsset.Contains("arbusdc", StringComparison.InvariantCultureIgnoreCase) &&
-                 !swap.SourceAsset.Contains("arbusdc", StringComparison.InvariantCultureIgnoreCase)))
+            var isUsdtSwap =
+                swap.DestinationAsset.Contains("usdt", StringComparison.InvariantCultureIgnoreCase) ||
+                swap.SourceAsset.Contains("usdt", StringComparison.InvariantCultureIgnoreCase);
+            
+            var isArbUsdc =
+                swap.DestinationAsset.Contains("arbusdc", StringComparison.InvariantCultureIgnoreCase) ||
+                swap.SourceAsset.Contains("arbusdc", StringComparison.InvariantCultureIgnoreCase);
+            
+            if (!isUsdtSwap && !isArbUsdc)
             {
                 _logger.LogInformation(
                     "Swap did not meet asset (USDT/arbUSDC) for LP Telegram: {IngressAmount} {IngressTicker} to {EgressAmount} {EgressTicker} -> {ExplorerUrl}",
