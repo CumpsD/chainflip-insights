@@ -14,20 +14,8 @@ namespace ChainflipInsights.Consumers.Twitter
             if (!_configuration.TwitterBurnEnabled.Value)
             {
                 _logger.LogInformation(
-                    "Burn disabled for Twitter. Burn {BurnBlock} ({BurnBlockHash}) -> {BlockUrl}",
+                    "Burn disabled for Twitter. Burn {BurnBlock} -> {BlockUrl}",
                     burn.LastSupplyUpdateBlock,
-                    burn.LastSupplyUpdateBlockHash,
-                    $"{_configuration.ExplorerBlocksUrl}{burn.LastSupplyUpdateBlock}");
-
-                return;
-            }
-            
-            if (burn.BurnSkipped)
-            {
-                _logger.LogInformation(
-                    "Burn did not meet burn threshold. Burn {BurnBlock} ({BurnBlockHash}) -> {BlockUrl}",
-                    burn.LastSupplyUpdateBlock,
-                    burn.LastSupplyUpdateBlockHash,
                     $"{_configuration.ExplorerBlocksUrl}{burn.LastSupplyUpdateBlock}");
 
                 return;
@@ -36,9 +24,8 @@ namespace ChainflipInsights.Consumers.Twitter
             try
             {
                 _logger.LogInformation(
-                    "Announcing Burn {BurnBlock} ({BurnBlockHash}) on Twitter -> {BlockUrl}",
+                    "Announcing Burn {BurnBlock} on Twitter -> {BlockUrl}",
                     burn.LastSupplyUpdateBlock,
-                    burn.LastSupplyUpdateBlockHash,
                     $"{_configuration.ExplorerBlocksUrl}{burn.LastSupplyUpdateBlock}");
 
                 var text =

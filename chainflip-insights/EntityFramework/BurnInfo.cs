@@ -13,8 +13,6 @@ namespace ChainflipInsights.EntityFramework
 
         public ulong BurnBlock { get; set; }
 
-        public string BurnHash { get; set; }
-
         public double BurnAmount { get; set; }
 
         public string ExplorerUrl { get; set; }
@@ -35,8 +33,6 @@ namespace ChainflipInsights.EntityFramework
             builder.HasIndex(x => x.BurnDate);
             
             builder.Property(x => x.BurnBlock).IsRequired();
-            
-            builder.Property(x => x.BurnHash).HasMaxLength(120).IsRequired();
             
             builder.Property(x => x.BurnAmount).IsRequired();
 

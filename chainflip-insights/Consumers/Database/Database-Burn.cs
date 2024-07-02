@@ -20,31 +20,18 @@ namespace ChainflipInsights.Consumers.Database
             if (!_configuration.DatabaseBurnEnabled.Value)
             {
                 _logger.LogInformation(
-                    "Burn disabled for Database. Burn {BurnBlock} ({BurnBlockHash}) -> {BlockUrl}",
+                    "Burn disabled for Database. Burn {BurnBlock} -> {BlockUrl}",
                     burn.LastSupplyUpdateBlock,
-                    burn.LastSupplyUpdateBlockHash,
                     $"{_configuration.ExplorerBlocksUrl}{burn.LastSupplyUpdateBlock}");
 
                 return;
             }
             
-            if (burn.BurnSkipped)
-            {
-                _logger.LogInformation(
-                    "Burn did not meet burn threshold. Burn {BurnBlock} ({BurnBlockHash}) -> {BlockUrl}",
-                    burn.LastSupplyUpdateBlock,
-                    burn.LastSupplyUpdateBlockHash,
-                    $"{_configuration.ExplorerBlocksUrl}{burn.LastSupplyUpdateBlock}");
-
-                return;
-            }
-
             try
             {
                 _logger.LogInformation(
-                    "Storing Burn {BurnBlock} ({BurnBlockHash}) in Database -> {BlockUrl}",
+                    "Storing Burn {BurnBlock} in Database -> {BlockUrl}",
                     burn.LastSupplyUpdateBlock,
-                    burn.LastSupplyUpdateBlockHash,
                     $"{_configuration.ExplorerBlocksUrl}{burn.LastSupplyUpdateBlock}");
 
                 using (var dbContext = _dbContextFactory.CreateDbContext())
@@ -53,9 +40,8 @@ namespace ChainflipInsights.Consumers.Database
                         .BurnInfo
                         .Add(new EntityFramework.BurnInfo
                         {
-                            BurnDate = DateTimeOffset.UtcNow,
+                            BurnDate = burn.LastBurnTime,
                             BurnBlock = burn.LastSupplyUpdateBlock,
-                            BurnHash = burn.LastSupplyUpdateBlockHash,
                             BurnAmount = burn.FlipBurned!.Value,
                             ExplorerUrl = $"{_configuration.ExplorerBlocksUrl}{burn.LastSupplyUpdateBlock}"
                         });
@@ -63,9 +49,8 @@ namespace ChainflipInsights.Consumers.Database
                     dbContext.SaveChanges();
 
                     _logger.LogInformation(
-                        "Stored Burn {BurnBlock} ({BurnBlockHash}) in Database -> {BlockUrl}",
+                        "Stored Burn {BurnBlock} in Database -> {BlockUrl}",
                         burn.LastSupplyUpdateBlock,
-                        burn.LastSupplyUpdateBlockHash,
                         $"{_configuration.ExplorerBlocksUrl}{burn.LastSupplyUpdateBlock}");
 
                     GenerateBurnCsv(dbContext);

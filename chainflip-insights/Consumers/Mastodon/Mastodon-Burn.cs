@@ -12,20 +12,8 @@ namespace ChainflipInsights.Consumers.Mastodon
             if (!_configuration.MastodonBurnEnabled.Value)
             {
                 _logger.LogInformation(
-                    "Burn disabled for Mastodon. Burn {BurnBlock} ({BurnBlockHash}) -> {BlockUrl}",
+                    "Burn disabled for Mastodon. Burn {BurnBlock} -> {BlockUrl}",
                     burn.LastSupplyUpdateBlock,
-                    burn.LastSupplyUpdateBlockHash,
-                    $"{_configuration.ExplorerBlocksUrl}{burn.LastSupplyUpdateBlock}");
-
-                return;
-            }
-            
-            if (burn.BurnSkipped)
-            {
-                _logger.LogInformation(
-                    "Burn did not meet burn threshold. Burn {BurnBlock} ({BurnBlockHash}) -> {BlockUrl}",
-                    burn.LastSupplyUpdateBlock,
-                    burn.LastSupplyUpdateBlockHash,
                     $"{_configuration.ExplorerBlocksUrl}{burn.LastSupplyUpdateBlock}");
 
                 return;
@@ -34,9 +22,8 @@ namespace ChainflipInsights.Consumers.Mastodon
             try
             {
                 _logger.LogInformation(
-                    "Announcing Burn {BurnBlock} ({BurnBlockHash}) on Mastodon -> {BlockUrl}",
+                    "Announcing Burn {BurnBlock} on Mastodon -> {BlockUrl}",
                     burn.LastSupplyUpdateBlock,
-                    burn.LastSupplyUpdateBlockHash,
                     $"{_configuration.ExplorerBlocksUrl}{burn.LastSupplyUpdateBlock}");
 
                 var text =
@@ -51,9 +38,8 @@ namespace ChainflipInsights.Consumers.Mastodon
                     .GetResult();
 
                 _logger.LogInformation(
-                    "Announcing Burn {BurnBlock} ({BurnBlockHash}) on Mastodon as Message {MessageId}",
+                    "Announcing Burn {BurnBlock} on Mastodon as Message {MessageId}",
                     burn.LastSupplyUpdateBlock,
-                    burn.LastSupplyUpdateBlockHash,
                     status.Url);
             }
             catch (Exception e)

@@ -18,20 +18,8 @@ namespace ChainflipInsights.Consumers.Telegram
             if (!_configuration.TelegramBurnEnabled.Value)
             {
                 _logger.LogInformation(
-                    "Burn disabled for Telegram. Burn {BurnBlock} ({BurnBlockHash}) -> {BlockUrl}",
+                    "Burn disabled for Telegram. Burn {BurnBlock} -> {BlockUrl}",
                     burn.LastSupplyUpdateBlock,
-                    burn.LastSupplyUpdateBlockHash,
-                    $"{_configuration.ExplorerBlocksUrl}{burn.LastSupplyUpdateBlock}");
-
-                return;
-            }
-            
-            if (burn.BurnSkipped)
-            {
-                _logger.LogInformation(
-                    "Burn did not meet burn threshold. Burn {BurnBlock} ({BurnBlockHash}) -> {BlockUrl}",
-                    burn.LastSupplyUpdateBlock,
-                    burn.LastSupplyUpdateBlockHash,
                     $"{_configuration.ExplorerBlocksUrl}{burn.LastSupplyUpdateBlock}");
 
                 return;
@@ -40,17 +28,13 @@ namespace ChainflipInsights.Consumers.Telegram
             try
             {
                 _logger.LogInformation(
-                    "Announcing Burn {BurnBlock} ({BurnBlockHash}) on Telegram -> {BlockUrl}",
+                    "Announcing Burn {BurnBlock} on Telegram -> {BlockUrl}",
                     burn.LastSupplyUpdateBlock,
-                    burn.LastSupplyUpdateBlockHash,
                     $"{_configuration.ExplorerBlocksUrl}{burn.LastSupplyUpdateBlock}");
 
                 var text =
-                    burn.BurnSkipped
-                        ? $"🔥 Burn was **skipped** due to not meeting burn threshold, **{burn.FlipToBurnFormatted} FLIP**{(string.IsNullOrWhiteSpace(burn.FlipToBurnFormattedUsd) ? string.Empty : $" (**${burn.FlipToBurnFormattedUsd}**)")} waiting to be burned! " +
-                          $"// **[view block on explorer]({_configuration.ExplorerBlocksUrl}{burn.LastSupplyUpdateBlock})**"
-                        : $"🔥 Burned **{burn.FlipBurnedFormatted} FLIP**{(string.IsNullOrWhiteSpace(burn.FlipBurnedFormattedUsd) ? string.Empty : $" (**${burn.FlipBurnedFormattedUsd}**)")}! " +
-                          $"// **[view block on explorer]({_configuration.ExplorerBlocksUrl}{burn.LastSupplyUpdateBlock})**";
+                    $"🔥 Burned **{burn.FlipBurnedFormatted} FLIP**{(string.IsNullOrWhiteSpace(burn.FlipBurnedFormattedUsd) ? string.Empty : $" (**${burn.FlipBurnedFormattedUsd}**)")}! " +
+                    $"// **[view block on explorer]({_configuration.ExplorerBlocksUrl}{burn.LastSupplyUpdateBlock})**";
 
                 foreach (var channelId in _configuration.TelegramSwapInfoChannelId)
                 {
@@ -76,9 +60,8 @@ namespace ChainflipInsights.Consumers.Telegram
                         .GetResult();
 
                     _logger.LogInformation(
-                        "Announcing Burn {BurnBlock} ({BurnBlockHash}) on Telegram as Message {MessageId}",
+                        "Announcing Burn {BurnBlock} on Telegram as Message {MessageId}",
                         burn.LastSupplyUpdateBlock,
-                        burn.LastSupplyUpdateBlockHash,
                         message.MessageId);
                 }
             }

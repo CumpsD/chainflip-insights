@@ -9,38 +9,8 @@ namespace ChainflipInsights.Feeders.Burn
         
         public ulong LastSupplyUpdateBlock { get; }
         
-        public string LastSupplyUpdateBlockHash { get; }
+        public DateTimeOffset LastBurnTime { get; }
         
-        public double FlipToBurn { get; }
-        
-        public string FlipToBurnFormatted
-        {
-            get
-            {
-                var flip = Constants.SupportedAssets[Constants.FLIP];
-                var amount = FlipToBurn / Math.Pow(10, flip.Decimals);
-                return Math.Round(amount, 2).ToString(flip.FormatString);
-            }
-        }
-        
-        public string? FlipToBurnFormattedUsd
-        {
-            get
-            {
-                var flipPrice = _priceProvider
-                    .GetFlipPriceInUsd()
-                    .GetAwaiter()
-                    .GetResult();
-                
-                var flip = Constants.SupportedAssets[Constants.FLIP];
-                var amount = FlipToBurn / Math.Pow(10, flip.Decimals);
-                
-                return flipPrice == null 
-                    ? null
-                    : Math.Round(flipPrice.Value * amount, 2).ToString(Constants.DollarString);
-            }
-        }
-
         public double? FlipBurned { get; }
         
         public string? FlipBurnedFormatted
@@ -77,28 +47,17 @@ namespace ChainflipInsights.Feeders.Burn
             }
         }
         
-        public bool BurnSkipped { get; }
-
-        public BurnInfo(ulong lastSupplyUpdateBlock)
-        {
-            LastSupplyUpdateBlock = lastSupplyUpdateBlock;
-        }
-
         public BurnInfo(
             PriceProvider priceProvider,
             ulong lastSupplyUpdateBlock,
-            string lastSupplyUpdateBlockHash,
-            double flipToBurn,
-            double? flipBurned, 
-            bool burnSkipped)
+            DateTimeOffset lastBurnTime,
+            double flipBurned)
         {
             _priceProvider = priceProvider;
             
             LastSupplyUpdateBlock = lastSupplyUpdateBlock;
-            LastSupplyUpdateBlockHash = lastSupplyUpdateBlockHash;
-            FlipToBurn = flipToBurn;
+            LastBurnTime = lastBurnTime;
             FlipBurned = flipBurned;
-            BurnSkipped = burnSkipped;
         }
     }
 }
