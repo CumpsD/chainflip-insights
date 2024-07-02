@@ -112,8 +112,11 @@ namespace ChainflipInsights.Feeders.Burn
 
                 foreach (var burn in burnsIncreasing)
                 {
-                    if (burn.Timestamp <= lastBurn) continue;
-                    
+                    var burnDate = new DateOnly(burn.Timestamp.Year, burn.Timestamp.Month, burn.Timestamp.Day);
+                    var lastBurnDate = new DateOnly(lastBurn.Year, lastBurn.Month, lastBurn.Day);
+                    if (burnDate <= lastBurnDate) 
+                        continue;
+      
                     var burnInfo = new BurnInfo(
                         _priceProvider,
                         burn.Event.BlockId,
@@ -129,7 +132,7 @@ namespace ChainflipInsights.Feeders.Burn
                         burnInfo, 
                         cancellationToken);
 
-                    lastBurn = burn.Timestamp;
+                    lastBurn = lastBurnDate;
                     await StoreLastBurn(lastBurn);
                         
                     await Task.Delay(_configuration.BurnQueryDelay.Value.RandomizeTime(), cancellationToken);
@@ -139,18 +142,18 @@ namespace ChainflipInsights.Feeders.Burn
             }
         }
         
-        private async Task<DateTimeOffset> GetLastBurn(CancellationToken cancellationToken)
+        private async Task<DateOnly> GetLastBurn(CancellationToken cancellationToken)
         {
             if (File.Exists(_configuration.LastBurnLocation))
-                return DateTimeOffset.Parse(await File.ReadAllTextAsync(_configuration.LastBurnLocation, cancellationToken));
+                return DateOnly.Parse(await File.ReadAllTextAsync(_configuration.LastBurnLocation, cancellationToken));
             
             await using var file = File.CreateText(_configuration.LastBurnLocation);
-            var lastBurn = DateTimeOffset.Parse("2024-06-23 23:59:59");
+            var lastBurn = DateOnly.Parse("2024-06-30");
             await file.WriteAsync(lastBurn.ToString());
             return lastBurn;
         }
         
-        private async Task StoreLastBurn(DateTimeOffset lastBurn)
+        private async Task StoreLastBurn(DateOnly lastBurn)
         {
             await using var file = File.CreateText(_configuration.LastBurnLocation);
             await file.WriteAsync(lastBurn.ToString());
