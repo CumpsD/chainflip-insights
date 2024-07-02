@@ -255,7 +255,7 @@
                     "UniswapV2Graph",
                     x =>
                     {
-                        x.BaseAddress = new Uri(botConfiguration.UniswapV2Graph);
+                        x.BaseAddress = new Uri(botConfiguration.UniswapV2Graph.Replace("API_KEY", botConfiguration.TheGraphApiKey));
                         x.DefaultRequestHeaders.UserAgent.ParseAdd("discord-chainflip-insights");
                     })
                 
@@ -265,7 +265,7 @@
                     "UniswapV3Graph",
                     x =>
                     {
-                        x.BaseAddress = new Uri(botConfiguration.UniswapV3Graph);
+                        x.BaseAddress = new Uri(botConfiguration.UniswapV3Graph.Replace("API_KEY", botConfiguration.TheGraphApiKey));
                         x.DefaultRequestHeaders.UserAgent.ParseAdd("discord-chainflip-insights");
                     });
             

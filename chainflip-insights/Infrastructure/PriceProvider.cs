@@ -16,7 +16,7 @@ namespace ChainflipInsights.Infrastructure
             """
             {
                 bundle(id: \"1\") {
-                    ethPrice
+                    ethPriceUSD
                 }
             }
             """;
@@ -104,7 +104,7 @@ namespace ChainflipInsights.Infrastructure
         {
             try
             {
-                using var client = _httpClientFactory.CreateClient("UniswapV2Graph");
+                using var client = _httpClientFactory.CreateClient("UniswapV3Graph");
 
                 var graphQuery = $"{{ \"query\": \"{EthPriceQuery.ReplaceLineEndings("\\n")}\" }}";
 
@@ -214,7 +214,7 @@ namespace ChainflipInsights.Infrastructure
 
     public class EthPriceData
     {
-        [JsonPropertyName("ethPrice")] 
+        [JsonPropertyName("ethPriceUSD")] 
         public double EthPrice { get; set; }
     }
 }
