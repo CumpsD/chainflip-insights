@@ -220,6 +220,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public string? TheGraphApiKey
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
         public string? UniswapV2Graph
         {
             get; init;

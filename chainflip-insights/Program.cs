@@ -205,7 +205,7 @@
                     "StakedFlipGraph",
                     x =>
                     {
-                        x.BaseAddress = new Uri(botConfiguration.StakedFlipGraphUrl);
+                        x.BaseAddress = new Uri(botConfiguration.StakedFlipGraphUrl.Replace("API_KEY", botConfiguration.TheGraphApiKey));
                         x.DefaultRequestHeaders.UserAgent.ParseAdd("discord-chainflip-insights");
                     })
                 
