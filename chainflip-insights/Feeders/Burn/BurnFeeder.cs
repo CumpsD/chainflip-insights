@@ -132,7 +132,7 @@ namespace ChainflipInsights.Feeders.Burn
                         burnInfo, 
                         cancellationToken);
 
-                    lastBurn = lastBurnDate;
+                    lastBurn = burnDate;
                     await StoreLastBurn(lastBurn);
                         
                     await Task.Delay(_configuration.BurnQueryDelay.Value.RandomizeTime(), cancellationToken);
