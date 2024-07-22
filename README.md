@@ -26,6 +26,11 @@ FLIP InfoBot can broadcast Chainflip data on popular crypto-heavy platform such 
 * Telegram: https://t.me/chainflip_io_chat
 * Mastodon: https://mastodon.social/@ChainflipBot
 
+## Funding
+
+Adding new features to FLIP InfoBot is based on a bounty system. Feature requests are created as new issues, which are assigned a bounty price based on an estimation of the work involved to add the feature. After anyone has funded the bounty, work on the feature will start.
+
+<!-- a normal html comment 
 ## Screenshots
 
 ![a](https://github.com/CumpsD/chainflip-insights/raw/main/assets/swap-cex-cfe.png "a")
@@ -35,3 +40,4 @@ FLIP InfoBot can broadcast Chainflip data on popular crypto-heavy platform such 
 #### Twitter
 
 ![a](https://github.com/CumpsD/chainflip-insights/raw/main/assets/twitter.png "a")
+-->
