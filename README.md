@@ -15,11 +15,11 @@ Chainflip is a game-changing protocol for native cross-chain swaps design using 
 
 ## What is FLIP InfoBot?
 
-This is a bot created to analyze swap data from Chainflip protocol and present the information in a user-friendly format. The bot utilizes APIs to gather and process the swap data, and then present the relevant information in a readable and understandable manner for users. It can broadcast swap, incoming liquidity, epoch, funding, redemption, CEX FLIP movement per day, CFE versions per validator, last 24h of Volume on Chainflip, and when swap limits change. More analytics can be added as necessary.
+This is a bot created to analyze swap data from Chainflip protocol and present the information in a user-friendly format. The bot utilizes APIs to gather and process the swap data, and then present the relevant information in a readable and understandable manner for users. It can broadcast swap, incoming liquidity, epoch, funding, redemption, CEX FLIP movement per day, CFE versions per validator, last 24h of Volume on Chainflip, when swap limits change and much more.
 
 ## Where does it broadcast the data?
 
-FLIP InfoBot can broadcast Chainflip data on popular crypto-heavy platform such as Discord, Telegram, Twitter/X and Mastodon.
+FLIP InfoBot can broadcast Chainflip data on popular crypto-heavy platforms such as Discord, Telegram, Twitter/X and Mastodon.
 
 * Twitter: https://twitter.com/ChainflipBot
 * Discord: https://discord.gg/chainflip-community
