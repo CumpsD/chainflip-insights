@@ -30,6 +30,8 @@ FLIP InfoBot can broadcast Chainflip data on popular crypto-heavy platform such 
 
 Adding new features to FLIP InfoBot is based on a bounty system. Feature requests are created as new issues, which are assigned a bounty price based on an estimation of the work involved to add the feature. After anyone has funded the bounty, work on the feature will start.
 
+An overview of all bounty issues can be seen on the [Chainflip Infobot Features](https://github.com/users/CumpsD/projects/1) board.
+
 <!-- a normal html comment 
 ## Screenshots
 
