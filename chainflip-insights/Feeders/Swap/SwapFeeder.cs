@@ -9,6 +9,7 @@ namespace ChainflipInsights.Feeders.Swap
     using System.Net.Http.Headers;
     using System.Net.Http.Json;
     using System.Net.Mime;
+    using System.Text.Json;
     using System.Threading;
     using System.Threading.Tasks;
     using System.Threading.Tasks.Dataflow;
@@ -58,11 +59,13 @@ namespace ChainflipInsights.Feeders.Swap
                             effectiveBoostFeeBps
                             
                             swapFeesBySwapId {
-                                nodes {
-                                    type
-                                    amount
-                                    asset
-                                    valueUsd
+                                edges {
+                                    node {
+                                        type
+                                        amount
+                                        asset
+                                        valueUsd
+                                    }
                                 }
                             }
                         }
@@ -230,8 +233,8 @@ namespace ChainflipInsights.Feeders.Swap
                 return double.Parse(await File.ReadAllTextAsync(_configuration.LastSwapIdLocation, cancellationToken));
             
             await using var file = File.CreateText(_configuration.LastSwapIdLocation);
-            await file.WriteAsync("0");
-            return 0;
+            await file.WriteAsync("12562");
+            return 12562;
         }
 
         private async Task StoreLastSwapId(double swapId)
@@ -260,6 +263,10 @@ namespace ChainflipInsights.Feeders.Swap
 
                 if (response.IsSuccessStatusCode)
                 {
+                    // var json = await response.Content.ReadAsStringAsync(cancellationToken);
+                    //
+                    // return JsonSerializer.Deserialize<SwapsResponse>(json);
+
                     return await response
                         .Content
                         .ReadFromJsonAsync<SwapsResponse>(cancellationToken: cancellationToken);
