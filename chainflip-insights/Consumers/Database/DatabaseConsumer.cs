@@ -5,7 +5,6 @@ namespace ChainflipInsights.Consumers.Database
     using System.Linq;
     using System.Net.Http;
     using System.Threading;
-    using System.Threading.Tasks;
     using System.Threading.Tasks.Dataflow;
     using ChainflipInsights.Configuration;
     using ChainflipInsights.EntityFramework;
@@ -20,7 +19,7 @@ namespace ChainflipInsights.Consumers.Database
         private readonly IDbContextFactory<BotContext> _dbContextFactory;
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly BotConfiguration _configuration;
-        private readonly Dictionary<string, Broker> _brokers;
+        private readonly Dictionary<string, string> _brokers;
 
         public DatabaseConsumer(
             ILogger<DatabaseConsumer> logger,
@@ -37,7 +36,7 @@ namespace ChainflipInsights.Consumers.Database
                 .Brokers
                 .ToDictionary(
                     x => x.Address,
-                    x => x);
+                    x => x.Name);
         }
 
         public ITargetBlock<BroadcastInfo> Build(
