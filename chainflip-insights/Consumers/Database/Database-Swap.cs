@@ -61,7 +61,9 @@ namespace ChainflipInsights.Consumers.Database
                             DeltaUsd = swap.DeltaUsd,
                             DeltaUsdPercentage = swap.DeltaUsdPercentage,
                             Broker = swap.Broker,
-                            ExplorerUrl = $"{_configuration.ExplorerSwapsUrl}{swap.Id}"
+                            ExplorerUrl = $"{_configuration.ExplorerSwapsUrl}{swap.Id}",
+                            BoostFeeBps = swap.BoostFeeBps,
+                            BoostFeeUsd = swap.BoostFeeUsd
                         });
 
                     dbContext.SaveChanges();
@@ -112,7 +114,10 @@ namespace ChainflipInsights.Consumers.Database
                         DestinationAmountUsd = x.EgressValueUsd.ToString(Constants.DollarString),
                         DestinationAsset = x.DestinationAsset,
                         DeltaUsd = x.DeltaUsd,
-                        DeltaUsdPercentage = x.DeltaUsdPercentage
+                        DeltaUsdPercentage = x.DeltaUsdPercentage,
+                        IsBoosted = x.BoostFeeBps != null,
+                        BoostFeeBps = x.BoostFeeBps,
+                        BoostFeeUsd = x.BoostFeeUsd?.ToString(Constants.DollarString)
                     };
                 })
                 .ToList();

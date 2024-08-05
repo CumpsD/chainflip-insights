@@ -54,6 +54,17 @@ namespace ChainflipInsights.Feeders.Swap
                                     }
                                 }
                             }
+                            
+                            effectiveBoostFeeBps
+                            
+                            swapFeesBySwapId {
+                                nodes {
+                                    type
+                                    amount
+                                    asset
+                                    valueUsd
+                                }
+                            }
                         }
                     }
                 }

@@ -51,6 +51,7 @@ namespace ChainflipInsights.Consumers.Twitter
                     $"📤 {swap.EgressAmountFormatted} ${swap.DestinationAsset} (${swap.EgressValueUsdFormatted})\n" +
                     $"🔺 {swap.DeltaUsdFormatted.FormatDelta()} ({swap.DeltaUsdPercentageFormatted})\n" +
                     $"{(brokerExists ? $"🏦 via {brokerName}\n" : string.Empty)}" +
+                    $"{(swap.IsBoosted ? $"⚡ Boosted for {swap.BoostFeeUsdFormatted}\n" : string.Empty)}" +
                     $"#chainflip $flip";
 
                 _twitterClient.Execute

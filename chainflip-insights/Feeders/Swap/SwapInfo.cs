@@ -1,6 +1,7 @@
 namespace ChainflipInsights.Feeders.Swap
 {
     using System;
+    using System.Linq;
 
     public class SwapInfo
     {
@@ -56,6 +57,14 @@ namespace ChainflipInsights.Feeders.Swap
         public DateTimeOffset SwapScheduledBlockTimestamp { get; }
         
         public string? Broker { get; }
+        
+        public bool IsBoosted { get; set; }
+
+        public double? BoostFeeBps { get; set; }
+        
+        public double? BoostFeeUsd { get; set; }
+
+        public string? BoostFeeUsdFormatted => BoostFeeUsd?.ToString(Constants.DollarString);
 
         public string Emoji =>
             DepositValueUsd switch
@@ -95,6 +104,10 @@ namespace ChainflipInsights.Feeders.Swap
             SourceAsset = SourceAssetInfo.Ticker;
             DestinationAsset = DestinationAssetInfo.Ticker;
 
+            IsBoosted = swap.EffectiveBoostFeeBps != null;
+            BoostFeeBps = swap.EffectiveBoostFeeBps;
+            BoostFeeUsd = swap.SwapFees.Data.FirstOrDefault(x => x.Data.FeeType == "BOOST")?.Data.FeeValueUsd;
+            
             Broker = swap
                 .SwapChannel?
                 .Broker

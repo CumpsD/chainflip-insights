@@ -30,6 +30,10 @@ namespace ChainflipInsights.EntityFramework
         public string? Broker { get; set; }
 
         public string ExplorerUrl { get; set; }
+        
+        public double? BoostFeeBps { get; set; }
+        
+        public double? BoostFeeUsd { get; set; }
     }
     #pragma warning restore CS8618
 

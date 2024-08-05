@@ -43,6 +43,7 @@ namespace ChainflipInsights.Consumers.Mastodon
                     $"📤 {swap.EgressAmountFormatted} #{swap.DestinationAsset} (${swap.EgressValueUsdFormatted})\n" +
                     $"🔺 {swap.DeltaUsdFormatted.FormatDelta()} ({swap.DeltaUsdPercentageFormatted})\n" +
                     $"{(brokerExists ? $"🏦 via {broker}\n" : string.Empty)}" +
+                    $"{(swap.IsBoosted ? $"⚡ Boosted for {swap.BoostFeeUsdFormatted}\n" : string.Empty)}" +
                     $"#chainflip #flip";
 
                 var status = _mastodonClient

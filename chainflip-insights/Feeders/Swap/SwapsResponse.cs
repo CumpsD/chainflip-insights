@@ -84,6 +84,12 @@ namespace ChainflipInsights.Feeders.Swap
         
         [JsonPropertyName("swapChannelByDepositChannelId")] 
         public SwapChannelByDepositChannelId SwapChannel { get; set; }
+        
+        [JsonPropertyName("effectiveBoostFeeBps")] 
+        public double? EffectiveBoostFeeBps { get; set; }
+        
+        [JsonPropertyName("swapFeesBySwapId")] 
+        public SwapFeesBySwapId SwapFees { get; set; }
     }
 
     public class SwapChannelByDepositChannelId
@@ -102,5 +108,32 @@ namespace ChainflipInsights.Feeders.Swap
     {
         [JsonPropertyName("idSs58")] 
         public string Ss58 { get; set; }
+    }
+
+    public class SwapFeesBySwapId
+    {
+        [JsonPropertyName("edges")] 
+        public SwapFeesBySwapIdEdges[] Data { get; set; }
+    }
+
+    public class SwapFeesBySwapIdEdges
+    {
+        [JsonPropertyName("node")] 
+        public SwapFeesBySwapIdNode Data { get; set; }
+    }
+
+    public class SwapFeesBySwapIdNode
+    {
+        [JsonPropertyName("type")] 
+        public string FeeType { get; set; }
+        
+        [JsonPropertyName("amount")] 
+        public string FeeAmount { get; set; }
+        
+        [JsonPropertyName("asset")] 
+        public string FeeAsset { get; set; }
+        
+        [JsonPropertyName("valueUsd")] 
+        public double FeeValueUsd { get; set; }
     }
 }
