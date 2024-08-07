@@ -2,6 +2,13 @@ namespace ChainflipInsights.Feeders.Swap
 {
     using System.Text.Json.Serialization;
 
+    public class SwapsResponseWrapper
+    {
+        public bool ContainsResponse { get; set; }
+        
+        public SwapsResponse? SwapsResponse { get; set; }
+    }
+    
     public class SwapsResponse
     {
         [JsonPropertyName("data")] 

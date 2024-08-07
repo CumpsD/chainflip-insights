@@ -24,7 +24,7 @@ namespace ChainflipInsights.Feeders.Swap
         private const string SwapsQuery = 
             """
             {
-                allSwaps(orderBy: ID_ASC, first: 500, filter: {
+                allSwaps(orderBy: ID_ASC, first: NUMBER_OF_RESULTS, filter: {
                     id: { greaterThan: LAST_ID }
                  }) {
                     edges {
@@ -139,7 +139,7 @@ namespace ChainflipInsights.Feeders.Swap
                 if (cancellationToken.IsCancellationRequested)
                     return;
                 
-                var swapsInfo = await GetSwaps(lastId, cancellationToken);
+                var swapsInfo = await GetSwaps(lastId, 100, cancellationToken);
                 
                 if (cancellationToken.IsCancellationRequested)
                     return;
@@ -153,11 +153,19 @@ namespace ChainflipInsights.Feeders.Swap
                     await Task.Delay(_configuration.SwapQueryDelay.Value.RandomizeTime(), cancellationToken);
                     continue;                    
                 }
+
+                if (!swapsInfo.ContainsResponse)
+                {
+                    lastId++;
+                    await StoreLastSwapId(lastId);
+                    continue;
+                }
                 
                 List<SwapsResponseNode> swaps;
                 try
                 {
                     swaps = swapsInfo
+                        .SwapsResponse!
                         .Data.Data.Data
                         .Select(x => x.Data)
                         .Where(x => x.SwapType != "GAS")
@@ -223,7 +231,7 @@ namespace ChainflipInsights.Feeders.Swap
                     }
                 }
                 
-                await Task.Delay(_configuration.SwapQueryDelay.Value.RandomizeTime(), cancellationToken);
+                await Task.Delay(swaps.Count == 1 ? 1000 : _configuration.SwapQueryDelay.Value.RandomizeTime(), cancellationToken);
             }
         }
         
@@ -233,8 +241,8 @@ namespace ChainflipInsights.Feeders.Swap
                 return double.Parse(await File.ReadAllTextAsync(_configuration.LastSwapIdLocation, cancellationToken));
             
             await using var file = File.CreateText(_configuration.LastSwapIdLocation);
-            await file.WriteAsync("12562");
-            return 12562;
+            await file.WriteAsync("12694");
+            return 12694;
         }
 
         private async Task StoreLastSwapId(double swapId)
@@ -243,15 +251,19 @@ namespace ChainflipInsights.Feeders.Swap
             await file.WriteAsync(swapId.ToString(CultureInfo.InvariantCulture));
         }
         
-        private async Task<SwapsResponse?> GetSwaps(
+        private async Task<SwapsResponseWrapper?> GetSwaps(
             double fromId,
+            int numberOfResults,
             CancellationToken cancellationToken)
         {
             try
             {
                 using var client = _httpClientFactory.CreateClient("Graph");
 
-                var query = SwapsQuery.Replace("LAST_ID", fromId.ToString(CultureInfo.InvariantCulture));
+                var query = SwapsQuery
+                    .Replace("LAST_ID", fromId.ToString(CultureInfo.InvariantCulture))
+                    .Replace("NUMBER_OF_RESULTS", numberOfResults.ToString());
+                
                 var graphQuery = $"{{ \"query\": \"{query.ReplaceLineEndings("\\n")}\" }}";
 
                 var response = await client.PostAsync(
@@ -264,12 +276,15 @@ namespace ChainflipInsights.Feeders.Swap
                 if (response.IsSuccessStatusCode)
                 {
                     // var json = await response.Content.ReadAsStringAsync(cancellationToken);
-                    //
                     // return JsonSerializer.Deserialize<SwapsResponse>(json);
 
-                    return await response
-                        .Content
-                        .ReadFromJsonAsync<SwapsResponse>(cancellationToken: cancellationToken);
+                    return new SwapsResponseWrapper
+                    {
+                        ContainsResponse = true,
+                        SwapsResponse = await response
+                            .Content
+                            .ReadFromJsonAsync<SwapsResponse>(cancellationToken: cancellationToken)
+                    };
                 }
 
                 _logger.LogError(
@@ -277,6 +292,47 @@ namespace ChainflipInsights.Feeders.Swap
                     response.StatusCode,
                     await response.Content.ReadAsStringAsync(cancellationToken),
                     graphQuery);
+            }
+            catch (JsonException e)
+            {
+                // The JSON value could not be converted to System.Double. Path: $.data.allSwaps.edges[0].node.swapFeesBySwapId.edges[0].node.valueUsd
+                if (!e.Message.Contains("JSON value could not be converted to") || !e.Message.Contains("valueUsd"))
+                {
+                    _logger.LogError(
+                        e,
+                        "Fetching swaps failed.");
+
+                    return null;
+                }
+
+                if (numberOfResults == 1)
+                {
+                    _logger.LogError(
+                        e,
+                        "Swap {SwapId} contains missing USD values.",
+                        fromId);
+                    
+                    return null;
+                }
+                
+                _logger.LogError(
+                    e,
+                    "There was a swap with missing USD values.");
+
+                // There is a broken swap in the response where the USD values are missing.
+                // Let's just grab them 1 by one till we hit the faulty one
+                var singleSwap = await GetSwaps(fromId, 1, cancellationToken);
+
+                // This is the broken one!
+                if (singleSwap == null)
+                {
+                    return new SwapsResponseWrapper
+                    {
+                        ContainsResponse = false
+                    };
+                }
+
+                return singleSwap;
             }
             catch (Exception e)
             {
