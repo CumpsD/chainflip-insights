@@ -32,6 +32,10 @@ Adding new features to FLIP InfoBot is based on a bounty system. Feature request
 
 An overview of all bounty issues can be seen on the [Chainflip Infobot Features](https://github.com/users/CumpsD/projects/1) board.
 
+## Funding Contributors
+
+* [@chainflip-io](https://github.com/chainflip-io) - https://github.com/CumpsD/chainflip-insights/issues/78
+
 <!-- a normal html comment 
 ## Screenshots
 
