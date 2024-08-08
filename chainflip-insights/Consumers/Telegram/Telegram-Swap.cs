@@ -50,7 +50,7 @@ namespace ChainflipInsights.Consumers.Telegram
                     $"**{swap.EgressAmountFormatted} {swap.DestinationAsset}** (*${swap.EgressValueUsdFormatted}*) " +
                     $"Δ **{swap.DeltaUsdFormatted.FormatDelta()}** (*{swap.DeltaUsdPercentageFormatted}*) " +
                     $"{(brokerExists ? $"@ **{broker}** " : string.Empty)}" +
-                    $"{(swap.IsBoosted ? $"⚡ **Boosted** for **{swap.BoostFeeUsdFormatted}** " : string.Empty)}" +
+                    $"{(swap.IsBoosted ? $"⚡ **Boosted** for **${swap.BoostFeeUsdFormatted}** " : string.Empty)}" +
                     $"// **[view swap on explorer]({_configuration.ExplorerSwapsUrl}{swap.Id})**";
 
                 foreach (var channelId in _configuration.TelegramSwapInfoChannelId)
