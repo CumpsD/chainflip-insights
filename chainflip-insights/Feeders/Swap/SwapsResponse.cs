@@ -103,8 +103,26 @@ namespace ChainflipInsights.Feeders.Swap
     {
         [JsonPropertyName("brokerByBrokerId")] 
         public BrokerByBrokerId Broker { get; set; }
+        
+        [JsonPropertyName("swapChannelBeneficiariesByDepositChannelId")]
+        public BeneficiariesByDepositChannelId Beneficiaries { get; set; }
     }
 
+    public class BeneficiariesByDepositChannelId
+    {
+        [JsonPropertyName("nodes")] 
+        public BeneficiariesNode[] Data { get; set; }
+    }
+
+    public class BeneficiariesNode
+    {
+        [JsonPropertyName("type")] 
+        public string Type { get; set; }
+        
+        [JsonPropertyName("brokerByBrokerId")] 
+        public BrokerByBrokerId Broker { get; set; }
+    }
+    
     public class BrokerByBrokerId
     {
         [JsonPropertyName("accountByAccountId")] 

@@ -47,12 +47,7 @@ namespace ChainflipInsights.Feeders.Swap
         
         public double DeltaUsd => DepositValueUsd - EgressValueUsd;
 
-        public string DeltaUsdFormatted => DeltaUsd.ToString(Constants.DollarString);
-
         public double DeltaUsdPercentage => 100 / DepositValueUsd * DeltaUsd;
-        
-        public string DeltaUsdPercentageFormatted 
-            => $"{Math.Round(DeltaUsdPercentage, 2).ToString(Constants.DollarString)}%";
         
         public DateTimeOffset SwapScheduledBlockTimestamp { get; }
         
@@ -128,12 +123,32 @@ namespace ChainflipInsights.Feeders.Swap
             BoostFeeBps = swap.EffectiveBoostFeeBps;
             BoostFeeUsd = swap.SwapFees.Data.FirstOrDefault(x => x.Data.FeeType == "BOOST")?.Data.FeeValueUsd;
             BrokerFeeUsd = swap.SwapFees.Data.FirstOrDefault(x => x.Data.FeeType == "BROKER")?.Data.FeeValueUsd;
-            
-            Broker = swap
+
+            Broker = GetBroker(swap);
+        }
+
+        private static string? GetBroker(SwapsResponseNode swap)
+        {
+            var mainBroker = swap
                 .SwapChannel?
                 .Broker
                 .Account
                 .Ss58;
+            
+            var beneficiaries = swap
+                .SwapChannel?
+                .Beneficiaries
+                .Data;
+
+            if (beneficiaries == null)
+                return mainBroker;
+
+            var affiliate = beneficiaries
+                .FirstOrDefault(x => x.Type == "AFFILIATE");
+
+            return affiliate == null 
+                ? mainBroker 
+                : affiliate.Broker.Account.Ss58;
         }
     }
 }

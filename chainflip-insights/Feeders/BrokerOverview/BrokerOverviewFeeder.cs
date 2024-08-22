@@ -19,6 +19,8 @@ namespace ChainflipInsights.Feeders.BrokerOverview
 
     public class BrokerOverviewFeeder : IFeeder
     {
+        // TODO: Since Chainflip API does not return Affiliate Brokers, we need to build this from the swaps database
+        
         private const string BrokerOverviewQuery = 
             """
             {
