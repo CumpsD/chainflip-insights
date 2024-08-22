@@ -34,6 +34,8 @@ namespace ChainflipInsights.EntityFramework
         public double? BoostFeeBps { get; set; }
         
         public double? BoostFeeUsd { get; set; }
+        
+        public double? BrokerFeeUsd { get; set; }
     }
     #pragma warning restore CS8618
 
@@ -61,9 +63,13 @@ namespace ChainflipInsights.EntityFramework
             builder.Property(x => x.DeltaUsd).IsRequired();
             builder.Property(x => x.DeltaUsdPercentage).IsRequired();
             
-            builder.Property(x => x.Broker).HasMaxLength(400);
+            builder.Property(x => x.Broker).HasMaxLength(400).IsRequired(false);
 
             builder.Property(x => x.ExplorerUrl).IsRequired();
+            
+            builder.Property(x => x.BoostFeeBps).IsRequired(false);
+            builder.Property(x => x.BoostFeeUsd).IsRequired(false);
+            builder.Property(x => x.BrokerFeeUsd).IsRequired(false);
         }
     }
 }

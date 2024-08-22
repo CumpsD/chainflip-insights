@@ -41,15 +41,26 @@ namespace ChainflipInsights.Consumers.Discord
                     brokerExists ? $" @ {broker}" : string.Empty,
                     $"{_configuration.ExplorerSwapsUrl}{swap.Id}");
 
-                var text =
-                    $"{swap.Emoji} Swapped " +
-                    $"**{swap.DepositAmountFormatted} {swap.SourceAsset}** (*${swap.DepositValueUsdFormatted}*) → " +
-                    $"**{swap.EgressAmountFormatted} {swap.DestinationAsset}** (*${swap.EgressValueUsdFormatted}*) " +
-                    $"Δ **{swap.DeltaUsdFormatted.FormatDelta()}** (*{swap.DeltaUsdPercentageFormatted}*) " +
-                    $"{(brokerExists ? $"@ **{broker}** " : string.Empty)}" +
-                    $"{(swap.IsBoosted ? $"⚡ **Boosted** for **${swap.BoostFeeUsdFormatted}** " : string.Empty)}" +
-                    $"// **[view swap on explorer]({_configuration.ExplorerSwapsUrl}{swap.Id})**";
+                // var text =
+                //     $"{swap.Emoji} Swapped " +
+                //     $"**{swap.DepositAmountFormatted} {swap.SourceAsset}** (*${swap.DepositValueUsdFormatted}*) → " +
+                //     $"**{swap.EgressAmountFormatted} {swap.DestinationAsset}** (*${swap.EgressValueUsdFormatted}*) " +
+                //     $"Δ **{swap.DeltaUsdFormatted.FormatDelta()}** (*{swap.DeltaUsdPercentageFormatted}*) " +
+                //     $"{(brokerExists ? $"@ **{broker}** " : string.Empty)}" +
+                //     $"{(swap.IsBoosted ? $"⚡ **Boosted** for **${swap.BoostFeeUsdFormatted}** " : string.Empty)}" +
+                //     $"// **[view swap on explorer]({_configuration.ExplorerSwapsUrl}{swap.Id})**";
 
+                var text =
+                    $"{swap.Emoji} Swapped **{_configuration.ExplorerSwapsUrl}{swap.Id}**\n" +
+                    $"📥 **{swap.DepositAmountFormatted} {swap.SourceAsset}** (*${swap.DepositValueUsdFormatted}*)\n" +
+                    $"📤 **{swap.EgressAmountFormatted} {swap.DestinationAsset}** (*${swap.EgressValueUsdFormatted}*)\n" +
+                    $"🔺 Slippage & Protocol: **{swap.ProtocolDeltaUsdFormatted.FormatDelta()}** (*{swap.ProtocolDeltaUsdPercentageFormatted}*)\n" +
+                    $"{(swap.BrokerFeeUsdFormatted != null ? $"🔺 Broker: **{swap.BrokerFeeUsdFormatted.FormatDelta()}** (*{swap.BrokerFeePercentageFormatted}*)\n" : string.Empty)}" +
+                    $"{(brokerExists ? $"🏦 via **{broker}**\n" : string.Empty)}" +
+                    $"{(swap.IsBoosted ? $"⚡ **Boosted** for **${swap.BoostFeeUsdFormatted}**\n" : string.Empty)}";
+
+                text = text.TrimEnd('\n');
+                
                 var infoChannel = (ITextChannel)_discordClient
                     .GetChannel(_configuration.DiscordSwapInfoChannelId.Value);
 

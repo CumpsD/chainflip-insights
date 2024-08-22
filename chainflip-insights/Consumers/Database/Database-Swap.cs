@@ -58,12 +58,13 @@ namespace ChainflipInsights.Consumers.Database
                             EgressAmount = swap.EgressAmount,
                             EgressValueUsd = swap.EgressValueUsd,
                             DestinationAsset = swap.DestinationAsset,
-                            DeltaUsd = swap.DeltaUsd,
-                            DeltaUsdPercentage = swap.DeltaUsdPercentage,
+                            DeltaUsd = -swap.DeltaUsd,
+                            DeltaUsdPercentage = -swap.DeltaUsdPercentage,
                             Broker = swap.Broker,
                             ExplorerUrl = $"{_configuration.ExplorerSwapsUrl}{swap.Id}",
                             BoostFeeBps = swap.BoostFeeBps,
-                            BoostFeeUsd = swap.BoostFeeUsd
+                            BoostFeeUsd = swap.BoostFeeUsd,
+                            BrokerFeeUsd = swap.BrokerFeeUsd
                         });
 
                     dbContext.SaveChanges();

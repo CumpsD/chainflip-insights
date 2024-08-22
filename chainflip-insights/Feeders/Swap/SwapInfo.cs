@@ -45,7 +45,7 @@ namespace ChainflipInsights.Feeders.Swap
         
         public AssetInfo DestinationAssetInfo { get; }
         
-        public double DeltaUsd => EgressValueUsd - DepositValueUsd;
+        public double DeltaUsd => DepositValueUsd - EgressValueUsd;
 
         public string DeltaUsdFormatted => DeltaUsd.ToString(Constants.DollarString);
 
@@ -66,6 +66,26 @@ namespace ChainflipInsights.Feeders.Swap
 
         public string? BoostFeeUsdFormatted => BoostFeeUsd?.ToString(Constants.DollarString);
 
+        public double? BrokerFeeUsd { get; set; }
+
+        public string? BrokerFeeUsdFormatted => BrokerFeeUsd?.ToString(Constants.DollarString);
+
+        public double? BrokerFeePercentage => 100 / DepositValueUsd * BrokerFeeUsd;
+        
+        public string? BrokerFeePercentageFormatted 
+            => BrokerFeePercentage == null
+                ? null
+                : $"{Math.Round(BrokerFeePercentage.Value, 2).ToString(Constants.DollarString)}%";
+
+        public double ProtocolDeltaUsd => DepositValueUsd - EgressValueUsd - (BrokerFeeUsd ?? 0);
+
+        public string ProtocolDeltaUsdFormatted => ProtocolDeltaUsd.ToString(Constants.DollarString);
+
+        public double ProtocolDeltaUsdPercentage => 100 / DepositValueUsd * ProtocolDeltaUsd;
+        
+        public string ProtocolDeltaUsdPercentageFormatted 
+            => $"{Math.Round(ProtocolDeltaUsdPercentage, 2).ToString(Constants.DollarString)}%";
+        
         public string Emoji =>
             DepositValueUsd switch
             {
@@ -107,6 +127,7 @@ namespace ChainflipInsights.Feeders.Swap
             IsBoosted = swap.EffectiveBoostFeeBps != null;
             BoostFeeBps = swap.EffectiveBoostFeeBps;
             BoostFeeUsd = swap.SwapFees.Data.FirstOrDefault(x => x.Data.FeeType == "BOOST")?.Data.FeeValueUsd;
+            BrokerFeeUsd = swap.SwapFees.Data.FirstOrDefault(x => x.Data.FeeType == "BROKER")?.Data.FeeValueUsd;
             
             Broker = swap
                 .SwapChannel?

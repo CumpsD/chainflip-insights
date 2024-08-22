@@ -3,7 +3,7 @@
     <PropertyGroup>
         <LangVersion>latest</LangVersion>
         <TargetFramework>net8.0</TargetFramework>
-        <RuntimeFrameworkVersion>8.0.7</RuntimeFrameworkVersion>
+        <RuntimeFrameworkVersion>8.0.8</RuntimeFrameworkVersion>
         <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
 
         <AssemblyName>$(MSBuildProjectName)</AssemblyName>
