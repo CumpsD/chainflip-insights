@@ -34,7 +34,7 @@ An overview of all bounty issues can be seen on the [Chainflip Infobot Features]
 
 ## Funding Contributors
 
-* [@chainflip-io](https://github.com/chainflip-io) - https://github.com/CumpsD/chainflip-insights/issues/78
+* [@chainflip-io](https://github.com/chainflip-io) - https://github.com/CumpsD/chainflip-insights/issues/23, https://github.com/CumpsD/chainflip-insights/issues/67, https://github.com/CumpsD/chainflip-insights/issues/78, https://github.com/CumpsD/chainflip-insights/issues/79, https://github.com/CumpsD/chainflip-insights/issues/84
 
 <!-- a normal html comment 
 ## Screenshots
