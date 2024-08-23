@@ -81,6 +81,14 @@ namespace ChainflipInsights.Feeders.Swap
         public string ProtocolDeltaUsdPercentageFormatted 
             => $"{Math.Round(-ProtocolDeltaUsdPercentage, 2).ToString(Constants.DollarString)}%";
         
+        public double? AllFeesUsd { get; set; }
+        
+        public double? AllUserFeesUsd { get; set; }
+        
+        public double? LiquidityFeesUsd { get; set; }
+        
+        public double? BurnUsd { get; set; }
+        
         public string Emoji =>
             DepositValueUsd switch
             {
@@ -119,11 +127,27 @@ namespace ChainflipInsights.Feeders.Swap
             SourceAsset = SourceAssetInfo.Ticker;
             DestinationAsset = DestinationAssetInfo.Ticker;
 
+            var fees = swap
+                .SwapFees
+                .Data;
+            
             IsBoosted = swap.EffectiveBoostFeeBps != null;
             BoostFeeBps = swap.EffectiveBoostFeeBps;
-            BoostFeeUsd = swap.SwapFees.Data.FirstOrDefault(x => x.Data.FeeType == "BOOST")?.Data.FeeValueUsd;
-            BrokerFeeUsd = swap.SwapFees.Data.FirstOrDefault(x => x.Data.FeeType == "BROKER")?.Data.FeeValueUsd;
+            BoostFeeUsd = fees.FirstOrDefault(x => x.Data.FeeType == "BOOST")?.Data.FeeValueUsd;
+            BrokerFeeUsd = fees.FirstOrDefault(x => x.Data.FeeType == "BROKER")?.Data.FeeValueUsd;
 
+            BurnUsd = fees.FirstOrDefault(x => x.Data.FeeType == "NETWORK")?.Data.FeeValueUsd;
+
+            AllFeesUsd = fees.Sum(x => x.Data.FeeValueUsd ?? 0);
+            AllUserFeesUsd = fees
+                .Where(x => 
+                    x.Data.FeeType != "INGRESS" &&
+                    x.Data.FeeType != "EGRESS")
+                .Sum(x => x.Data.FeeValueUsd ?? 0);
+
+            var lpFees = swap.SwapOutputValueUsd - swap.SwapInputValueUsd;
+            LiquidityFeesUsd = lpFees < 0 ? 0 : lpFees;
+            
             Broker = GetBroker(swap);
         }
 

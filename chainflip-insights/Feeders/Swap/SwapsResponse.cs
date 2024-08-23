@@ -89,6 +89,18 @@ namespace ChainflipInsights.Feeders.Swap
         [JsonPropertyName("intermediateValueUsd")] 
         public double? IntermediateValueUsd { get; set; }
         
+        [JsonPropertyName("swapInputAmount")] 
+        public double? SwapInputAmount { get; set; }
+
+        [JsonPropertyName("swapInputValueUsd")] 
+        public double? SwapInputValueUsd { get; set; }
+        
+        [JsonPropertyName("swapOutputAmount")] 
+        public double? SwapOutputAmount { get; set; }
+
+        [JsonPropertyName("swapOutputValueUsd")] 
+        public double? SwapOutputValueUsd { get; set; }
+        
         [JsonPropertyName("swapChannelByDepositChannelId")] 
         public SwapChannelByDepositChannelId SwapChannel { get; set; }
         

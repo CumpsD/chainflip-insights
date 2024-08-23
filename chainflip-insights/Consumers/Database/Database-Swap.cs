@@ -64,7 +64,11 @@ namespace ChainflipInsights.Consumers.Database
                             ExplorerUrl = $"{_configuration.ExplorerSwapsUrl}{swap.Id}",
                             BoostFeeBps = swap.BoostFeeBps,
                             BoostFeeUsd = swap.BoostFeeUsd,
-                            BrokerFeeUsd = swap.BrokerFeeUsd
+                            BrokerFeeUsd = swap.BrokerFeeUsd,
+                            AllFeesUsd = swap.AllFeesUsd,
+                            AllUserFeesUsd = swap.AllUserFeesUsd,
+                            LiquidityFeesUsd = swap.LiquidityFeesUsd,
+                            BurnUsd = swap.BurnUsd
                         });
 
                     dbContext.SaveChanges();

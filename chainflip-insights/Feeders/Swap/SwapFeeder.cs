@@ -48,6 +48,11 @@ namespace ChainflipInsights.Feeders.Swap
                             intermediateAmount
                             intermediateValueUsd
                             
+                            swapInputAmount
+                            swapInputValueUsd
+                            swapOutputAmount
+                            swapOutputValueUsd
+                            
                             swapChannelByDepositChannelId {
                                 swapChannelBeneficiariesByDepositChannelId {
                                     nodes {
