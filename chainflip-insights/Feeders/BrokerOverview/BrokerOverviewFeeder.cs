@@ -20,6 +20,14 @@ namespace ChainflipInsights.Feeders.BrokerOverview
     public class BrokerOverviewFeeder : IFeeder
     {
         // TODO: Since Chainflip API does not return Affiliate Brokers, we need to build this from the swaps database
+        /*
+           SELECT SUM(DepositValueUsd) AS Volume, SUM(BrokerFeeUsd) AS Fees, Broker 
+           FROM Insights.swap_info
+           WHERE SwapDate > 'TIME_FROM'
+           AND SwapDate < 'TIME_TO'
+           GROUP BY Broker
+           ORDER BY SUM(DepositValueUsd) DESC
+         */
         
         private const string BrokerOverviewQuery = 
             """

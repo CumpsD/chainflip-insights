@@ -27,8 +27,6 @@ namespace ChainflipInsights.Feeders.BrokerOverview
     {
         public string Ss58 { get; }
         
-        public double Swaps { get; }
-
         public double Fees { get; }
         
         public string FeesFormatted => Fees.ToReadableMetric();
@@ -42,7 +40,6 @@ namespace ChainflipInsights.Feeders.BrokerOverview
             BrokerOverviewInfoBroker broker)
         {
             Ss58 = broker.Ss58;
-            Swaps = broker.Swaps ?? 0;
             Fees = broker.Fees ?? 0;
             Volume = broker.Volume ?? 0;
         }
