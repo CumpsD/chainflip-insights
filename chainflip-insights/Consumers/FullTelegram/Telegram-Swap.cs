@@ -54,7 +54,7 @@ namespace ChainflipInsights.Consumers.FullTelegram
                 //     $"// **[view swap on explorer]({_configuration.ExplorerSwapsUrl}{swap.Id})**";
 
                 var text =
-                    $"{swap.Emoji} Swapped **{_configuration.ExplorerSwapsUrl}{swap.Id}**\n" +
+                    $"{swap.Emoji} Swap **[#{swap.Id}]({_configuration.ExplorerSwapsUrl}{swap.Id})**\n" +
                     $"📥 **{swap.DepositAmountFormatted} {swap.SourceAsset}** (*${swap.DepositValueUsdFormatted}*)\n" +
                     $"📤 **{swap.EgressAmountFormatted} {swap.DestinationAsset}** (*${swap.EgressValueUsdFormatted}*)\n" +
                     $"{(swap.ProtocolDeltaUsdPercentage < 0 ? "🟢" : "🔴")} Delta{(swap.BrokerFeeUsdFormatted != null ? " (ex. Broker)" : string.Empty)}: **{swap.ProtocolDeltaUsdFormatted.FormatDelta()}** (*{swap.ProtocolDeltaUsdPercentageFormatted}*)\n" +
