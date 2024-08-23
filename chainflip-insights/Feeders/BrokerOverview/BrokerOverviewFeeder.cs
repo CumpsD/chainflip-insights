@@ -1,62 +1,37 @@
 namespace ChainflipInsights.Feeders.BrokerOverview
 {
     using System;
+    using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
     using System.Linq;
-    using System.Net.Http;
-    using System.Net.Http.Headers;
-    using System.Net.Http.Json;
-    using System.Net.Mime;
     using System.Threading;
     using System.Threading.Tasks;
     using System.Threading.Tasks.Dataflow;
     using ChainflipInsights.Configuration;
+    using ChainflipInsights.EntityFramework;
     using ChainflipInsights.Infrastructure;
     using ChainflipInsights.Infrastructure.Pipelines;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
 
     public class BrokerOverviewFeeder : IFeeder
     {
-        // TODO: Since Chainflip API does not return Affiliate Brokers, we need to build this from the swaps database
-        /*
-           SELECT SUM(DepositValueUsd) AS Volume, SUM(BrokerFeeUsd) AS Fees, Broker 
-           FROM Insights.swap_info
-           WHERE SwapDate > 'TIME_FROM'
-           AND SwapDate < 'TIME_TO'
-           GROUP BY Broker
-           ORDER BY SUM(DepositValueUsd) DESC
-         */
-        
-        private const string BrokerOverviewQuery = 
-            """
-            {
-                brokersAggregate(
-                    startDate: \"TIME_FROM\", 
-                    endDate: \"TIME_TO\") {
-                    idSs58
-                    swapCount
-                    swapFeeUsd
-                    volume
-                }
-            }
-            """;
-
         private readonly ILogger<BrokerOverviewFeeder> _logger;
+        private readonly IDbContextFactory<BotContext> _dbContextFactory;
         private readonly Pipeline<BrokerOverviewInfo> _pipeline;
         private readonly BotConfiguration _configuration;
-        private readonly IHttpClientFactory _httpClientFactory;
 
         public BrokerOverviewFeeder(
             ILogger<BrokerOverviewFeeder> logger,
             IOptions<BotConfiguration> options,
-            IHttpClientFactory httpClientFactory,
+            IDbContextFactory<BotContext> dbContextFactory,
             Pipeline<BrokerOverviewInfo> pipeline)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _dbContextFactory = dbContextFactory ?? throw new ArgumentNullException(nameof(dbContextFactory));
             _configuration = options.Value ?? throw new ArgumentNullException(nameof(options));
-            _httpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
         }
         
@@ -74,7 +49,7 @@ namespace ChainflipInsights.Feeders.BrokerOverview
                 }
                 
                 // Add some randomization before starting to not spam the world
-                await Task.Delay(Random.Shared.Next(0, 30000), _pipeline.CancellationToken);
+                await Task.Delay(Random.Shared.Next(0, _configuration.StartupDelay.Value), _pipeline.CancellationToken);
 
                 _logger.LogInformation(
                     "Starting {TaskName}",
@@ -139,7 +114,7 @@ namespace ChainflipInsights.Feeders.BrokerOverview
                 
                 var brokerOverview = new BrokerOverviewInfo(
                     yesterday, 
-                    brokerOverviewInfo.Data.Data.Select(x => new BrokerInfo(x)));
+                    brokerOverviewInfo.Select(x => new BrokerInfo(x)));
                 
                 _logger.LogInformation(
                     "Broadcasting {TotalBrokers} brokers",
@@ -172,39 +147,33 @@ namespace ChainflipInsights.Feeders.BrokerOverview
             await file.WriteAsync(lastBrokerOverview.ToString(CultureInfo.InvariantCulture));
         }
         
-        private async Task<BrokerOverviewResponse?> GetBrokerOverview(
+        private async Task<List<IGrouping<string, SwapInfo>>?> GetBrokerOverview(
             DateTimeOffset timeFrom,
             DateTimeOffset timeTo,
             CancellationToken cancellationToken)
         {
+            // Since Chainflip API does not return Affiliate Brokers, we need to build this from the swaps database
+            /*
+               SELECT SUM(DepositValueUsd) AS Volume, SUM(BrokerFeeUsd) AS Fees, Broker
+               FROM Insights.swap_info
+               WHERE SwapDate >= 'TIME_FROM'
+               AND SwapDate < 'TIME_TO'
+               GROUP BY Broker
+               ORDER BY SUM(DepositValueUsd) DESC
+             */
+            
             try
             {
-                using var client = _httpClientFactory.CreateClient("Graph");
-
-                var query = BrokerOverviewQuery
-                    .Replace("TIME_FROM", timeFrom.ToString("yyyy-MM-ddT00:00:00.000Z"))
-                    .Replace("TIME_TO", timeTo.ToString("yyyy-MM-ddT00:00:00.000Z"));
-                var graphQuery = $"{{ \"query\": \"{query.ReplaceLineEndings("\\n")}\" }}";
-
-                var response = await client.PostAsync(
-                    string.Empty,
-                    new StringContent(
-                        graphQuery,
-                        new MediaTypeHeaderValue(MediaTypeNames.Application.Json)),
-                    cancellationToken);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    return await response
-                        .Content
-                        .ReadFromJsonAsync<BrokerOverviewResponse>(cancellationToken: cancellationToken);
-                }
-
-                _logger.LogError(
-                    "GetBrokerOverview returned {StatusCode}: {Error}\nRequest: {Request}",
-                    response.StatusCode,
-                    await response.Content.ReadAsStringAsync(cancellationToken),
-                    graphQuery);
+                await using var dbContext = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
+                
+                return await dbContext
+                    .SwapInfo
+                    .Where(x =>
+                        x.Broker != null &&
+                        x.SwapDate >= DateTimeOffset.Parse(timeFrom.ToString("yyyy-MM-ddT00:00:00.000Z")) &&
+                        x.SwapDate < DateTimeOffset.Parse(timeTo.ToString("yyyy-MM-ddT00:00:00.000Z")))
+                    .GroupBy(x => x.Broker ?? string.Empty)
+                    .ToListAsync(cancellationToken);
             }
             catch (Exception e)
             {

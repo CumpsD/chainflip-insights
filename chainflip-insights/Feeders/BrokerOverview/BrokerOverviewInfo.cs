@@ -3,6 +3,7 @@ namespace ChainflipInsights.Feeders.BrokerOverview
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using ChainflipInsights.EntityFramework;
     using ChainflipInsights.Infrastructure;
 
     public class BrokerOverviewInfo
@@ -37,11 +38,11 @@ namespace ChainflipInsights.Feeders.BrokerOverview
 
         
         public BrokerInfo(
-            BrokerOverviewInfoBroker broker)
+            IGrouping<string, SwapInfo> broker)
         {
-            Ss58 = broker.Ss58;
-            Fees = broker.Fees ?? 0;
-            Volume = broker.Volume ?? 0;
+            Ss58 = broker.Key;
+            Fees = broker.Sum(x => x.BrokerFeeUsd ?? 0);
+            Volume = broker.Sum(x => x.DepositValueUsd);
         }
     }
 }
