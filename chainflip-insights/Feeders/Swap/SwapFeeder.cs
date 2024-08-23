@@ -120,7 +120,7 @@ namespace ChainflipInsights.Feeders.Swap
                     nameof(SwapFeeder));
 
                 // Add some randomization before starting to not spam the world
-                await Task.Delay(Random.Shared.Next(0, 30000), _pipeline.CancellationToken);
+                await Task.Delay(Random.Shared.Next(0, _configuration.StartupDelay.Value), _pipeline.CancellationToken);
                 
                 // Give the consumers some time to connect
                 await Task.Delay(_configuration.FeedingDelay.Value, _pipeline.CancellationToken);

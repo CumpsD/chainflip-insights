@@ -330,6 +330,14 @@ namespace ChainflipInsights.Configuration
             get; init;
         }
 
+        // StartupDelay
+        [Required]
+        [NotNull]
+        public int? StartupDelay
+        {
+            get; init;
+        }
+        
         [Required]
         [NotNull]
         public int? FeedingDelay
