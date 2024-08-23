@@ -78,10 +78,10 @@ namespace ChainflipInsights.Consumers.Database
                         brokerExists ? $" @ {broker}" : string.Empty,
                         $"{_configuration.ExplorerSwapsUrl}{swap.Id}");
                     
-                    // GenerateSwapCsv(dbContext);
+                    GenerateSwapCsv(dbContext);
                 }
                 
-                // UploadSwapCsv(File.ReadAllText(_configuration.SwapCsvLocation));
+                UploadSwapCsv(File.ReadAllText(_configuration.SwapCsvLocation));
             }
             catch (Exception e)
             {
