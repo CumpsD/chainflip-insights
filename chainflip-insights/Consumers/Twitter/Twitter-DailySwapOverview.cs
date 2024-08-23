@@ -51,8 +51,8 @@ namespace ChainflipInsights.Consumers.Twitter
                     
                     text.AppendLine(
                         $"{emojis[i]} " +
-                        $"{swap.DepositAmountFormatted} ${swap.SourceAsset} (${swap.DepositValueUsdFormatted}) → " +
-                        $"{swap.EgressAmountFormatted} ${swap.DestinationAsset} (${swap.EgressValueUsdFormatted}) " +
+                        $"{swap.DepositAmountFormatted} ${swap.SourceAsset} → " +
+                        $"{swap.EgressAmountFormatted} ${swap.DestinationAsset} " +
                         $"{(brokerExists ? $"@ {name}" : string.Empty)}");
                 }
                 

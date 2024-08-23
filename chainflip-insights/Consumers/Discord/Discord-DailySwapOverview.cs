@@ -47,8 +47,8 @@ namespace ChainflipInsights.Consumers.Discord
 
                     text.AppendLine(
                         $"{emojis[i]} " +
-                        $"**{swap.DepositAmountFormatted} {swap.SourceAsset}** (*${swap.DepositValueUsdFormatted}*) → " +
-                        $"**{swap.EgressAmountFormatted} {swap.DestinationAsset}** (*${swap.EgressValueUsdFormatted}*) " +
+                        $"**{swap.DepositAmountFormatted} {swap.SourceAsset}** → " +
+                        $"**{swap.EgressAmountFormatted} {swap.DestinationAsset}** " +
                         $"{(brokerExists ? $"@ **{broker}** " : string.Empty)}" +
                         $"// **[#{swap.Id}]({_configuration.ExplorerSwapsUrl}{swap.Id})**");
                 }
