@@ -27,7 +27,7 @@ namespace ChainflipInsights.Consumers.Mastodon
                     dailySwapOverviewInfo.Date.ToString("yyyy-MM-dd"));
 
                 var text = new StringBuilder();
-                text.AppendLine($"💲 Top Swaps for {dailySwapOverviewInfo.Date:yyyy-MM-dd} are in!");
+                text.AppendLine($"💵 Top Swaps for {dailySwapOverviewInfo.Date:yyyy-MM-dd} are in!");
 
                 var emojis = new[]
                 {

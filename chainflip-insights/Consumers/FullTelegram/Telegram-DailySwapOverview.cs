@@ -32,7 +32,7 @@ namespace ChainflipInsights.Consumers.FullTelegram
                     dailySwapOverviewInfo.Date.ToString("yyyy-MM-dd"));
 
                 var text = new StringBuilder();
-                text.AppendLine($"💲 Top Swaps for **{dailySwapOverviewInfo.Date:yyyy-MM-dd}** are in!");
+                text.AppendLine($"💵 Top Swaps for **{dailySwapOverviewInfo.Date:yyyy-MM-dd}** are in!");
 
                 var emojis = new[]
                 {
@@ -46,13 +46,11 @@ namespace ChainflipInsights.Consumers.FullTelegram
                 for (var i = 0; i < dailySwapOverviewInfo.Swaps.Count; i++)
                 {
                     var swap = dailySwapOverviewInfo.Swaps[i];
-                    var brokerExists = _brokers.TryGetValue(swap.Broker ?? string.Empty, out var broker);
 
                     text.AppendLine(
                         $"{emojis[i]} " +
-                        $"**{swap.DepositAmountFormatted} {swap.SourceAsset}** (*${swap.DepositValueUsdFormatted}*) → " +
-                        $"**{swap.EgressAmountFormatted} {swap.DestinationAsset}** (*${swap.EgressValueUsdFormatted}*) " +
-                        $"{(brokerExists ? $"@ **{broker}** " : string.Empty)}" +
+                        $"**{swap.DepositAmountFormatted} {swap.SourceAsset}** → " +
+                        $"**{swap.EgressAmountFormatted} {swap.DestinationAsset}** " +
                         $"// **[#{swap.Id}]({_configuration.ExplorerSwapsUrl}{swap.Id})**");
                 }
 
