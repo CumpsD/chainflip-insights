@@ -58,8 +58,8 @@ namespace ChainflipInsights.Consumers.Database
                             EgressAmount = swap.EgressAmount,
                             EgressValueUsd = swap.EgressValueUsd,
                             DestinationAsset = swap.DestinationAsset,
-                            DeltaUsd = -swap.DeltaUsd,
-                            DeltaUsdPercentage = -swap.DeltaUsdPercentage,
+                            DeltaUsd = swap.DepositValueUsd == 0 ? 0 : -swap.DeltaUsd,
+                            DeltaUsdPercentage = swap.DepositValueUsd == 0 ? 0 : -swap.DeltaUsdPercentage,
                             Broker = swap.Broker,
                             ExplorerUrl = $"{_configuration.ExplorerSwapsUrl}{swap.Id}",
                             BoostFeeBps = swap.BoostFeeBps,
@@ -78,10 +78,10 @@ namespace ChainflipInsights.Consumers.Database
                         brokerExists ? $" @ {broker}" : string.Empty,
                         $"{_configuration.ExplorerSwapsUrl}{swap.Id}");
                     
-                    GenerateSwapCsv(dbContext);
+                    // GenerateSwapCsv(dbContext);
                 }
                 
-                UploadSwapCsv(File.ReadAllText(_configuration.SwapCsvLocation));
+                // UploadSwapCsv(File.ReadAllText(_configuration.SwapCsvLocation));
             }
             catch (Exception e)
             {
