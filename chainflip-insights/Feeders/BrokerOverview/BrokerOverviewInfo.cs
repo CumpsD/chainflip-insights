@@ -35,7 +35,6 @@ namespace ChainflipInsights.Feeders.BrokerOverview
         public double Volume { get; }
         
         public string VolumeFormatted => Volume.ToReadableMetric();
-
         
         public BrokerInfo(
             IGrouping<string, SwapInfo> broker)

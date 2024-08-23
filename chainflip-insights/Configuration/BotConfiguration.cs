@@ -101,6 +101,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public bool? EnableDailySwapOverview
+        {
+            get; init;
+        } 
+        
+        [Required]
+        [NotNull]
         public bool? EnableDiscord
         {
             get; init;
@@ -445,6 +452,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public int? DailySwapOverviewQueryDelay
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
         public string? BurnCsvLocation
         {
             get; init;
@@ -593,6 +607,13 @@ namespace ChainflipInsights.Configuration
         [Required]
         [NotNull]
         public string? LastBurnLocation
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public string? LastDailySwapOverviewLocation
         {
             get; init;
         }

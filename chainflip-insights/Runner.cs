@@ -18,6 +18,7 @@ namespace ChainflipInsights
     using ChainflipInsights.Feeders.Burn;
     using ChainflipInsights.Feeders.CexMovement;
     using ChainflipInsights.Feeders.CfeVersion;
+    using ChainflipInsights.Feeders.DailySwapOverview;
     using ChainflipInsights.Feeders.Epoch;
     using ChainflipInsights.Feeders.Funding;
     using ChainflipInsights.Feeders.Redemption;
@@ -64,6 +65,7 @@ namespace ChainflipInsights
             Pipeline<StakedFlipInfo> stakedFlipPipeline,
             Pipeline<BrokerOverviewInfo> brokerOverviewPipeline,
             Pipeline<BigStakedFlipInfo> bigStakedFlipPipeline,
+            Pipeline<DailySwapOverviewInfo> dailySwapOverviewPipeline,
             DiscordConsumer discordConsumer,
             TelegramConsumer telegramConsumer,
             FullTelegramConsumer fullTelegramConsumer,
@@ -95,7 +97,8 @@ namespace ChainflipInsights
                 pastVolumePipeline,
                 stakedFlipPipeline,
                 brokerOverviewPipeline,
-                bigStakedFlipPipeline);
+                bigStakedFlipPipeline,
+                dailySwapOverviewPipeline);
         }
 
         private void SetupPipelines(
@@ -112,7 +115,8 @@ namespace ChainflipInsights
             Pipeline<PastVolumeInfo> pastVolumePipeline,
             Pipeline<StakedFlipInfo> stakedFlipPipeline,
             Pipeline<BrokerOverviewInfo> brokerOverviewPipeline,
-            Pipeline<BigStakedFlipInfo> bigStakedFlipPipeline)
+            Pipeline<BigStakedFlipInfo> bigStakedFlipPipeline,
+            Pipeline<DailySwapOverviewInfo> dailySwapOverviewPipeline)
         {
             var linkOptions = new DataflowLinkOptions
             {
@@ -226,6 +230,13 @@ namespace ChainflipInsights
             SetupFeederPipeline(
                 "Burn",
                 burnPipeline,
+                linkOptions,
+                broadcast,
+                x => new BroadcastInfo(x));
+            
+            SetupFeederPipeline(
+                "Daily Swap Overview",
+                dailySwapOverviewPipeline,
                 linkOptions,
                 broadcast,
                 x => new BroadcastInfo(x));

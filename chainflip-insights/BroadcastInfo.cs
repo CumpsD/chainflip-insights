@@ -6,6 +6,7 @@ namespace ChainflipInsights
     using ChainflipInsights.Feeders.Burn;
     using ChainflipInsights.Feeders.CexMovement;
     using ChainflipInsights.Feeders.CfeVersion;
+    using ChainflipInsights.Feeders.DailySwapOverview;
     using ChainflipInsights.Feeders.Epoch;
     using ChainflipInsights.Feeders.Funding;
     using ChainflipInsights.Feeders.Liquidity;
@@ -31,6 +32,7 @@ namespace ChainflipInsights
         public BrokerOverviewInfo? BrokerOverviewInfo { get; }
         public BigStakedFlipInfo? BigStakedFlipInfo { get; }
         public BurnInfo? BurnInfo { get; }
+        public DailySwapOverviewInfo? DailySwapOverviewInfo { get; }
         
         public BroadcastInfo(SwapInfo swapInfo) 
             => SwapInfo = swapInfo ?? throw new ArgumentNullException(nameof(swapInfo));
@@ -73,5 +75,8 @@ namespace ChainflipInsights
         
         public BroadcastInfo(BurnInfo burnInfo)
             => BurnInfo = burnInfo ?? throw new ArgumentNullException(nameof(burnInfo));
+        
+        public BroadcastInfo(DailySwapOverviewInfo dailySwapOverviewInfo)
+            => DailySwapOverviewInfo = dailySwapOverviewInfo ?? throw new ArgumentNullException(nameof(dailySwapOverviewInfo));
     }
 }
