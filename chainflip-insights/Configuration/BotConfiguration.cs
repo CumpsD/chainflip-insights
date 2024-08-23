@@ -1031,7 +1031,6 @@ namespace ChainflipInsights.Configuration
             get; init;
         }
         
-        
         [Required]
         [NotNull]
         public bool? MastodonBurnEnabled
@@ -1063,6 +1062,34 @@ namespace ChainflipInsights.Configuration
         [Required]
         [NotNull]
         public bool? DatabaseBurnEnabled
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public bool? MastodonDailySwapOverviewEnabled
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public bool? TwitterDailySwapOverviewEnabled
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public bool? TelegramDailySwapOverviewEnabled
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public bool? DiscordDailySwapOverviewEnabled
         {
             get; init;
         }

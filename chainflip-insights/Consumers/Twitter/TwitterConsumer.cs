@@ -107,6 +107,9 @@ namespace ChainflipInsights.Consumers.Twitter
                     if (input.BurnInfo != null)
                         ProcessBurnInfo(input.BurnInfo);
                     
+                    if (input.DailySwapOverviewInfo != null)
+                        ProcessDailySwapOverviewInfo(input.DailySwapOverviewInfo);
+                    
                     Task
                         .Delay(1500, cancellationToken)
                         .GetAwaiter()
