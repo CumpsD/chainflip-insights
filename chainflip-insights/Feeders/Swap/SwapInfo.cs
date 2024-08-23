@@ -137,16 +137,15 @@ namespace ChainflipInsights.Feeders.Swap
             BrokerFeeUsd = fees.FirstOrDefault(x => x.Data.FeeType == "BROKER")?.Data.FeeValueUsd;
 
             BurnUsd = fees.FirstOrDefault(x => x.Data.FeeType == "NETWORK")?.Data.FeeValueUsd;
-
-            AllFeesUsd = fees.Sum(x => x.Data.FeeValueUsd ?? 0);
+            
+            LiquidityFeesUsd = swap.SwapInputValueUsd - swap.SwapOutputValueUsd;
+            
+            AllFeesUsd = fees.Sum(x => x.Data.FeeValueUsd ?? 0) + LiquidityFeesUsd;
             AllUserFeesUsd = fees
                 .Where(x => 
                     x.Data.FeeType != "INGRESS" &&
                     x.Data.FeeType != "EGRESS")
-                .Sum(x => x.Data.FeeValueUsd ?? 0);
-
-            var lpFees = swap.SwapOutputValueUsd - swap.SwapInputValueUsd;
-            LiquidityFeesUsd = lpFees < 0 ? 0 : lpFees;
+                .Sum(x => x.Data.FeeValueUsd ?? 0) + LiquidityFeesUsd;
             
             Broker = GetBroker(swap);
         }
