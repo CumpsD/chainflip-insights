@@ -137,7 +137,7 @@ namespace ChainflipInsights.Feeders.Swap
             
             var beneficiaries = swap
                 .SwapChannel?
-                .Beneficiaries
+                .Beneficiaries?
                 .Data;
 
             if (beneficiaries == null)

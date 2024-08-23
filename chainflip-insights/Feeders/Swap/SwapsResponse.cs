@@ -159,6 +159,6 @@ namespace ChainflipInsights.Feeders.Swap
         public string FeeAsset { get; set; }
         
         [JsonPropertyName("valueUsd")] 
-        public double FeeValueUsd { get; set; }
+        public double? FeeValueUsd { get; set; }
     }
 }
