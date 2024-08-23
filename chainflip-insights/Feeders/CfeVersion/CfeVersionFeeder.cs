@@ -83,6 +83,9 @@ namespace ChainflipInsights.Feeders.CfeVersion
                     return;
                 }
 
+                // Add some randomization before starting to not spam the world
+                await Task.Delay(Random.Shared.Next(0, 30000), _pipeline.CancellationToken);
+                
                 _logger.LogInformation(
                     "Starting {TaskName}",
                     nameof(CfeVersionFeeder));
