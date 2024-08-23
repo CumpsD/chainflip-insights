@@ -74,12 +74,12 @@ namespace ChainflipInsights.Feeders.Swap
 
         public double ProtocolDeltaUsd => DepositValueUsd - EgressValueUsd - (BrokerFeeUsd ?? 0);
 
-        public string ProtocolDeltaUsdFormatted => ProtocolDeltaUsd.ToString(Constants.DollarString);
+        public string ProtocolDeltaUsdFormatted => (-ProtocolDeltaUsd).ToString(Constants.DollarString);
 
         public double ProtocolDeltaUsdPercentage => 100 / DepositValueUsd * ProtocolDeltaUsd;
         
         public string ProtocolDeltaUsdPercentageFormatted 
-            => $"{Math.Round(ProtocolDeltaUsdPercentage, 2).ToString(Constants.DollarString)}%";
+            => $"{Math.Round(-ProtocolDeltaUsdPercentage, 2).ToString(Constants.DollarString)}%";
         
         public string Emoji =>
             DepositValueUsd switch
