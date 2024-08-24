@@ -27,6 +27,7 @@ namespace ChainflipInsights
     using ChainflipInsights.Feeders.StakedFlip;
     using ChainflipInsights.Feeders.Swap;
     using ChainflipInsights.Feeders.SwapLimits;
+    using ChainflipInsights.Feeders.WeeklySwapOverview;
     using ChainflipInsights.Infrastructure.Pipelines;
     using Microsoft.Extensions.Logging;
 
@@ -66,6 +67,7 @@ namespace ChainflipInsights
             Pipeline<BrokerOverviewInfo> brokerOverviewPipeline,
             Pipeline<BigStakedFlipInfo> bigStakedFlipPipeline,
             Pipeline<DailySwapOverviewInfo> dailySwapOverviewPipeline,
+            Pipeline<WeeklySwapOverviewInfo> weeklySwapOverviewPipeline,
             DiscordConsumer discordConsumer,
             TelegramConsumer telegramConsumer,
             FullTelegramConsumer fullTelegramConsumer,
@@ -98,7 +100,8 @@ namespace ChainflipInsights
                 stakedFlipPipeline,
                 brokerOverviewPipeline,
                 bigStakedFlipPipeline,
-                dailySwapOverviewPipeline);
+                dailySwapOverviewPipeline,
+                weeklySwapOverviewPipeline);
         }
 
         private void SetupPipelines(
@@ -116,7 +119,8 @@ namespace ChainflipInsights
             Pipeline<StakedFlipInfo> stakedFlipPipeline,
             Pipeline<BrokerOverviewInfo> brokerOverviewPipeline,
             Pipeline<BigStakedFlipInfo> bigStakedFlipPipeline,
-            Pipeline<DailySwapOverviewInfo> dailySwapOverviewPipeline)
+            Pipeline<DailySwapOverviewInfo> dailySwapOverviewPipeline,
+            Pipeline<WeeklySwapOverviewInfo> weeklySwapOverviewPipeline)
         {
             var linkOptions = new DataflowLinkOptions
             {
@@ -237,6 +241,13 @@ namespace ChainflipInsights
             SetupFeederPipeline(
                 "Daily Swap Overview",
                 dailySwapOverviewPipeline,
+                linkOptions,
+                broadcast,
+                x => new BroadcastInfo(x));
+            
+            SetupFeederPipeline(
+                "Weekly Swap Overview",
+                weeklySwapOverviewPipeline,
                 linkOptions,
                 broadcast,
                 x => new BroadcastInfo(x));

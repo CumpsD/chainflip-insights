@@ -108,6 +108,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public bool? EnableWeeklySwapOverview
+        {
+            get; init;
+        } 
+        
+        [Required]
+        [NotNull]
         public bool? EnableDiscord
         {
             get; init;
@@ -459,6 +466,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public int? WeeklySwapOverviewQueryDelay
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
         public string? BurnCsvLocation
         {
             get; init;
@@ -614,6 +628,13 @@ namespace ChainflipInsights.Configuration
         [Required]
         [NotNull]
         public string? LastDailySwapOverviewLocation
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public string? LastWeeklySwapOverviewLocation
         {
             get; init;
         }
@@ -1090,6 +1111,34 @@ namespace ChainflipInsights.Configuration
         [Required]
         [NotNull]
         public bool? DiscordDailySwapOverviewEnabled
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public bool? MastodonWeeklySwapOverviewEnabled
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public bool? TwitterWeeklySwapOverviewEnabled
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public bool? TelegramWeeklySwapOverviewEnabled
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public bool? DiscordWeeklySwapOverviewEnabled
         {
             get; init;
         }
