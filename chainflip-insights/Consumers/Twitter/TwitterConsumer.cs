@@ -36,6 +36,7 @@ namespace ChainflipInsights.Consumers.Twitter
         private readonly BotConfiguration _configuration;
         private readonly TwitterClient _twitterClient;
         private readonly Dictionary<string, Broker> _brokers;
+        private readonly Dictionary<string, string> _liquidityProviders;
 
         public TwitterConsumer(
             ILogger<TwitterConsumer> logger,
@@ -53,6 +54,12 @@ namespace ChainflipInsights.Consumers.Twitter
                 .ToDictionary(
                     x => x.Address,
                     x => x);
+            
+            _liquidityProviders = _configuration
+                .LiquidityProviders
+                .ToDictionary(
+                    x => x.Address,
+                    x => x.Name);
         }
 
         public ITargetBlock<BroadcastInfo> Build(

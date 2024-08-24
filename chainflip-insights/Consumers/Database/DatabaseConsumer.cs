@@ -20,6 +20,7 @@ namespace ChainflipInsights.Consumers.Database
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly BotConfiguration _configuration;
         private readonly Dictionary<string, string> _brokers;
+        private readonly Dictionary<string, string> _liquidityProviders;
 
         public DatabaseConsumer(
             ILogger<DatabaseConsumer> logger,
@@ -34,6 +35,12 @@ namespace ChainflipInsights.Consumers.Database
             
             _brokers = _configuration
                 .Brokers
+                .ToDictionary(
+                    x => x.Address,
+                    x => x.Name);
+                        
+            _liquidityProviders = _configuration
+                .LiquidityProviders
                 .ToDictionary(
                     x => x.Address,
                     x => x.Name);

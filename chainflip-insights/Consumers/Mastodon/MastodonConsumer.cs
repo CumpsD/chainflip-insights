@@ -21,6 +21,7 @@ namespace ChainflipInsights.Consumers.Mastodon
         private readonly MastodonClient _mastodonClient;
         private readonly BotConfiguration _configuration;
         private readonly Dictionary<string, string> _brokers;
+        private readonly Dictionary<string, string> _liquidityProviders;
 
         public MastodonConsumer(
             ILogger<MastodonConsumer> logger,
@@ -35,6 +36,12 @@ namespace ChainflipInsights.Consumers.Mastodon
             
             _brokers = _configuration
                 .Brokers
+                .ToDictionary(
+                    x => x.Address,
+                    x => x.Name);
+            
+            _liquidityProviders = _configuration
+                .LiquidityProviders
                 .ToDictionary(
                     x => x.Address,
                     x => x.Name);

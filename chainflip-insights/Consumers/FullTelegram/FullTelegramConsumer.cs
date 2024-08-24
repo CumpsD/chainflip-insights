@@ -22,6 +22,7 @@ namespace ChainflipInsights.Consumers.FullTelegram
         private readonly BotConfiguration _configuration;
         private readonly TelegramBotClient _telegramClient;
         private readonly Dictionary<string,string> _brokers;
+        private readonly Dictionary<string, string> _liquidityProviders;
 
         private readonly ReactionTypeEmoji _tadaEmoji = new() { Emoji = "🎉" };
         private readonly ReactionTypeEmoji _angryEmoji = new() { Emoji = "🤬" };
@@ -39,6 +40,12 @@ namespace ChainflipInsights.Consumers.FullTelegram
             
             _brokers = _configuration
                 .Brokers
+                .ToDictionary(
+                    x => x.Address,
+                    x => x.Name);
+                        
+            _liquidityProviders = _configuration
+                .LiquidityProviders
                 .ToDictionary(
                     x => x.Address,
                     x => x.Name);

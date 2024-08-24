@@ -22,6 +22,7 @@ namespace ChainflipInsights.Consumers.Discord
         private readonly BotConfiguration _configuration;
         private readonly DiscordSocketClient _discordClient;
         private readonly Dictionary<string, string> _brokers;
+        private readonly Dictionary<string, string> _liquidityProviders;
 
         private readonly Emoji _tadaEmoji = new("🎉");
         private readonly Emoji _angryEmoji = new("🤬");
@@ -39,6 +40,12 @@ namespace ChainflipInsights.Consumers.Discord
 
             _brokers = _configuration
                 .Brokers
+                .ToDictionary(
+                    x => x.Address,
+                    x => x.Name);
+            
+            _liquidityProviders = _configuration
+                .LiquidityProviders
                 .ToDictionary(
                     x => x.Address,
                     x => x.Name);

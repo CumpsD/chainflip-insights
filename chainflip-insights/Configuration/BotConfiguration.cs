@@ -1156,6 +1156,13 @@ namespace ChainflipInsights.Configuration
         {
             get; init;
         }
+        
+        [Required]
+        [NotNull]
+        public LiquidityProvider[]? LiquidityProviders
+        {
+            get; init;
+        }
     }
 
     public class Broker
@@ -1175,6 +1182,23 @@ namespace ChainflipInsights.Configuration
         }
         
         public string? Twitter
+        {
+            get; init;
+        }
+    }
+    
+    public class LiquidityProvider
+    {
+        [Required]
+        [NotNull]
+        public string? Address
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public string? Name
         {
             get; init;
         }
