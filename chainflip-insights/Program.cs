@@ -208,6 +208,16 @@
                 .Services
                     
                 .AddHttpClient(
+                    "LpGraph",
+                    x =>
+                    {
+                        x.BaseAddress = new Uri(botConfiguration.LpGraphUrl);
+                        x.DefaultRequestHeaders.UserAgent.ParseAdd("discord-chainflip-insights");
+                    })
+                
+                .Services
+                    
+                .AddHttpClient(
                     "StakedFlipGraph",
                     x =>
                     {
