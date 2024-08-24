@@ -110,6 +110,9 @@ namespace ChainflipInsights.Consumers.Twitter
                     if (input.DailySwapOverviewInfo != null)
                         ProcessDailySwapOverviewInfo(input.DailySwapOverviewInfo);
                     
+                    if (input.WeeklySwapOverviewInfo != null)
+                        ProcessWeeklySwapOverviewInfo(input.WeeklySwapOverviewInfo);
+                    
                     Task
                         .Delay(1500, cancellationToken)
                         .GetAwaiter()

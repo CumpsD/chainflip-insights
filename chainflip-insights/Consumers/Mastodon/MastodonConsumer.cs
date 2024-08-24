@@ -95,6 +95,9 @@ namespace ChainflipInsights.Consumers.Mastodon
                     if (input.DailySwapOverviewInfo != null)
                         ProcessDailySwapOverviewInfo(input.DailySwapOverviewInfo);
                     
+                    if (input.WeeklySwapOverviewInfo != null)
+                        ProcessWeeklySwapOverviewInfo(input.WeeklySwapOverviewInfo);
+                    
                     Task
                         .Delay(1500, cancellationToken)
                         .GetAwaiter()

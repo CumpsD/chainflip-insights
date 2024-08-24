@@ -20,7 +20,9 @@ namespace ChainflipInsights.Feeders.WeeklySwapOverview
         {
             StartDate = startDate;
             EndDate = endDate;
-            Swaps = swaps.ToList();
+            Swaps = swaps
+                .OrderByDescending(x => x.Swap.EgressValueUsd)
+                .ToList();
         }
     }
 

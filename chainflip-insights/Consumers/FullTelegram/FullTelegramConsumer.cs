@@ -102,6 +102,9 @@ namespace ChainflipInsights.Consumers.FullTelegram
                     if (input.DailySwapOverviewInfo != null)
                         ProcessDailySwapOverviewInfo(input.DailySwapOverviewInfo, cancellationToken);
                     
+                    if (input.WeeklySwapOverviewInfo != null)
+                        ProcessWeeklySwapOverviewInfo(input.WeeklySwapOverviewInfo, cancellationToken);
+                    
                     Task
                         .Delay(1500, cancellationToken)
                         .GetAwaiter()

@@ -2,19 +2,20 @@ namespace ChainflipInsights.Consumers.Mastodon
 {
     using System;
     using System.Text;
-    using ChainflipInsights.Feeders.DailySwapOverview;
+    using ChainflipInsights.Feeders.WeeklySwapOverview;
     using Mastonet;
     using Microsoft.Extensions.Logging;
 
     public partial class MastodonConsumer
     {
-        private void ProcessDailySwapOverviewInfo(DailySwapOverviewInfo dailySwapOverviewInfo)
+        private void ProcessWeeklySwapOverviewInfo(WeeklySwapOverviewInfo weeklySwapOverviewInfo)
         {
-            if (!_configuration.MastodonDailySwapOverviewEnabled.Value)
+            if (!_configuration.MastodonWeeklySwapOverviewEnabled.Value)
             {
                 _logger.LogInformation(
-                    "Daily Swap Overview disabled for Mastodon. {Date}",
-                    dailySwapOverviewInfo.Date.ToString("yyyy-MM-dd"));
+                    "Weekly Swap Overview disabled for Mastodon. {StartDate} -> {EndDate}",
+                    weeklySwapOverviewInfo.StartDate.ToString("yyyy-MM-dd"),
+                    weeklySwapOverviewInfo.EndDate.ToString("yyyy-MM-dd"));
 
                 return;
             }
@@ -22,11 +23,12 @@ namespace ChainflipInsights.Consumers.Mastodon
             try
             {
                 _logger.LogInformation(
-                    "Announcing Daily Swap Overview for {Date} on Mastodon.",
-                    dailySwapOverviewInfo.Date.ToString("yyyy-MM-dd"));
+                    "Announcing Weekly Swap Overview for {StartDate} -> {EndDate} on Mastodon.",
+                    weeklySwapOverviewInfo.StartDate.ToString("yyyy-MM-dd"),
+                    weeklySwapOverviewInfo.EndDate.ToString("yyyy-MM-dd"));
 
                 var text = new StringBuilder();
-                text.AppendLine($"💵 Top Swaps for {dailySwapOverviewInfo.Date:yyyy-MM-dd} are in!");
+                text.AppendLine($"💵 Weekly Top Swaps for {weeklySwapOverviewInfo.StartDate:yyyy-MM-dd} -> {weeklySwapOverviewInfo.EndDate:yyyy-MM-dd} are in!");
 
                 var emojis = new[]
                 {
@@ -34,12 +36,20 @@ namespace ChainflipInsights.Consumers.Mastodon
                     "🥈",
                     "🥉",
                     "🏅",
+                    "🏅",
+                    "🏅",
+                    "🏅",
+                    "🏅",
+                    "🏅",
+                    "🏅",
+                    "🏅",
+                    "🏅",
                     "🏅"
                 };
 
-                for (var i = 0; i < dailySwapOverviewInfo.Swaps.Count; i++)
+                for (var i = 0; i < weeklySwapOverviewInfo.Swaps.Count; i++)
                 {
-                    var swap = dailySwapOverviewInfo.Swaps[i];
+                    var swap = weeklySwapOverviewInfo.Swaps[i].Swap;
                     var brokerExists = _brokers.TryGetValue(swap.Broker ?? string.Empty, out var broker);
                     
                     text.AppendLine(
@@ -59,8 +69,9 @@ namespace ChainflipInsights.Consumers.Mastodon
                     .GetResult();
 
                 _logger.LogInformation(
-                    "Announcing Daily Swap Overview {Date} on Mastodon as Message {MessageId}",
-                    dailySwapOverviewInfo.Date.ToString("yyyy-MM-dd"),
+                    "Announcing Weekly Swap Overview {StartDate} -> {EndDate} on Mastodon as Message {MessageId}",
+                    weeklySwapOverviewInfo.StartDate.ToString("yyyy-MM-dd"),
+                    weeklySwapOverviewInfo.EndDate.ToString("yyyy-MM-dd"),
                     status.Id);
             }
             catch (Exception e)
