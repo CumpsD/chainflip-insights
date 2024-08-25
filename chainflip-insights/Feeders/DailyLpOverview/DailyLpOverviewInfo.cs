@@ -9,7 +9,7 @@ namespace ChainflipInsights.Feeders.DailyLpOverview
     {
         public DateTimeOffset Date { get; }
 
-        public Dictionary<string,decimal> LpVolume { get; set; }
+        public Dictionary<string, string> LpVolume { get; set; }
 
         public DailyLpOverviewInfo(
             DateTimeOffset date,
@@ -33,7 +33,7 @@ namespace ChainflipInsights.Feeders.DailyLpOverview
                     .GroupBy(x => x.Name)
                     .ToDictionary(
                         x => x.Key,
-                        x => x.Sum(y => y.VolumeFilled));
+                        x => x.Sum(y => y.VolumeFilled).ToString(Constants.DollarString));
         }
     }
 
@@ -54,7 +54,7 @@ namespace ChainflipInsights.Feeders.DailyLpOverview
             var name = liquidityProviders.SingleOrDefault(x => x.Address == lpNode.IdSs58);
 
             Name = name == null 
-                ? $"{lpNode.IdSs58[..8]}...{lpNode.IdSs58[8..]}" 
+                ? $"{lpNode.IdSs58[..8]}...{lpNode.IdSs58.Substring(lpNode.IdSs58.Length - 8, 8)}" 
                 : name.Name;
             
             VolumeFilled = 
