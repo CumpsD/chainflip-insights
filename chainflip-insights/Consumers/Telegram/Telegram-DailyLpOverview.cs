@@ -55,31 +55,34 @@ namespace ChainflipInsights.Consumers.Telegram
                         $"@ **{lp.Key}**");
                 }
 
-                var message = _telegramClient
-                    .SendMessageAsync(
-                        new SendMessageRequest
-                        {
-                            ChatId = new ChatId(_configuration.TelegramInfoChannelId.Value),
-                            Text = text.ToString(),
-                            ParseMode = ParseMode.Markdown,
-                            DisableNotification = true,
-                            LinkPreviewOptions = new LinkPreviewOptions
+                foreach (var channelId in _configuration.TelegramSwapInfoChannelId)
+                {
+                    var message = _telegramClient
+                        .SendMessageAsync(
+                            new SendMessageRequest
                             {
-                                IsDisabled = true
+                                ChatId = new ChatId(channelId),
+                                Text = text.ToString(),
+                                ParseMode = ParseMode.Markdown,
+                                DisableNotification = true,
+                                LinkPreviewOptions = new LinkPreviewOptions
+                                {
+                                    IsDisabled = true
+                                },
+                                ReplyParameters = new ReplyParameters
+                                {
+                                    AllowSendingWithoutReply = true,
+                                }
                             },
-                            ReplyParameters = new ReplyParameters
-                            {
-                                AllowSendingWithoutReply = true,
-                            }
-                        },
-                        cancellationToken)
-                    .GetAwaiter()
-                    .GetResult();
+                            cancellationToken)
+                        .GetAwaiter()
+                        .GetResult();
 
-                _logger.LogInformation(
-                    "Announcing Daily LP Overview {Date} on Telegram as Message {MessageId}",
-                    dailyLpOverviewInfo.Date.ToString("yyyy-MM-dd"),
-                    message.MessageId);
+                    _logger.LogInformation(
+                        "Announcing Daily LP Overview {Date} on Telegram as Message {MessageId}",
+                        dailyLpOverviewInfo.Date.ToString("yyyy-MM-dd"),
+                        message.MessageId);
+                }
             }
             catch (Exception e)
             {

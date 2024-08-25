@@ -59,7 +59,7 @@ namespace ChainflipInsights.Consumers.LpTelegram
                     .SendMessageAsync(
                         new SendMessageRequest
                         {
-                            ChatId = new ChatId(_configuration.TelegramInfoChannelId.Value),
+                            ChatId = new ChatId(_configuration.TelegramLpChannelId.Value),
                             Text = text.ToString(),
                             ParseMode = ParseMode.Markdown,
                             DisableNotification = true,
