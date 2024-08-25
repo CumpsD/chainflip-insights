@@ -37,7 +37,11 @@ namespace ChainflipInsights.Feeders.WeeklyLpOverview
                     .GroupBy(x => x.Name)
                     .ToDictionary(
                         x => x.Key,
-                        x => x.Sum(y => y.VolumeFilled).ToString(Constants.DollarString));
+                        x => x.Sum(y => y.VolumeFilled))
+                    .OrderByDescending(x => x.Value)
+                    .ToDictionary(
+                        x => x.Key,
+                        x => x.Value.ToString(Constants.DollarString));
         }
     }
 
