@@ -1,6 +1,7 @@
 namespace ChainflipInsights.Consumers.Twitter
 {
     using System;
+    using System.Linq;
     using System.Net.Http.Headers;
     using System.Net.Http.Json;
     using System.Net.Mime;
@@ -39,7 +40,8 @@ namespace ChainflipInsights.Consumers.Twitter
                     "🏅"
                 };
 
-                for (var i = 0; i < dailySwapOverviewInfo.Swaps.Count; i++)
+                var swaps = dailySwapOverviewInfo.Swaps.Take(3).ToList();
+                for (var i = 0; i < swaps.Count; i++)
                 {
                     var swap = dailySwapOverviewInfo.Swaps[i];
                     var brokerExists = _brokers.TryGetValue(swap.Broker ?? string.Empty, out var broker);
