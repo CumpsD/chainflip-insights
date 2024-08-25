@@ -136,7 +136,7 @@ namespace ChainflipInsights.Feeders.DailyLpOverview
                 if (dateString == lastDailyLpOverview)
                 {
                     _logger.LogInformation(
-                        "No new daily lp overview to announce. Last daily lp info is still {DailyLpOverview}",
+                        "No new daily LP overview to announce. Last daily lp info is still {DailyLpOverview}",
                         lastDailyLpOverview);
                     
                     await Task.Delay(_configuration.DailyLpOverviewQueryDelay.Value.RandomizeTime(), cancellationToken);
@@ -163,7 +163,7 @@ namespace ChainflipInsights.Feeders.DailyLpOverview
                     dailyLpOverviewInfo);
                 
                 _logger.LogInformation(
-                    "Broadcasting daily lp overview for {DailyLpOverview}",
+                    "Broadcasting daily LP overview for {DailyLpOverview}",
                     dateString);
 
                 await _pipeline.Source.SendAsync(
@@ -231,7 +231,7 @@ namespace ChainflipInsights.Feeders.DailyLpOverview
             {
                 _logger.LogError(
                     e,
-                    "Fetching daily lp overview failed.");
+                    "Fetching daily LP overview failed.");
             }
 
             return null;

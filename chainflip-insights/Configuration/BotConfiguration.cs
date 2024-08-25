@@ -276,6 +276,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public string? ExplorerLpsUrl
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
         public string? ExplorerLiquidityChannelUrl
         {
             get; init;

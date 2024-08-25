@@ -113,6 +113,9 @@ namespace ChainflipInsights.Consumers.Discord
                     
                     if (input.WeeklySwapOverviewInfo != null)
                         ProcessWeeklySwapOverviewInfo(input.WeeklySwapOverviewInfo);
+                    
+                    if (input.DailyLpOverviewInfo != null)
+                        ProcessDailyLpOverviewInfo(input.DailyLpOverviewInfo);
                 },
                 new ExecutionDataflowBlockOptions
                 {

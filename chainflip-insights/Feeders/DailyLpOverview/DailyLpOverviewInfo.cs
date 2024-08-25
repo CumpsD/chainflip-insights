@@ -54,7 +54,7 @@ namespace ChainflipInsights.Feeders.DailyLpOverview
             var name = liquidityProviders.SingleOrDefault(x => x.Address == lpNode.IdSs58);
 
             Name = name == null 
-                ? lpNode.IdSs58 
+                ? $"{lpNode.IdSs58[..8]}...{lpNode.IdSs58[8..]}" 
                 : name.Name;
             
             VolumeFilled = 

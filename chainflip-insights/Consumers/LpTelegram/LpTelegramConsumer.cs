@@ -64,6 +64,9 @@ namespace ChainflipInsights.Consumers.LpTelegram
                     if (input.SwapInfo != null)
                         ProcessSwap(input.SwapInfo, cancellationToken);
                     
+                    if (input.DailyLpOverviewInfo != null)
+                        ProcessDailyLpOverviewInfo(input.DailyLpOverviewInfo, cancellationToken);
+                    
                     Task
                         .Delay(1500, cancellationToken)
                         .GetAwaiter()
