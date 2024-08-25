@@ -37,6 +37,7 @@
     using ChainflipInsights.Feeders.StakedFlip;
     using ChainflipInsights.Feeders.Swap;
     using ChainflipInsights.Feeders.SwapLimits;
+    using ChainflipInsights.Feeders.WeeklyLpOverview;
     using ChainflipInsights.Feeders.WeeklySwapOverview;
     using ChainflipInsights.Infrastructure;
     using ChainflipInsights.Infrastructure.Options;
@@ -103,6 +104,7 @@
                 container.GetRequiredService<Pipeline<DailySwapOverviewInfo>>(),
                 container.GetRequiredService<Pipeline<WeeklySwapOverviewInfo>>(),
                 container.GetRequiredService<Pipeline<DailyLpOverviewInfo>>(),
+                container.GetRequiredService<Pipeline<WeeklyLpOverviewInfo>>(),
             };
             
             var feeders = new IFeeder[]
@@ -124,6 +126,7 @@
                 container.GetRequiredService<DailySwapOverviewFeeder>(),
                 container.GetRequiredService<WeeklySwapOverviewFeeder>(),
                 container.GetRequiredService<DailyLpOverviewFeeder>(),
+                container.GetRequiredService<WeeklyLpOverviewFeeder>(),
             };
             
             Console.CancelKeyPress += (_, eventArgs) =>
@@ -374,6 +377,7 @@
             RegisterFeeder<DailySwapOverviewFeeder, DailySwapOverviewInfo>(builder, ct);
             RegisterFeeder<WeeklySwapOverviewFeeder, WeeklySwapOverviewInfo>(builder, ct);
             RegisterFeeder<DailyLpOverviewFeeder, DailyLpOverviewInfo>(builder, ct);
+            RegisterFeeder<WeeklyLpOverviewFeeder, WeeklyLpOverviewInfo>(builder, ct);
 
             builder
                 .RegisterType<PriceProvider>()

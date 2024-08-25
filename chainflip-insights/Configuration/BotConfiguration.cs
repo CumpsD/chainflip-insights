@@ -122,6 +122,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public bool? EnableWeeklyLpOverview
+        {
+            get; init;
+        } 
+        
+        [Required]
+        [NotNull]
         public bool? EnableDiscord
         {
             get; init;
@@ -501,6 +508,13 @@ namespace ChainflipInsights.Configuration
         
         [Required]
         [NotNull]
+        public int? WeeklyLpOverviewQueryDelay
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
         public string? BurnCsvLocation
         {
             get; init;
@@ -670,6 +684,13 @@ namespace ChainflipInsights.Configuration
         [Required]
         [NotNull]
         public string? LastDailyLpOverviewLocation
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public string? LastWeeklyLpOverviewLocation
         {
             get; init;
         }
@@ -1178,7 +1199,6 @@ namespace ChainflipInsights.Configuration
             get; init;
         }
         
-        
         [Required]
         [NotNull]
         public bool? MastodonDailyLpOverviewEnabled
@@ -1203,6 +1223,34 @@ namespace ChainflipInsights.Configuration
         [Required]
         [NotNull]
         public bool? DiscordDailyLpOverviewEnabled
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public bool? MastodonWeeklyLpOverviewEnabled
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public bool? TwitterWeeklyLpOverviewEnabled
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public bool? TelegramWeeklyLpOverviewEnabled
+        {
+            get; init;
+        }
+        
+        [Required]
+        [NotNull]
+        public bool? DiscordWeeklyLpOverviewEnabled
         {
             get; init;
         }

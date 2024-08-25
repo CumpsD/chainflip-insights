@@ -108,6 +108,9 @@ namespace ChainflipInsights.Consumers.Mastodon
                     if (input.DailyLpOverviewInfo != null)
                         ProcessDailyLpOverviewInfo(input.DailyLpOverviewInfo);
                     
+                    if (input.WeeklyLpOverviewInfo != null)
+                        ProcessWeeklyLpOverviewInfo(input.WeeklyLpOverviewInfo);
+                    
                     Task
                         .Delay(1500, cancellationToken)
                         .GetAwaiter()

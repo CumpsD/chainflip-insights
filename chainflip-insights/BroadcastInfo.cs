@@ -16,6 +16,7 @@ namespace ChainflipInsights
     using ChainflipInsights.Feeders.StakedFlip;
     using ChainflipInsights.Feeders.Swap;
     using ChainflipInsights.Feeders.SwapLimits;
+    using ChainflipInsights.Feeders.WeeklyLpOverview;
     using ChainflipInsights.Feeders.WeeklySwapOverview;
 
     public class BroadcastInfo
@@ -37,6 +38,7 @@ namespace ChainflipInsights
         public DailySwapOverviewInfo? DailySwapOverviewInfo { get; }
         public WeeklySwapOverviewInfo? WeeklySwapOverviewInfo { get; }
         public DailyLpOverviewInfo? DailyLpOverviewInfo { get; }
+        public WeeklyLpOverviewInfo? WeeklyLpOverviewInfo { get; }
 
         public BroadcastInfo(SwapInfo swapInfo) 
             => SwapInfo = swapInfo ?? throw new ArgumentNullException(nameof(swapInfo));
@@ -88,5 +90,8 @@ namespace ChainflipInsights
         
         public BroadcastInfo(DailyLpOverviewInfo dailyLpOverviewInfo)
             => DailyLpOverviewInfo = dailyLpOverviewInfo ?? throw new ArgumentNullException(nameof(dailyLpOverviewInfo));
+                
+        public BroadcastInfo(WeeklyLpOverviewInfo weeklyLpOverviewInfo)
+            => WeeklyLpOverviewInfo = weeklyLpOverviewInfo ?? throw new ArgumentNullException(nameof(weeklyLpOverviewInfo));
     }
 }

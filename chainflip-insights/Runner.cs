@@ -28,6 +28,7 @@ namespace ChainflipInsights
     using ChainflipInsights.Feeders.StakedFlip;
     using ChainflipInsights.Feeders.Swap;
     using ChainflipInsights.Feeders.SwapLimits;
+    using ChainflipInsights.Feeders.WeeklyLpOverview;
     using ChainflipInsights.Feeders.WeeklySwapOverview;
     using ChainflipInsights.Infrastructure.Pipelines;
     using Microsoft.Extensions.Logging;
@@ -70,6 +71,7 @@ namespace ChainflipInsights
             Pipeline<DailySwapOverviewInfo> dailySwapOverviewPipeline,
             Pipeline<WeeklySwapOverviewInfo> weeklySwapOverviewPipeline,
             Pipeline<DailyLpOverviewInfo> dailyLpOverviewPipeline,
+            Pipeline<WeeklyLpOverviewInfo> weeklyLpOverviewPipeline,
             DiscordConsumer discordConsumer,
             TelegramConsumer telegramConsumer,
             FullTelegramConsumer fullTelegramConsumer,
@@ -104,7 +106,8 @@ namespace ChainflipInsights
                 bigStakedFlipPipeline,
                 dailySwapOverviewPipeline,
                 weeklySwapOverviewPipeline,
-                dailyLpOverviewPipeline);
+                dailyLpOverviewPipeline,
+                weeklyLpOverviewPipeline);
         }
 
         private void SetupPipelines(
@@ -124,7 +127,8 @@ namespace ChainflipInsights
             Pipeline<BigStakedFlipInfo> bigStakedFlipPipeline,
             Pipeline<DailySwapOverviewInfo> dailySwapOverviewPipeline,
             Pipeline<WeeklySwapOverviewInfo> weeklySwapOverviewPipeline,
-            Pipeline<DailyLpOverviewInfo> dailyLpOverviewPipeline)
+            Pipeline<DailyLpOverviewInfo> dailyLpOverviewPipeline,
+            Pipeline<WeeklyLpOverviewInfo> weeklyLpOverviewPipeline)
         {
             var linkOptions = new DataflowLinkOptions
             {
@@ -259,6 +263,13 @@ namespace ChainflipInsights
             SetupFeederPipeline(
                 "Daily LP Overview",
                 dailyLpOverviewPipeline,
+                linkOptions,
+                broadcast,
+                x => new BroadcastInfo(x));
+            
+            SetupFeederPipeline(
+                "Weekly LP Overview",
+                weeklyLpOverviewPipeline,
                 linkOptions,
                 broadcast,
                 x => new BroadcastInfo(x));
