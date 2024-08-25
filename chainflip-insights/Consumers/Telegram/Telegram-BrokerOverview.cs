@@ -4,6 +4,7 @@ namespace ChainflipInsights.Consumers.Telegram
     using System.Text;
     using System.Threading;
     using ChainflipInsights.Feeders.BrokerOverview;
+    using ChainflipInsights.Infrastructure;
     using global::Telegram.Bot;
     using global::Telegram.Bot.Requests;
     using global::Telegram.Bot.Types;
@@ -49,7 +50,7 @@ namespace ChainflipInsights.Consumers.Telegram
                 {
                     var brokerInfo = brokerOverview.Brokers[i];
                     var brokerExists = _brokers.TryGetValue(brokerInfo.Ss58, out var broker);
-                    var name = brokerExists ? broker : brokerInfo.Ss58;
+                    var name = brokerExists ? broker : brokerInfo.Ss58.FormatSs58();
 
                     text.AppendLine(
                         $"{emojis[i]} **{name}** (**${brokerInfo.VolumeFormatted}** Volume, **${brokerInfo.FeesFormatted}** Fees)");

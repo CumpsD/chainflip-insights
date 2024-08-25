@@ -6,6 +6,7 @@ namespace ChainflipInsights.Consumers.Twitter
     using System.Net.Mime;
     using System.Text;
     using ChainflipInsights.Feeders.BrokerOverview;
+    using ChainflipInsights.Infrastructure;
     using Microsoft.Extensions.Logging;
 
     public partial class TwitterConsumer
@@ -49,7 +50,7 @@ namespace ChainflipInsights.Consumers.Twitter
                         ? string.IsNullOrWhiteSpace(broker!.Twitter)
                             ? broker.Name
                             : broker.Twitter
-                        : brokerInfo.Ss58;
+                        : brokerInfo.Ss58.FormatSs58();
 
                     text.AppendLine(
                         $"{emojis[i]} {name} (${brokerInfo.VolumeFormatted} Volume, ${brokerInfo.FeesFormatted} Fees)");

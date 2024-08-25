@@ -4,6 +4,7 @@ namespace ChainflipInsights.Feeders.DailyLpOverview
     using System.Collections.Generic;
     using System.Linq;
     using ChainflipInsights.Configuration;
+    using ChainflipInsights.Infrastructure;
 
     public class DailyLpOverviewInfo
     {
@@ -54,7 +55,7 @@ namespace ChainflipInsights.Feeders.DailyLpOverview
             var name = liquidityProviders.SingleOrDefault(x => x.Address == lpNode.IdSs58);
 
             Name = name == null 
-                ? $"{lpNode.IdSs58[..8]}...{lpNode.IdSs58.Substring(lpNode.IdSs58.Length - 8, 8)}" 
+                ? lpNode.IdSs58.FormatSs58()
                 : name.Name;
             
             VolumeFilled = 

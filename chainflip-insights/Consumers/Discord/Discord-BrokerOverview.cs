@@ -3,6 +3,7 @@ namespace ChainflipInsights.Consumers.Discord
     using System;
     using System.Text;
     using ChainflipInsights.Feeders.BrokerOverview;
+    using ChainflipInsights.Infrastructure;
     using global::Discord;
     using Microsoft.Extensions.Logging;
 
@@ -46,7 +47,7 @@ namespace ChainflipInsights.Consumers.Discord
                 {
                     var brokerInfo = brokerOverview.Brokers[i];
                     var brokerExists = _brokers.TryGetValue(brokerInfo.Ss58, out var broker);
-                    var name = brokerExists ? broker : brokerInfo.Ss58;
+                    var name = brokerExists ? broker : brokerInfo.Ss58.FormatSs58();
 
                     text.AppendLine(
                         $"{emojis[i]} **{name}** (**${brokerInfo.VolumeFormatted}** Volume, **${brokerInfo.FeesFormatted}** Fees)");
