@@ -47,7 +47,7 @@ namespace ChainflipInsights.Consumers.Twitter
                     "🏅",
                 };
 
-                var lps = weeklyLpOverviewInfo.LpVolume.Take(10).ToList();
+                var lps = weeklyLpOverviewInfo.LpVolume.Take(5).ToList();
                 for (var i = 0; i < lps.Count; i++)
                 {
                     var lp = lps[i];
