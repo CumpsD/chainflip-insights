@@ -54,8 +54,8 @@ namespace ChainflipInsights.Consumers.Twitter
 
                     text.AppendLine(
                         $"{emojis[i]} " +
-                        $"${lp.Value} " +
-                        $"@ {lp.Key}");
+                        $"${lp.Value.Item2} " +
+                        $"@ {lp.Value.Item1}");
                 }
                 
                 text.AppendLine("#chainflip $flip");

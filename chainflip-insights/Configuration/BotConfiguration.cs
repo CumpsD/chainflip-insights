@@ -1307,5 +1307,10 @@ namespace ChainflipInsights.Configuration
         {
             get; init;
         }
+        
+        public string? Twitter
+        {
+            get; init;
+        }
     }
 }

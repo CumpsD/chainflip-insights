@@ -51,7 +51,7 @@ namespace ChainflipInsights.Consumers.LpTelegram
 
                     text.AppendLine(
                         $"{emojis[i]} " +
-                        $"**${lp.Value}** " +
+                        $"**${lp.Value.Item2}** " +
                         $"@ **{lp.Key}**");
                 }
 

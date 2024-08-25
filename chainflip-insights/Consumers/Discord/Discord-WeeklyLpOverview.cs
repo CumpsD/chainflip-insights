@@ -55,7 +55,7 @@ namespace ChainflipInsights.Consumers.Discord
 
                     text.AppendLine(
                         $"{emojis[i]} " +
-                        $"**${lp.Value}** " +
+                        $"**${lp.Value.Item2}** " +
                         $"@ **{lp.Key}**");
                 }
 

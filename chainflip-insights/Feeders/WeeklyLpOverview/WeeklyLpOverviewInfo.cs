@@ -11,7 +11,7 @@ namespace ChainflipInsights.Feeders.WeeklyLpOverview
         public DateTimeOffset StartDate { get; }
         
         public DateTimeOffset EndDate { get; }
-        public Dictionary<string, string> LpVolume { get; set; }
+        public Dictionary<string, Tuple<string, string>> LpVolume { get; set; }
 
         public WeeklyLpOverviewInfo(
             DateTimeOffset startDate, 
@@ -37,11 +37,15 @@ namespace ChainflipInsights.Feeders.WeeklyLpOverview
                     .GroupBy(x => x.Name)
                     .ToDictionary(
                         x => x.Key,
-                        x => x.Sum(y => y.VolumeFilled))
+                        x => new Tuple<string, decimal>(
+                            x.First().Twitter,
+                            x.Sum(y => y.VolumeFilled)))
                     .OrderByDescending(x => x.Value)
                     .ToDictionary(
                         x => x.Key,
-                        x => x.Value.ToString(Constants.DollarString));
+                        x => new Tuple<string, string>(
+                            x.Value.Item1,
+                            x.Value.Item2.ToString(Constants.DollarString)));
         }
     }
 
@@ -50,6 +54,8 @@ namespace ChainflipInsights.Feeders.WeeklyLpOverview
         public string Ss58 { get; set; }
 
         public string Name { get; set; }
+        
+        public string Twitter { get; set; }
         
         public decimal VolumeFilled { get; set; }
 
@@ -61,9 +67,17 @@ namespace ChainflipInsights.Feeders.WeeklyLpOverview
 
             var name = liquidityProviders.SingleOrDefault(x => x.Address == lpNode.IdSs58);
 
+            var ss58 = lpNode.IdSs58.FormatSs58();
+            
             Name = name == null 
-                ? lpNode.IdSs58.FormatSs58()
+                ? ss58
                 : name.Name;
+
+            Twitter = name == null
+                ? ss58
+                : string.IsNullOrWhiteSpace(name.Twitter)
+                    ? ss58
+                    : name.Twitter;
             
             VolumeFilled = 
                 lpNode.LimitOrders.LimitOrder.Sum(x => x.Sum.FilledAmountUsd)+ 
