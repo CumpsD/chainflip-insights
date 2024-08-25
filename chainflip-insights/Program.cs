@@ -27,6 +27,7 @@
     using ChainflipInsights.Feeders.Burn;
     using ChainflipInsights.Feeders.CexMovement;
     using ChainflipInsights.Feeders.CfeVersion;
+    using ChainflipInsights.Feeders.DailyLpOverview;
     using ChainflipInsights.Feeders.DailySwapOverview;
     using ChainflipInsights.Feeders.Epoch;
     using ChainflipInsights.Feeders.Funding;
@@ -101,6 +102,7 @@
                 container.GetRequiredService<Pipeline<BurnInfo>>(),
                 container.GetRequiredService<Pipeline<DailySwapOverviewInfo>>(),
                 container.GetRequiredService<Pipeline<WeeklySwapOverviewInfo>>(),
+                container.GetRequiredService<Pipeline<DailyLpOverviewInfo>>(),
             };
             
             var feeders = new IFeeder[]
@@ -121,6 +123,7 @@
                 container.GetRequiredService<BurnFeeder>(),
                 container.GetRequiredService<DailySwapOverviewFeeder>(),
                 container.GetRequiredService<WeeklySwapOverviewFeeder>(),
+                container.GetRequiredService<DailyLpOverviewFeeder>(),
             };
             
             Console.CancelKeyPress += (_, eventArgs) =>
@@ -370,6 +373,7 @@
             RegisterFeeder<BurnFeeder, BurnInfo>(builder, ct);
             RegisterFeeder<DailySwapOverviewFeeder, DailySwapOverviewInfo>(builder, ct);
             RegisterFeeder<WeeklySwapOverviewFeeder, WeeklySwapOverviewInfo>(builder, ct);
+            RegisterFeeder<DailyLpOverviewFeeder, DailyLpOverviewInfo>(builder, ct);
 
             builder
                 .RegisterType<PriceProvider>()

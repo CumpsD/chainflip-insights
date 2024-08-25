@@ -6,6 +6,7 @@ namespace ChainflipInsights
     using ChainflipInsights.Feeders.Burn;
     using ChainflipInsights.Feeders.CexMovement;
     using ChainflipInsights.Feeders.CfeVersion;
+    using ChainflipInsights.Feeders.DailyLpOverview;
     using ChainflipInsights.Feeders.DailySwapOverview;
     using ChainflipInsights.Feeders.Epoch;
     using ChainflipInsights.Feeders.Funding;
@@ -35,7 +36,8 @@ namespace ChainflipInsights
         public BurnInfo? BurnInfo { get; }
         public DailySwapOverviewInfo? DailySwapOverviewInfo { get; }
         public WeeklySwapOverviewInfo? WeeklySwapOverviewInfo { get; }
-        
+        public DailyLpOverviewInfo? DailyLpOverviewInfo { get; }
+
         public BroadcastInfo(SwapInfo swapInfo) 
             => SwapInfo = swapInfo ?? throw new ArgumentNullException(nameof(swapInfo));
 
@@ -83,5 +85,8 @@ namespace ChainflipInsights
         
         public BroadcastInfo(WeeklySwapOverviewInfo weeklySwapOverviewInfo)
             => WeeklySwapOverviewInfo = weeklySwapOverviewInfo ?? throw new ArgumentNullException(nameof(weeklySwapOverviewInfo));
+        
+        public BroadcastInfo(DailyLpOverviewInfo dailyLpOverviewInfo)
+            => DailyLpOverviewInfo = dailyLpOverviewInfo ?? throw new ArgumentNullException(nameof(dailyLpOverviewInfo));
     }
 }
