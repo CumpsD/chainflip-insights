@@ -37,7 +37,7 @@ namespace ChainflipInsights.Feeders.DailyLpOverview
                         x => new Tuple<string, decimal>(
                             x.First().Twitter,
                             x.Sum(y => y.VolumeFilled)))
-                    .OrderByDescending(x => x.Value)
+                    .OrderByDescending(x => x.Value.Item2)
                     .ToDictionary(
                         x => x.Key,
                         x => new Tuple<string, string>(
