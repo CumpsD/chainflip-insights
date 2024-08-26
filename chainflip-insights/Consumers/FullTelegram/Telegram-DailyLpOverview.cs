@@ -47,12 +47,12 @@ namespace ChainflipInsights.Consumers.FullTelegram
                 var lps = dailyLpOverviewInfo.LpVolume.Take(5).ToList();
                 for (var i = 0; i < lps.Count; i++)
                 {
-                    var lp = lps[i];
+                    var lp = lps[i].Value;
 
                     text.AppendLine(
                         $"{emojis[i]} " +
-                        $"**${lp.Value.Item2}** " +
-                        $"@ **{lp.Key}**");
+                        $"**${lp.VolumeFilled}** (*{lp.VolumePercentage}*) " +
+                        $"@ **{lp.Name}**");
                 }
 
                 var message = _telegramClient

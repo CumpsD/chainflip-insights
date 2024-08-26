@@ -10,7 +10,7 @@ namespace ChainflipInsights.Feeders.DailyLpOverview
     {
         public DateTimeOffset Date { get; }
 
-        public Dictionary<string, Tuple<string, string>> LpVolume { get; set; }
+        public Dictionary<string, LpOverviewInfo> LpVolume { get; set; }
 
         public DailyLpOverviewInfo(
             DateTimeOffset date,
@@ -29,20 +29,47 @@ namespace ChainflipInsights.Feeders.DailyLpOverview
                 .OrderByDescending(x => x.VolumeFilled)
                 .ToList();
 
+            var totalVolume = lpAccounts.Sum(x => x.VolumeFilled);
+
             LpVolume =
                 lpAccounts
                     .GroupBy(x => x.Name)
                     .ToDictionary(
                         x => x.Key,
-                        x => new Tuple<string, decimal>(
-                            x.First().Twitter,
-                            x.Sum(y => y.VolumeFilled)))
-                    .OrderByDescending(x => x.Value.Item2)
+                        x => new
+                        {
+                            Twitter = x.First().Twitter,
+                            VolumeFilled = x.Sum(y => y.VolumeFilled)
+                        })
+                    .OrderByDescending(x => x.Value.VolumeFilled)
                     .ToDictionary(
                         x => x.Key,
-                        x => new Tuple<string, string>(
-                            x.Value.Item1,
-                            x.Value.Item2.ToString(Constants.DollarString)));
+                        x => new LpOverviewInfo(
+                            x.Key,
+                            x.Value.Twitter,
+                            x.Value.VolumeFilled,
+                            totalVolume));
+        }
+    }
+
+    public class LpOverviewInfo
+    {
+        public string Name { get; }
+        public string Twitter { get; }
+        
+        public string VolumeFilled { get; }
+        
+        public string VolumePercentage { get; }
+
+        public LpOverviewInfo(string name,
+            string twitter,
+            decimal volumeFilled,
+            decimal totalVolume)
+        {
+            Name = name;
+            Twitter = twitter;
+            VolumeFilled = volumeFilled.ToString(Constants.DollarString);
+            VolumePercentage = $"{Math.Round(100 / totalVolume * volumeFilled, 2).ToString(Constants.DollarString)}%";
         }
     }
 

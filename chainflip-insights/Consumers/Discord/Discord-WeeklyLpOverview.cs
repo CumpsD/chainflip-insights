@@ -51,12 +51,12 @@ namespace ChainflipInsights.Consumers.Discord
                 var lps = weeklyLpOverviewInfo.LpVolume.Take(10).ToList();
                 for (var i = 0; i < lps.Count; i++)
                 {
-                    var lp = lps[i];
+                    var lp = lps[i].Value;
 
                     text.AppendLine(
                         $"{emojis[i]} " +
-                        $"**${lp.Value.Item2}** " +
-                        $"@ **{lp.Key}**");
+                        $"**${lp.VolumeFilled}** (*{lp.VolumePercentage}*) " +
+                        $"@ **{lp.Name}**");
                 }
 
                 var infoChannel = (ITextChannel)_discordClient

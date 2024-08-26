@@ -50,12 +50,12 @@ namespace ChainflipInsights.Consumers.Twitter
                 var lps = weeklyLpOverviewInfo.LpVolume.Take(5).ToList();
                 for (var i = 0; i < lps.Count; i++)
                 {
-                    var lp = lps[i];
+                    var lp = lps[i].Value;
 
                     text.AppendLine(
                         $"{emojis[i]} " +
-                        $"${lp.Value.Item2} " +
-                        $"@ {lp.Value.Item1}");
+                        $"${lp.VolumeFilled} ({lp.VolumePercentage}) " +
+                        $"@ {lp.Twitter}");
                 }
                 
                 text.AppendLine("#chainflip $flip");
