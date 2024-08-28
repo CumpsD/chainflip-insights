@@ -53,15 +53,15 @@ namespace ChainflipInsights.Feeders.Swap
         
         public string? Broker { get; }
         
-        public bool IsBoosted { get; set; }
+        public bool IsBoosted { get; }
 
-        public double? BoostFeeBps { get; set; }
+        public double? BoostFeeBps { get; }
         
-        public double? BoostFeeUsd { get; set; }
+        public double? BoostFeeUsd { get; }
 
         public string? BoostFeeUsdFormatted => BoostFeeUsd?.ToString(Constants.DollarString);
 
-        public double? BrokerFeeUsd { get; set; }
+        public double? BrokerFeeUsd { get; }
 
         public string? BrokerFeeUsdFormatted => BrokerFeeUsd?.ToString(Constants.DollarString);
 
@@ -81,13 +81,29 @@ namespace ChainflipInsights.Feeders.Swap
         public string ProtocolDeltaUsdPercentageFormatted 
             => $"{Math.Round(-ProtocolDeltaUsdPercentage, 2).ToString(Constants.DollarString)}%";
         
-        public double? AllFeesUsd { get; set; }
+        public double? AllFeesUsd { get; }
         
-        public double? AllUserFeesUsd { get; set; }
+        public double? AllUserFeesUsd { get; }
         
-        public double? LiquidityFeesUsd { get; set; }
+        public double? LiquidityFeesUsd { get; }
         
-        public double? BurnUsd { get; set; }
+        public double? BurnUsd { get; }
+        
+        public DateTimeOffset? PreDepositTimestamp { get; }
+        public DateTimeOffset DepositTimestamp { get; }
+        public DateTimeOffset EgressTimestamp { get; }
+
+        public TimeSpan SwapDuration
+        {
+            get
+            {
+                var offset = PreDepositTimestamp.HasValue
+                    ? DepositTimestamp.Subtract(PreDepositTimestamp.Value) / 2
+                    : new TimeSpan(0);
+
+                return EgressTimestamp - DepositTimestamp + offset;
+            }
+        }
         
         public string Emoji =>
             DepositValueUsd switch
@@ -148,8 +164,14 @@ namespace ChainflipInsights.Feeders.Swap
                 .Sum(x => x.Data.FeeValueUsd ?? 0) + LiquidityFeesUsd;
             
             Broker = GetBroker(swap);
+            
+            PreDepositTimestamp = string.IsNullOrWhiteSpace(swap.PreDeposit?.StateChainTimestamp) 
+                ? null 
+                : DateTimeOffset.Parse(swap.PreDeposit.StateChainTimestamp);
+            DepositTimestamp = DateTimeOffset.Parse(swap.Deposit.StateChainTimestamp);
+            EgressTimestamp = DateTimeOffset.Parse(swap.Egress.Block.StateChainTimestamp);
         }
-
+        
         private static string? GetBroker(SwapsResponseNode swap)
         {
             var mainBroker = swap

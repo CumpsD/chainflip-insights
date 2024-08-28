@@ -53,6 +53,20 @@ namespace ChainflipInsights.Feeders.Swap
                             swapOutputAmount
                             swapOutputValueUsd
                             
+                            egress: eventByEgressScheduledEventId {
+                                blockByBlockId {
+                                    timestamp
+                                }
+                            }
+                            
+                            predeposit: foreignChainTrackingByForeignChainPreDepositBlockId {
+                                stateChainTimestamp
+                            }
+                            
+                            deposit: foreignChainTrackingByForeignChainDepositBlockId {
+                                stateChainTimestamp
+                            }
+                            
                             swapChannelByDepositChannelId {
                                 swapChannelBeneficiariesByDepositChannelId {
                                     nodes {
@@ -260,8 +274,8 @@ namespace ChainflipInsights.Feeders.Swap
                 return double.Parse(await File.ReadAllTextAsync(_configuration.LastSwapIdLocation, cancellationToken));
             
             await using var file = File.CreateText(_configuration.LastSwapIdLocation);
-            await file.WriteAsync("0");
-            return 0;
+            await file.WriteAsync("14647");
+            return 14647;
         }
 
         private async Task StoreLastSwapId(double swapId)

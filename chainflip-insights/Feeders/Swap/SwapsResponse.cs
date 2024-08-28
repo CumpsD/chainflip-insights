@@ -109,6 +109,33 @@ namespace ChainflipInsights.Feeders.Swap
         
         [JsonPropertyName("swapFeesBySwapId")] 
         public SwapFeesBySwapId SwapFees { get; set; }
+        
+        [JsonPropertyName("egress")] 
+        public Egress Egress { get; set; }
+        
+        [JsonPropertyName("predeposit")] 
+        public BlockTime? PreDeposit { get; set; }
+        
+        [JsonPropertyName("deposit")] 
+        public BlockTime Deposit { get; set; }
+    }
+
+    public class Egress
+    {
+        [JsonPropertyName("blockByBlockId")] 
+        public Block Block { get; set; }
+    }
+
+    public class Block
+    {
+        [JsonPropertyName("timestamp")] 
+        public string StateChainTimestamp { get; set; }
+    }
+
+    public class BlockTime
+    {
+        [JsonPropertyName("stateChainTimestamp")] 
+        public string StateChainTimestamp { get; set; }
     }
 
     public class SwapChannelByDepositChannelId
