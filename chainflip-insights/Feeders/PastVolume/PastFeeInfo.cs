@@ -15,7 +15,9 @@ namespace ChainflipInsights.Feeders.PastVolume
                     
                     (_, _, "Usdc", "Ethereum") =>
                         // Take network fee from swapOutputValueUsd
-                        response.SwapOutputValue / 100 * 0.10,
+                        response.SwapOutputValue.HasValue 
+                            ? response.SwapOutputValue.Value / 100 * 0.10
+                            : 0,
                     
                     _ => 
                         // Take network fee from intermediateValueUsd

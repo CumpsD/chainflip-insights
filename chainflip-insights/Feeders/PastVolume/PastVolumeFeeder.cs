@@ -208,8 +208,8 @@ namespace ChainflipInsights.Feeders.PastVolume
                 return await File.ReadAllTextAsync(_configuration.LastPastVolumeLocation, cancellationToken);
 
             await using var file = File.CreateText(_configuration.LastPastVolumeLocation);
-            await file.WriteAsync("2024-03-04");
-            return "2024-03-04";
+            await file.WriteAsync("2024-08-26");
+            return "2024-08-26";
         }
         
         private async Task StoreLastPastVolume(string lastVolume)

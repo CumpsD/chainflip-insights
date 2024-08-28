@@ -35,7 +35,7 @@ namespace ChainflipInsights.Feeders.PastVolume
         public double? IntermediateValue { get; set; }
         
         [JsonPropertyName("swapOutputValueUsd")] 
-        public double SwapOutputValue { get; set; }
+        public double? SwapOutputValue { get; set; }
         
         [JsonPropertyName("destinationAsset")] 
         public string DestinationAsset { get; set; }
