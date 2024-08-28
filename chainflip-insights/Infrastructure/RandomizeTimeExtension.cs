@@ -4,7 +4,11 @@ namespace ChainflipInsights.Infrastructure
 
     public static class RandomizeTimeExtension
     {
-        public static int RandomizeTime(this int originalTimeInMs) 
-            => originalTimeInMs + Random.Shared.Next(-5000, 5000);
+        public static int RandomizeTime(this int originalTimeInMs)
+        {
+            var factor = originalTimeInMs / 30000;
+            var random = factor * Random.Shared.Next(-5000, 5000);
+            return originalTimeInMs + (random < 0 ? 0 : random);
+        }
     }
 }
