@@ -2,6 +2,7 @@ namespace ChainflipInsights.Feeders.Swap
 {
     using System;
     using System.Linq;
+    using Humanizer;
 
     public class SwapInfo
     {
@@ -93,6 +94,26 @@ namespace ChainflipInsights.Feeders.Swap
         public DateTimeOffset DepositTimestamp { get; }
         public DateTimeOffset EgressTimestamp { get; }
 
+        public string SwapDurationFormatted
+        {
+            get
+            {
+                var duration = SwapDuration.Humanize(
+                    3, 
+                    maxUnit: Humanizer.Localisation.TimeUnit.Hour, 
+                    minUnit:Humanizer.Localisation.TimeUnit.Second);
+                
+                return duration
+                    .Replace(" hours", "h")
+                    .Replace(" hour", "h")
+                    .Replace(" minutes", "m")
+                    .Replace(" minute", "m")
+                    .Replace(" seconds", "s")
+                    .Replace(" second", "s")
+                    .Replace(",", "");
+            }
+        }
+        
         public TimeSpan SwapDuration
         {
             get

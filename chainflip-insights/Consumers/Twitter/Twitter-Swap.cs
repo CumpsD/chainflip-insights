@@ -49,6 +49,7 @@ namespace ChainflipInsights.Consumers.Twitter
                     $"{swap.Emoji} Swapped {_configuration.ExplorerSwapsUrl}{swap.Id}\n" +
                     $"📥 {swap.DepositAmountFormatted} ${swap.SourceAsset} (${swap.DepositValueUsdFormatted})\n" +
                     $"📤 {swap.EgressAmountFormatted} ${swap.DestinationAsset} (${swap.EgressValueUsdFormatted})\n" +
+                    $"⏱️ Took {swap.SwapDurationFormatted}\n" +
                     $"{(swap.ProtocolDeltaUsdPercentage < 0 ? "🟢" : "🔴")} Delta{(swap.BrokerFeeUsdFormatted != null ? " (ex. Broker)" : string.Empty)}: {swap.ProtocolDeltaUsdFormatted.FormatDelta()} ({swap.ProtocolDeltaUsdPercentageFormatted})\n" +
                     $"{(swap.BrokerFeeUsdFormatted != null ? $"💵 Broker: {swap.BrokerFeeUsdFormatted.FormatDelta()} ({swap.BrokerFeePercentageFormatted})\n" : string.Empty)}" +
                     $"{(brokerExists ? $"🏦 via {brokerName}\n" : string.Empty)}" +
