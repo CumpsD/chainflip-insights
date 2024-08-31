@@ -68,6 +68,9 @@ namespace ChainflipInsights.Feeders.Swap
                             }
                             
                             swapChannelByDepositChannelId {
+                                blockByIssuedBlockId {
+                                    timestamp
+                                }
                                 swapChannelBeneficiariesByDepositChannelId {
                                     nodes {
                                         brokerCommissionRateBps

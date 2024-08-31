@@ -90,6 +90,7 @@ namespace ChainflipInsights.Feeders.Swap
         
         public double? BurnUsd { get; }
         
+        public DateTimeOffset DepositChannelIssuedTimestamp { get; }
         public DateTimeOffset? PreDepositTimestamp { get; }
         public DateTimeOffset DepositTimestamp { get; }
         public DateTimeOffset EgressTimestamp { get; }
@@ -118,8 +119,14 @@ namespace ChainflipInsights.Feeders.Swap
         {
             get
             {
+                var estimatedStart = PreDepositTimestamp.HasValue
+                    ? DepositChannelIssuedTimestamp > PreDepositTimestamp.Value
+                        ? DepositChannelIssuedTimestamp
+                        : PreDepositTimestamp.Value
+                    : DepositChannelIssuedTimestamp;
+                
                 var offset = PreDepositTimestamp.HasValue
-                    ? DepositTimestamp.Subtract(PreDepositTimestamp.Value) / 2
+                    ? DepositTimestamp.Subtract(estimatedStart) / 2
                     : new TimeSpan(0);
 
                 return EgressTimestamp - DepositTimestamp + offset;
@@ -185,7 +192,8 @@ namespace ChainflipInsights.Feeders.Swap
                 .Sum(x => x.Data.FeeValueUsd ?? 0) + LiquidityFeesUsd;
             
             Broker = GetBroker(swap);
-            
+
+            DepositChannelIssuedTimestamp = DateTimeOffset.Parse(swap.SwapChannel.Block.StateChainTimestamp);
             PreDepositTimestamp = string.IsNullOrWhiteSpace(swap.PreDeposit?.StateChainTimestamp) 
                 ? null 
                 : DateTimeOffset.Parse(swap.PreDeposit.StateChainTimestamp);
