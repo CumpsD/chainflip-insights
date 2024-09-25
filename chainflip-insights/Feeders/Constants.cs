@@ -20,6 +20,8 @@ namespace ChainflipInsights.Feeders
         public const string USDT = "usdt";
         public const string ARBETH = "arbeth";
         public const string ARBUSDC = "arbusdc";
+        public const string SOL = "sol";
+        public const string SOLUSDC = "solusdc";
 
         public static readonly Dictionary<string, AssetInfo> SupportedAssets = new()
         {
@@ -93,6 +95,24 @@ namespace ChainflipInsights.Feeders
                     "arbUSDC",
                     "arbUSDC",
                     "Arbitrum",
+                    6)
+            },
+            {
+                SOL,
+                new AssetInfo(
+                    SOL,
+                    "SOL",
+                    "Solana",
+                    "Solana",
+                    9)
+            },
+            {
+                SOLUSDC,
+                new AssetInfo(
+                    SOLUSDC,
+                    "solUSDC",
+                    "solUSDC",
+                    "Solana",
                     6)
             },
         };

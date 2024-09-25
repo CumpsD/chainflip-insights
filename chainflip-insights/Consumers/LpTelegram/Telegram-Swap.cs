@@ -24,10 +24,14 @@ namespace ChainflipInsights.Consumers.LpTelegram
                 swap.DestinationAsset.Contains("arbusdc", StringComparison.InvariantCultureIgnoreCase) ||
                 swap.SourceAsset.Contains("arbusdc", StringComparison.InvariantCultureIgnoreCase);
             
-            if (!isUsdtSwap && !isArbUsdc)
+            var isSolUsdc =
+                swap.DestinationAsset.Contains("solusdc", StringComparison.InvariantCultureIgnoreCase) ||
+                swap.SourceAsset.Contains("solusdc", StringComparison.InvariantCultureIgnoreCase);
+            
+            if (!isUsdtSwap && !isArbUsdc && !isSolUsdc)
             {
                 _logger.LogInformation(
-                    "Swap did not meet asset (USDT/arbUSDC) for LP Telegram: {IngressAmount} {IngressTicker} to {EgressAmount} {EgressTicker} -> {ExplorerUrl}",
+                    "Swap did not meet asset (USDT/arbUSDC/solUSDC) for LP Telegram: {IngressAmount} {IngressTicker} to {EgressAmount} {EgressTicker} -> {ExplorerUrl}",
                     swap.DepositAmountFormatted,
                     swap.SourceAsset,
                     swap.EgressAmountFormatted,

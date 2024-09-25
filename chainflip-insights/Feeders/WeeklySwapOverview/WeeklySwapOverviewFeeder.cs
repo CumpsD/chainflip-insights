@@ -182,7 +182,9 @@ namespace ChainflipInsights.Feeders.WeeklySwapOverview
                 "FLIP",
                 "USDT",
                 "arbETH",
-                "arbUSDC"
+                "arbUSDC",
+                "SOL",
+                "solUSDC"
             };
             
             try
