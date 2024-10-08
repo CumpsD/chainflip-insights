@@ -1,3 +1,11 @@
+<h1>
+  DISCONTINUED! DISCONTINUED! DISCONTINUED!
+</h1>
+
+Development of FLIP InfoBot has been stopped and is moving internally to Chainflip.
+
+---
+
 ![a](https://github.com/CumpsD/chainflip-insights/raw/main/assets/banner.gif "a")
 
 # FLIP InfoBot
